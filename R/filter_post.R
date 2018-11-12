@@ -7,7 +7,7 @@
 #'
 #' @param post an object of class \code{mcmc.list} from which to filter out the node
 #'   identified by \code{p}
-#' @param p a character vector of length 1. Passed to \code{stringr::str_detect()},
+#' @param p a character vector of with length >=. Passed to \code{stringr::str_detect()},
 #'   so can (and perhaps should) be a regular expression.
 #' @param format a character vector of length 1 specifying the desired output format.
 #'   Currently accepted options are \code{format = "mcmc.list"} and \code{format = "matrix"}.
@@ -29,6 +29,7 @@ filter_post = function(post, p = NULL, format = "mcmc.list", iters = F, chains =
   if (is.null(p)) {
     stop("No nodes supplied to extract. Please specify 'p', please see ?post_extract")
   }
+  p = ifelse(!stringr::str_detect(p, "\\\\"), ins_regex_bracket(p), p)
 
   # stop if format isn't accepted
   if (format %!in% c("mcmc.list", "matrix")) {
@@ -47,16 +48,15 @@ filter_post = function(post, p = NULL, format = "mcmc.list", iters = F, chains =
   u_p = get_nodes(post, type = "unique")
 
   # determine which names match
-  keep = all_p[stringr::str_detect(all_p, p)]
+  keep = unlist(lapply(p, function(x) {
+    all_p[stringr::str_detect(all_p, x)]
+  }))
 
   # the base name (no index)
   base = unique(stringr::str_replace(keep, "\\[.+\\]", ""))
 
   # stop if none were detected
   if (length(keep) == 0) stop(paste("no nodes detected with name like:", p, ".\n\n The unique nodes monitored were:\n\n  ", paste(u_p, collapse = ", "), sep = ""))
-
-  # warn if more than one unique node found
-  if (length(base) > 1) warning(paste("two or more nodes found with a name like:", p, ". They were:\n\n  ", paste(base, collapse = ", "), "\n\n  You may wish to use a regex to get more specific.", sep = ""))
 
   # extract them from each chain and coerce to mcmc.list
   post_out = coda::as.mcmc.list(lapply(post, function(x) x[,keep]))

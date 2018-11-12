@@ -11,7 +11,7 @@ filter_post(post, p = NULL, format = "mcmc.list", iters = F,
 \item{post}{an object of class \code{mcmc.list} from which to filter out the node
 identified by \code{p}}
 
-\item{p}{a character vector of length 1. Passed to \code{stringr::str_detect()},
+\item{p}{a character vector of with length >=. Passed to \code{stringr::str_detect()},
 so can (and perhaps should) be a regular expression.}
 
 \item{format}{a character vector of length 1 specifying the desired output format.
