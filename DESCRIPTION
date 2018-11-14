@@ -1,16 +1,19 @@
 Package: codaTools
 Title: Utilities for Dealing with mcmc.lists
-Version: 0.0.0.9000
+Version: 0.1.0
 Authors@R: person("Benjamin", "Staton", email = "statonbe@gmail.com", role = c("aut", "cre"))
-Description: Contains many shortcuts for querying, summarizing, plotting, and diagnosing particular
+Description: Contains many shortcuts for subsetting, summarizing, plotting, and diagnosing particular
     nodes from an mcmc.list object. These objects are created from JAGS, BUGS, or STAN models,
     yet the author has found the default summary capabilities rather clunky for plotting and subsetting
     a particular portions of the posterior output.
-Depends: R (>= 3.3.3)
+Depends: R
 Imports:
     stringr,
-    coda
-License: What license is it under?
+    coda,
+    StatonMisc
+Remotes:
+    bstaton1/StatonMisc
+License: MIT
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 6.1.0
