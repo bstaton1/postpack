@@ -28,7 +28,7 @@ density_plot = function(post, p = NULL) {
   junk = sapply(unique(post_sub[,"CHAIN"]), function(c) {
     chain_sub = post_sub[post_sub[,"CHAIN"] == c,]
     dens = density(chain_sub[,3])
-    lines(dens$y ~ dens$x, col = color[c])
+    lines(dens$y ~ dens$x, col = c)
   })
   box()
 }

@@ -15,7 +15,7 @@ trace_plot = function(post, p = NULL, thin_percent = 0) {
 
   p = ins_regex_bracket(p)
 
-  color = c("blue", "red", "green", "yellow", "pink")
+  # color = c("blue", "red", "green", "yellow", "pink")
 
   post_sub = filter_post(post, p, format = "matrix", iters = T, chains = T)
   if (ncol(post_sub) != 3) {
@@ -35,7 +35,7 @@ trace_plot = function(post, p = NULL, thin_percent = 0) {
        main = paste("Trace of", rm_regex_bracket(p)))
   sapply(unique(post_sub[,"CHAIN"]), function(c) {
     chain_sub = post_sub[post_sub[,"CHAIN"] == c,]
-    lines(chain_sub[,3] ~ chain_sub[,"ITER"], col = color[c])
+    lines(chain_sub[,3] ~ chain_sub[,"ITER"], col = c)
   })
   axis(side = 1)
   axis(side = 4)
