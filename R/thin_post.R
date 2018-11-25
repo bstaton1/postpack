@@ -22,7 +22,7 @@
 
 thin_post = function(post, thin_percent = 0.8) {
 
-  iters = 1:nrow(post1[[1]])
+  iters = 1:nrow(post[[1]])
   n_iters = length(iters)
   retain = ceiling(n_iters * (1 - thin_percent))
   keep = seq(1, n_iters, by = n_iters/retain)
