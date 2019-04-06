@@ -74,6 +74,10 @@ diag_plots = function(post, p = NULL, layout = "auto", dims = "auto",
   }))
   n = length(nodes)
 
+  # keep ^ and $ if supplied
+  nodes = ifelse(stringr::str_detect(p, "\\^"), paste("^", nodes, sep = ""), nodes)
+  nodes = ifelse(stringr::str_detect(p, "\\$"), paste(nodes, "$", sep = ""), nodes)
+
   # set the layout
   if (layout == "auto") {
     layout = ifelse(n == 1, "1x1",
