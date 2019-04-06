@@ -35,7 +35,7 @@ which will return the output as an `mcmc.list` object by default, but if you set
 You can summarize a node or set of nodes:
 
 ```
-summ_post(post, "b")
+summ_post(mypost, "b")
 ```
 
 See `?summ_post` for more details.
@@ -46,16 +46,18 @@ You can view diagnostic plots (trace and density plots) for desired nodes:
 diag_plots(post, "b")
 ```
 
-Sometimes it is nice to have a posterior summary statistic in the same format used in the model. For example, say you have a matrix object in your model `X`. If you run `summ_post(post, "X")`, the summaries will become vectorized. You can coerce a vector like this back to its native format in the model using:
+Sometimes it is nice to have a posterior summary statistic in the same format used in the model. For example, say you have a matrix object in your model called `X`. If you run `summ_post(mypost, "X")`, the summaries will become vectorized. You can coerce a vector like this back to its native format in the model using:
 
 ```
 native_format(summ_post(mypost, "X")["mean",])
 ```
 
-Currently, this works for up to 3 dimensions.
+Currently, this works for objects with a native format in the model up to 3 dimensions.
 
 Sometimes it is nice to have a smaller subset of your complete model output to test post-processing code with prior to running it with all retained posterior samples:
 
 `thin_post(mypost, 0.5)`
 
-will return an object of class `mcmc.list` with every other posterior sample from each chain removed. 
+will return an object of class `mcmc.list` with every other posterior sample from each chain removed (the `0.5` corresponds to discarding 50% of the retained samples). 
+
+**Questions?** Feel free to post an issue to this repository for bug fixes, questions, requested features, etc.
