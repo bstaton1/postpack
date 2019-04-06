@@ -78,14 +78,32 @@ native_format = function(v, row_names = T, sub_name = "") {
 
     if (ndims == 3) {
       output[dim_ids[i,1],dim_ids[i,2],dim_ids[i,3]] = v[i]
+      dimnames(output) = list(
+        paste(base, subname, "[", unique(dim_ids[,1]), ",]", sep = ""),
+        paste(base, subname, "[,", unique(dim_ids[,2]), "]", sep = ""),
+        paste(base, subname, "[,,", unique(dim_ids[,3]), "]", sep = "")
+      )
     }
 
     if (ndims == 4) {
-      output[dim_ids[i,1],dim_ids[i,2],dim_ids[i,3],dim_ids[,4]] = v[i]
+      output[dim_ids[i,1],dim_ids[i,2],dim_ids[i,3],dim_ids[i,4]] = v[i]
+      dimnames(output) = list(
+        paste(base, subname, "[", unique(dim_ids[,1]), ",]", sep = ""),
+        paste(base, subname, "[,", unique(dim_ids[,2]), "]", sep = ""),
+        paste(base, subname, "[,,", unique(dim_ids[,3]), "]", sep = ""),
+        paste(base, subname, "[,,,", unique(dim_ids[,4]), "]", sep = "")
+      )
     }
 
     if (ndims == 5) {
       output[dim_ids[i,1],dim_ids[i,2],dim_ids[i,3],dim_ids[,4],dim_ids[,5]] = v[i]
+      dimnames(output) = list(
+        paste(base, subname, "[", unique(dim_ids[,1]), ",]", sep = ""),
+        paste(base, subname, "[,", unique(dim_ids[,2]), "]", sep = ""),
+        paste(base, subname, "[,,", unique(dim_ids[,3]), "]", sep = ""),
+        paste(base, subname, "[,,,", unique(dim_ids[,4]), "]", sep = ""),
+        paste(base, subname, "[,,,,", unique(dim_ids[,5]), "]", sep = "")
+      )
     }
   }
 
