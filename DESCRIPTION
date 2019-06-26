@@ -5,15 +5,15 @@ Authors@R: person("Benjamin", "Staton", email = "statonbe@gmail.com", role = c("
 Description: Contains many shortcuts for subsetting, summarizing, plotting, and diagnosing particular
     nodes from an mcmc.list object. These objects are created from JAGS, BUGS, or STAN models,
     yet the author has found the default summary capabilities rather clunky for plotting and subsetting
-    a particular portions of the posterior output.
-Depends: R
+    particular portions of the posterior output.
+Depends: R (>= 3.0.0)
 Imports:
     stringr (>= 1.3.1),
     coda,
     StatonMisc
 Remotes:
     bstaton1/StatonMisc
-License: MIT
+License: GPL-2
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 6.1.0
