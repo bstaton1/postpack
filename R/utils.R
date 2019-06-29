@@ -9,7 +9,7 @@ ins_regex_bracket = function(string) {
   return(out)
 }
 
-#' Insert regex brackets
+#' Remove regex brackets
 #'
 #' @param string a character vector
 #' @export
