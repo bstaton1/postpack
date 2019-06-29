@@ -5,7 +5,7 @@
 #' That's what this function does.
 #'
 #' @param post an object of class \code{mcmc.list}
-#' @param type character vector of length 1. Currently accepted options are
+#' @param type character vector of length == 1. Currently accepted options are
 #'   \code{"unique"} and \code{"all"}. See below.
 #'
 #' @return if \code{type = "unique"}, then the unique node names (i.e., without indices)
@@ -15,11 +15,16 @@
 #'@export
 
 get_nodes = function(post, type = "unique") {
-  require(StatonMisc) # for %!in%
+  require(StatonMisc, quietly = T) # for %!in%
 
   # error check for type acceptance
   if (type %!in% c("unique", "all")) {
     stop("type must be either 'unique' or 'all'")
+  }
+
+  # error check for class acceptance
+  if (!coda::is.mcmc.list(post)) {
+    stop("post must be an object of class 'mcmc.list'")
   }
 
   # if only viewing the unique node names
