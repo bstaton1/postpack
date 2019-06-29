@@ -7,42 +7,32 @@
 #'
 #' @param post an object of class \code{mcmc.list} from which to filter out the node
 #'   identified by \code{p}
-#' @param p a character vector of with length >=. Passed to \code{stringr::str_detect()},
+#' @param p a character vector of with length >= 1. Passed to \code{stringr::str_detect()},
 #'   so can (and perhaps should) be a regular expression.
-#' @param format a character vector of length 1 specifying the desired output format.
-#'   Currently accepted options are \code{format = "mcmc.list"} and \code{format = "matrix"}.
-#'   Defaults to \code{format = "mcmc.list"}.
-#' @param iters logical. Do you wish to retain the iteration number if \code{format = "mcmc.list"}?
-#' @param chains logical. Do you wish to retain the chain number if \code{format = "mcmc.list"}?
-#'
+#' @param matrix logical. If \code{TRUE}, the subsetted output will be returned as a matrix using
+#'   \code{coda::as.matrix}. Defaults to \code{FALSE}, in which case the class \code{mcmc.list} will be retained.
+#' @param iters logical. Do you wish to retain the iteration number if \code{matrix = TRUE}? Not used otherwise.
+#'   Defaults to \code{FALSE}.
+#' @param chains logical. Do you wish to retain the chain number if \code{matrix = TRUE}? Not used otherwise.
+#'   Defaults to \code{FALSE}.
 #'@export
 
-filter_post = function(post, p = NULL, format = "mcmc.list", iters = F, chains = F) {
-  require(StatonMisc) # for %!in%
+filter_post = function(post, p = NULL, matrix = FALSE, iters = F, chains = F) {
+  require(StatonMisc, quietly = T) # for %!in%
 
   # stop if post isn't mcmc.list
   if (!coda::is.mcmc.list(post)) {
-    stop ("post is not an object of class 'mcmc.list'!")
+    stop ("post must be an object of class 'mcmc.list'")
   }
 
   # stop if p wasn't supplied
   if (is.null(p)) {
-    stop("No nodes supplied to extract. Please specify 'p', please see ?post_extract")
+    stop("No nodes supplied to extract. Please specify 'p', or see ?filter_post for details")
   }
   p = ifelse(!stringr::str_detect(p, "\\\\"), ins_regex_bracket(p), p)
 
-  # stop if format isn't accepted
-  if (format %!in% c("mcmc.list", "matrix")) {
-    stop("format must be one of 'mcmc.list' or 'matrix'.")
-  }
-
-  # stop if used a special character
-  # if (!stringr::str_detect(p, "\\\\[")) {
-  #   stop("You must escape the special character '['.\n  Use '\\\\[' instead.")
-  # }
-
   # extract all parameters in the post object
-  all_p = colnames(post[[1]])
+  all_p = get_nodes(post, type = "all")
 
   # extract the node names
   u_p = get_nodes(post, type = "unique")
@@ -62,7 +52,7 @@ filter_post = function(post, p = NULL, format = "mcmc.list", iters = F, chains =
   post_out = coda::as.mcmc.list(lapply(post, function(x) x[,keep]))
 
   # if reformatting to matrix type, do so
-  if (format == "matrix") {
+  if (matrix) {
     post_out = as.matrix(post_out, iters = iters, chains = chains)
   }
 
