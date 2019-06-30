@@ -10,7 +10,7 @@ post_subset(post, p, matrix = FALSE, iters = F, chains = F,
 \arguments{
 \item{post}{an object of class \code{mcmc.list}}
 
-\item{p}{a character vector of with length >= 1. Passed to \code{\link{match_p}},
+\item{p}{a character vector of with length >= 1 specifying the nodes to extract. Passed to \code{\link{match_p}},
 so can (and sometimes should) be a regular expression.}
 
 \item{matrix}{logical. If \code{TRUE}, the subsetted output will be returned as a matrix.
@@ -28,4 +28,7 @@ possibly unexpected behavior regarding regex matching?}
 \description{
 Subsets a smaller portion from the joint posterior
 corresponding only to the node(s) requested.
+}
+\seealso{
+\code{\link{match_p}}
 }

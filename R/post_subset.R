@@ -4,7 +4,7 @@
 #' corresponding only to the node(s) requested.
 #'
 #' @param post an object of class \code{mcmc.list}
-#' @param p a character vector of with length >= 1. Passed to \code{\link{match_p}},
+#' @param p a character vector of with length >= 1 specifying the nodes to extract. Passed to \code{\link{match_p}},
 #'   so can (and sometimes should) be a regular expression.
 #' @param matrix logical. If \code{TRUE}, the subsetted output will be returned as a matrix.
 #'   Defaults to \code{FALSE}, in which case the class \code{mcmc.list} will be retained.
@@ -14,6 +14,7 @@
 #'   Defaults to \code{FALSE}.
 #' @param warn logical. Do you wish to receive warnings about
 #'   possibly unexpected behavior regarding regex matching?
+#' @seealso \code{\link{match_p}}
 #'@export
 
 post_subset = function(post, p, matrix = FALSE, iters = F, chains = F, warn = F) {

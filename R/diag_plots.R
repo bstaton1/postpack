@@ -7,7 +7,8 @@
 #' plotting device scales to the job needed.
 #'
 #' @param post an object of class \code{mcmc.list}
-#' @param p a character vector with length >= 1 specifying the nodes to plot
+#' @param p a character vector of with length >= 1 specifying the nodes to plot. Passed to \code{\link{match_p}},
+#'   so can (and sometimes should) be a regular expression.
 #' @param layout a character vector specifying \code{"ROWSxCOLUMNS"} of parameter diagnostics.
 #'   For example, \code{"4x1"} has 4 rows and 1 column of parameter diagnostics.
 #'   Defaults to \code{"auto"}, which selects between \code{"1x1"}, \code{"4x1"}, and \code{"5x3"}.
@@ -30,6 +31,7 @@
 #'   but can recieve an absolute or relative file path here as well
 #' @param warn logical. Do you wish to receive warnings about
 #'   possibly unexpected behavior regarding regex matching? Defaults to \code{FALSE}
+#' @seealso \code{\link{match_p}}
 #' @importFrom StatonMisc %!in%
 #' @importFrom StatonMisc ext_device
 #'

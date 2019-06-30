@@ -10,7 +10,8 @@ diag_plots(post, p, layout = "auto", dims = "auto", ext_device = F,
 \arguments{
 \item{post}{an object of class \code{mcmc.list}}
 
-\item{p}{a character vector with length >= 1 specifying the nodes to plot}
+\item{p}{a character vector of with length >= 1 specifying the nodes to plot. Passed to \code{\link{match_p}},
+so can (and sometimes should) be a regular expression.}
 
 \item{layout}{a character vector specifying \code{"ROWSxCOLUMNS"} of parameter diagnostics.
 For example, \code{"4x1"} has 4 rows and 1 column of parameter diagnostics.
@@ -47,4 +48,7 @@ BOTH separated by chain, for the desired nodes of interest. Includes the
 ability to plot in the RStudio graphics device, an external device (OS-indepenent),
 or a PDF file. Further, with the auto settings, the dimensions of the
 plotting device scales to the job needed.
+}
+\seealso{
+\code{\link{match_p}}
 }
