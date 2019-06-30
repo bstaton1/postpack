@@ -4,14 +4,13 @@
 \alias{density_plot}
 \title{Create a density for a single desired node}
 \usage{
-density_plot(post, p = NULL)
+density_plot(post, p_one)
 }
 \arguments{
 \item{post}{an object of class \code{mcmc.list}}
 
-\item{p}{a character vector of length 1. Should be a node reference
-to a single element in the model. E.g., \code{"pi[1]"}, not \code{"pi"}.
-If escapes are not provided to square brakets, they will automatically be inserted.}
+\item{p_one}{a character vector of length == 1. Should be a node reference
+to a single element in the model. E.g., \code{"pi[1]"}, not \code{"pi"}.}
 }
 \description{
 Create a density for a single desired node

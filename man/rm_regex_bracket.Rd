@@ -2,7 +2,7 @@
 % Please edit documentation in R/utils.R
 \name{rm_regex_bracket}
 \alias{rm_regex_bracket}
-\title{Insert regex brackets}
+\title{Remove escapes on regex brackets}
 \usage{
 rm_regex_bracket(string)
 }
@@ -10,5 +10,13 @@ rm_regex_bracket(string)
 \item{string}{a character vector}
 }
 \description{
-Insert regex brackets
+Remove escapes on regex brackets
+}
+\details{
+searches the contents of a string for the occurrence of a
+ square bracket or two (that has been escaped), and removes the escaping
+ that was necessary for regular expression matching
+}
+\note{
+this is NOT a function users will generally use.
 }

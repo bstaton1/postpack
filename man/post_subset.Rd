@@ -4,7 +4,8 @@
 \alias{post_subset}
 \title{Extract a subset of nodes from a \code{mcmc.list}}
 \usage{
-post_subset(post, p, matrix = FALSE, iters = F, chains = F)
+post_subset(post, p, matrix = FALSE, iters = F, chains = F,
+  warn = F)
 }
 \arguments{
 \item{post}{an object of class \code{mcmc.list}}
@@ -20,6 +21,9 @@ Defaults to \code{FALSE}.}
 
 \item{chains}{logical. Do you wish to retain the chain number if \code{matrix = TRUE}? Not used otherwise.
 Defaults to \code{FALSE}.}
+
+\item{warn}{logical. Do you wish to receive warnings about
+possibly unexpected behavior regarding regex matching?}
 }
 \description{
 Subsets a smaller portion from the joint posterior

@@ -4,14 +4,13 @@
 \alias{diag_plots}
 \title{Create MCMC diagnostic plots for nodes of interest}
 \usage{
-diag_plots(post, p = NULL, layout = "auto", dims = "auto",
-  ext_device = F, thin_percent = 0, save = F, file = NULL)
+diag_plots(post, p, layout = "auto", dims = "auto", ext_device = F,
+  thin_percent = 0, save = F, file = NULL, warn = F)
 }
 \arguments{
 \item{post}{an object of class \code{mcmc.list}}
 
-\item{p}{a character vector with length >= 1. Passed to \code{stringr::str_detect},
-so can, and perhaps should, be a regular expression.}
+\item{p}{a character vector with length >= 1 specifying the nodes to plot}
 
 \item{layout}{a character vector specifying \code{"ROWSxCOLUMNS"} of parameter diagnostics.
 For example, \code{"4x1"} has 4 rows and 1 column of parameter diagnostics.
@@ -25,7 +24,7 @@ as well.}
 
 \item{ext_device}{logical. Do you wish to have an external device open to display the diagnostics?
 \code{TRUE} will create a new plotting device using the OS-specific function.
-Defaults to \code{FALSE}. Requires \code{StatonMisc}.}
+Defaults to \code{FALSE}. Requires the \code{\link[StatonMisc]{ext_device}} function.}
 
 \item{thin_percent}{if you wish to remove some fraction of the samples before traceplotting, do that here.
 The thinning will occur systematically, i.e., at evenly-spaced intervals.
@@ -36,12 +35,16 @@ Defaults to \code{0}, i.e., no thinning.}
 specify \code{file = "example.pdf"} as well. Defaults to \code{FALSE}.}
 
 \item{file}{character vector of length 1. The file name, which
-must include the \code{".png"} extension. Saved to working directory by default,
+must include the \code{".pdf"} extension. Saved to working directory by default,
 but can recieve an absolute or relative file path here as well}
+
+\item{warn}{logical. Do you wish to receive warnings about
+possibly unexpected behavior regarding regex matching?}
 }
 \description{
-This function allows you to easily plot the density and traceplots,
+Allows quick visualization of posterior density and traceplots,
 BOTH separated by chain, for the desired nodes of interest. Includes the
 ability to plot in the RStudio graphics device, an external device (OS-indepenent),
-or a PDF file.
+or a PDF file. Further, with the auto settings, the dimensions of the
+plotting device scales to the job needed.
 }

@@ -1,13 +1,13 @@
 #' Create MCMC diagnostic plots for nodes of interest
 #'
-#' This function allows you to easily plot the density and traceplots,
+#' Allows quick visualization of posterior density and traceplots,
 #' BOTH separated by chain, for the desired nodes of interest. Includes the
 #' ability to plot in the RStudio graphics device, an external device (OS-indepenent),
-#' or a PDF file.
+#' or a PDF file. Further, with the auto settings, the dimensions of the
+#' plotting device scales to the job needed.
 #'
 #' @param post an object of class \code{mcmc.list}
-#' @param p a character vector with length >= 1. Passed to \code{stringr::str_detect},
-#'   so can, and perhaps should, be a regular expression.
+#' @param p a character vector with length >= 1 specifying the nodes to plot
 #' @param layout a character vector specifying \code{"ROWSxCOLUMNS"} of parameter diagnostics.
 #'   For example, \code{"4x1"} has 4 rows and 1 column of parameter diagnostics.
 #'   Defaults to \code{"auto"}, which selects between \code{"1x1"}, \code{"4x1"}, and \code{"5x3"}.
@@ -18,7 +18,7 @@
 #'   as well.
 #' @param ext_device logical. Do you wish to have an external device open to display the diagnostics?
 #'   \code{TRUE} will create a new plotting device using the OS-specific function.
-#'   Defaults to \code{FALSE}. Requires \code{StatonMisc}.
+#'   Defaults to \code{FALSE}. Requires the \code{\link[StatonMisc]{ext_device}} function.
 #' @param thin_percent if you wish to remove some fraction of the samples before traceplotting, do that here.
 #'   The thinning will occur systematically, i.e., at evenly-spaced intervals.
 #'   This is sometimes helpful when saving a pdf with many samples/nodes, which can render slowly.
@@ -26,26 +26,18 @@
 #' @param save logical. Do you wish to save the diagnostic plots in a PDF file? If so,
 #'   specify \code{file = "example.pdf"} as well. Defaults to \code{FALSE}.
 #' @param file character vector of length 1. The file name, which
-#'   must include the \code{".png"} extension. Saved to working directory by default,
+#'   must include the \code{".pdf"} extension. Saved to working directory by default,
 #'   but can recieve an absolute or relative file path here as well
+#' @param warn logical. Do you wish to receive warnings about
+#'   possibly unexpected behavior regarding regex matching?
 #'
 #' @export
 
-diag_plots = function(post, p = NULL, layout = "auto", dims = "auto",
-                      ext_device = F, thin_percent = 0, save = F, file = NULL) {
+diag_plots = function(post, p, layout = "auto", dims = "auto",
+                      ext_device = F, thin_percent = 0, save = F, file = NULL, warn = F) {
 
-  require(StatonMisc, quietly = T)
-
-  # stop if post isn't mcmc.list
-  if (!coda::is.mcmc.list(post)) {
-    stop ("post is not an object of class 'mcmc.list'")
-  }
-
-  # stop if p wasn't supplied
-  if (is.null(p)) {
-    stop("No nodes supplied to extract. Please specify 'p', please see ?filter_post")
-  }
-  p = ifelse(!stringr::str_detect(p, "\\\\"), ins_regex_bracket(p), p)
+  # the exact nodes to display. includes error checks for post and p being compatible.
+  keep = match_p(post, p, warn = warn); n = length(keep)
 
   # error handle for layout
   if (layout %!in% c("auto", "1x1", "4x1", "5x3")) {
@@ -65,23 +57,6 @@ diag_plots = function(post, p = NULL, layout = "auto", dims = "auto",
     if (tolower(substr(file, nchar(file) - 2, nchar(file))) != "pdf") {
       stop("filename must include the '.pdf' extension")
     }
-  }
-
-  # extract the desired parameters from post
-  all_nodes = get_nodes(post, type = "all")
-  nodes = unlist(lapply(p, function(x) {
-    all_nodes[stringr::str_detect(all_nodes, x)]
-  }))
-  n = length(nodes)
-
-  # keep ^ and $ if supplied
-  # nodes = ifelse(stringr::str_detect(p, "\\^"), paste("^", nodes, sep = ""), nodes)
-  # nodes = ifelse(stringr::str_detect(p, "\\$"), paste(nodes, "$", sep = ""), nodes)
-  if (stringr::str_detect(p, "\\^")) {
-    nodes = paste("^", nodes, sep = "")
-  }
-  if (stringr::str_detect(p, "\\$")) {
-    nodes = paste(nodes, "$", sep = "")
   }
 
   # set the layout
@@ -106,8 +81,8 @@ diag_plots = function(post, p = NULL, layout = "auto", dims = "auto",
   # set up the graphics device
   par(mfrow = c(row_col[1],row_col[2] * 2))
 
-  junk = sapply(nodes, function(i) {
-    if (which(nodes == i) %in% new_page & ext_device) {
+  junk = sapply(keep, function(i) {
+    if (which(keep == i) %in% new_page & ext_device) {
       ext_device(h = height_width[1], w = height_width[2])
       par(mfrow = c(row_col[1],row_col[2] * 2))
     }
