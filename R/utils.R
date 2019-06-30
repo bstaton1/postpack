@@ -5,6 +5,7 @@
 #'  square bracket or two, and inserts the necessary escapes for searching
 #'  via regular expression
 #' @note this is NOT a function users will generally use.
+#' @export
 
 ins_regex_bracket = function(string) {
   out = stringr::str_replace(string, "\\[", "\\\\[")
@@ -19,6 +20,7 @@ ins_regex_bracket = function(string) {
 #'  square bracket or two (that has been escaped), and removes the escaping
 #'  that was necessary for regular expression matching
 #' @note this is NOT a function users will generally use.
+#' @export
 
 rm_regex_bracket = function(string) {
   out = stringr::str_replace(string, "\\\\\\[", "\\[")
