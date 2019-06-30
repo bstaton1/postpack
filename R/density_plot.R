@@ -30,7 +30,7 @@ density_plot = function(post, p_one) {
   plot(1,1,type = "n",
        xlim = x_lim,  xlab = "",
        ylim = c(0, y_max) * 1.05, ylab = "",
-       main = paste("Density of", rm_regex_lock(rm_regex_bracket(p_one))))
+       main = rm_regex_lock(rm_regex_bracket(p_one)))
 
   # loop through chains plotting the distribution of each
   junk = sapply(unique(post_sub[,"CHAIN"]), function(c) {

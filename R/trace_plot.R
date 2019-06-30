@@ -10,7 +10,7 @@
 #'
 #' @export
 
-trace_plot = function(post, p = NULL, thin_percent = 0) {
+trace_plot = function(post, p_one, thin_percent = 0) {
 
   # return error if p_one has length > 1
   if (length(p_one) > 1) stop ("p_one must have only one element, and it must match the desired node exactly")
@@ -18,16 +18,14 @@ trace_plot = function(post, p = NULL, thin_percent = 0) {
   # lock in the search string. It must be exact for the rest of this code to work
   p_one = ins_regex_lock(p_one)
 
+  # perform additional thinning if desired
+  post = thin_post(post, thin_percent = thin_percent)
+
   # extract this node's samples
   post_sub = post_subset(post, p_one, matrix = T, iters = T, chains = T)
 
   # get axis limits
   y_lim = range(post_sub[,3])
-
-  # perform additional thinning if desired
-  n_keep = (1 - thin_percent) * nrow(post_sub)/max(post_sub[,"CHAIN"])
-  keep_iter = round(seq(min(post_sub[,"ITER"]), max(post_sub[,"ITER"]), length = n_keep))
-  post_sub = post_sub[post_sub[,"ITER"] %in% keep_iter,]
 
   # set up graphics device
   par(mar = c(2.5,0.5,1.5,2), tcl = -0.25,
@@ -37,7 +35,7 @@ trace_plot = function(post, p = NULL, thin_percent = 0) {
   plot(1,1, axes = F, type = "n",
        xlim = range(post_sub[,"ITER"]),
        ylim = y_lim, xlab = "", ylab = "",
-       main = paste("Trace of", rm_regex_lock(rm_regex_bracket(p_one))))
+       main = rm_regex_lock(rm_regex_bracket(p_one)))
 
   # loop through chains plotting the trace of each
   sapply(unique(post_sub[,"CHAIN"]), function(c) {
