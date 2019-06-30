@@ -9,7 +9,7 @@ get_nodes(post, type = "unique")
 \arguments{
 \item{post}{an object of class \code{mcmc.list}}
 
-\item{type}{character vector of length 1. Currently accepted options are
+\item{type}{character vector of length == 1. Currently accepted options are
 \code{"unique"} and \code{"all"}. See below.}
 }
 \value{
@@ -21,4 +21,7 @@ if \code{type = "unique"}, then the unique node names (i.e., without indices)
 Sometimes it's helpful to know what nodes are
 stored in an object of class \code{mcmc.list}.
 That's what this function does.
+}
+\seealso{
+\code{\link{base_p}}
 }

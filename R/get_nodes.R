@@ -12,13 +12,14 @@
 #'   will be returned. If \code{type = "all"}, then all node names, including the indices,
 #'   will be returned.
 #'
+#' @seealso \code{\link{base_p}}
+#'
 #'@export
 
 get_nodes = function(post, type = "unique") {
-  require(StatonMisc, quietly = T) # for %!in%
 
   # error check for type acceptance
-  if (type %!in% c("unique", "all")) {
+  if (type != "unique" & type != "all") {
     stop("type must be either 'unique' or 'all'")
   }
 
@@ -27,16 +28,13 @@ get_nodes = function(post, type = "unique") {
     stop("post must be an object of class 'mcmc.list'")
   }
 
+  # extract all names
+  all_p = colnames(post[[1]])
+
+  ## return the appropriate output
   # if only viewing the unique node names
-  if(type == "unique") {
-    output = unique(stringr::str_replace(colnames(post[[1]]), "\\[.+\\]", ""))
-  }
+  if(type == "unique") unique(base_p(all_p))
 
   # if viewing all nodes
-  if (type == "all") {
-    output = colnames(post[[1]])
-  }
-
-  # return the output
-  return(output)
+  if (type == "all") all_p
 }
