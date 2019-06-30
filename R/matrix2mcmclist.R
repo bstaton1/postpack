@@ -1,16 +1,16 @@
-#' Coerce a matrix to an mcmc.list
+#' Coerce a matrix to a mcmc.list
 #'
 #' Does as the name implies. Requires that the \code{"CHAIN"} and \code{"ITER"} are columns.
-#' These can be obtained from the \code{filter_post()} function.
+#' These can be obtained from \code{\link{post_subset}} function.
 #'
 #' @param post_mat a posterior model object, with samples in matrix format.
 #'   The matrix can contain any number of nodes, but it must contain
-#'   \code{"CHAIN"} and \code{"ITER"} are columns.
+#'   \code{"CHAIN"} and \code{"ITER"} as columns.
+#' @importFrom StatonMisc %!in%
 #'
 #' @export
 
 matrix2mcmclist = function(post_mat) {
-  require(StatonMisc) # for %!in%
 
   if (!all(c("CHAIN", "ITER") %in% colnames(post_mat))) {
     stop ("the column names of post_mat must include 'CHAINS' and 'ITER'")

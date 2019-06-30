@@ -2,16 +2,16 @@
 % Please edit documentation in R/matrix2mcmclist.R
 \name{matrix2mcmclist}
 \alias{matrix2mcmclist}
-\title{Coerce a matrix to an mcmc.list}
+\title{Coerce a matrix to a mcmc.list}
 \usage{
 matrix2mcmclist(post_mat)
 }
 \arguments{
 \item{post_mat}{a posterior model object, with samples in matrix format.
 The matrix can contain any number of nodes, but it must contain
-\code{"CHAIN"} and \code{"ITER"} are columns.}
+\code{"CHAIN"} and \code{"ITER"} as columns.}
 }
 \description{
 Does as the name implies. Requires that the \code{"CHAIN"} and \code{"ITER"} are columns.
-These can be obtained from the \code{filter_post()} function.
+These can be obtained from \code{\link{post_subset}} function.
 }
