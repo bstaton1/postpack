@@ -34,16 +34,16 @@
 diag_plots = function(post, p = NULL, layout = "auto", dims = "auto",
                       ext_device = F, thin_percent = 0, save = F, file = NULL) {
 
-  require(StatonMisc)
+  require(StatonMisc, quietly = T)
 
   # stop if post isn't mcmc.list
   if (!coda::is.mcmc.list(post)) {
-    stop ("post is not an object of class 'mcmc.list'!")
+    stop ("post is not an object of class 'mcmc.list'")
   }
 
   # stop if p wasn't supplied
   if (is.null(p)) {
-    stop("No nodes supplied to extract. Please specify 'p', please see ?post_extract")
+    stop("No nodes supplied to extract. Please specify 'p', please see ?filter_post")
   }
   p = ifelse(!stringr::str_detect(p, "\\\\"), ins_regex_bracket(p), p)
 

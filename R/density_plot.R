@@ -11,7 +11,7 @@ density_plot = function(post, p = NULL) {
 
   color = c("blue", "red", "green", "yellow", "pink")
 
-  post_sub = filter_post(post, p, format = "matrix", iters = T, chains = T)
+  post_sub = filter_post(post, p, matrix = T, iters = T, chains = T)
   if (ncol(post_sub) != 3) {
     stop ("more than one element from the model supplied!")
   }
