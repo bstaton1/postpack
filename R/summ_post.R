@@ -1,46 +1,44 @@
-#' Obtain a posterior summary
+#' Obtain a posterior summary of specific nodes
 #'
-#' Oftentimes you want to obtain the summary of just one node at a time.
+#' Obtaining a summary of specific nodes is cumbersome from mcmc.list objects:
 #' \code{summary(post)} if \code{post} is of class \code{mcmc.list} is clunky.
 #' The central tendency and uncertainty measures are in different lists.
-#' This function allows extractinging a summary of the posteriors associated with requested nodes.
+#' This function allows extractinging a summary of the posteriors
+#' associated with requested nodes.
 #'
-#' @param post an object of class \code{mcmc.list} from which to filter out the node
-#'   identified by \code{p}
-#' @param p a character vector of length 1. Passed to \code{stringr::str_detect()},
-#'   so can (and perhaps should) be a regular expression.
-#' @param p_summ numeric vector passed to \code{StatonMisc::summ()}.
-#'  The posterior percentiles you want to see. Defaults to \code{p_summ = c(0.5, 0.025, 0.975)}.
-#' @param prettify logical passed to \code{StatonMisc::summ()}.
+#' @param post an object of class \code{mcmc.list}
+#' @param p a character vector of with length >= 1 specifying the nodes to summarize.
+#'   Passed to \code{\link{match_p}}, so can (and sometimes should) be a regular expression.
+#' @param p_summ numeric vector passed to \code{\link[StatonMisc]{summ}}.
+#'  The posterior percentiles you want to have summarized, Defaults to \code{p_summ = c(0.5, 0.025, 0.975)}.
+#' @param prettify logical, passed to \code{\link[StatonMisc]{summ}}.
 #'   Do you wish to add commas to demarcate thousands points?
 #'   Coerces numerics to characters.
-#' @param rnd numeric vector passed to \code{StatonMisc::summ()}.
-#'   The digits of \code{round()}.
-#' @param bgr logical. Do you wish to calculate the
-#'   effective sample size using \code{coda:effectiveSize(post)}?
+#' @param rnd numeric vector passed to \code{\link[StatonMisc]{summ}}.
+#'   The digits of \code{round}.
+#' @param Rhat logical. Do you wish to calculate the
+#'   Rhat convergence diagnostic using \code{\link[coda]{gelman.diag}}?
 #'   Fair warning: this can take a bit of time to run on many nodes/samples
 #' @param ess logical. Do you wish to calculate the
-#'   effective sample size using \code{coda:effectiveSize(post)}?
+#'   effective sample size using \code{\link[coda]{effectiveSize}}?
 #'   Fair warning: this can take a bit of time to run on many nodes/samples
+#' @param warn logical. Do you wish to receive warnings about
+#'   possibly unexpected behavior regarding regex matching?
+#' @seealso \code{\link{match_p}}, \code{\link[StatonMisc]{summ}}, \code{\link[coda]{gelman.diag}},
+#'   \code{\link[coda]{effectiveSize}}
+#' @importFrom StatonMisc summ
 #'
 #'@export
 
-summ_post = function(post, p = NULL, p_summ = c(0.5, 0.025, 0.975), prettify = F, rnd = NULL, bgr = F, ess = F) {
+post_summ = function(post, p, p_summ = c(0.5, 0.025, 0.975), prettify = F, rnd = NULL, Rhat = F, ess = F, warn = F) {
 
-  # stop if post isn't mcmc.list
-  if (!coda::is.mcmc.list(post)) {
-    stop ("'post' is not an object of class 'mcmc.list'!")
-  }
+  # match the names of the nodes that will be extracted
+  p_match = match_p(post, p, warn = F) # don't warn on this step
 
-  # stop if p wasn't supplied
-  if (is.null(p)) {
-    stop("No nodes supplied to extract. Please specify 'p', please see ?post_extract")
-  }
+  # subset the nodes corresponding to p
+  post_sub = post_subset(post, p, warn = warn)
 
-  # extract the nodes corresponding to p
-  post_sub = filter_post(post, p)
-
-  # apply the summary function
+  # apply the StatonMisc::summ function
   output = apply(as.matrix(post_sub), 2, function(x) {
     summ(x,
          p = p_summ,
@@ -49,17 +47,17 @@ summ_post = function(post, p = NULL, p_summ = c(0.5, 0.025, 0.975), prettify = F
          )
   })
 
-  # add the right node name if
-  if (ncol(output) == 1) {
-    colnames(output) = p
+  # add the right node name if necessary
+  if (length(p_match) == 1) {
+    colnames(output) = p_match
   }
 
-  # if doing bgr (Rhat), do so
-  if (bgr) {
-    bgr = round(coda::gelman.diag(post_sub, multivariate = F)[[1]][,1], 3)
+  # if doing Rhat, calculate it
+  if (Rhat) {
+    Rhat = round(coda::gelman.diag(post_sub, multivariate = F)[[1]][,1], 3)
     output = rbind(
       output,
-      bgr = bgr
+      Rhat = Rhat
     )
   }
 
