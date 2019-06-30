@@ -29,7 +29,9 @@
 #'   must include the \code{".pdf"} extension. Saved to working directory by default,
 #'   but can recieve an absolute or relative file path here as well
 #' @param warn logical. Do you wish to receive warnings about
-#'   possibly unexpected behavior regarding regex matching?
+#'   possibly unexpected behavior regarding regex matching? Defaults to \code{FALSE}
+#' @importFrom StatonMisc %!in%
+#' @importFrom StatonMisc ext_device
 #'
 #' @export
 

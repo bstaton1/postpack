@@ -39,7 +39,7 @@ must include the \code{".pdf"} extension. Saved to working directory by default,
 but can recieve an absolute or relative file path here as well}
 
 \item{warn}{logical. Do you wish to receive warnings about
-possibly unexpected behavior regarding regex matching?}
+possibly unexpected behavior regarding regex matching? Defaults to \code{FALSE}}
 }
 \description{
 Allows quick visualization of posterior density and traceplots,
