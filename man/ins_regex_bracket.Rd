@@ -2,7 +2,7 @@
 % Please edit documentation in R/utils.R
 \name{ins_regex_bracket}
 \alias{ins_regex_bracket}
-\title{Insert a brackets as regex version}
+\title{Insert escapes on regex brackets}
 \usage{
 ins_regex_bracket(string)
 }
@@ -10,5 +10,13 @@ ins_regex_bracket(string)
 \item{string}{a character vector}
 }
 \description{
-Insert a brackets as regex version
+Insert escapes on regex brackets
+}
+\details{
+searches the contents of a string for the occurrence of a
+ square bracket or two, and inserts the necessary escapes for searching
+ via regular expression
+}
+\note{
+this is NOT a function users will generally use.
 }
