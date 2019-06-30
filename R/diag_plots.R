@@ -92,7 +92,11 @@ diag_plots = function(post, p, layout = "auto", dims = "auto",
     }
     density_plot(post, i)
     trace_plot(post, i, thin_percent = thin_percent)
+    mytitle(i)
   })
 
   if (save) dev.off()
 }
+
+
+

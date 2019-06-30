@@ -28,14 +28,13 @@ trace_plot = function(post, p_one, thin_percent = 0) {
   y_lim = range(post_sub[,3])
 
   # set up graphics device
-  par(mar = c(2.5,0.5,1.5,2), tcl = -0.25,
+  par(mar = c(1.5,0.5,2.5,2), tcl = -0.25,
       mgp = c(1.5,0.4,0), yaxs = "r")
 
   # create an empty plotting region
   plot(1,1, axes = F, type = "n",
        xlim = range(post_sub[,"ITER"]),
-       ylim = y_lim, xlab = "", ylab = "",
-       main = rm_regex_lock(rm_regex_bracket(p_one)))
+       ylim = y_lim, xlab = "", ylab = "")
 
   # loop through chains plotting the trace of each
   sapply(unique(post_sub[,"CHAIN"]), function(c) {

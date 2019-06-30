@@ -23,14 +23,13 @@ density_plot = function(post, p_one) {
   y_max = max(tapply(post_sub[,3], post_sub[,"CHAIN"], function(x) max(density(x)$y)))
 
   # set up device
-  par(yaxs = "i", mar = c(2.5,2,1.5,0.5), tcl = -0.25,
+  par(yaxs = "i", mar = c(1.5,2,2.5,0.5), tcl = -0.25,
       mgp = c(1.5,0.4,0))
 
   # create an empty plot
   plot(1,1,type = "n",
        xlim = x_lim,  xlab = "",
-       ylim = c(0, y_max) * 1.05, ylab = "",
-       main = rm_regex_lock(rm_regex_bracket(p_one)))
+       ylim = c(0, y_max) * 1.05, ylab = "")
 
   # loop through chains plotting the distribution of each
   junk = sapply(unique(post_sub[,"CHAIN"]), function(c) {

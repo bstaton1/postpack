@@ -69,3 +69,18 @@ rm_regex_lock = function(string) {
 base_p = function(p) {
   stringr::str_replace(p, "\\[.+\\]", "")
 }
+
+#' Adds a title between two figures
+#'
+#' Used by \code{\link{diag_plots}} to place a common
+#' title over top of two figures: one trace and one density
+#' for a given node.
+#'
+#' @param text character vector length == 1. The text string to
+#'   include as a title
+
+mytitle = function(text) {
+  usr = par("usr"); xdiff = diff(usr[1:2]); ydiff = diff(usr[3:4])
+  text(x = usr[1] - xdiff * 0.02, y = usr[4] + ydiff * 0.11,
+       labels = text, font = 2, cex = 1.4, xpd = NA)
+}
