@@ -37,9 +37,10 @@ this function is called as one of the first steps in many of the more downstream
 \examples{
 \dontrun{
 match_p(post, "alpha")
-match_p(post, c("S", "R"))   # Elements of  S, S_msy, and Sigma_R, and R
-match_p(post, c("R["))       # Elements of R and Sigma_R only
-match_p(post, c("^R["))      # Elements of R
+match_p(post, c("S", "R"))         # Elements of  S, S_msy, and Sigma_R, and R
+match_p(post, c("R["))             # Elements of R and Sigma_R only
+match_p(post, c("^R["))            # Elements of R
+match_p(post, c("^R["), ubase = T) # Only the base node name: R
 }
 
 }

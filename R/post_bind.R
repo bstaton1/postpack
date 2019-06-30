@@ -1,10 +1,13 @@
 #' Combine two mcmc.list objects
 #'
-#' Take two mcmc.list objects, possibly from the same or different models.
+#' Bind together two mcmc.list objects, possibly from the same or different models.
 #' The two posterior objects must have equal chains and iterations per chain.
 #'
 #' @param post1 an object of class \code{mcmc.list}
 #' @param post2 an object of class \code{mcmc.list}
+#' @param dup_id a character vector of length == 1. If any
+#'   node names are duplicated in post2, what should be appended to the
+#'   end of the node names in the output? Defaults to \code{"_p2"}
 #'
 #' @details The two lists are coerced to matricies, \code{cbind()}-ed, and
 #'   converted back to to an \code{mcmc.list} using \code{matrix2mcmclist}.
@@ -13,11 +16,10 @@
 #'
 #' @export
 
-bind_post = function(post1, post2) {
-  require(coda)
+post_bind = function(post1, post2, dup_id = "_p2") {
 
   # error check for both mcmc lists
-  if (!is.mcmc.list(post1) | !is.mcmc.list(post2)) {
+  if (!coda::is.mcmc.list(post1) | !coda::is.mcmc.list(post2)) {
     stop ("both post1 and post2 must be objects of class 'mcmc.list'")
   }
 
@@ -37,6 +39,9 @@ bind_post = function(post1, post2) {
 
   # cbind them
   post_m = cbind(post1_m, post2_m)
+
+  # if any names are duplicated, append them for identification
+  colnames(post_m) = ifelse(duplicated(colnames(post_m)), paste0(colnames(post_m), dup_id), colnames(post_m))
 
   # coerce back to mcmc.list
   matrix2mcmclist(post_m)
