@@ -19,7 +19,7 @@ trace_plot = function(post, p_one, thin_percent = 0) {
   p_one = ins_regex_lock(p_one)
 
   # perform additional thinning if desired
-  post = thin_post(post, thin_percent = thin_percent)
+  post = post_thin(post, thin_percent = thin_percent)
 
   # extract this node's samples
   post_sub = post_subset(post, p_one, matrix = T, iters = T, chains = T)

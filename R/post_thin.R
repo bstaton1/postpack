@@ -1,18 +1,18 @@
 #' Thin a mcmc.list object
 #'
 #' Systematically remove iterations from each chain of an
-#' objective of class \code{mcmc.list}. Thinning after running the model is most often done during
-#'   developement of post-processing code, so the calculations take
-#'   less time.
+#' objective of class \code{mcmc.list}. Thinning after running the model
+#' is most often done during developement of post-processing code,
+#' so the calculations take less time.
 #'
 #' @param post an object of class \code{mcmc.list}
 #' @param thin_percent numeric vector of length 1 and between the interval
 #'   (0,1): what fraction of the samples do you wish to remove from each
-#'   chain?
+#'   chain? Defaults to \code{0.8}; i.e., removing 80\% of the samples.
 #'
 #' @details the samples will be removed at as evenly spaced intervals
 #'   as possible, however, this is not perfect. It is therefore recommended
-#'   to use the full posterior for output, put this should be fine for
+#'   to use the full posterior for final output, but this should be fine for
 #'   most development. It can be improved by finding a better thinning rule:
 #'   one that gives a consistent interval between all retained samples.
 #'
@@ -20,7 +20,7 @@
 #'
 #' @export
 
-thin_post = function(post, thin_percent = 0.8) {
+post_thin = function(post, thin_percent = 0.8) {
 
   iters = 1:nrow(post[[1]])
   n_iters = length(iters)
@@ -33,7 +33,7 @@ thin_post = function(post, thin_percent = 0.8) {
 ## function not working ideally. the printing of iteration
   # numbers doesn't work quite right. The rownames are good
   # but
-# tp = thin_post(post)
+# tp = post_thin(post)
 # length(tp)
 # nrow((tp)[[1]])/nrow((post)[[1]])
 # class(tp)
