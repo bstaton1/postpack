@@ -33,7 +33,12 @@
 post_summ = function(post, p, p_summ = c(0.5, 0.025, 0.975), prettify = F, rnd = NULL, Rhat = F, ess = F, warn = F) {
 
   # match the names of the nodes that will be extracted
-  p_match = match_p(post, p, warn = F) # don't warn on this step
+  # p_match = tryCatch(
+  #   expr = {
+      p_match = match_p(post, p, warn = F)
+  #   }
+  #
+  # )
 
   # subset the nodes corresponding to p
   post_sub = post_subset(post, p, warn = warn)

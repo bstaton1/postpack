@@ -7,9 +7,10 @@
 #' @param p a character vector with length >= 1. Passed to \code{stringr::str_detect},
 #'   so can, and sometimes should, be a regular expression; see the examples.
 #'   Duplicate matches found among different elements of \code{p} are discarded.
+#' @param ubase logical. Do you wish to return only the unique bases (i.e., without indices listed)?
 #' @param warn logical. Do you wish to be warned when duplicates and cases
 #'   with more than one match per \code{p} element? Defaults to \code{FALSE}, and is provided for
-#'   helping to diagnose problems with regex matching.#'
+#'   helping to diagnose problems with regex matching.
 #' @return a character vector with all node names that match \code{p}.
 #'   If no matches are found, it will return an error with
 #'   the base node names found the \code{mcmc.list} to help the next try.
@@ -20,14 +21,15 @@
 #' @examples
 #' \dontrun{
 #' match_p(post, "alpha")
-#' match_p(post, c("S", "R"))   # Elements of  S, S_msy, and Sigma_R, and R
-#' match_p(post, c("R["))       # Elements of R and Sigma_R only
-#' match_p(post, c("^R["))      # Elements of R
+#' match_p(post, c("S", "R"))         # Elements of  S, S_msy, and Sigma_R, and R
+#' match_p(post, c("R["))             # Elements of R and Sigma_R only
+#' match_p(post, c("^R["))            # Elements of R
+#' match_p(post, c("^R["), ubase = T) # Only the base node name: R
 #' }
 #'
 #' @export
 
-match_p = function(post, p, warn = F) {
+match_p = function(post, p, ubase = F, warn = F) {
 
   # stop if post isn't mcmc.list
   if (!coda::is.mcmc.list(post)) {
@@ -38,10 +40,10 @@ match_p = function(post, p, warn = F) {
   p_regex = ifelse(!stringr::str_detect(p, "\\\\"), ins_regex_bracket(p), p)
 
   # extract all parameters in the post object
-  all_p = get_nodes(post, type = "all")
+  all_p = get_p(post, type = "all")
 
   # extract the node names
-  u_p = get_nodes(post, type = "unique")
+  u_p = get_p(post, type = "base")
 
   # determine which names match
   match_list = lapply(p_regex, function(x) {
@@ -60,7 +62,7 @@ match_p = function(post, p, warn = F) {
       paste(
         "\n  Supplied value(s) of p (",
         paste(p[u_base_matches == 0], collapse = ", "),
-        ") did not have any matches in the nodes stored in post.\n  All elements of p must have at least one match.\n  The base names of all monitored nodes are:\n    ", paste(u_p, collapse = ", "), sep = "")
+        ") did not have any matches in the nodes stored in post. All elements of p must have at least one match.\n  The base names of all monitored nodes are:\n    ", paste(u_p, collapse = ", "), sep = "")
     )
   }
 
@@ -82,5 +84,9 @@ match_p = function(post, p, warn = F) {
   }
 
   # return the names of the exact nodes to extract
-  match_vec
+  if (!ubase) {
+    return(match_vec)
+  } else {
+    return(unique(base_p(match_vec)))
+  }
 }

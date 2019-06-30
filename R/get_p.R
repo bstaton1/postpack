@@ -16,11 +16,11 @@
 #'
 #'@export
 
-get_nodes = function(post, type = "unique") {
+get_p = function(post, type = "base") {
 
   # error check for type acceptance
-  if (type != "unique" & type != "all") {
-    stop("type must be either 'unique' or 'all'")
+  if (type != "base" & type != "all") {
+    stop("type must be either 'base' or 'all'")
   }
 
   # error check for class acceptance
@@ -32,9 +32,5 @@ get_nodes = function(post, type = "unique") {
   all_p = colnames(post[[1]])
 
   ## return the appropriate output
-  # if only viewing the unique node names
-  if(type == "unique") unique(base_p(all_p))
-
-  # if viewing all nodes
-  if (type == "all") all_p
+  if (type == "base") return(unique(base_p(all_p))) else return(all_p)
 }

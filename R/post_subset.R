@@ -15,7 +15,7 @@
 #' @param warn logical. Do you wish to receive warnings about
 #'   possibly unexpected behavior regarding regex matching?
 #' @seealso \code{\link{match_p}}
-#'@export
+#' @export
 
 post_subset = function(post, p, matrix = FALSE, iters = F, chains = F, warn = F) {
 

@@ -4,7 +4,7 @@
 \alias{match_p}
 \title{Find matching node names}
 \usage{
-match_p(post, p, warn = F)
+match_p(post, p, ubase = F, warn = F)
 }
 \arguments{
 \item{post}{an object of class \code{mcmc.list}}
@@ -13,9 +13,11 @@ match_p(post, p, warn = F)
 so can, and sometimes should, be a regular expression; see the examples.
 Duplicate matches found among different elements of \code{p} are discarded.}
 
+\item{ubase}{logical. Do you wish to return only the unique bases (i.e., without indices listed)?}
+
 \item{warn}{logical. Do you wish to be warned when duplicates and cases
 with more than one match per \code{p} element? Defaults to \code{FALSE}, and is provided for
-helping to diagnose problems with regex matching.#'}
+helping to diagnose problems with regex matching.}
 }
 \value{
 a character vector with all node names that match \code{p}.
