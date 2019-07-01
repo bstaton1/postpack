@@ -1,17 +1,17 @@
-# codaTools
+# postpack
 
 An R package for streamlining the workflow with R objects of class `mcmc.list`. 
 
 To install the current working version of this package to your computer:
 
 ```R
-devtools::install_github("bstaton1/codaTools")
+devtools::install_github("bstaton1/postpack")
 ```
 
 To install a specific branch (i.e., development versions), use:
 
 ```R
-devtools::install_github("bstaton1/codaTools", ref = "branchname")
+devtools::install_github("bstaton1/postpack", ref = "branchname")
 ```
 
 ## Motivations
@@ -20,9 +20,9 @@ The author has found the default and built-in workflow for post-processing outpu
 
 Since B. Staton first discovered these issues in 2014, he has written various functions to attempt to circumvent them, or at least hide the nasty subsetting behind wrapper functions. Until recently (Fall 2018), these functions (primarily `get.post` and `sort.post`, as they were called back then) had been floating around in various directories (and in various states of completeness) and were generally `source`-ed at the start of any script that used `mcmc.list` objects. This made it very difficult to share code with collaborators or workshop participants, as the functions needed to be shared (and stored in the right place) for the rest of the code to run.
 
-### Enter `codaTools`...
+### Enter `postpack`...
 
-This package synthesizes these functions into a standardized workflow that ensures they all play nice together (or at least tries to). In essence, it attempts make working with `mcmc.list` objects neater. Whether it be diagnosing sampling convergence, summarizing posterior estimates, paring down for faster calculations, combining with `mcmc.lists`  from the same or other models, or whatever else it takes the job done, it is the intent that `codaTools` has got you covered. In an additional attempt to make the subsetting of particular nodes more flexible, regular expressions are now accepted!
+This package synthesizes these functions into a standardized workflow that ensures they all play nice together (or at least tries to). In essence, it attempts make working with `mcmc.list` objects neater. Whether it be diagnosing sampling convergence, summarizing posterior estimates, paring down for faster calculations, combining with `mcmc.lists`  from the same or other models, or whatever else it takes the job done, it is the intent that `postpack` has got you covered. In an additional attempt to make the subsetting of particular nodes more flexible, regular expressions are now accepted!
 
 The next section provides some examples.
 
