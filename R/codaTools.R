@@ -1,4 +1,4 @@
-#'codaTools: Utilities for Dealing with Posterior Samples Stored in mcmc.lists
+#' postpack: Utilities for Dealing with Posterior Samples Stored in mcmc.lists
 #'
 #' This package contains many shortcuts for subsetting, summarizing, plotting, and diagnosing particular
 #' nodes from an \code{mcmc.list} object. These objects are created from JAGS, BUGS, or STAN models,
@@ -10,5 +10,5 @@
 #' highly flexible by the incorporation of regular expression compatibility.
 #'
 #'@docType package
-#'@name codaTools
+#'@name postpack
 NULL
