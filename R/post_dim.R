@@ -50,7 +50,7 @@ post_dim = function(post) {
     thin = n_thin,
     chains = n_chains,
     saved = n_save,
-    nodes = ncol(postm)
+    nodes = ncol(postm[,-which(colnames(postm) %in% c("CHAIN", "ITER"))])
   )
 
   # return the output
