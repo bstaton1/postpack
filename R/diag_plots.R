@@ -11,7 +11,7 @@
 #'   so can (and sometimes should) be a regular expression.
 #' @param layout a character vector specifying \code{"ROWSxCOLUMNS"} of parameter diagnostics.
 #'   For example, \code{"4x1"} has 4 rows and 1 column of parameter diagnostics.
-#'   Defaults to \code{"auto"}, which selects between \code{"1x1"}, \code{"4x1"}, and \code{"5x3"}.
+#'   Defaults to \code{"auto"}, which selects between \code{"1x1"}, \code{"2x1"}, \code{"4x1"}, \code{"4x2"}, and \code{"5x3"}.
 #' @param dims a character vector specifying the \code{"HEIGHTxWIDTH"} dimensions
 #'   of the plotting device, in inches.
 #'   For example, \code{"5x7"} would create a 5 inch tall and 7 inch wide plotting device.
@@ -22,7 +22,7 @@
 #'   Defaults to \code{FALSE}. Requires the \code{\link[StatonMisc]{ext_device}} function.
 #' @param thin_percent if you wish to remove some fraction of the samples before traceplotting, do that here.
 #'   The thinning will occur systematically, i.e., at evenly-spaced intervals.
-#'   This is sometimes helpful when saving a pdf with many samples/nodes, which can render slowly.
+#'   This is sometimes helpful when generating plots with many samples/nodes, which can render slowly.
 #'   Defaults to \code{0}, i.e., no thinning.
 #' @param save logical. Do you wish to save the diagnostic plots in a PDF file? If so,
 #'   specify \code{file = "example.pdf"} as well. Defaults to \code{FALSE}.
@@ -44,8 +44,8 @@ diag_plots = function(post, p, layout = "auto", dims = "auto",
   keep = match_p(post, p, warn = warn); n = length(keep)
 
   # error handle for layout
-  if (layout %!in% c("auto", "1x1", "4x1", "5x3")) {
-    stop ("layout must be one of 'auto', '1x1', '4x1', or '5x3'")
+  if (layout %!in% c("auto", "1x1", "2x1", "4x1", "4x2", "5x3")) {
+    stop ("layout must be one of 'auto', '1x1', '2x1', '4x1', '4x2', or '5x3'")
   }
 
   # error handle for dims
@@ -66,15 +66,17 @@ diag_plots = function(post, p, layout = "auto", dims = "auto",
   # set the layout
   if (layout == "auto") {
     layout = ifelse(n == 1, "1x1",
-                    ifelse(n <= 8, "4x1", "5x3"))
+                    ifelse(n < 4, "2x1",
+                           ifelse(n < 8, "4x1",
+                                  ifelse(8 <= n & n <= 16, "4x2", "5x3"))))
   }
   row_col = as.numeric(unlist(stringr::str_split(layout, "x")))
   n_per_page = prod(row_col)
-  new_page = 1 + n_per_page * seq(1, 50)
+  new_page = 1 + n_per_page * seq(1, 1000)
 
   # set the dimensions (in inches)
   if (dims == "auto") {
-    dims = c("1x1" = "3.5x7", "4x1" = "8x7","5x3" = "8.5x11")
+    dims = c("1x1" = "3.5x7", "2x1" = "6x7", "4x1" = "8x7", "4x2" = "8x7", "5x3" = "8.5x11")
     dims = dims[layout]
   }
   height_width = as.numeric(unlist(stringr::str_split(dims, "x")))

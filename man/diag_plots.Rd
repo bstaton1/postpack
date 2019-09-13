@@ -15,7 +15,7 @@ so can (and sometimes should) be a regular expression.}
 
 \item{layout}{a character vector specifying \code{"ROWSxCOLUMNS"} of parameter diagnostics.
 For example, \code{"4x1"} has 4 rows and 1 column of parameter diagnostics.
-Defaults to \code{"auto"}, which selects between \code{"1x1"}, \code{"4x1"}, and \code{"5x3"}.}
+Defaults to \code{"auto"}, which selects between \code{"1x1"}, \code{"2x1"}, \code{"4x1"}, \code{"4x2"}, and \code{"5x3"}.}
 
 \item{dims}{a character vector specifying the \code{"HEIGHTxWIDTH"} dimensions
 of the plotting device, in inches.
@@ -29,7 +29,7 @@ Defaults to \code{FALSE}. Requires the \code{\link[StatonMisc]{ext_device}} func
 
 \item{thin_percent}{if you wish to remove some fraction of the samples before traceplotting, do that here.
 The thinning will occur systematically, i.e., at evenly-spaced intervals.
-This is sometimes helpful when saving a pdf with many samples/nodes, which can render slowly.
+This is sometimes helpful when generating plots with many samples/nodes, which can render slowly.
 Defaults to \code{0}, i.e., no thinning.}
 
 \item{save}{logical. Do you wish to save the diagnostic plots in a PDF file? If so,
