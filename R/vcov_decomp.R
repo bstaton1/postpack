@@ -73,6 +73,8 @@ vcov_decomp = function(post, p, progress = T, sigma_base_name = "sigma", rho_bas
   rho_samps_array = array(NA, dim = c(n, n, ni))
   rho_samps = matrix(NA, ni, n^2)
 
+  if (progress) cat("Decomposing variance-covariance matrix node: ", matched_p, " (", n, "x", n, ")\n\n  ", sep = "")
+
   # calculate the sigma vector and rho matrix for each posterior sample
   for (i in 1:nrow(Sigma_samps)) {
     if (progress) cat("\r", floor(i/nrow(Sigma_samps) * 100), "%", sep = "")
