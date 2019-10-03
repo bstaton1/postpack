@@ -4,8 +4,9 @@
 #' number of chains, etc. from an object of class \code{mcmc.list}
 #'
 #' @param post an object of class \code{mcmc.list}
-#'
-#' @return vector with named elements
+#' @param kind a character vector containing some of \code{"burn"}, \code{"post_burn"},
+#'   \code{"thin"}, \code{"chains"}, \code{"nodes"}. Defaults to \code{NULL}, in which case all of these are returned
+#' @return vector with named elements.
 #' \itemize{
 #'   \item \code{burn} - The burn-in period (per chain)
 #'   \item \code{post_burn} - The post-burn-in period (per chain)
@@ -15,13 +16,17 @@
 #'   \item \code{nodes} - The number of nodes with MCMC samples
 #' }
 #'
-#' @note if the \code{post} object was thinned after MCMC completed
+#' All of these will be returned if \code{kind = NULL}, a subset can be returned by
+#'  specifying (for example) \code{kind = c("burn", "thin")}
+#'
+#' @note If the \code{post} object was thinned after MCMC completed
 #'   using \code{\link{post_thin}}, then these dimensions will be improperly calculated
 #'   (currently).
 #'
+#' @importFrom StatonMisc %!in%
 #' @export
 
-post_dim = function(post) {
+post_dim = function(post, kind = NULL) {
 
   # stop if not an mcmc.list object
   if (!coda::is.mcmc.list(post)) {
@@ -53,6 +58,19 @@ post_dim = function(post) {
     nodes = ncol(postm[,-which(colnames(postm) %in% c("CHAIN", "ITER"))])
   )
 
+  # decide on which to return based on kind argument
+  # only eval if kind isn't null
+  if (!is.null(kind)) {
+
+    # if any of kind are not in the names, return informative error
+    if (any(kind %!in% c(names(out)))) {
+      stop ("kind must include some of: \n\n", paste(names(out), collapse = ", "))
+    } else {# otherwise subset
+      out = out[kind]
+    }
+  }
+
   # return the output
   return(out)
 }
+
