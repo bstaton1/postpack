@@ -21,11 +21,14 @@
 #' @export
 
 post_thin = function(post, thin_percent = 0.8) {
+  post_dims = post_dim(post)
 
-  iters = 1:nrow(post[[1]])
-  n_iters = length(iters)
-  retain = ceiling(n_iters * (1 - thin_percent))
-  keep = seq(1, n_iters, by = n_iters/retain)
+  keep = with(as.list(post_dims), {
+    n_iters = saved/chains
+    iters = 1:n_iters
+    retain = ceiling(n_iters * (1 - thin_percent))
+    seq(1, n_iters, by = n_iters/retain)
+  })
 
   coda::as.mcmc.list(lapply(post, function(x) coda::as.mcmc(x[keep,])))
 }
