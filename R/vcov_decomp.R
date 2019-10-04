@@ -66,7 +66,7 @@ vcov_decomp = function(post, p, progress = T, sigma_base_name = "sigma", rho_bas
   # passes all checks, proceed with calculations
   # the dimensions
   n = sqrt(ncol(Sigma_samps))
-  ni = nrow(Sigma_samps)
+  ni = post_dim(post, "saved")
 
   # containers
   sigma_samps = matrix(NA, ni, n)
@@ -76,8 +76,8 @@ vcov_decomp = function(post, p, progress = T, sigma_base_name = "sigma", rho_bas
   if (progress) cat("Decomposing variance-covariance matrix node: ", matched_p, " (", n, "x", n, ")\n\n  ", sep = "")
 
   # calculate the sigma vector and rho matrix for each posterior sample
-  for (i in 1:nrow(Sigma_samps)) {
-    if (progress) cat("\r", floor(i/nrow(Sigma_samps) * 100), "%", sep = "")
+  for (i in 1:ni) {
+    if (progress) cat("\r", floor(i/ni * 100), "%", sep = "")
     Sigma_tmp = array_format(Sigma_samps[i,])
     if (invert) Sigma_tmp = solve(Sigma_tmp)
     sigma_samps[i,] = sqrt(diag(Sigma_tmp))
