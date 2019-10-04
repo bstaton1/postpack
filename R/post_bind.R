@@ -24,12 +24,12 @@ post_bind = function(post1, post2, dup_id = "_p2") {
   }
 
   # error check for same n_iter per chain
-  if (nrow(post1[[1]]) != nrow(post2[[1]])) {
+  if (post_dim(post1, "post_burn") != post_dim(post2, "post_burn")) {
     stop ("post1 and post2 must have the same number of posterior samples saved per chain")
   }
 
   # error check for whether the number chains is different
-  if (length(post1) != length(post2)) {
+  if (post_dim(post1, "chains") != post_dim(post2, "chains")) {
     stop ("post1 and post2 must have the same number of chains saved")
   }
 
