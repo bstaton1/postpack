@@ -1,30 +1,29 @@
-# postpack
+# `postpack`
 
 An R package for streamlining the workflow with R objects of class `mcmc.list`. 
 
+## Installation
 To install the current working version of this package to your computer:
 
 ```R
 devtools::install_github("bstaton1/postpack")
 ```
-
-To install a specific branch (i.e., development versions), use:
+Current versions (>=v0.1.9) of the package now include a vignette describing how to use the package by working through some example posterior samples included with the package. To build the vignette upon installing the package, instead run:
 
 ```R
-devtools::install_github("bstaton1/postpack", ref = "branchname")
+devtools::install_github("bstaton1/postpack", build_vignettes = TRUE)
+```
+Because the R packages `rmarkdown` and `knitr` are used to build this vignette to HTML output, you are required to have these installed before running this code. The vignette can then be accessed using:
+
+```R
+vignette("main-tutorial", package = "postpack")
 ```
 
 ## Motivations
 
-The author has found the default and built-in workflow for post-processing output stored in R objects of class `mcmc.list` (possibly obtained via BUGS, JAGS, or Stan models) rather clunky. For example, suppose you have such an object called `mypost`. If you run `summary(mypost)` you get all of the information you need, but it is for all nodes and the measures of central tendency and spread (e.g., posterior mean and standard deviation) are stored in a separate list element than their quantiles. Further, if you run `plot(mypost)`, density plots and trace plots are presented for ALL monitored nodes (without any way to specify a subset), and only trace plots are displayed separated by chain. This organization makes subsetting, plotting, and table generation incredibly cumbersome. The user needs to either (1) sift through all output (which could take a while to calculate and do if many nodes were monitored) to find the specific information required or (2) write highly specific subsetting code for each node or set of nodes you wish to extract. Add multiple models into the mix, and one can see where even basic tasks can take dozens of lines of code, let alone many intermediate objects of little value.
+This package is an attempt at creating a simple-to-use and standardized workflow for processing output from models fitted using MCMC methods in which the output is stored in an R object of class `mcmc.list`.  Without `postpack`, I find working with `mcmc.list` objects cumbersome - particularly because it is difficult to access only the output you desire. In essence, it attempts make working with `mcmc.list` objects neater, more consistent, and more flexible. Whether it be diagnosing sampling convergence, summarizing posterior estimates, paring output down for development of long-running calculations, combining `mcmc.lists`  from the same or different models, or whatever else it takes to get the job done, it is the intent that `postpack` has got you covered. In an additional attempt to make the subsetting of particular nodes more flexible, regular expressions are now accepted!
 
-Since B. Staton first discovered these issues in 2014, he has written various functions to attempt to circumvent them, or at least hide the nasty subsetting behind wrapper functions. Until recently (Fall 2018), these functions (primarily `get.post` and `sort.post`, as they were called back then) had been floating around in various directories (and in various states of completeness) and were generally `source`-ed at the start of any script that used `mcmc.list` objects. This made it very difficult to share code with collaborators or workshop participants, as the functions needed to be shared (and stored in the right place) for the rest of the code to run.
-
-### Enter `postpack`...
-
-This package synthesizes these functions into a standardized workflow that ensures they all play nice together (or at least tries to). In essence, it attempts make working with `mcmc.list` objects neater. Whether it be diagnosing sampling convergence, summarizing posterior estimates, paring down for faster calculations, combining with `mcmc.lists`  from the same or other models, or whatever else it takes the job done, it is the intent that `postpack` has got you covered. In an additional attempt to make the subsetting of particular nodes more flexible, regular expressions are now accepted!
-
-The next section provides some examples.
+The next section provides some examples, but you are encouraged to explore the package vignette ("main-tutorial") for a more exhaustive description of the main functions.
 
 ## Example functionality
 
@@ -70,13 +69,7 @@ If you are writing code that takes a long time to run if provided with the full 
 post_thin(mypost, 0.8)
 ```
 
-will remove 80% of the samples at regularly spaced intervals from each chain. If you have two `mcmc.list` objects, you can combine them into one:
-
-```R
-post_bind(mypost1, mypost2)
-```
-
-Duplicate names will be appended with `"_p2"` by default, which allows combining output from more than one model into a single `mcmc.list`. The dimensions of both `mypost1` and `mypost2` must be identical.
+will remove 80% of the samples at regularly spaced intervals from each chain. 
 
 You can subset `mypost` to retrieve only samples for the `b0` parameter:
 
@@ -86,21 +79,21 @@ post_subset(mypost, "b0")
 
 This will return the output as an `mcmc.list` object by default, but if you set the `matrix = T`, argument, then it will be coerced to a matrix where the further arguments `chains = T` and `iters = T` come into play. See `?post_subset` for more details. 
 
-Because of regular expression matching, running:
+Because of node matching via regular expressions, running:
 
 ```R
 post_subset(mypost, "b")
 ```
 
-will return samples of both the `b0` and `b1` nodes. This magic stems from the usage of `stringr::str_detect()` within the `match_p` function here. This function performs the searching to extract a particular node, so if you are having trouble with the regular expressions, try running:
+will return samples of both the `b0` and `b1` nodes. This magic stems from the usage of `stringr::str_detect()` within the `match_p()` function of `postpack`. This function performs the searching to extract particular node(s), so if you are having trouble with the regular expressions, try running:
 
 ```R
-match_p(mypost, "b", warn = T)
+match_p(mypost, "b")
 ```
 
-to see what is being matched. Matching of multiple elements is allowed. See `?str_detect` and `?match_p` for more information and details.
+to see what is being matched. See `?str_detect` and `?match_p` for more information and details.
 
-If you wish to extract all elements of `pred_p`, you would run `match_p(mypost, "pred_y")`. To extract only one element of this node, you can run `match_p(mypost, "pred_y[5]")` without needing to escape the square brackets (though you may escape them with `"pred_y\\[5\\]"` if you like).
+If you wish to extract all elements of `pred_p`, you would run `match_p(mypost, "pred_y")`. To extract only one element of this node, you can run `match_p(mypost, "pred_y[5]")` without needing to escape the square brackets (though you may escape them with `"pred_y\\[5\\]"` if you like). However, this means you won't be able to use `"["` or `"]"` in their standard regular expression usage until I add an `auto_escape = F` feature (which I plan to do).
 
 #### Summary and covergence
 
@@ -118,7 +111,7 @@ You can view diagnostic plots (trace and density) for desired nodes:
 diag_plots(post, c("b", "sig"))
 ```
 
-See `?diag_plots` for more settings, including opening device selection and saving to a PDF file.
+See `?diag_plots` for more settings, including the layout of the output, and where it is dumped (i.e., the current device, a new device, or even saved in a PDF file for viewing later).
 
 ### Questions?
 
