@@ -1,19 +1,512 @@
 ---
-title: "main-tutorial"
-output: rmarkdown::html_vignette
+title: "`postpack` Tutorial"
+author: "Ben Staton"
+date: "`r format(Sys.Date(), '%m/%d/%Y')`"
+output: 
+  rmarkdown::html_vignette:
+    toc: true
+    toc_depth: 3
 vignette: >
   %\VignetteIndexEntry{main-tutorial}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
 
-```{r, include = FALSE}
-knitr::opts_chunk$set(
-  collapse = TRUE,
-  comment = "#>"
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, fig.align = "center")
+```
+
+# Motivations
+
+The R package `postpack` exists to make your job easier when it comes time to process the output of models fitted using Markov Chain Monte Carlo (MCMC) methods, as is commonly done in Bayesian inference. Although significant capabilities exist to interface from R with programs like JAGS, WinBUGS, OpenBUGS, and Stan, the functionality to easily process the output is lacking in my personal opinion. Output from these models is commonly stored in (or can easily be converted to) R objects of class `mcmc.list` (default methods supplied through the `coda` package, upon which `postpack` strongly depends), and working with these objects is not as straight-forward as one might desire. A practitioner needs to extract raw samples, summarize them, diagnose their convergence, and plot the summaries along with their measures of uncertainty. It would be ideal if consistent rules were used in how these actions were performed, all based around the master `mcmc.list`, and the functionality should be able to scale to seamlessly summarize the same output from multiple models to allow quick evaluation of the influence of different model assumptions (e.g., different priors or where some terms are fixed at zero). Perhaps most importantly, given the ever-increasing complexity of these models, these tasks should be made simple to perform for only desired nodes from the model.
+
+# Working Example
+
+For this tutorial, suppose you have fitted the following Cormack-Jolly-Seber mark-recapture model^[Readers interested in this kind of model are encouraged to refer to _Bayesian Population Analysis using WinBUGS: A Hierarchical Perspective_ by Marc Kéry and Michael Schuab.]:
+
+```
+model{
+  # HYPERPARAMETERS: SURVIVAL COEFFICIENTS AND VARIABILITY
+  B0 ~ dnorm(0, 0.001)
+  B1 ~ dnorm(0, 0.001)
+  sig_B0 ~ dunif(0,10)
+  sig_B1 ~ dunif(0,10)
+  rho ~ dunif(-1,1)
+  
+  # COVARIANCE MATRIX FOR YEAR-SPECIFIC SURVIVAL COEFFICIENTS
+  SIG[1,1] <- sig_B0^2
+  SIG[2,2] <- sig_B1^2
+  SIG[2,1] <- sig_B0 * sig_B1 * rho
+  SIG[1,2] <- sig_B0 * sig_B1 * rho
+  
+  # YEAR-SPECIFIC SURVIVAL COEFFICIENTS
+  Bmean[1] <- B0
+  Bmean[2] <- B1
+  for (t in 1:nt) {
+    b[t,1:2] ~ dmnorm.vcov(Bmean[1:2], SIG[1:2,1:2])
+    b0[t] <- b[t,1]
+    b1[t] <- b[t,2]
+  }
+  
+  # DETECTION PROBABILITY: OCCASION-SPECIFIC, BUT YEAR-CONSTANT
+  for (j in 2:J) {
+    p[j] ~ dunif(0,1)
+  }
+  
+  # LIKELIHOOD
+  for (i in 1:N) {
+    logit(phi[i]) <- b0[year[i]] + b1[year[i]] * FL[i]
+    for (j in 2:J) {
+      z[i,j] ~ dbern(z[i,j-1] * phi[i])
+      y[i,j] ~ dbern(z[i,j] * p[j])
+    }
+  }
+}
+```
+
+The data come from a hypothetical (i.e., simulated) 5-year study in which individual salmon smolts were tagged in the headwaters of a river system shortly before making their outmigration to the ocean. Three PIT tag receiver arrays exist in the river that detect fish on their way to sea, and upon tagging, the fork length (`FL`, _z_-transformed for the above code) was measured. The above model assumes survival between each array varies according to fork length, with year-specific slopes and intercepts as random effects and that their covariance is explicitly modeled. Further, the model assumes that the different arrays detect fish with different efficiencies, but that each array has the same efficiency each year. 
+
+Suppose you have chosen to monitor the nodes representing the global survival coefficients (`B0` and `B1`), their year-specific random realizations (`b0` and `b1`), the covariance matrix modeling the inter-annual variability (`SIG`), and the detection efficiency of each array (`p`). Further suppose that you drew posterior samples from this model with JAGS using an MCMC run with 2 chains and 11,000 burn-in/adapting phase samples plus 50,000 post-burn-in samples thinned by 200 samples per chain. The resulting `mcmc.list` object is supplied as a data set with `postpack` so that you may follow along with this tutorial. You can load the samples into your R session using:
+
+```{r, eval = F}
+data("cjs", package = "postpack")
+```
+
+```{r, echo = F}
+load("../data/cjs.rda")
+```
+
+This is the raw object that you will perform your post-processing with. Nearly every `postpack` function takes an argument called `post` as the first argument, and performs some action with the samples contained in it. To enforce consistency in how the functions do their jobs, I have imposed the hard constraint that your samples are stored in `mcmc.list` objects.
+
+To start using `postpack`, load it into your session:
+
+```{r}
+library(postpack)
+```
+
+# Attributes of the MCMC Run
+
+You can return the dimensions of the MCMC run saved in `cjs` using:
+
+```{r}
+post_dim(cjs)
+```
+
+You can extract one of these dimensional elements quickly by specifying the `kind` argument, e.g., notice that there are `r post_dim(cjs, "nodes")` saved nodes by running: `post_dim(cjs, "nodes")`.
+
+The names of these nodes will be crucial in subsetting them, so you should be able to check them out quickly at any time. This is the purpose of the `get_p()` function:
+
+```{r}
+get_p(cjs)
+```
+
+But I thought we stored `r post_dim(cjs, "nodes")` nodes? This is because some of the nodes have multiple elements; you can access the indices monitored for each node as well:
+
+```{r}
+get_p(cjs, type = "all")
+```
+
+# Extracting Summaries
+
+With the default methods, you can summarize an `mcmc.list` object as follows:
+
+```{r}
+summary(cjs)
+```
+
+However, note that **all** nodes are summarized (which many take a long time if the model has many nodes) and that much of the important information is stored in more than one location in the summary (e.g., mean and standard deviations are stored separately from the quantiles, making them difficult to access). 
+
+With `post_summ()` you can summarize only the node(s) you wish by passing their name(s) to the `p` argument.
+
+```{r}
+post_summ(cjs, p = c("sig_B0", "sig_B1"))
+```
+
+Notice that the basic measures of central tendency are presented along with the measures of variability and the two most commonly accessed quantiles: those corresponding to the posterior median and the equal-tailed 95% credible limits. If you prefer to see nodes be stored as rows and summary statistics as columns, you can perform a matrix transposition with the `t()` function:
+
+```{r}
+t(post_summ(cjs, c("sig_B0", "sig_B1")))
+```
+
+Calculating convergence diagnostics for all nodes in a model can be time-consuming for large output (e.g., via `coda::gelman.diag()` or `coda::effectiveSize()`), so `post_summ()` can also be seen as a wrapper for these functions but on a smaller subset of the MCMC output:
+
+```{r}
+post_summ(cjs, p = c("sig_B0", "sig_B1"), ess = T, Rhat = T)
+```
+
+`"Rhat"` will always be rounded to three digits, and `"ess"` will always be rounded to an integer.
+
+You can report other quantiles if desired and round them:
+
+```{r}
+b1_ests = post_summ(cjs, "b1", rnd = 3,
+  p_summ = c(0.025, 0.25, 0.5, 0.75, 0.975)
 )
 ```
 
-```{r setup}
-library(postpack)
+Which you could then plot to show how the effect of fork length on survival varies between years:
+
+```{r, fig.width = 4, fig.height = 3}
+par(mar = c(2,4,2,2), lend = "square")
+mp = barplot(b1_ests["50%",], las = 1, space = 1, border = "white",
+        xlim = max(abs(b1_ests)) * c(-1,1), horiz = T)
+abline(v = 0)
+segments(b1_ests["25%",], mp, b1_ests["75%",], mp, lwd = 5)
+segments(b1_ests["2.5%",], mp, b1_ests["97.5%",], mp, lwd = 1)
 ```
+
+In which the grey bars are the posterior medians, the thick black lines are the central 50%, and the thin black lines are the central 95%.
+
+# Extracting Samples
+
+Often you will want to take a subset out of your output while retaining each saved posterior sample, for example, to plot a histogram of the samples or to calculate the posterior of some derived quantity external to the MCMC algorithm.
+
+```{r}
+b0_samps = post_subset(cjs, "b0")
+```
+
+By default, the output will be a `mcmc.list` which allows it to play nicely with the rest of the `postpack` functions (e.g., `get_p(b0_samps)`). However, performing plotting or calculation tasks on posterior samples might be easier if they were combined across chains and stored as a matrix (nodes as columns, rows as samples):
+
+```{r}
+b0_samps = post_subset(cjs, "b0", matrix = T)
+```
+
+Which represents the expected log odds of survival between arrays for a fish of average length in each year. You could perform the inverse logit transformation to obtain these terms on the probability scale. Performing this for each sample which would allow plotting its posterior as a histogram:
+
+```{r, fig.width = 3, fig.height = 7}
+# perform the inverse logit calculation to each sample:
+eb0_samps = exp(b0_samps)/(1 + exp(b0_samps))
+
+# plot a histogram of each year's derived posterior
+par(mfrow = c(5,1), mar = c(2,4,0.5,1), xaxs = "i", yaxs = "i",
+    tcl = -0.25, mgp = c(2,0.5,0), las = 1)
+junk = sapply(1:5, function(year) {
+  hist(eb0_samps[,year], col = "grey90", border = "grey50",
+       breaks = seq(0.5,1,length=50),
+       ylab = paste("Year", year), main = "", ylim = c(0, 100))
+  segments(0.5, 0, 1, 0, xpd = T)
+})
+
+```
+
+Note that if you wish to retain the chain and iteration number of each posterior sample when converting to a matrix with `post_subset()`, you can pass the optional logical arguments `chains` and `iters`. The arguments are both optional and are `FALSE` by default.
+
+```{r}
+head(post_subset(cjs, "b0", matrix = T, chains = T, iters = T))
+```
+
+# Pattern Matching {-}
+
+Early versions of these `postpack` functions required that if you wanted to subset both (e.g.,) `sig_B0` and `sig_B1`, you had pass them explicity to the `p` argument. However, with the magic of pattern matching with regular expressions, far more general subsetting is now available. However, you will need to learn some very basic regular expression syntax to get it to work properly.
+
+Here is a very basic example:
+
+```{r}
+post_summ(cjs, "B")
+```
+
+because all of the node names contain a `"B"`, they are matched and returned. So if you only wanted `sig_B0` and `sig_B1`, you could pass `p = "sig"` as an argument to the `postpack` function in question, to perform the action for only nodes that contain `"sig"`.
+
+## `match_p()`
+
+Pattern matching is driven by the `match_p()` function (which is essentially a wrapper for `stringr::str_detect()`). Every function in `postpack` that uses a `p` argument passes that argument to `match_p()` early on their calculations, so understanding the way it works is important. For example, say you want the random slope and intercept for year 2. Use `match_p()` to help you get the right regular expression code by checking what will be matched when you try to subset your output:
+
+```{r}
+match_p(cjs, "2")
+```
+
+All nodes with a `"2"` would be returned. You could exclude the `"SIG"` elements using:
+
+```{r}
+match_p(cjs, "[2]")
+```
+
+## Auto Escape of Brackets
+
+Because the square brackets (`"["` and `"]"`) are special characters in regular expressions, you would normally need to escape them (`"\\["` and `"\\]"`) to allow them to match as text. However, I built in functionality to force brackets to be escaped prior to pattern matching, and to ignore escapes if they are already inserted. Thus, you won't be able to use the (`"["` and `"]"`) for their default pattern matching behavior in regular expressions (e.g., match any letter: `"[:alpha:]"`), until an `auto_escape` argument is added (which I plan to in the future).
+
+## Wild Cards
+
+With that out of the way, now further refine the regular expression to exclude the `p` node from the output:
+
+```{r}
+match_p(cjs, "b.[2]")
+```
+
+The `"."` serves as a wild card, which says match any one character. If you would have supplied simply `"b[2]"`, you would get an error:
+
+```{r, echo = F, error = T, purl = F}
+match_p(cjs, "b[2]")
+```
+
+Which is what will happen when any elements supplied to `p` do not match one of the node names stored in the output. The wildcard is necessary to specify that some character (here a `"1"` or a `"2"`) falls between the `"b"` and the `"["` characters in your desired match. You can now pass `"b.[2]"` to `post_summ()` with confidence knowing that only the two coefficients you want will be returned:
+
+```{r}
+(b2_ests = post_summ(cjs, "b.[2]"))
+```
+
+You can use these coefficients to obtain the fitted line in that year, and calculate the survivorship from the release site through the last detection occasion:
+
+```{r, fig.width = 6, fig.height = 3}
+
+# predict survival at a range of FL
+pred_x = seq(-3, 3, length = 30)
+logit_phi = b2_ests["mean",1] + b2_ests["mean",2] * pred_x
+
+# convert from logit to probability scale, could also use
+# StatonMisc::expit()
+phi = exp(logit_phi)/(1 + exp(logit_phi))
+
+# plot the result
+par(mfrow = c(1,2), mar = c(2,2,2,2))
+plot(phi ~ pred_x, type = "l", main = "Survival between arrays", ylim = c(0,1))
+plot(I(phi^3) ~ pred_x, type = "l", main = "Suriviorship from start to end", ylim = c(0,1))
+```
+
+Remember fork length was specified on the _z_-scale during model fitting, meaning the numbers along the _x_-axis represent standard deviations from the mean. 
+
+## Anchors
+
+You can force your match to start with certain patterns. For example, instead of accessing all nodes that contain `"B"` in their name, suppose you wish to only extract those that contain `"B"` as the first character:
+
+```{r}
+match_p(cjs, "^B")
+```
+
+Likewise, you could extract only nodes that end with `"0"`:
+
+```{r}
+match_p(cjs, "0$")
+```
+
+Note that no elements of `"b0"` are returned, because these are matched on the basis of (e.g.,) `"b0[1]"`.
+
+## Repetition
+
+You can repeat a wild card or some other character one or more times using the `"+"` symbol:
+
+```{r}
+match_p(cjs, "^s.+0$")
+```
+
+Which forces the match to start with an `"s"`, end with a `"0"`, and have anything in between.
+
+# Other Useful Features
+
+Now that you have a basic understanding of how to use the `p` argument within `postpack` functions to be very specific about which output you want to obtain, its time to cover some other other functionality provided with `postpack`.
+
+## `diag_plots()`
+
+One of the key outputs to look at for convergence and good sampling behavior is the density and trace plots compared between chains. The `diag_plots()` function serves this purpose (which unlike the `coda` version allows plotting the densities color coded by chain and only for specific nodes):
+
+```{r, fig.width = 4, fig.height = 6}
+diag_plots(cjs, "SIG")
+```
+
+Options exist to:
+
+*  change the size of the graphics device (the `dims` argument),
+*  change the layout of parameters on the device (the `layout` argument), 
+*  to plot the output in a new external device (the `ext_device` argument, the device will be OS specific, e.g., `quartz()` on a Mac or `windows()` on a PC - see `?StatonMisc::ext_device`), 
+*  to save the output to a PDF graphics device (the `save` argument, which then requires that you enter the `file` argument, which is the file name of the PDF complete with the `".pdf"` extension). 
+*  thin the chains by some percentage (at evenly spaced intervals) before drawing the trace plot - this can help manage the file size when generating many plots with many samples taken while still providing much of the same inference as the unthinned output. The argument `thin_percent = 0.8` is passed to `post_thin`, and would discard 80% of the samples prior to trace plotting.
+
+The `dims` and `layout` arguments are set to `"auto"` by default - for adjustment of these settings, see `?diag_plots`. 
+
+The more chains there are in the `mcmc.list` object passed to the `post` argument, the more colors there will be displayed.
+
+## `array_format()`
+
+Notice that the `"SIG"` node is a matrix:
+
+```{r}
+match_p(cjs, "SIG")
+```
+
+Yet if we summarize the samples, we get this output:
+
+```{r}
+(SIG_ests = post_summ(cjs, "SIG", rnd = 2))
+```
+
+You may want a matrix that stores the posterior means in the same location as they would be found in the model. For this, you can use `array_format()`:
+
+```{r}
+array_format(SIG_ests["mean",])
+```
+
+Currently, objects with dimensions between 2 and 10 are supported. Although this is a silly example, imagine you had arranged survival for each individual, detection occasion, and year as `phi[i,j,y]` - it would be really nice to be able to quickly put the summaries back in the dimensions of the model.
+
+`array_format()` requires a vector of named elements, where the element names contain the correct indices to place them in (e.g., `"SIG[1,1]"` and `"SIG[2,2]"`).
+
+## `vcov_decomp()`
+
+For the `"SIG"` matrix, the diagonal elements `"SIG[1,1]"` and `"SIG[2,2]"` represent the inter-annual variance of the intercept and slope, respectively. The off-diagonal elements `"SIG[2,1]"` and `"SIG[1,2]"` store their covariances. To obtain the posterior of the correlation between the slope and intercept, you must divide these elements in a specific way for each posterior sample - which can get cumbersome for larger matrices. This is the purpose of `vcov_decomp()`:
+
+```{r, eval = F}
+SIG_decomp = vcov_decomp(cjs, "SIG")
+```
+
+```{r, echo = F}
+SIG_decomp = vcov_decomp(cjs, "SIG", progress = F)
+```
+
+Note the characteristics of the output obtained:
+
+```{r}
+class(SIG_decomp)
+```
+
+```{r}
+post_dim(cjs) == post_dim(SIG_decomp)
+```
+
+```{r}
+get_p(SIG_decomp, type = "all")
+```
+
+The nodes `"sigma[1]"` and `"sigma[2]"` represent the square root of the diagonal elements `"SIG[1,1]"` and `"SIG[2,2]"` (and are thus the same as the `"sig_B0"` and `"sig_B1"` nodes stored in `cjs`), and the `"rho"` elements represent to correlation matrix - and posterior samples exist now for each. The names used for these newly-created nodes can be changed using the `sigma_base_name` and `rho_base_name` arguments.
+
+You can now build the correlation matrix at the posterior median:
+
+```{r}
+array_format(post_summ(SIG_decomp, "rho")["50%",])
+```
+
+When using `vcov_decomp()`, you are recommended to always keep `check = T`, which will ensure that the samples are from a valid variance-covariance matrix prior to performing the calculation. Setting `invert = T` will take the inverse of the matrix from each posterior sample prior to performing the calculations (e.g., if you had monitored a precision matrix rather than a covariance matrix). The progress message can be suppressed by setting `progress = F` - if you are curious, this progress message is generated using the `StatonMisc::progress_updater()` function.
+
+## `post_thin()`
+
+If your downstream analyses of the posterior samples require many calculations, then it may be advantageous to develop the code with a smaller but otherwise identical version of the posterior output before unleashing them on the full output. You can thin the chains at regularly-spaced intervals using `post_thin()`:
+
+```{r, eval = F}
+post_thin(cjs, thin_percent = 0.95)
+```
+
+Which would discard 95% of the samples from each chain, and return the result as an `mcmc.list` object. Future versions may allow you to specify a fixed number of total samples to retain rather than as a percentage.
+
+## `post_bind()`
+
+It may be desirable to be able to combine posterior samples from the same MCMC run together in a single object. This case may arise when calculating derived quantities, and for organizational purposes you want to have them in one object as opposed to two. The two objects must have the same number of chains and saved iterations, and should be calculated from the same model run.
+
+### Two `mcmc.list`s
+
+The derived quantities stored in `SIG_decomp` from above are stored as an `mcmc.list` object and were calculated from the same model using consistent rules, so have the same dimensions. This makes it easy to just use:
+
+```{r}
+cjs = post_bind(post1 = cjs, post2 = SIG_decomp)
+```
+
+and note that you have the new calculated nodes in you main master object:
+
+```{r}
+get_p(cjs)
+```
+
+You can now quickly verify that `"sig_B0"` and `"sig_B1"` are the same as `"sigma[1]"` and `"sigma[2]"`, respectively:
+
+```{r}
+post_summ(cjs, "sig")
+```
+
+### One `mcmc.list` and one `matrix`
+
+Suppose instead that your derived quantities are stored as a matrix: iterations along the rows and quantities along the columns. Binding this to an `mcmc.list` object involves:
+
+1.)  Obtaining the matrix of the derived quantity(ies),
+
+2.)  Deciding on a name for each of your quantities,
+
+3.)  Coercing the matrix to a `mcmc.list` object with consistent dimensions as the master list, and
+
+4.)  Binding the derived list to the master list.
+
+For step (1), generate such a matrix of derived quantities now, representing the inverse logit of the year-specific survival intercepts:
+
+```{r}
+# extract the raw samples from the master in matrix form
+b0_samps = post_subset(cjs, "b0", matrix = T)
+
+# perform a derived quantity calculation
+eb0_samps = exp(b0_samps)/(1 + exp(b0_samps))
+```
+
+Now you have a derived quantity, so for step (2) change the names that each quantity will be stored as:
+
+```{r}
+colnames(eb0_samps) = paste0("eb0[", 1:5, "]")
+```
+
+For step (3), you must assign each sample to an iteration number and chain, so that the corresponding samples can be matched with the jointly sampled quantities in the master output. This ensures consistency - as though the derived quantity was calculated within the model to begin with. Extract the appropriate identifiers using `id_mat()` from the master object and combine them by columns with the derived quantity:
+
+```{r}
+eb0_samps = cbind(id_mat(cjs), eb0_samps)
+```
+
+You can now complete step (3) by coercing the derived object to an `mcmc.list` with the `postpack` function `matrix2mcmclist()`:
+
+```{r}
+eb0_samps = matrix2mcmclist(eb0_samps)
+```
+
+Finally, for step (4) combine the samples using `post_bind()`:
+
+```{r}
+cjs = post_bind(post1 = cjs, post2 = eb0_samps)
+```
+
+If the two `mcmc.list` objects contain duplicate node names, the values from the list passed to the `post2` argument of `post_bind()` will have the suffix supplied under the argument `dup_id` (`"_p2"` by default).
+
+In the future, the steps in this section may be wrapped into the default behavior of `post_bind()`, especially, since this is one of the few places where the whole function `id_mat()` is necessary.
+
+# Multiple Models
+
+Oftentimes, you will want to evaluate how the output depends on a small change to the model. It would be nice to scale up the functionality of `postpack` to allow relatively simple output extractions from multiple model outputs using the same consistent workflow as presented above. 
+
+I have only recently began working with the `postpack` functions in this regard efficiently, so the ideas are not fully fleshed out yet. 
+
+The trick is to store your multiple `mcmc.list` objects as elements of a larger list. Suppose you have, in addition to `cjs`, an `mcmc.list` called `cjs_no_rho`, which is identical to the model above, except that the `rho` node was fixed at zero during MCMC sampling rather than being estimated with a uniform(1,1) prior as shown above. You could combine these objects:
+
+```{r, echo = F}
+load("../data/cjs_no_rho.rda")
+```
+
+```{r}
+post_list = list(cjs, cjs_no_rho)
+```
+
+Be sure to assign the list with element names, which allows tracking which output is from which model later on:
+
+```{r}
+names(post_list) = c("est_rho", "no_rho")
+```
+
+From here, the world is wide open to you. Anything you would do with one of your `mcmc.list` objects, you can do with two (or any number really) through the use of the base `apply()` family of functions. For example, extract the dimensions of the saved output for each run:
+
+```{r}
+sapply(post_list, post_dim)
+```
+
+Notice the two are identical, except that the `"no_rho"` run has fewer nodes because we added some to the `cjs` object above. You can see this by applying `get_p()` separately to each model object:
+
+```{r}
+sapply(post_list, get_p)
+```
+
+You could extract the summaries of the global survival coefficients from each mode to see that the qualitative inference does not depend on whether `rho` is estimated or fixed at zero:
+
+```{r}
+lapply(post_list, function(model) post_summ(model, "^B", rnd = 2))
+```
+
+Or verify that the detection efficiencies are not affected either:
+
+```{r}
+lapply(post_list, function(model) post_summ(model, "p", rnd = 2))
+```
+
+# That's All (For Now)
+
+I hope that you find `postpack` as useful as I have. Feel free to peruse the [source code](https://github.com/bstaton1/postpack), submit an [issue](https://github.com/bstaton1/postpack/issues) with any problems you find or requested features, or submit a pull request.
+
+Be sure to check back regularly, as this package is in active development!
