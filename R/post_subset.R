@@ -12,15 +12,13 @@
 #'   Defaults to \code{FALSE}.
 #' @param chains logical. Do you wish to retain the chain number if \code{matrix = TRUE}? Not used otherwise.
 #'   Defaults to \code{FALSE}.
-#' @param warn logical. Do you wish to receive warnings about
-#'   possibly unexpected behavior regarding regex matching?
 #' @seealso \code{\link{match_p}}
 #' @export
 
-post_subset = function(post, p, matrix = FALSE, iters = F, chains = F, warn = F) {
+post_subset = function(post, p, matrix = FALSE, iters = F, chains = F) {
 
   # extract the names to keep
-  keep = match_p(post, p, warn = warn)
+  keep = match_p(post, p)
 
   # extract them from each chain and coerce to mcmc.list
   post_out = coda::as.mcmc.list(lapply(post, function(x) x[,keep]))

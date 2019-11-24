@@ -5,7 +5,7 @@
 \title{Obtain a posterior summary of specific nodes}
 \usage{
 post_summ(post, p, rnd = NULL, p_summ = c(0.5, 0.025, 0.975),
-  Rhat = F, ess = F, prettify = F, warn = F)
+  Rhat = F, ess = F)
 }
 \arguments{
 \item{post}{an object of class \code{mcmc.list}}
@@ -26,13 +26,6 @@ Fair warning: this can take a bit of time to run on many nodes/samples}
 \item{ess}{logical. Do you wish to calculate the
 effective sample size using \code{\link[coda]{effectiveSize}}?
 Fair warning: this can take a bit of time to run on many nodes/samples}
-
-\item{prettify}{logical, passed to \code{\link[StatonMisc]{summ}}.
-Do you wish to add commas to demarcate thousands points?
-Coerces numerics to characters.}
-
-\item{warn}{logical. Do you wish to receive warnings about
-possibly unexpected behavior regarding regex matching?}
 }
 \description{
 Obtaining a summary of specific nodes is cumbersome from mcmc.list objects:

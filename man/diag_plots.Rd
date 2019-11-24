@@ -5,7 +5,7 @@
 \title{Create MCMC diagnostic plots for nodes of interest}
 \usage{
 diag_plots(post, p, layout = "auto", dims = "auto", ext_device = F,
-  thin_percent = 0, save = F, file = NULL, warn = F)
+  thin_percent = 0, save = F, file = NULL)
 }
 \arguments{
 \item{post}{an object of class \code{mcmc.list}}
@@ -38,9 +38,6 @@ specify \code{file = "example.pdf"} as well. Defaults to \code{FALSE}.}
 \item{file}{character vector of length 1. The file name, which
 must include the \code{".pdf"} extension. Saved to working directory by default,
 but can recieve an absolute or relative file path here as well}
-
-\item{warn}{logical. Do you wish to receive warnings about
-possibly unexpected behavior regarding regex matching? Defaults to \code{FALSE}}
 }
 \description{
 Allows quick visualization of posterior density and traceplots,

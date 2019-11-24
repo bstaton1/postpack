@@ -29,19 +29,16 @@
 #' @param file character vector of length 1. The file name, which
 #'   must include the \code{".pdf"} extension. Saved to working directory by default,
 #'   but can recieve an absolute or relative file path here as well
-#' @param warn logical. Do you wish to receive warnings about
-#'   possibly unexpected behavior regarding regex matching? Defaults to \code{FALSE}
 #' @seealso \code{\link{match_p}}
 #' @importFrom StatonMisc %!in%
 #' @importFrom StatonMisc ext_device
 #'
 #' @export
 
-diag_plots = function(post, p, layout = "auto", dims = "auto",
-                      ext_device = F, thin_percent = 0, save = F, file = NULL, warn = F) {
+diag_plots = function(post, p, layout = "auto", dims = "auto", ext_device = F, thin_percent = 0, save = F, file = NULL) {
 
   # the exact nodes to display. includes error checks for post and p being compatible.
-  keep = match_p(post, p, warn = warn); n = length(keep)
+  keep = match_p(post, p); n = length(keep)
 
   # error handle for layout
   if (layout %!in% c("auto", "1x1", "2x1", "4x1", "4x2", "5x3")) {
