@@ -30,7 +30,7 @@
 #'
 #'@export
 
-post_summ = function(post, p, p_summ = c(0.5, 0.025, 0.975), prettify = F, rnd = NULL, Rhat = F, ess = F, warn = F) {
+post_summ = function(post, p, rnd = NULL, p_summ = c(0.5, 0.025, 0.975), Rhat = F, ess = F, prettify = F, warn = F) {
 
   # match the names of the nodes that will be extracted
   # p_match = tryCatch(

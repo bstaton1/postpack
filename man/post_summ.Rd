@@ -4,8 +4,8 @@
 \alias{post_summ}
 \title{Obtain a posterior summary of specific nodes}
 \usage{
-post_summ(post, p, p_summ = c(0.5, 0.025, 0.975), prettify = F,
-  rnd = NULL, Rhat = F, ess = F, warn = F)
+post_summ(post, p, rnd = NULL, p_summ = c(0.5, 0.025, 0.975),
+  Rhat = F, ess = F, prettify = F, warn = F)
 }
 \arguments{
 \item{post}{an object of class \code{mcmc.list}}
@@ -13,15 +13,11 @@ post_summ(post, p, p_summ = c(0.5, 0.025, 0.975), prettify = F,
 \item{p}{a character vector of with length >= 1 specifying the nodes to summarize.
 Passed to \code{\link{match_p}}, so can (and sometimes should) be a regular expression.}
 
-\item{p_summ}{numeric vector passed to \code{\link[StatonMisc]{summ}}.
-The posterior percentiles you want to have summarized, Defaults to \code{p_summ = c(0.5, 0.025, 0.975)}.}
-
-\item{prettify}{logical, passed to \code{\link[StatonMisc]{summ}}.
-Do you wish to add commas to demarcate thousands points?
-Coerces numerics to characters.}
-
 \item{rnd}{numeric vector passed to \code{\link[StatonMisc]{summ}}.
 The digits of \code{round}.}
+
+\item{p_summ}{numeric vector passed to \code{\link[StatonMisc]{summ}}.
+The posterior percentiles you want to have summarized, Defaults to \code{p_summ = c(0.5, 0.025, 0.975)}.}
 
 \item{Rhat}{logical. Do you wish to calculate the
 Rhat convergence diagnostic using \code{\link[coda]{gelman.diag}}?
@@ -30,6 +26,10 @@ Fair warning: this can take a bit of time to run on many nodes/samples}
 \item{ess}{logical. Do you wish to calculate the
 effective sample size using \code{\link[coda]{effectiveSize}}?
 Fair warning: this can take a bit of time to run on many nodes/samples}
+
+\item{prettify}{logical, passed to \code{\link[StatonMisc]{summ}}.
+Do you wish to add commas to demarcate thousands points?
+Coerces numerics to characters.}
 
 \item{warn}{logical. Do you wish to receive warnings about
 possibly unexpected behavior regarding regex matching?}
