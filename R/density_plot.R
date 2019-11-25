@@ -16,11 +16,11 @@ density_plot = function(post, p_one) {
   post_sub = post_subset(post, p_one, matrix = T, iters = T, chains = T)
 
   # fit the KDE
-  dens = density(post_sub[,3])
+  dens = suppressWarnings(density(post_sub[,3]))
 
   # determine axis limits
   x_lim = range(dens$x)
-  y_max = max(tapply(post_sub[,3], post_sub[,"CHAIN"], function(x) max(density(x)$y)))
+  y_max = max(tapply(post_sub[,3], post_sub[,"CHAIN"], function(x) suppressWarnings(max(density(x)$y))))
 
   # set up device
   par(yaxs = "i", mar = c(1.5,2,2.5,0.5), tcl = -0.25,
@@ -34,7 +34,7 @@ density_plot = function(post, p_one) {
   # loop through chains plotting the distribution of each
   junk = sapply(unique(post_sub[,"CHAIN"]), function(c) {
     chain_sub = post_sub[post_sub[,"CHAIN"] == c,]
-    dens = density(chain_sub[,3])
+    dens = suppressWarnings(density(chain_sub[,3]))
     lines(dens$y ~ dens$x, col = c)
   })
   box()
