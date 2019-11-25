@@ -61,15 +61,16 @@ match_p = function(post, p, ubase = F) {
     stop (
       paste(
         "\n  Supplied value(s) of p (",
-        paste(p[u_base_matches == 0], collapse = ", "),
-        ") did not have any matches in the nodes stored in post. All elements of p must have at least one match.\n  The base names of all monitored nodes are:\n    ", paste(u_p, collapse = ", "), sep = "")
+        StatonMisc::list_out(p[u_base_matches == 0], final = "and", wrap = '"'),
+        ") did not have any matches in the nodes stored in post.\n  All elements of p must have at least one match.\n  The base names of all monitored nodes are:\n", StatonMisc::list_out(u_p, final = "and", wrap = '"', per_line = 4, indent = "    "), sep = "")
     )
   }
 
   # return the names of the exact nodes to extract
   if (!ubase) {
-    return(match_vec)
+    return(unique(match_vec))
   } else {
     return(unique(base_p(match_vec)))
   }
 }
+
