@@ -1,6 +1,19 @@
 # *NEWS*
 
-# postpack 0.1.13 (2019-11-28)
+# postpack 0.1.14 (2019-11-27)
+
+## Remove unnecessary exports
+
+* Functions that were previously exported but could confuse users include:
+  * `ins_regex_bracket`
+  * `rm_regex_bracket`
+  * `id_mat`
+* These functions were removed from the exported NAMESPACE
+* Consistency was improved for `vcov_decomp`: it now internally uses `id_mat`
+* `post_bind` now allows one of the objects to be a matrix of derived quantities, but still requires that it has the same number of samples as the object it is being binded to.
+* The vignette was updated to reflect these and other changes to the package since its initial creation.
+
+# postpack 0.1.13 (2019-11-26)
 
 ## Include NEWS.md
 
