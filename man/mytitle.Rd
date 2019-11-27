@@ -15,3 +15,6 @@ Used by \code{\link{diag_plots}} to place a common
 title over top of two figures: one trace and one density
 for a given node.
 }
+\note{
+this is NOT a function users will generally use.
+}
