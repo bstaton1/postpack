@@ -9,6 +9,13 @@
 #' @param post an object of class \code{mcmc.list}
 #' @param p a character vector of with length >= 1 specifying the nodes to plot. Passed to \code{\link{match_p}},
 #'   so can (and sometimes should) be a regular expression.
+#' @param ext_device logical. Do you wish to have an external device open to display the diagnostics?
+#'   \code{TRUE} will create a new plotting device using the OS-specific function.
+#'   Defaults to \code{FALSE}. Requires the \code{\link[StatonMisc]{ext_device}} function.
+#' @param show_diags a character vector of length == 1. Must be one of
+#'   \code{"always"}, \code{"never"}, \code{"if_poor_Rhat"}. Defaults to
+#'   \code{"if_poor_Rhat"}, which will display the Rhat and effective MCMC samples
+#'   if the Rhat statistic is greater than 1.1
 #' @param layout a character vector specifying \code{"ROWSxCOLUMNS"} of parameter diagnostics.
 #'   For example, \code{"4x1"} has 4 rows and 1 column of parameter diagnostics.
 #'   Defaults to \code{"auto"}, which selects between \code{"1x1"}, \code{"2x1"}, \code{"4x1"}, \code{"4x2"}, and \code{"5x3"}.
@@ -17,9 +24,6 @@
 #'   For example, \code{"5x7"} would create a 5 inch tall and 7 inch wide plotting device.
 #'   Defaults to \code{"auto"}, which selects the dimensions that look nice when \code{layout = "auto"}
 #'   as well.
-#' @param ext_device logical. Do you wish to have an external device open to display the diagnostics?
-#'   \code{TRUE} will create a new plotting device using the OS-specific function.
-#'   Defaults to \code{FALSE}. Requires the \code{\link[StatonMisc]{ext_device}} function.
 #' @param thin_percent if you wish to remove some fraction of the samples before traceplotting, do that here.
 #'   The thinning will occur systematically, i.e., at evenly-spaced intervals.
 #'   This is sometimes helpful when generating plots with many samples/nodes, which can render slowly.
@@ -35,7 +39,7 @@
 #'
 #' @export
 
-diag_plots = function(post, p, layout = "auto", dims = "auto", ext_device = F, thin_percent = 0, save = F, file = NULL) {
+diag_plots = function(post, p, ext_device = F, show_diags = "if_poor_Rhat", layout = "auto", dims = "auto", thin_percent = 0, save = F, file = NULL) {
 
   # the exact nodes to display. includes error checks for post and p being compatible.
   keep = match_p(post, p); n = length(keep)
@@ -89,7 +93,7 @@ diag_plots = function(post, p, layout = "auto", dims = "auto", ext_device = F, t
       ext_device(h = height_width[1], w = height_width[2])
       par(mfrow = c(row_col[1],row_col[2] * 2))
     }
-    density_plot(post, i)
+    density_plot(post, i, show_diags)
     trace_plot(post, i, thin_percent = thin_percent)
     mytitle(i)
   })
