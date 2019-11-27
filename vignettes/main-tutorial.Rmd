@@ -18,7 +18,7 @@ knitr::opts_chunk$set(echo = TRUE, fig.align = "center")
 
 # Motivations
 
-The R package `postpack` exists to make your job easier when it comes time to process the output of models fitted using Markov Chain Monte Carlo (MCMC) methods, as is commonly done in Bayesian inference. Although significant capabilities exist to interface from R with programs like JAGS, WinBUGS, OpenBUGS, and Stan, the functionality to easily process the output is lacking in my personal opinion. Output from these models is commonly stored in (or can easily be converted to) R objects of class `mcmc.list` (default methods supplied through the `coda` package, upon which `postpack` strongly depends), and working with these objects is not as straight-forward as one might desire. A practitioner needs to extract raw samples, summarize them, diagnose their convergence, and plot the summaries along with their measures of uncertainty. It would be ideal if consistent rules were used in how these actions were performed, all based around the master `mcmc.list`, and the functionality should be able to scale to seamlessly summarize the same output from multiple models to allow quick evaluation of the influence of different model assumptions (e.g., different priors or where some terms are fixed at zero). Perhaps most importantly, given the ever-increasing complexity of these models, these tasks should be made simple to perform for only desired nodes from the model.
+The R package `postpack` exists to make your job easier when it comes time to process the output of models fitted using Markov Chain Monte Carlo (MCMC) methods, as is commonly done in Bayesian inference. Although significant capabilities exist to interface from R with programs like JAGS, WinBUGS, OpenBUGS, and Stan, the functionality to easily process the output is lacking in my personal opinion. Output from these models is commonly stored in (or can be converted to) R objects of class `mcmc.list` (default methods supplied through the `coda` package, upon which `postpack` strongly depends), however working with these objects is not as straight-forward as one might desire. A practitioner needs to extract raw samples, summarize them, diagnose their convergence, and plot the summaries along with their measures of uncertainty. It would be ideal if consistent rules were used in how these actions were performed, all based around the master `mcmc.list`. Further, the functionality should be scalable to allow summarizing the same output from multiple models for quick evaluation of the influence of different model assumptions (e.g., different priors or where some terms are fixed at zero). Perhaps most importantly, given the ever-increasing complexity of these models, these tasks should be made simple to perform for only desired nodes from the model.
 
 # Working Example
 
@@ -92,7 +92,7 @@ You can return the dimensions of the MCMC run saved in `cjs` using:
 post_dim(cjs)
 ```
 
-You can extract one of these dimensional elements quickly by specifying the `kind` argument, e.g., notice that there are `r post_dim(cjs, "nodes")` saved nodes by running: `post_dim(cjs, "nodes")`.
+You can extract one of these dimensional elements quickly by specifying the `kind` argument, e.g., notice that there are `r post_dim(cjs, "nodes")` saved nodes by running `post_dim(cjs, "nodes")`.
 
 The names of these nodes will be crucial in subsetting them, so you should be able to check them out quickly at any time. This is the purpose of the `get_p()` function:
 
@@ -147,10 +147,13 @@ b1_ests = post_summ(cjs, "b1", rnd = 3,
 Which you could then plot to show how the effect of fork length on survival varies between years:
 
 ```{r, fig.width = 4, fig.height = 3}
+# reverse the order of the node summaries, looks better in the plot
+b1_ests = b1_ests[,5:1]
+
 par(mar = c(2,4,2,2), lend = "square")
 mp = barplot(b1_ests["50%",], las = 1, space = 1, border = "white",
         xlim = max(abs(b1_ests)) * c(-1,1), horiz = T)
-abline(v = 0)
+abline(v = 0, lty = 2)
 segments(b1_ests["25%",], mp, b1_ests["75%",], mp, lwd = 5)
 segments(b1_ests["2.5%",], mp, b1_ests["97.5%",], mp, lwd = 1)
 ```
@@ -305,15 +308,16 @@ diag_plots(cjs, "SIG")
 
 Options exist to:
 
+*  display the Rhat and effective MCMC samples for each node (the `show_diags` argument, which accepts value of `"always"`, `"never"`, or `"if_poor_Rhat"` with the last one being the default. See `?diag_plots` for details),
 *  change the size of the graphics device (the `dims` argument),
 *  change the layout of parameters on the device (the `layout` argument), 
-*  to plot the output in a new external device (the `ext_device` argument, the device will be OS specific, e.g., `quartz()` on a Mac or `windows()` on a PC - see `?StatonMisc::ext_device`), 
-*  to save the output to a PDF graphics device (the `save` argument, which then requires that you enter the `file` argument, which is the file name of the PDF complete with the `".pdf"` extension). 
-*  thin the chains by some percentage (at evenly spaced intervals) before drawing the trace plot - this can help manage the file size when generating many plots with many samples taken while still providing much of the same inference as the unthinned output. The argument `thin_percent = 0.8` is passed to `post_thin`, and would discard 80% of the samples prior to trace plotting.
+*  plot the output in a new external device (the `ext_device` argument, the device will be OS specific - see `?StatonMisc::ext_device`), 
+*  save the output to a PDF graphics device (the `save` argument, which then requires that you enter the `file` argument, which is the file name of the PDF complete with the `".pdf"` extension). 
+*  thin the chains by some percentage (at evenly spaced intervals) before drawing the trace plot - this can help manage the file size when generating many plots with many samples taken while still providing much of the same inference as the unthinned output. The argument `thin_percent = 0.8` is passed to `post_thin`, and would discard 80% of the samples prior to trace plotting. This thinning does not affect the density plot visual - all retained samples are plotted there.
 
 The `dims` and `layout` arguments are set to `"auto"` by default - for adjustment of these settings, see `?diag_plots`. 
 
-The more chains there are in the `mcmc.list` object passed to the `post` argument, the more colors there will be displayed.
+The more chains there are in the `mcmc.list` object passed to the `post` argument, the more colors will be displayed.
 
 ## `array_format()`
 
@@ -335,7 +339,7 @@ You may want a matrix that stores the posterior means in the same location as th
 array_format(SIG_ests["mean",])
 ```
 
-Currently, objects with dimensions between 2 and 10 are supported. Although this is a silly example, imagine you had arranged survival for each individual, detection occasion, and year as `phi[i,j,y]` - it would be really nice to be able to quickly put the summaries back in the dimensions of the model.
+Currently, objects with dimensions between 2 and 10 are supported. Although this is a basic example, imagine you had arranged survival for each individual, detection occasion, and year as `phi[i,j,y]` - it would be really nice to quickly put the posterior summaries back in the dimensions of the model.
 
 `array_format()` requires a vector of named elements, where the element names contain the correct indices to place them in (e.g., `"SIG[1,1]"` and `"SIG[2,2]"`).
 
@@ -387,7 +391,7 @@ Which would discard 95% of the samples from each chain, and return the result as
 
 ## `post_bind()`
 
-It may be desirable to be able to combine posterior samples from the same MCMC run together in a single object. This case may arise when calculating derived quantities, and for organizational purposes you want to have them in one object as opposed to two. The two objects must have the same number of chains and saved iterations, and should be calculated from the same model run.
+It may be desirable to combine posterior samples from the same MCMC run together in a single object. This case may arise when calculating derived quantities, and for organizational purposes you want to have them in one object as opposed to two. The two objects must have the same number of chains and saved iterations, and should be calculated from the same model run.
 
 ### Two `mcmc.list`s
 
@@ -415,11 +419,9 @@ Suppose instead that your derived quantities are stored as a matrix: iterations 
 
 1.)  Obtaining the matrix of the derived quantity(ies),
 
-2.)  Deciding on a name for each of your quantities,
+2.)  Deciding on a name for each of your quantities, and
 
-3.)  Coercing the matrix to a `mcmc.list` object with consistent dimensions as the master list, and
-
-4.)  Binding the derived list to the master list.
+3.)  Binding the derived list to the master list.
 
 For step (1), generate such a matrix of derived quantities now, representing the inverse logit of the year-specific survival intercepts:
 
@@ -437,27 +439,13 @@ Now you have a derived quantity, so for step (2) change the names that each quan
 colnames(eb0_samps) = paste0("eb0[", 1:5, "]")
 ```
 
-For step (3), you must assign each sample to an iteration number and chain, so that the corresponding samples can be matched with the jointly sampled quantities in the master output. This ensures consistency - as though the derived quantity was calculated within the model to begin with. Extract the appropriate identifiers using `id_mat()` from the master object and combine them by columns with the derived quantity:
-
-```{r}
-eb0_samps = cbind(id_mat(cjs), eb0_samps)
-```
-
-You can now complete step (3) by coercing the derived object to an `mcmc.list` with the `postpack` function `matrix2mcmclist()`:
-
-```{r}
-eb0_samps = matrix2mcmclist(eb0_samps)
-```
-
-Finally, for step (4) combine the samples using `post_bind()`:
+Finally, for step (3) combine the samples using `post_bind()`:
 
 ```{r}
 cjs = post_bind(post1 = cjs, post2 = eb0_samps)
 ```
 
-If the two `mcmc.list` objects contain duplicate node names, the values from the list passed to the `post2` argument of `post_bind()` will have the suffix supplied under the argument `dup_id` (`"_p2"` by default).
-
-In the future, the steps in this section may be wrapped into the default behavior of `post_bind()`, especially, since this is one of the few places where the whole function `id_mat()` is necessary.
+If the two objects contain duplicate node names, the values from the object passed to the `post2` argument of `post_bind()` will have the suffix supplied under the argument `dup_id` (`"_p2"` by default), and a warning will be returned to notify the user that this occured.
 
 # Multiple Models
 
@@ -466,6 +454,10 @@ Oftentimes, you will want to evaluate how the output depends on a small change t
 I have only recently began working with the `postpack` functions in this regard efficiently, so the ideas are not fully fleshed out yet. 
 
 The trick is to store your multiple `mcmc.list` objects as elements of a larger list. Suppose you have, in addition to `cjs`, an `mcmc.list` called `cjs_no_rho`, which is identical to the model above, except that the `rho` node was fixed at zero during MCMC sampling rather than being estimated with a uniform(1,1) prior as shown above. You could combine these objects:
+
+```{r, eval = F}
+data("cjs_no_rho", package = "postpack")
+```
 
 ```{r, echo = F}
 load("../data/cjs_no_rho.rda")
