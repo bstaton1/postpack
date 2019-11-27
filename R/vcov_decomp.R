@@ -34,9 +34,7 @@ vcov_decomp = function(post, p, progress = T, sigma_base_name = "sigma", rho_bas
   }
 
   # extract desired node
-  Sigma_samps = post_subset(post, p, matrix = T, chains = T, iters = T)
-  id_mat = Sigma_samps[,c("CHAIN","ITER")]
-  Sigma_samps = Sigma_samps[,-which(colnames(Sigma_samps) %in% c("CHAIN", "ITER"))]
+  Sigma_samps = post_subset(post, p, matrix = T)
   test_mat = array_format(Sigma_samps[1,])
 
   # check for whether p is a matrix: search for 1 comma
@@ -105,7 +103,7 @@ vcov_decomp = function(post, p, progress = T, sigma_base_name = "sigma", rho_bas
   colnames(sigma_samps) = sigma_names
 
   # combine into large matrix
-  out = cbind(id_mat, sigma_samps, rho_samps)
+  out = cbind(id_mat(post), sigma_samps, rho_samps)
 
   # convert to an mcmc.list
   matrix2mcmclist(out)
