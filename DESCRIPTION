@@ -1,6 +1,6 @@
 Package: postpack
 Title: Utilities for Dealing with Posterior Samples Stored in mcmc.lists
-Version: 0.1.11
+Version: 0.1.12
 Authors@R: person("Benjamin", "Staton", email = "statonbe@gmail.com", role = c("aut", "cre"))
 Description: Contains many shortcuts for subsetting, summarizing, plotting, and diagnosing particular
     nodes from an mcmc.list object. These objects are created from JAGS, BUGS, or STAN models,
