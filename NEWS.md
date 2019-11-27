@@ -1,5 +1,24 @@
 # *NEWS*
 
+# postpack 0.1.13 (2019-11-28)
+
+## Include NEWS.md
+
+* A news tracker file has now been added. I have gone through the git history to include the progression of changes that have been made. 
+
+* In theory, a user should be able to access this via `utils::news(package = "postpack")`, however in RStudio version 1.2.1335 (my current version), this returns an error in the RStudio help pane:
+
+  ```
+  Error in UseMethod("toHTML") : no applicable method for 'toHTML' applied to an object of class "NULL"
+  ```
+
+  When run from the standard R command line (not in RStudio, it works just fine). This issue is documented [here](<https://stackoverflow.com/questions/56270933/package-specific-utilsnews-not-working-in-rstudio>) and [here](<https://community.rstudio.com/t/utils-news-does-not-work-in-rstudio/42878>). For now, users can just look at the source code, which renders the markdown for them when viewed on GitHub.
+
+* It is my intent that every major, minor, and patch update will be documented here, which prevents users from needing to dig into the git history to see what has changed with each version.
+
+* I haven't really used the semantic versioning correctly, (all updates have been categorized as patch updates, when really some of them were major updates that would have broken previous versions, or minor updates that added substantial features). I will make an attempt to fix this in the future.
+
+
 # postpack 0.1.12 (2019-11-26)
 
 ## Include numerical diagnostic summaries in `diag_plots`
