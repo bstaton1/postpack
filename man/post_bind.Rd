@@ -2,26 +2,34 @@
 % Please edit documentation in R/post_bind.R
 \name{post_bind}
 \alias{post_bind}
-\title{Combine two mcmc.list objects}
+\title{Combine two objects containing posterior samples}
 \usage{
 post_bind(post1, post2, dup_id = "_p2")
 }
 \arguments{
-\item{post1}{an object of class \code{mcmc.list}}
+\item{post1}{an object of class \code{mcmc.list} or \code{matrix}}
 
-\item{post2}{an object of class \code{mcmc.list}}
+\item{post2}{an object of class \code{mcmc.list} or \code{matrix}}
 
 \item{dup_id}{a character vector of length == 1. If any
 node names are duplicated in post2, what should be appended to the
-end of the node names in the output? Defaults to \code{"_p2"}}
+end of these node names in the output? If this occurs a warning will be returned.
+Defaults to \code{"_p2"}}
 }
 \description{
-Bind together two mcmc.list objects, possibly from the same or different models.
-The two posterior objects must have equal chains and iterations per chain.
+Bind together two objects containing posterior samples into one \code{mcmc.list} object.
+Intended for use when derived quantities are calculated from monitored posterior samples,
+and you wish to combine them into the master list, as though they were calculated and monitored during MCMC sampling.
+It is not advised to combine samples from two MCMC runs (because covariance
+of MCMC sampling would be lost).
 }
 \details{
-The two lists are coerced to matricies, \code{cbind()}-ed, and
-  converted back to to an \code{mcmc.list} using \code{matrix2mcmclist}.
-  The chains, thinning, and iterations, burn-in settings in the output object
-  will remain as for \code{post1}.
+Some important things to note:
+\itemize{
+  \item{if the object passed to \code{post1} is a matrix, \code{post2} must be an mcmc.list, and vice versa}
+  \item{for matrix objects, nodes should be stored as columns and samples should be stored as rows. Column names should be present}
+  \item{the objects passed to \code{post1} and \code{post2} must contain the same number of samples per node}
+  \item{if the objects passed to \code{post1} and \code{post2} are both mcmc.lists, they must have the same number of chains, iterations, burnin, and thinning interval}
+  \item{if the node names are empty (e.g., only one node in an mcmc.list or missing column names in a matrix), the node names will be coerced to \code{"var1"}, \code{"var2"}, etc.}
+}
 }
