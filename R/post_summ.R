@@ -45,7 +45,7 @@ post_summ = function(post, p, rnd = NULL, p_summ = c(0.5, 0.025, 0.975), Rhat = 
 
   # if doing Rhat, calculate it
   if (Rhat) {
-    Rhat = round(coda::gelman.diag(post_sub, multivariate = F)[[1]][,1], 3)
+    Rhat = round(coda::gelman.diag(post_sub, autoburnin = F, multivariate = F)[[1]][,1], 3)
     output = rbind(
       output,
       Rhat = Rhat
