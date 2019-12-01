@@ -1,5 +1,17 @@
 # *NEWS*
 
+# postpack 0.1.15 (2019-11-30)
+
+## Bug fix when calculating Rhat
+
+* When calculating Rhat using `post_summ(..., Rhat = T)` (which wraps `coda::gelman.diag`) on an object containing only one node, an error would be thrown:
+
+  ```
+  Error in data[1:nobs, , drop = FALSE] : incorrect number of dimensions
+  ```
+
+  Which I tracked down to be a result of the `autoburnin` argument being true by default. Being able to perform the calculations for only one node was required for the `diag_plots(..., show_diags = T)` update. So I have forced this argument to be `FALSE` in its usage within `post_summ`. 
+
 # postpack 0.1.14 (2019-11-27)
 
 ## Remove unnecessary exports
