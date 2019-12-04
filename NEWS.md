@@ -1,5 +1,12 @@
 # *NEWS*
 
+# postpack 0.1.16 (2019-12-04)
+
+## Bug fix when displaying NaN Rhat values
+
+* If a posterior has all samples with the same value, then the Rhat value is `NaN`. This was triggering an error in the logical of `density_plot(..., show_diags = "if_poor_Rhat")` because you can't respond to logical questions of `NA` entries. 
+* I have created an outer logical where it first asks if the Rhat value is not `NA`, and if it is, it proceeds as before. Rhat values of `NaN` will never be displayed.
+
 # postpack 0.1.15 (2019-11-30)
 
 ## Bug fix when calculating Rhat
