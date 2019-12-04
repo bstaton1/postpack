@@ -52,10 +52,12 @@ density_plot = function(post, p_one, show_diags = "if_poor_Rhat") {
   # calculate convergence diagnostics if requested
   if (show_diags %in% c("always", "if_poor_Rhat")) {
     diags = post_summ(post, p_one, Rhat = T, ess = T)[c("Rhat", "ess"),]
-    if (diags["Rhat"] >= 1.1 | show_diags == "always") {
-      Rhat_text = paste0("Rhat: ", diags["Rhat"])
-      ess_text = paste0("ESS: ", StatonMisc::prettify(diags["ess"]))
-      legend("topright", legend = c(Rhat_text, ess_text), bty = "n")
+    if (!is.na(diags["Rhat"])) {
+      if (diags["Rhat"] >= 1.1 | show_diags == "always") {
+        Rhat_text = paste0("Rhat: ", diags["Rhat"])
+        ess_text = paste0("ESS: ", StatonMisc::prettify(diags["ess"]))
+        legend("topright", legend = c(Rhat_text, ess_text), bty = "n")
+      }
     }
   }
 
