@@ -18,18 +18,35 @@
 post_subset = function(post, p, matrix = FALSE, iters = F, chains = F) {
 
   # extract the names to keep
-  keep = match_p(post, p)
+  keep_p = match_p(post, p)
 
-  # extract them from each chain and coerce to mcmc.list
-  post_out = coda::as.mcmc.list(lapply(post, function(x) x[,keep]))
+  # extract the iteration ids: chain and iteration numbers
+  ids = id_mat(post)
+  n_chains = length(unique(ids[,"CHAIN"]))
+  n_iter = nrow(ids)/n_chains
 
-  # if reformatting to matrix type, do so
-  if (matrix) {
-    post_out = as.matrix(post_out, iters = iters, chains = chains)
-    # rename the column if there is only one element to keep
-    if (length(keep) == 1) {
-      colnames(post_out)[colnames(post_out) == "var1"] = keep
+  # extract the samples from the right nodes in each chain, place these into list elements
+  post_sub_list = lapply(post, function(x) {
+    mat = as.matrix(x[,keep_p], nrow = n_iter, ncol = length(keep_p))
+    colnames(mat) = keep_p
+    mat
     }
+  )
+
+  # store the samples as a matrix
+  post_sub_matx = NULL
+  for (c in 1:n_chains) post_sub_matx = rbind(post_sub_matx, post_sub_list[[c]])
+  post_sub = cbind(ids, post_sub_matx)
+
+  # if returning in matrix format, decide which columns to keep
+  if (matrix) {
+    keep_columns = keep_p
+    if (iters) keep_columns = c("ITER", keep_columns)
+    if (chains) keep_columns = c("CHAIN", keep_columns)
+    post_out = as.matrix(post_sub[,keep_columns], nrow = nrow(ids), ncol = length(keep_columns))
+    colnames(post_out) = keep_columns
+  } else { # if returning in mcmc.list format, reformat to mcmc.list
+    post_out = matrix2mcmclist(post_sub)
   }
 
   # return the output

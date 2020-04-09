@@ -30,7 +30,10 @@ post_thin = function(post, thin_percent = 0.8) {
     seq(1, n_iters, by = n_iters/retain)
   })
 
-  coda::as.mcmc.list(lapply(post, function(x) coda::as.mcmc(x[keep,])))
+  post_mat = as.matrix(post, chains = T, iters = T)
+  unique_iters = unique(post_mat[,"ITER"])
+  keep_rows = post_mat[,"ITER"] %in% unique_iters[keep]
+  matrix2mcmclist(post_mat[keep_rows,])
 }
 
 ## function not working ideally. the printing of iteration
