@@ -1,5 +1,12 @@
 # *NEWS*
 
+# postpack 0.1.17 (2020-04-09)
+
+## Bug fixes when working with one-node `mcmc.lists`
+
+*  `post_subset()` and `post_thin()` previously used `coda::as.mcmc.list()` to convert matrices to mcmc.list objects, however, if the matrix contained only one node, this would result in the mcmc.list no longer having a name for that node. Because most of the postpack functions rely on node names, this caused issues (e.g., `diag_plots()`, `post_bind()`).
+*  These functions now rely on `matrix2mcmclist` to perform this task, which should fix these issues.
+
 # postpack 0.1.16 (2019-12-04)
 
 ## Bug fix when displaying NaN Rhat values
