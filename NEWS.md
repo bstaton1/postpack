@@ -1,5 +1,11 @@
 # *NEWS*
 
+# postpack 0.1.18 (2020-04-09)
+
+## Require that R version 3.5.0 or later is available
+
+*  I had issues installing postpack on a computer running R version 3.4.3, and found that the issue was a result of the .rda structure -- it was created after version 3.5.0. Evidently R objects created later than 3.5.0 don't play nicely with versions earlier than this. See issue [#8](https://github.com/bstaton1/postpack/issues/8) for more details. 
+
 # postpack 0.1.17 (2020-04-09)
 
 ## Bug fixes when working with one-node `mcmc.lists`
