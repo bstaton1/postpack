@@ -19,13 +19,18 @@
 #' @param ess logical. Do you wish to calculate the
 #'   effective sample size using \code{\link[coda]{effectiveSize}}?
 #'   Fair warning: this can take a bit of time to run on many nodes/samples
+#' @param mcse logical. Do you wish to calculate the
+#'   Monte Carlo standard error for the posterior mean and reported quantiles
+#'   using the \code{\link[mcmcse]{mcse}} and \code{\link[mcmcse]{mcse.q}} functions
+#'   (batch means method with batch size automatically calculated)?
+#'   Fair warning: this can take a bit of time to run on many nodes/samples
 #' @seealso \code{\link{match_p}}, \code{\link[StatonMisc]{summ}}, \code{\link[coda]{gelman.diag}},
-#'   \code{\link[coda]{effectiveSize}}
+#'   \code{\link[coda]{effectiveSize}}, \code{\link[mcmcse]{mcse}}, \code{\link[mcmcse]{mcse.q}}
 #' @importFrom StatonMisc summ
 #'
 #'@export
 
-post_summ = function(post, p, rnd = NULL, p_summ = c(0.5, 0.025, 0.975), Rhat = FALSE, ess = FALSE, auto_escape = TRUE) {
+post_summ = function(post, p, rnd = NULL, p_summ = c(0.5, 0.025, 0.975), Rhat = FALSE, ess = FALSE, mcse = FALSE, auto_escape = TRUE) {
 
   # match the names of the nodes that will be extracted
   p_match = match_p(post, p, auto_escape = auto_escape)
@@ -58,6 +63,31 @@ post_summ = function(post, p, rnd = NULL, p_summ = c(0.5, 0.025, 0.975), Rhat = 
     output = rbind(
       output,
       ess = ess
+    )
+  }
+
+  # if doing MC error, do so
+  if (mcse) {
+    # convert samples to matrix format
+    post_sub_mat = as.matrix(post_sub)
+
+    # calculate Monte Carlo SE of the mean
+    se_mean = apply(post_sub_mat, 2, function(x) mcmcse::mcse(x)$se)
+    if (!is.null(rnd)) se_mean = round(se_mean, rnd)
+
+    # calculate Monte Carlo SE of the various quantiles that are returned
+    se_q = NULL
+    for (i in 1:length(p_summ)) {
+      se_q = rbind(se_q, apply(post_sub_mat, 2, function(x) mcmcse::mcse.q(x, p_summ[i])$se))
+    }
+    if (!is.null(rnd)) se_q = round(se_q, rnd)
+    rownames(se_q) = paste0("mcse_", p_summ * 100, "%")
+
+    # add the standard errors to the output
+    output = rbind(
+      output,
+      mcse_mean = se_mean,
+      se_q
     )
   }
 
