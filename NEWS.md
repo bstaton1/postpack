@@ -1,5 +1,11 @@
 # *NEWS*
 
+# postpack 0.2.0 (2020-04-10)
+
+## Include an `auto_escape` option
+
+*  Previously, all functions that took a `p` argument forced any brackets (`"["`) to be escaped. This allowed matching nodes like `"b0[1]"` without having to type `"b0\\[1\\]"`. However, some advanced users might wish to use the brackets as special characters in a regex context. All functions that take a `p` argument now have an `auto_escape` argument, which is always `TRUE` by default -- thus, the default behavior is identical to previous versions.
+
 # postpack 0.1.18 (2020-04-09)
 
 ## Require that R version 3.5.0 or later is available
