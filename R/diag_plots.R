@@ -33,16 +33,22 @@
 #' @param file character vector of length 1. The file name, which
 #'   must include the \code{".pdf"} extension. Saved to working directory by default,
 #'   but can recieve an absolute or relative file path here as well
+#' @param auto_escape logical. \code{FALSE} will treat \code{"["} and \code{"]"}
+#'   as regular expression syntax (unless explicitly escaped by user),
+#'   \code{TRUE} will treat these symbols as plain text to be matched.
+#'   It is generally recommended to keep this as \code{TRUE} (the default),
+#'   unless you are performing complex regex searches that require the
+#'   \code{"["} and \code{"]"} symbols to be special characters
 #' @seealso \code{\link{match_p}}
 #' @importFrom StatonMisc %!in%
 #' @importFrom StatonMisc ext_device
 #'
 #' @export
 
-diag_plots = function(post, p, ext_device = F, show_diags = "if_poor_Rhat", layout = "auto", dims = "auto", thin_percent = 0, save = F, file = NULL) {
+diag_plots = function(post, p, ext_device = FALSE, show_diags = "if_poor_Rhat", layout = "auto", dims = "auto", thin_percent = 0, save = FALSE, file = NULL, auto_escape = TRUE) {
 
   # the exact nodes to display. includes error checks for post and p being compatible.
-  keep = match_p(post, p); n = length(keep)
+  keep = match_p(post, p, ubase = F, auto_escape = auto_escape); n = length(keep)
 
   # error handle for layout
   if (layout %!in% c("auto", "1x1", "2x1", "4x1", "4x2", "5x3")) {

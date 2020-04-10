@@ -8,6 +8,12 @@
 #'   so can, and sometimes should, be a regular expression; see the examples.
 #'   Duplicate matches found among different elements of \code{p} are discarded.
 #' @param ubase logical. Do you wish to return only the unique bases (i.e., without indices listed)?
+#' @param auto_escape logical. \code{FALSE} will treat \code{"["} and \code{"]"}
+#'   as regular expression syntax (unless explicitly escaped by user),
+#'   \code{TRUE} will treat these symbols as plain text to be matched.
+#'   It is generally recommended to keep this as \code{TRUE} (the default),
+#'   unless you are performing complex regex searches that require the
+#'   \code{"["} and \code{"]"} symbols to be special characters
 #' @return a character vector with all node names that match \code{p}.
 #'   If no matches are found, it will return an error with
 #'   the base node names found the \code{mcmc.list} to help the next try.
@@ -26,7 +32,7 @@
 #'
 #' @export
 
-match_p = function(post, p, ubase = F) {
+match_p = function(post, p, ubase = FALSE, auto_escape = TRUE) {
 
   # stop if post isn't mcmc.list
   if (!coda::is.mcmc.list(post)) {
@@ -34,7 +40,7 @@ match_p = function(post, p, ubase = F) {
   }
 
   # insert regex escapes for brackets if necessary
-  p_regex = ifelse(!stringr::str_detect(p, "\\\\"), ins_regex_bracket(p), p)
+  p_regex = ifelse(!stringr::str_detect(p, "\\\\") & auto_escape, ins_regex_bracket(p), p)
 
   # extract all parameters in the post object
   all_p = get_p(post, type = "all")

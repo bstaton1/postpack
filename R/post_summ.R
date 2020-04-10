@@ -25,10 +25,10 @@
 #'
 #'@export
 
-post_summ = function(post, p, rnd = NULL, p_summ = c(0.5, 0.025, 0.975), Rhat = F, ess = F) {
+post_summ = function(post, p, rnd = NULL, p_summ = c(0.5, 0.025, 0.975), Rhat = FALSE, ess = FALSE, auto_escape = TRUE) {
 
   # match the names of the nodes that will be extracted
-  p_match = match_p(post, p)
+  p_match = match_p(post, p, auto_escape = auto_escape)
 
   # subset the nodes corresponding to p
   post_sub = post_subset(post, p)

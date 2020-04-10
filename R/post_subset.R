@@ -12,13 +12,19 @@
 #'   Defaults to \code{FALSE}.
 #' @param chains logical. Do you wish to retain the chain number if \code{matrix = TRUE}? Not used otherwise.
 #'   Defaults to \code{FALSE}.
+#' @param auto_escape logical. \code{FALSE} will treat \code{"["} and \code{"]"}
+#'   as regular expression syntax (unless explicitly escaped by user),
+#'   \code{TRUE} will treat these symbols as plain text to be matched.
+#'   It is generally recommended to keep this as \code{TRUE} (the default),
+#'   unless you are performing complex regex searches that require the
+#'   \code{"["} and \code{"]"} symbols to be special characters
 #' @seealso \code{\link{match_p}}
 #' @export
 
-post_subset = function(post, p, matrix = FALSE, iters = F, chains = F) {
+post_subset = function(post, p, matrix = FALSE, iters = FALSE, chains = FALSE, auto_escape = TRUE) {
 
   # extract the names to keep
-  keep_p = match_p(post, p)
+  keep_p = match_p(post, p, ubase = F, auto_escape = auto_escape)
 
   # extract the iteration ids: chain and iteration numbers
   ids = id_mat(post)

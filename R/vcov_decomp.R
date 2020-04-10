@@ -25,10 +25,10 @@
 #' @return an object of class \code{mcmc.list}
 #' @export
 
-vcov_decomp = function(post, p, progress = T, sigma_base_name = "sigma", rho_base_name = "rho", invert = F, check = T) {
+vcov_decomp = function(post, p, progress = TRUE, sigma_base_name = "sigma", rho_base_name = "rho", invert = FALSE, check = TRUE, auto_escape = TRUE) {
 
   # check for only one node match; the normal checks will be done by match_p
-  matched_p = match_p(post, p, ubase = T)
+  matched_p = match_p(post, p, ubase = T, auto_escape = auto_escape)
   if (length(matched_p) > 1) {
     stop("more than one unique base name matched by p: \n\n    ", paste(paste0("'", matched_p, "'"), collapse = ", "))
   }
