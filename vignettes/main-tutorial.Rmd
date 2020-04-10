@@ -1,5 +1,6 @@
 ---
 title: "`postpack` Tutorial"
+subtitle: "`r d = readLines('../DESCRIPTION'); paste0('Package ', d[3])`"
 author: "Ben Staton"
 date: "`r format(Sys.Date(), '%m/%d/%Y')`"
 output: 
@@ -160,6 +161,12 @@ segments(b1_ests["2.5%",], mp, b1_ests["97.5%",], mp, lwd = 1)
 
 In which the grey bars are the posterior medians, the thick black lines are the central 50%, and the thin black lines are the central 95%.
 
+The error resulting from MCMC sampling can also be calculated for the posterior mean (with `mcmcse::mcse`) and reported quantiles (with `mcmcse::mcse.q`) by setting the `mcse` argument to `TRUE`:
+
+```{r}
+post_summ(cjs, "b1", rnd = 3, mcse = T)
+```
+
 # Extracting Samples
 
 Often you will want to take a subset out of your output while retaining each saved posterior sample, for example, to plot a histogram of the samples or to calculate the posterior of some derived quantity external to the MCMC algorithm.
@@ -226,7 +233,7 @@ match_p(cjs, "[2]")
 
 ## Auto Escape of Brackets
 
-Because the square brackets (`"["` and `"]"`) are special characters in regular expressions, you would normally need to escape them (`"\\["` and `"\\]"`) to allow them to match as text. However, I built in functionality to force brackets to be escaped prior to pattern matching, and to ignore escapes if they are already inserted. Thus, you won't be able to use the (`"["` and `"]"`) for their default pattern matching behavior in regular expressions (e.g., match any letter: `"[:alpha:]"`), until an `auto_escape` argument is added (which I plan to in the future).
+Because the square brackets (`"["` and `"]"`) are special characters in regular expressions, you would normally need to escape them (`"\\["` and `"\\]"`) to allow them to match as text. However, I built in functionality to allow these square brackets to be escaped prior to pattern matching, and to ignore escapes if they are already inserted. However, if you wish to perform advanced regular expression matches that use the brackets in their special character context (e.g., to match any letter: `"[:alpha:]"`), simply set the `auto_escape` argument to `FALSE` (it is `TRUE` by default).
 
 ## Wild Cards
 
@@ -242,7 +249,7 @@ The `"."` serves as a wild card, which says match any one character. If you woul
 match_p(cjs, "b[2]")
 ```
 
-Which is what will happen when any elements supplied to `p` do not match one of the node names stored in the output. The wildcard is necessary to specify that some character (here a `"1"` or a `"2"`) falls between the `"b"` and the `"["` characters in your desired match. You can now pass `"b.[2]"` to `post_summ()` with confidence knowing that only the two coefficients you want will be returned:
+Which is what will happen when any elements supplied to `p` do not match one of the node names stored in the output. The wildcard is necessary to specify that some character (here a `"0"` or a `"1"`) falls between the `"b"` and the `"["` characters in your desired match. You can now pass `"b.[2]"` to `post_summ()` with confidence knowing that only the two coefficients you want will be returned:
 
 ```{r}
 (b2_ests = post_summ(cjs, "b.[2]"))
