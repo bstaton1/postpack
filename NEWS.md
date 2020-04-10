@@ -1,5 +1,11 @@
 # *NEWS*
 
+# postpack 0.2.1 (2020-04-10)
+
+## Include ability to return Monte Carlo standard errors in `post_summ`
+
+*  This could be a nice feature for some users. It relies on the mcmcse package to calculate the MC standard error of the posterior mean and any quantiles returned by `post_summ()`.
+
 # postpack 0.2.0 (2020-04-10)
 
 ## Include an `auto_escape` option
