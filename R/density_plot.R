@@ -8,7 +8,6 @@
 #'   \code{"if_poor_Rhat"}, which will display the Rhat and effective MCMC samples
 #'   if the Rhat statistic is greater than 1.1
 #' @importFrom StatonMisc %!in%
-#' @export
 
 density_plot = function(post, p_one, show_diags = "if_poor_Rhat") {
   # return error if p_one has length > 1

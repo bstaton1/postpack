@@ -7,8 +7,6 @@
 #'   of samples you'd like to remove before traceplotting. If saving as a pdf,
 #'   these files can get very large with many samples and render slowly.
 #'   Samples are thinned systematically (i.e., at evenly-spaced intervals).
-#'
-#' @export
 
 trace_plot = function(post, p_one, thin_percent = 0) {
 
