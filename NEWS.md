@@ -1,5 +1,11 @@
 # *NEWS*
 
+# postpack 0.2.2 (2020-04-13)
+
+## Include a `post_remove` function
+
+*  In some circumstances, it might be better to exclude nodes rather than explicitly say which you want to keep. This new function behaves just like `post_subset`, except that it prompts the user to verify that they wish to exclude the match nodes and returns everything that does not match the `p` argument.
+
 # postpack 0.2.1 (2020-04-10)
 
 ## Include ability to return Monte Carlo standard errors in `post_summ`
