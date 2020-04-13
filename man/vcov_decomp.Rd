@@ -4,8 +4,16 @@
 \alias{vcov_decomp}
 \title{Decompose Variance-Covariance Matrix Node}
 \usage{
-vcov_decomp(post, p, progress = T, sigma_base_name = "sigma",
-  rho_base_name = "rho", invert = F, check = T)
+vcov_decomp(
+  post,
+  p,
+  progress = TRUE,
+  sigma_base_name = "sigma",
+  rho_base_name = "rho",
+  invert = FALSE,
+  check = TRUE,
+  auto_escape = TRUE
+)
 }
 \arguments{
 \item{post}{an object of class \code{mcmc.list}}

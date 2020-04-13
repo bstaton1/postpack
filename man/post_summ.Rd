@@ -4,8 +4,16 @@
 \alias{post_summ}
 \title{Obtain a posterior summary of specific nodes}
 \usage{
-post_summ(post, p, rnd = NULL, p_summ = c(0.5, 0.025, 0.975),
-  Rhat = F, ess = F)
+post_summ(
+  post,
+  p,
+  rnd = NULL,
+  p_summ = c(0.5, 0.025, 0.975),
+  Rhat = FALSE,
+  ess = FALSE,
+  mcse = FALSE,
+  auto_escape = TRUE
+)
 }
 \arguments{
 \item{post}{an object of class \code{mcmc.list}}
@@ -26,6 +34,12 @@ Fair warning: this can take a bit of time to run on many nodes/samples}
 \item{ess}{logical. Do you wish to calculate the
 effective sample size using \code{\link[coda]{effectiveSize}}?
 Fair warning: this can take a bit of time to run on many nodes/samples}
+
+\item{mcse}{logical. Do you wish to calculate the
+Monte Carlo standard error for the posterior mean and reported quantiles
+using the \code{\link[mcmcse]{mcse}} and \code{\link[mcmcse]{mcse.q}} functions
+(batch means method with batch size automatically calculated)?
+Fair warning: this can take a bit of time to run on many nodes/samples}
 }
 \description{
 Obtaining a summary of specific nodes is cumbersome from mcmc.list objects:
@@ -36,5 +50,5 @@ associated with requested nodes.
 }
 \seealso{
 \code{\link{match_p}}, \code{\link[StatonMisc]{summ}}, \code{\link[coda]{gelman.diag}},
-  \code{\link[coda]{effectiveSize}}
+  \code{\link[coda]{effectiveSize}}, \code{\link[mcmcse]{mcse}}, \code{\link[mcmcse]{mcse.q}}
 }

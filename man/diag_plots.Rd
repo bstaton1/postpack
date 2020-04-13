@@ -4,9 +4,18 @@
 \alias{diag_plots}
 \title{Create MCMC diagnostic plots for nodes of interest}
 \usage{
-diag_plots(post, p, ext_device = F, show_diags = "if_poor_Rhat",
-  layout = "auto", dims = "auto", thin_percent = 0, save = F,
-  file = NULL)
+diag_plots(
+  post,
+  p,
+  ext_device = FALSE,
+  show_diags = "if_poor_Rhat",
+  layout = "auto",
+  dims = "auto",
+  thin_percent = 0,
+  save = FALSE,
+  file = NULL,
+  auto_escape = TRUE
+)
 }
 \arguments{
 \item{post}{an object of class \code{mcmc.list}}
@@ -44,6 +53,13 @@ specify \code{file = "example.pdf"} as well. Defaults to \code{FALSE}.}
 \item{file}{character vector of length 1. The file name, which
 must include the \code{".pdf"} extension. Saved to working directory by default,
 but can recieve an absolute or relative file path here as well}
+
+\item{auto_escape}{logical. \code{FALSE} will treat \code{"["} and \code{"]"}
+as regular expression syntax (unless explicitly escaped by user),
+\code{TRUE} will treat these symbols as plain text to be matched.
+It is generally recommended to keep this as \code{TRUE} (the default),
+unless you are performing complex regex searches that require the
+\code{"["} and \code{"]"} symbols to be special characters}
 }
 \description{
 Allows quick visualization of posterior density and traceplots,

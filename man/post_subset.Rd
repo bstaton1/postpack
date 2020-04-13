@@ -4,7 +4,14 @@
 \alias{post_subset}
 \title{Extract a subset of nodes from a \code{mcmc.list}}
 \usage{
-post_subset(post, p, matrix = FALSE, iters = F, chains = F)
+post_subset(
+  post,
+  p,
+  matrix = FALSE,
+  iters = FALSE,
+  chains = FALSE,
+  auto_escape = TRUE
+)
 }
 \arguments{
 \item{post}{an object of class \code{mcmc.list}}
@@ -20,6 +27,13 @@ Defaults to \code{FALSE}.}
 
 \item{chains}{logical. Do you wish to retain the chain number if \code{matrix = TRUE}? Not used otherwise.
 Defaults to \code{FALSE}.}
+
+\item{auto_escape}{logical. \code{FALSE} will treat \code{"["} and \code{"]"}
+as regular expression syntax (unless explicitly escaped by user),
+\code{TRUE} will treat these symbols as plain text to be matched.
+It is generally recommended to keep this as \code{TRUE} (the default),
+unless you are performing complex regex searches that require the
+\code{"["} and \code{"]"} symbols to be special characters}
 }
 \description{
 Subsets a smaller portion from the joint posterior

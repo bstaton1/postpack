@@ -4,7 +4,7 @@
 \alias{match_p}
 \title{Find matching node names}
 \usage{
-match_p(post, p, ubase = F)
+match_p(post, p, ubase = FALSE, auto_escape = TRUE)
 }
 \arguments{
 \item{post}{an object of class \code{mcmc.list}}
@@ -14,6 +14,13 @@ so can, and sometimes should, be a regular expression; see the examples.
 Duplicate matches found among different elements of \code{p} are discarded.}
 
 \item{ubase}{logical. Do you wish to return only the unique bases (i.e., without indices listed)?}
+
+\item{auto_escape}{logical. \code{FALSE} will treat \code{"["} and \code{"]"}
+as regular expression syntax (unless explicitly escaped by user),
+\code{TRUE} will treat these symbols as plain text to be matched.
+It is generally recommended to keep this as \code{TRUE} (the default),
+unless you are performing complex regex searches that require the
+\code{"["} and \code{"]"} symbols to be special characters}
 }
 \value{
 a character vector with all node names that match \code{p}.

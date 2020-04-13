@@ -3,7 +3,6 @@
 \docType{package}
 \name{postpack}
 \alias{postpack}
-\alias{postpack-package}
 \title{postpack: Utilities for Dealing with Posterior Samples Stored in mcmc.lists}
 \description{
 This package contains many shortcuts for subsetting, summarizing, plotting, and diagnosing particular
