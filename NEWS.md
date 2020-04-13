@@ -1,5 +1,11 @@
 # *NEWS*
 
+# postpack 0.2.3 (2020-04-13)
+
+## Remove `density_plot` and `trace_plot` from exported list
+
+*  These are only ever called from `diag_plots`, so there is no need for the user to access them.
+
 # postpack 0.2.2 (2020-04-13)
 
 ## Include a `post_remove` function
