@@ -1,5 +1,12 @@
 # *NEWS*
 
+# postpack 0.2.4 (2020-07-14)
+
+## Fix warnings introduced by R 4.0.0
+
+*  See details in issue [#12](https://github.com/bstaton1/postpack/issues/12) for details on the problem.
+*  User-visible behavior is identical to previous versions, but the warnings are no longer returned.
+
 # postpack 0.2.3 (2020-04-13)
 
 ## Remove `density_plot` and `trace_plot` from exported list
