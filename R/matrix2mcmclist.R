@@ -23,7 +23,7 @@ matrix2mcmclist = function(post_mat) {
 
   # keep only parameters
   post_mat = post_mat[,p]
-  if(class(post_mat) == "numeric") {
+  if ("numeric" %in% class(post_mat)) {
     post_mat = matrix(post_mat, ncol = 1)
   }
   # use lapply over chains to turn individual blocks of samples into list elements
@@ -31,7 +31,7 @@ matrix2mcmclist = function(post_mat) {
   post_list = lapply(unique(chain), function(c) {
     # extract samples for this chain
     post_mat_sub = post_mat[chain == c,]
-    if (class(post_mat_sub) == "numeric") {
+    if ("numeric" %in% class(post_mat_sub)) {
       post_mat_sub = matrix(post_mat_sub, ncol = 1)
     }
     # set rownames equal to the iteration

@@ -28,7 +28,7 @@
 post_bind = function(post1, post2, dup_id = "_p2") {
 
   # error handlers for class correctness
-  class1 = class(post1); class2 = class(post2)
+  class1 = class(post1)[1]; class2 = class(post2)[1]
   classes = c(class1, class2)
 
   if (any(classes %!in% c("mcmc.list", "matrix"))) {
