@@ -1,5 +1,13 @@
 # *NEWS*
 
+# postpack 0.2.7 (2020-08-20)
+
+## Updates to `post_thin()`
+
+* Remove errors that arise when `thin_percent` is not a perfect multiple of the number of iterations per chain - this causes the thinning to be "quasi-evenly" spaced. As this function is only ever used in code development and not final products, this should not be an issue.
+* Reversed `thin_percent` to be `keep_percent`, and implemented in the `diag_plots()` function.
+* Added a `keep_iters` argument -- now users can choose to keep either a fixed number of samples (again, may be quasi-equal to `keep_iters`, due to rounding errors) or a fixed percent of samples.
+
 # postpack 0.2.6 (2020-08-20)
 
 ## Add a `by_chain` argument to `post_summ()`
