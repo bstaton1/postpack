@@ -131,6 +131,8 @@ Notice that the basic measures of central tendency are presented along with the 
 t(post_summ(cjs, c("sig_B0", "sig_B1")))
 ```
 
+Summaries for each chain can be obtained using the `by_chain = T` argument.
+
 Calculating convergence diagnostics for all nodes in a model can be time-consuming for large output (e.g., via `coda::gelman.diag()` or `coda::effectiveSize()`), so `post_summ()` can also be seen as a wrapper for these functions but on a smaller subset of the MCMC output:
 
 ```{r}
