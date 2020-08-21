@@ -12,6 +12,7 @@ post_summ(
   Rhat = FALSE,
   ess = FALSE,
   mcse = FALSE,
+  by_chain = F,
   auto_escape = TRUE
 )
 }
@@ -40,6 +41,11 @@ Monte Carlo standard error for the posterior mean and reported quantiles
 using the \code{\link[mcmcse]{mcse}} and \code{\link[mcmcse]{mcse.q}} functions
 (batch means method with batch size automatically calculated)?
 Fair warning: this can take a bit of time to run on many nodes/samples}
+
+\item{by_chain}{logical. Do you wish to calculate posterior summaries for each chain,
+rather than for the aggregate across chains? Defaults to \code{FALSE}.
+The arguments \code{Rhat}, \code{ess}, and \code{mcse} are ignored if \code{by_chain = TRUE}
+and a warning will be returned}
 }
 \description{
 Obtaining a summary of specific nodes is cumbersome from mcmc.list objects:

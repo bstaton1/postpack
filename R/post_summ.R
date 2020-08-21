@@ -24,13 +24,22 @@
 #'   using the \code{\link[mcmcse]{mcse}} and \code{\link[mcmcse]{mcse.q}} functions
 #'   (batch means method with batch size automatically calculated)?
 #'   Fair warning: this can take a bit of time to run on many nodes/samples
+#' @param by_chain logical. Do you wish to calculate posterior summaries for each chain,
+#'   rather than for the aggregate across chains? Defaults to \code{FALSE}.
+#'   The arguments \code{Rhat}, \code{ess}, and \code{mcse} are ignored if \code{by_chain = TRUE}
+#'   and a warning will be returned
 #' @seealso \code{\link{match_p}}, \code{\link[StatonMisc]{summ}}, \code{\link[coda]{gelman.diag}},
 #'   \code{\link[coda]{effectiveSize}}, \code{\link[mcmcse]{mcse}}, \code{\link[mcmcse]{mcse.q}}
 #' @importFrom StatonMisc summ
 #'
 #'@export
 
-post_summ = function(post, p, rnd = NULL, p_summ = c(0.5, 0.025, 0.975), Rhat = FALSE, ess = FALSE, mcse = FALSE, auto_escape = TRUE) {
+post_summ = function(post, p, rnd = NULL, p_summ = c(0.5, 0.025, 0.975), Rhat = FALSE, ess = FALSE, mcse = FALSE, by_chain = F, auto_escape = TRUE) {
+
+  # warn user that some arguments will be ignored if doing by chain
+  if (any(c(Rhat, ess, mcse)) & by_chain) {
+    warning("Rhat, ess, and mcmse will not be calculated by chain.\nSet by_chain = FALSE to see these summaries.")
+  }
 
   # match the names of the nodes that will be extracted
   p_match = match_p(post, p, auto_escape = auto_escape)
@@ -39,17 +48,31 @@ post_summ = function(post, p, rnd = NULL, p_summ = c(0.5, 0.025, 0.975), Rhat = 
   post_sub = post_subset(post, p)
 
   # apply the StatonMisc::summ function
-  output = apply(as.matrix(post_sub), 2, function(x) {
-    summ(x, p = p_summ, rnd = rnd)
-  })
+  if (!by_chain) {
+    output = apply(as.matrix(post_sub), 2, function(x) {
+      summ(x, p = p_summ, rnd = rnd)
+    })
+  } else {
+    output = lapply(post_sub, function(chain) {
+      apply(chain, 2, function(x) {
+        summ(x, p = p_summ, rnd = rnd)
+      })
+    })
 
-  # add the right node name if necessary
-  if (length(p_match) == 1) {
-    colnames(output) = p_match
+    # remove list format and make each chain summary an array slice
+    output = abind::abind(output, along = 3)
+
+    # add a more informative dimension name
+    dimnames(output)[[3]] = paste0("chain", 1:length(post_sub))
   }
 
+  # add the right node name if necessary
+  # if (length(p_match) == 1) {
+  #   colnames(output) = p_match
+  # }
+
   # if doing Rhat, calculate it
-  if (Rhat) {
+  if (Rhat & !by_chain) {
     Rhat = round(coda::gelman.diag(post_sub, autoburnin = F, multivariate = F)[[1]][,1], 3)
     output = rbind(
       output,
@@ -58,7 +81,7 @@ post_summ = function(post, p, rnd = NULL, p_summ = c(0.5, 0.025, 0.975), Rhat = 
   }
 
   # if doing effective sample size, do so
-  if (ess) {
+  if (ess & !by_chain) {
     ess = round(coda::effectiveSize(post_sub))
     output = rbind(
       output,
@@ -67,7 +90,7 @@ post_summ = function(post, p, rnd = NULL, p_summ = c(0.5, 0.025, 0.975), Rhat = 
   }
 
   # if doing MC error, do so
-  if (mcse) {
+  if (mcse & !by_chain) {
     # convert samples to matrix format
     post_sub_mat = as.matrix(post_sub)
 
