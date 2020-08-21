@@ -1,5 +1,11 @@
 # *NEWS*
 
+# postpack 0.2.5 (2020-08-20)
+
+## Add a `post_convert()` function
+
+* `postpack` requires (for the most part) that MCMC samples be stored in `mcmc.list` objects. But not all R packages that perform MCMC return samples immediately in this format. This new function may help users get their samples into `mcmc.list` format, potentially broadening the accessibility of the functions in this package.
+
 # postpack 0.2.4 (2020-07-14)
 
 ## Fix warnings introduced by R 4.0.0
