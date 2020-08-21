@@ -19,7 +19,7 @@ knitr::opts_chunk$set(echo = TRUE, fig.align = "center")
 
 # Motivations
 
-The R package `postpack` exists to make your job easier when it comes time to process the output of models fitted using Markov Chain Monte Carlo (MCMC) methods, as is commonly done in Bayesian inference. Although significant capabilities exist to interface from R with programs like JAGS, WinBUGS, OpenBUGS, and Stan, the functionality to easily process the output is lacking in my personal opinion. Output from these models is commonly stored in (or can be converted to) R objects of class `mcmc.list` (default methods supplied through the `coda` package, upon which `postpack` strongly depends), however working with these objects is not as straight-forward as one might desire. A practitioner needs to extract raw samples, summarize them, diagnose their convergence, and plot the summaries along with their measures of uncertainty. It would be ideal if consistent rules were used in how these actions were performed, all based around the master `mcmc.list`. Further, the functionality should be scalable to allow summarizing the same output from multiple models for quick evaluation of the influence of different model assumptions (e.g., different priors or where some terms are fixed at zero). Perhaps most importantly, given the ever-increasing complexity of these models, these tasks should be made simple to perform for only desired nodes from the model.
+The R package `postpack` exists to make your job easier when it comes time to process the output of models fitted using Markov Chain Monte Carlo (MCMC) methods, as is commonly done in Bayesian inference. Although significant capabilities exist to interface from R with programs like JAGS, WinBUGS, OpenBUGS, NIMBLE, and Stan, the functionality to easily process the output is lacking in my personal opinion. Output from these models is commonly stored in (or can be converted to, see `?postpack::post_convert`) R objects of class `mcmc.list` (default methods supplied through the `coda` package, upon which `postpack` strongly depends), however working with these objects is not as straight-forward as one might desire. A practitioner needs to extract raw samples, summarize them, diagnose their convergence, and plot the summaries along with their measures of uncertainty. It would be ideal if consistent rules were used in how these actions were performed, all based around the master `mcmc.list`. Further, the functionality should be scalable to allow summarizing the same output from multiple models for quick evaluation of the influence of different model assumptions (e.g., different priors or where some terms are fixed at zero). Perhaps most importantly, given the ever-increasing complexity of these models, these tasks should be made simple to perform for only desired nodes from the model.
 
 # Working Example
 
@@ -84,6 +84,8 @@ To start using `postpack`, load it into your session:
 ```{r}
 library(postpack)
 ```
+
+If your MCMC samples are not in `mcmc.list` format, you may be able to convert them using `postpack::post_convert`; see the help file for accepted formats.
 
 # Attributes of the MCMC Run
 
