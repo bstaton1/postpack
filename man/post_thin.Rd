@@ -4,28 +4,36 @@
 \alias{post_thin}
 \title{Thin a mcmc.list object}
 \usage{
-post_thin(post, thin_percent = 0.8)
+post_thin(post, keep_percent, keep_iters)
 }
 \arguments{
 \item{post}{an object of class \code{mcmc.list}}
 
-\item{thin_percent}{numeric vector of length 1 and between the interval
-(0,1): what fraction of the samples do you wish to remove from each
-chain? Defaults to \code{0.8}; i.e., removing 80\% of the samples.}
+\item{keep_percent}{numeric vector of length 1 and between the interval
+(0,1): what fraction of the samples do you wish to retain from each
+chain? Setting \code{keep_percent 0.2} will remove approximately 80\% of the samples.}
+
+\item{keep_iters}{numeric vector of length 1 representing how many samples from each
+chain to retain.}
 }
 \value{
 an object of class \code{mcmc.list}
 }
 \description{
-Systematically remove iterations from each chain of an
-objective of class \code{mcmc.list}. Thinning after running the model
-is most often done during developement of post-processing code,
-so the calculations take less time.
+Remove iterations from each chain of an
+objective of class \code{mcmc.list} at quasi-evenly spaced intervals.
+Thinning samples after running the model is useful for
+developing long-running post-processing code.
 }
 \details{
-the samples will be removed at as evenly spaced intervals
+The samples will be removed at as evenly spaced intervals
   as possible, however, this is not perfect. It is therefore recommended
   to use the full posterior for final output, but this should be fine for
-  most development. It can be improved by finding a better thinning rule:
-  one that gives a consistent interval between all retained samples.
+  most development.
+}
+\note{
+Iteration numbers are reset after thinning the samples, if running \code{\link{post_dim}}
+  on output passed through \code{post_thin}, you cannot trust the burn-in or thinning counts.
+  Again, this is not an issue for developing post-processing code, but is why you should perform final
+  calculations using the full posterior output.
 }
