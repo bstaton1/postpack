@@ -1,10 +1,10 @@
 Package: postpack
 Title: Utilities for Dealing with Posterior Samples Stored in mcmc.lists
-Version: 0.2.5
+Version: 0.2.6
 Authors@R: person("Benjamin", "Staton", email = "statonbe@gmail.com", role = c("aut", "cre"))
 Description: Contains many shortcuts for subsetting, summarizing, plotting, and diagnosing particular
     nodes from an mcmc.list object. These objects are commonly used to store output from programs that fit
-    models with Bayesian inference (e.g., JAGS, BUGS, or Stan),
+    models with Bayesian inference (e.g., JAGS, BUGS, NIMBLE, or Stan),
     yet the default summarization and diagnostic capabilities are somewhat clunky
     for plotting and subsetting particular portions of the output.
     The attempt here is to standardize all work with MCMC output into \code{mcmc.list} objects, and to provide the

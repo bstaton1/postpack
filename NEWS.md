@@ -1,5 +1,11 @@
 # *NEWS*
 
+# postpack 0.2.6 (2020-08-20)
+
+## Add a `by_chain` argument to `post_summ()`
+
+* Sometimes a user may wish to summarize each chain separately rather than the aggregate across chains. They can now do this by setting `post_summ(..., by_chain = TRUE)`. For now, Rhat, ess, and mcse will be ignored if `by_chain = TRUE`.
+
 # postpack 0.2.5 (2020-08-20)
 
 ## Add a `post_convert()` function
