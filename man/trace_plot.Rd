@@ -4,7 +4,7 @@
 \alias{trace_plot}
 \title{Create a traceplot for a single desired node}
 \usage{
-trace_plot(post, p_one, thin_percent = 0)
+trace_plot(post, p_one, keep_percent = 0)
 }
 \arguments{
 \item{post}{an object of class \code{mcmc.list}}
@@ -12,11 +12,13 @@ trace_plot(post, p_one, thin_percent = 0)
 \item{p_one}{a character vector of length 1.
 Should be a node reference to a single element in the model. E.g., \code{"pi[1]"}, not \code{"pi"}.}
 
-\item{thin_percent}{a numeric vector of length one and scaled between 0 and 1.
-of samples you'd like to remove before traceplotting. If saving as a pdf,
-these files can get very large with many samples and render slowly.
-Samples are thinned systematically (i.e., at evenly-spaced intervals).}
+\item{keep_percent}{a numeric vector of length one and scaled between 0 and 1.
+Percent of samples you'd like to keep for traceplotting and passed to \code{\link{post_thin}}.}
 }
 \description{
 Create a traceplot for a single desired node
+}
+\note{
+If saving as a pdf, these files can get very large with many samples and render slowly.
+  The \code{keep_percent} argument is intended to help with this by thinning the chains at quasi-evenly spaced intervals.
 }

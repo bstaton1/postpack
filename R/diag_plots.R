@@ -24,10 +24,8 @@
 #'   For example, \code{"5x7"} would create a 5 inch tall and 7 inch wide plotting device.
 #'   Defaults to \code{"auto"}, which selects the dimensions that look nice when \code{layout = "auto"}
 #'   as well.
-#' @param thin_percent if you wish to remove some fraction of the samples before traceplotting, do that here.
-#'   The thinning will occur systematically, i.e., at evenly-spaced intervals.
-#'   This is sometimes helpful when generating plots with many samples/nodes, which can render slowly.
-#'   Defaults to \code{0}, i.e., no thinning.
+#' @param keep_percent a numeric vector of length one and scaled between 0 and 1.
+#'   Percent of samples you'd like to keep for traceplotting and passed to \code{\link{post_thin}}.
 #' @param save logical. Do you wish to save the diagnostic plots in a PDF file? If so,
 #'   specify \code{file = "example.pdf"} as well. Defaults to \code{FALSE}.
 #' @param file character vector of length 1. The file name, which
@@ -39,13 +37,15 @@
 #'   It is generally recommended to keep this as \code{TRUE} (the default),
 #'   unless you are performing complex regex searches that require the
 #'   \code{"["} and \code{"]"} symbols to be special characters
+#' @note If saving as a pdf, these files can get very large with many samples and render slowly.
+#'   The \code{keep_percent} argument is intended to help with this by thinning the chains at quasi-evenly spaced intervals.
 #' @seealso \code{\link{match_p}}
 #' @importFrom StatonMisc %!in%
 #' @importFrom StatonMisc ext_device
 #'
 #' @export
 
-diag_plots = function(post, p, ext_device = FALSE, show_diags = "if_poor_Rhat", layout = "auto", dims = "auto", thin_percent = 0, save = FALSE, file = NULL, auto_escape = TRUE) {
+diag_plots = function(post, p, ext_device = FALSE, show_diags = "if_poor_Rhat", layout = "auto", dims = "auto", keep_percent = 1, save = FALSE, file = NULL, auto_escape = TRUE) {
 
   # the exact nodes to display. includes error checks for post and p being compatible.
   keep = match_p(post, p, ubase = F, auto_escape = auto_escape); n = length(keep)
@@ -100,7 +100,7 @@ diag_plots = function(post, p, ext_device = FALSE, show_diags = "if_poor_Rhat", 
       par(mfrow = c(row_col[1],row_col[2] * 2))
     }
     density_plot(post, i, show_diags)
-    trace_plot(post, i, thin_percent = thin_percent)
+    trace_plot(post, i, keep_percent = keep_percent)
     mytitle(i)
   })
 

@@ -11,7 +11,7 @@ diag_plots(
   show_diags = "if_poor_Rhat",
   layout = "auto",
   dims = "auto",
-  thin_percent = 0,
+  keep_percent = 1,
   save = FALSE,
   file = NULL,
   auto_escape = TRUE
@@ -42,10 +42,8 @@ For example, \code{"5x7"} would create a 5 inch tall and 7 inch wide plotting de
 Defaults to \code{"auto"}, which selects the dimensions that look nice when \code{layout = "auto"}
 as well.}
 
-\item{thin_percent}{if you wish to remove some fraction of the samples before traceplotting, do that here.
-The thinning will occur systematically, i.e., at evenly-spaced intervals.
-This is sometimes helpful when generating plots with many samples/nodes, which can render slowly.
-Defaults to \code{0}, i.e., no thinning.}
+\item{keep_percent}{a numeric vector of length one and scaled between 0 and 1.
+Percent of samples you'd like to keep for traceplotting and passed to \code{\link{post_thin}}.}
 
 \item{save}{logical. Do you wish to save the diagnostic plots in a PDF file? If so,
 specify \code{file = "example.pdf"} as well. Defaults to \code{FALSE}.}
@@ -67,6 +65,10 @@ BOTH separated by chain, for the desired nodes of interest. Includes the
 ability to plot in the RStudio graphics device, an external device (OS-indepenent),
 or a PDF file. Further, with the auto settings, the dimensions of the
 plotting device scales to the job needed.
+}
+\note{
+If saving as a pdf, these files can get very large with many samples and render slowly.
+  The \code{keep_percent} argument is intended to help with this by thinning the chains at quasi-evenly spaced intervals.
 }
 \seealso{
 \code{\link{match_p}}
