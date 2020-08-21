@@ -324,7 +324,7 @@ Options exist to:
 *  change the layout of parameters on the device (the `layout` argument), 
 *  plot the output in a new external device (the `ext_device` argument, the device will be OS specific - see `?StatonMisc::ext_device`), 
 *  save the output to a PDF graphics device (the `save` argument, which then requires that you enter the `file` argument, which is the file name of the PDF complete with the `".pdf"` extension). 
-*  thin the chains by some percentage (at evenly spaced intervals) before drawing the trace plot - this can help manage the file size when generating many plots with many samples taken while still providing much of the same inference as the unthinned output. The argument `thin_percent = 0.8` is passed to `post_thin`, and would discard 80% of the samples prior to trace plotting. This thinning does not affect the density plot visual - all retained samples are plotted there.
+*  thin the chains by some percentage (at evenly spaced intervals) before drawing the trace plot - this can help manage the file size when generating many plots with many samples taken while still providing much of the same inference as the unthinned output. The argument `keep_percent = 0.8` is passed to `post_thin`, and would discard 20% of the samples prior to trace plotting. This thinning does not affect the density plot visual - all retained samples are plotted there.
 
 The `dims` and `layout` arguments are set to `"auto"` by default - for adjustment of these settings, see `?diag_plots`. 
 
@@ -392,13 +392,13 @@ When using `vcov_decomp()`, you are recommended to always keep `check = T`, whic
 
 ## `post_thin()`
 
-If your downstream analyses of the posterior samples require many calculations, then it may be advantageous to develop the code with a smaller but otherwise identical version of the posterior output before unleashing them on the full output. You can thin the chains at regularly-spaced intervals using `post_thin()`:
+If your downstream analyses of the posterior samples require many calculations, then it may be advantageous to develop the code with a smaller but otherwise identical version of the posterior output before unleashing them on the full output. You can thin the chains at quasi-evenly spaced intervals using `post_thin()`:
 
 ```{r, eval = F}
-post_thin(cjs, thin_percent = 0.95)
+post_thin(cjs, keep_percent = 0.25)
 ```
 
-Which would discard 95% of the samples from each chain, and return the result as an `mcmc.list` object. Future versions may allow you to specify a fixed number of total samples to retain rather than as a percentage.
+Which would retain 25% of the samples from each chain, and return the result as an `mcmc.list` object. You may instead use the `keep_iters` argument to specify the number of iterations you wish to keep per chain.
 
 ## `post_bind()`
 
