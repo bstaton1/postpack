@@ -6,7 +6,6 @@
 #' @param post_mat a posterior model object, with samples in matrix format.
 #'   The matrix can contain any number of nodes, but it must contain
 #'   \code{"CHAIN"} and \code{"ITER"} as columns.
-#' @importFrom StatonMisc %!in%
 #'
 #' @export
 
@@ -19,7 +18,7 @@ matrix2mcmclist = function(post_mat) {
   # extract the chain and iter of each sample
   chain = post_mat[,"CHAIN"]
   iters = post_mat[,"ITER"]
-  p = colnames(post_mat)[which(colnames(post_mat) %!in% c("CHAIN", "ITER"))]
+  p = colnames(post_mat)[which(!(colnames(post_mat) %in% c("CHAIN", "ITER")))]
 
   # keep only parameters
   post_mat = post_mat[,p]

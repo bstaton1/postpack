@@ -7,7 +7,6 @@
 #'   \code{"always"}, \code{"never"}, \code{"if_poor_Rhat"}. Defaults to
 #'   \code{"if_poor_Rhat"}, which will display the Rhat and effective MCMC samples
 #'   if the Rhat statistic is greater than 1.1
-#' @importFrom StatonMisc %!in%
 
 density_plot = function(post, p_one, show_diags = "if_poor_Rhat") {
   # return error if p_one has length > 1
@@ -15,7 +14,7 @@ density_plot = function(post, p_one, show_diags = "if_poor_Rhat") {
 
   # return error if show_diags is invalid
   valid_show_diags = c("always", "never", "if_poor_Rhat")
-  if (show_diags %!in% valid_show_diags) {
+  if (!(show_diags %in% valid_show_diags)) {
     stop ("show_diags must be one of: ", StatonMisc::list_out(valid_show_diags, final = "or", wrap = '"'))
   }
 

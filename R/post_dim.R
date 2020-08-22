@@ -23,7 +23,6 @@
 #'   using \code{\link{post_thin}}, then these dimensions will be improperly calculated
 #'   (currently).
 #'
-#' @importFrom StatonMisc %!in%
 #' @export
 
 post_dim = function(post, kind = NULL) {
@@ -63,8 +62,8 @@ post_dim = function(post, kind = NULL) {
   if (!is.null(kind)) {
 
     # if any of kind are not in the names, return informative error
-    if (any(kind %!in% c(names(out)))) {
-      stop ("kind must include some of: \n", StatonMisc::list_out(names(out), final = "and", wrap = "'", indent = "  "))
+    if (!all(kind %in% c(names(out)))) {
+      stop ("kind can only include some of: \n", StatonMisc::list_out(names(out), final = "and", wrap = "'", indent = "  "))
     } else {# otherwise subset
       out = out[kind]
       # unname if there is only one element returned

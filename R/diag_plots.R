@@ -40,7 +40,6 @@
 #' @note If saving as a pdf, these files can get very large with many samples and render slowly.
 #'   The \code{keep_percent} argument is intended to help with this by thinning the chains at quasi-evenly spaced intervals.
 #' @seealso \code{\link{match_p}}
-#' @importFrom StatonMisc %!in%
 #' @importFrom StatonMisc ext_device
 #'
 #' @export
@@ -51,7 +50,7 @@ diag_plots = function(post, p, ext_device = FALSE, show_diags = "if_poor_Rhat", 
   keep = match_p(post, p, ubase = F, auto_escape = auto_escape); n = length(keep)
 
   # error handle for layout
-  if (layout %!in% c("auto", "1x1", "2x1", "4x1", "4x2", "5x3")) {
+  if (!(layout %in% c("auto", "1x1", "2x1", "4x1", "4x2", "5x3"))) {
     stop ("layout must be one of 'auto', '1x1', '2x1', '4x1', '4x2', or '5x3'")
   }
 
@@ -106,6 +105,3 @@ diag_plots = function(post, p, ext_device = FALSE, show_diags = "if_poor_Rhat", 
 
   if (save) dev.off()
 }
-
-
-

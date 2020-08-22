@@ -22,7 +22,6 @@
 #'   \item{if the node names are empty (e.g., only one node in an mcmc.list or missing column names in a matrix), the node names will be coerced to \code{"var1"}, \code{"var2"}, etc.}
 #' }
 #'
-#' @importFrom StatonMisc %!in%
 #' @export
 
 post_bind = function(post1, post2, dup_id = "_p2") {
@@ -31,7 +30,7 @@ post_bind = function(post1, post2, dup_id = "_p2") {
   class1 = class(post1)[1]; class2 = class(post2)[1]
   classes = c(class1, class2)
 
-  if (any(classes %!in% c("mcmc.list", "matrix"))) {
+  if (!all(classes %in% c("mcmc.list", "matrix"))) {
     stop ("post1 and post2 must be objects of class 'mcmc.list' or 'matrix'")
   }
 
