@@ -22,11 +22,12 @@ post_summ(
 \item{p}{a character vector of with length >= 1 specifying the nodes to summarize.
 Passed to \code{\link{match_p}}, so can (and sometimes should) be a regular expression.}
 
-\item{rnd}{numeric vector passed to \code{\link[StatonMisc]{summ}}.
-The digits of \code{round}.}
+\item{rnd}{numeric vector controlling rounding of summaries.
+Passed to the \code{digits} argument of \code{\link[base]{round}}.
+Defaults to \code{NULL}, which produces no rounding.}
 
-\item{p_summ}{numeric vector passed to \code{\link[StatonMisc]{summ}}.
-The posterior percentiles you want to have summarized, Defaults to \code{p_summ = c(0.5, 0.025, 0.975)}.}
+\item{p_summ}{numeric vector with the posterior percentiles you wish to have summarized.
+Defaults to \code{p_summ = c(0.5, 0.025, 0.975)}.}
 
 \item{Rhat}{logical. Do you wish to calculate the
 Rhat convergence diagnostic using \code{\link[coda]{gelman.diag}}?
@@ -55,6 +56,6 @@ This function allows extractinging a summary of the posteriors
 associated with requested nodes.
 }
 \seealso{
-\code{\link{match_p}}, \code{\link[StatonMisc]{summ}}, \code{\link[coda]{gelman.diag}},
+\code{\link{match_p}}, \code{\link[coda]{gelman.diag}},
   \code{\link[coda]{effectiveSize}}, \code{\link[mcmcse]{mcse}}, \code{\link[mcmcse]{mcse.q}}
 }
