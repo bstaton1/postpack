@@ -1,5 +1,11 @@
 # *NEWS*
 
+# postpack 0.3.1 (2020-08-23)
+
+## Reset `par()` after completing `diag_plots()`
+
+* Sometimes it is annoying without this.
+
 # postpack 0.3.0 (2020-08-23)
 
 ## Remove `StatonMisc` Dependencies
