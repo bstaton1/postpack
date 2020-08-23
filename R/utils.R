@@ -66,7 +66,7 @@ rm_regex_lock = function(string) {
 #' @param p character vector containing node names
 #' @note this is NOT a function users will generally use.
 
-base_p = function(p) {
+drop_index = function(p) {
   stringr::str_replace(p, "\\[.+\\]", "")
 }
 

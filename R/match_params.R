@@ -54,7 +54,7 @@ match_params = function(post, p, ubase = FALSE, auto_escape = TRUE) {
   }); names(match_list) = p
 
   # get the base matches by element of p
-  base_match_list = lapply(match_list, function(i) unique(base_p(i)))
+  base_match_list = lapply(match_list, function(i) unique(drop_index(i)))
 
   # number of unique base matches per element of p provided
   u_base_matches = unlist(lapply(base_match_list, function(i) length(i)))
@@ -76,7 +76,7 @@ match_params = function(post, p, ubase = FALSE, auto_escape = TRUE) {
   if (!ubase) {
     return(unique(match_vec))
   } else {
-    return(unique(base_p(match_vec)))
+    return(unique(drop_index(match_vec)))
   }
 }
 

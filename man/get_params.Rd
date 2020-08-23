@@ -23,5 +23,5 @@ stored in an object of class \code{mcmc.list}.
 That's what this function does.
 }
 \seealso{
-\code{\link{base_p}}
+\code{\link{drop_index}}
 }

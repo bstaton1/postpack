@@ -12,7 +12,7 @@
 #'   will be returned. If \code{type = "all"}, then all node names, including the indices,
 #'   will be returned.
 #'
-#' @seealso \code{\link{base_p}}
+#' @seealso \code{\link{drop_index}}
 #'
 #'@export
 
@@ -32,5 +32,5 @@ get_params = function(post, type = "base") {
   all_p = colnames(post[[1]])
 
   ## return the appropriate output
-  if (type == "base") return(unique(base_p(all_p))) else return(all_p)
+  if (type == "base") return(unique(drop_index(all_p))) else return(all_p)
 }
