@@ -4,7 +4,7 @@
 #' corresponding only to the node(s) requested.
 #'
 #' @param post an object of class \code{mcmc.list}
-#' @param p a character vector of with length >= 1 specifying the nodes to extract. Passed to \code{\link{match_p}},
+#' @param p a character vector of with length >= 1 specifying the nodes to extract. Passed to \code{\link{match_params}},
 #'   so can (and sometimes should) be a regular expression.
 #' @param matrix logical. If \code{TRUE}, the subsetted output will be returned as a matrix.
 #'   Defaults to \code{FALSE}, in which case the class \code{mcmc.list} will be retained.
@@ -18,13 +18,13 @@
 #'   It is generally recommended to keep this as \code{TRUE} (the default),
 #'   unless you are performing complex regex searches that require the
 #'   \code{"["} and \code{"]"} symbols to be special characters
-#' @seealso \code{\link{match_p}}
+#' @seealso \code{\link{match_params}}
 #' @export
 
 post_subset = function(post, p, matrix = FALSE, iters = FALSE, chains = FALSE, auto_escape = TRUE) {
 
   # extract the names to keep
-  keep_p = match_p(post, p, ubase = F, auto_escape = auto_escape)
+  keep_p = match_params(post, p, ubase = F, auto_escape = auto_escape)
 
   # extract the iteration ids: chain and iteration numbers
   ids = id_mat(post)

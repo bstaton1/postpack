@@ -20,7 +20,7 @@ post_summ(
 \item{post}{an object of class \code{mcmc.list}}
 
 \item{p}{a character vector of with length >= 1 specifying the nodes to summarize.
-Passed to \code{\link{match_p}}, so can (and sometimes should) be a regular expression.}
+Passed to \code{\link{match_params}}, so can (and sometimes should) be a regular expression.}
 
 \item{rnd}{numeric vector controlling rounding of summaries.
 Passed to the \code{digits} argument of \code{\link[base]{round}}.
@@ -56,6 +56,6 @@ This function allows extractinging a summary of the posteriors
 associated with requested nodes.
 }
 \seealso{
-\code{\link{match_p}}, \code{\link[coda]{gelman.diag}},
+\code{\link{match_params}}, \code{\link[coda]{gelman.diag}},
   \code{\link[coda]{effectiveSize}}, \code{\link[mcmcse]{mcse}}, \code{\link[mcmcse]{mcse.q}}
 }

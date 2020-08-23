@@ -5,7 +5,7 @@
 #' and return the output as a \code{mcmc.list} object
 #'
 #' @param post an object of class \code{mcmc.list}
-#' @param p a character vector with length >= 1. Passed to \code{\link{match_p}}.
+#' @param p a character vector with length >= 1. Passed to \code{\link{match_params}}.
 #'   Must match only one node in \code{post}, and that node must be a matrix.
 #' @param sigma_base_name a character vector with length == 1. What should the base node name be
 #'   for the standard deviation vector component? Defaults to \code{sigma}, which becomes \code{sigma[1]}, \code{sigma[2]},
@@ -25,8 +25,8 @@
 
 vcov_decomp = function(post, p, sigma_base_name = "sigma", rho_base_name = "rho", invert = FALSE, check = TRUE, auto_escape = TRUE) {
 
-  # check for only one node match; the normal checks will be done by match_p
-  matched_p = match_p(post, p, ubase = T, auto_escape = auto_escape)
+  # check for only one node match; the normal checks will be done by match_params
+  matched_p = match_params(post, p, ubase = T, auto_escape = auto_escape)
   if (length(matched_p) > 1) {
     stop("more than one unique base name matched by p: \n\n    ", paste(paste0("'", matched_p, "'"), collapse = ", "))
   }

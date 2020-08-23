@@ -7,7 +7,7 @@
 #' plotting device scales to the job needed.
 #'
 #' @param post an object of class \code{mcmc.list}
-#' @param p a character vector of with length >= 1 specifying the nodes to plot. Passed to \code{\link{match_p}},
+#' @param p a character vector of with length >= 1 specifying the nodes to plot. Passed to \code{\link{match_params}},
 #'   so can (and sometimes should) be a regular expression.
 #' @param ext_device logical. Do you wish to have an external device open to display the diagnostics?
 #'   \code{TRUE} will create a new plotting device using the OS-specific function.
@@ -39,14 +39,14 @@
 #'   \code{"["} and \code{"]"} symbols to be special characters
 #' @note If saving as a pdf, these files can get very large with many samples and render slowly.
 #'   The \code{keep_percent} argument is intended to help with this by thinning the chains at quasi-evenly spaced intervals.
-#' @seealso \code{\link{match_p}}
+#' @seealso \code{\link{match_params}}
 #'
 #' @export
 
 diag_plots = function(post, p, ext_device = FALSE, show_diags = "if_poor_Rhat", layout = "auto", dims = "auto", keep_percent = 1, save = FALSE, file = NULL, auto_escape = TRUE) {
 
   # the exact nodes to display. includes error checks for post and p being compatible.
-  keep = match_p(post, p, ubase = F, auto_escape = auto_escape); n = length(keep)
+  keep = match_params(post, p, ubase = F, auto_escape = auto_escape); n = length(keep)
 
   # error handle for layout
   if (!(layout %in% c("auto", "1x1", "2x1", "4x1", "4x2", "5x3"))) {

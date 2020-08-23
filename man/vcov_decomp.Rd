@@ -17,7 +17,7 @@ vcov_decomp(
 \arguments{
 \item{post}{an object of class \code{mcmc.list}}
 
-\item{p}{a character vector with length >= 1. Passed to \code{\link{match_p}}.
+\item{p}{a character vector with length >= 1. Passed to \code{\link{match_params}}.
 Must match only one node in \code{post}, and that node must be a matrix.}
 
 \item{sigma_base_name}{a character vector with length == 1. What should the base node name be

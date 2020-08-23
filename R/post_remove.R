@@ -4,7 +4,7 @@
 #'
 #' @param post an object of class \code{mcmc.list}
 #' @param p a character vector of with length >= 1 specifying the nodes to summarize.
-#'   Passed to \code{\link{match_p}}, so can (and sometimes should) be a regular expression.
+#'   Passed to \code{\link{match_params}}, so can (and sometimes should) be a regular expression.
 #' @param ask logical. Do you wish to be prompted prior to removing nodes?
 #'   Defaults to \code{TRUE}
 #' @param auto_escape logical. \code{FALSE} will treat \code{"["} and \code{"]"}
@@ -27,7 +27,7 @@
 post_remove = function(post, p, ask = TRUE, auto_escape = TRUE) {
 
   # extract the names to discard
-  discard_p = match_p(post, p, ubase = F, auto_escape = auto_escape)
+  discard_p = match_params(post, p, ubase = F, auto_escape = auto_escape)
 
   # print message and ask user if they wish to proceed
   acceptable_yes = c("y", "yes")

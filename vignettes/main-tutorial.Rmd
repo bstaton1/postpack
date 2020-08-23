@@ -221,18 +221,18 @@ post_summ(cjs, "B")
 
 because all of the node names contain a `"B"`, they are matched and returned. So if you only wanted `sig_B0` and `sig_B1`, you could pass `p = "sig"` as an argument to the `postpack` function in question, to perform the action for only nodes that contain `"sig"`.
 
-## `match_p()`
+## `match_params()`
 
-Pattern matching is driven by the `match_p()` function (which is essentially a wrapper for `stringr::str_detect()`). Every function in `postpack` that uses a `p` argument passes that argument to `match_p()` early on their calculations, so understanding the way it works is important. For example, say you want the random slope and intercept for year 2. Use `match_p()` to help you get the right regular expression code by checking what will be matched when you try to subset your output:
+Pattern matching is driven by the `match_params()` function (which is essentially a wrapper for `stringr::str_detect()`). Every function in `postpack` that uses a `p` argument passes that argument to `match_params()` early on their calculations, so understanding the way it works is important. For example, say you want the random slope and intercept for year 2. Use `match_params()` to help you get the right regular expression code by checking what will be matched when you try to subset your output:
 
 ```{r}
-match_p(cjs, "2")
+match_params(cjs, "2")
 ```
 
 All nodes with a `"2"` would be returned. You could exclude the `"SIG"` elements using:
 
 ```{r}
-match_p(cjs, "[2]")
+match_params(cjs, "[2]")
 ```
 
 ## Auto Escape of Brackets
@@ -244,13 +244,13 @@ Because the square brackets (`"["` and `"]"`) are special characters in regular 
 With that out of the way, now further refine the regular expression to exclude the `p` node from the output:
 
 ```{r}
-match_p(cjs, "b.[2]")
+match_params(cjs, "b.[2]")
 ```
 
 The `"."` serves as a wild card, which says match any one character. If you would have supplied simply `"b[2]"`, you would get an error:
 
 ```{r, echo = F, error = T, purl = F}
-match_p(cjs, "b[2]")
+match_params(cjs, "b[2]")
 ```
 
 Which is what will happen when any elements supplied to `p` do not match one of the node names stored in the output. The wildcard is necessary to specify that some character (here a `"0"` or a `"1"`) falls between the `"b"` and the `"["` characters in your desired match. You can now pass `"b.[2]"` to `post_summ()` with confidence knowing that only the two coefficients you want will be returned:
@@ -284,13 +284,13 @@ Remember fork length was specified on the _z_-scale during model fitting, meanin
 You can force your match to start with certain patterns. For example, instead of accessing all nodes that contain `"B"` in their name, suppose you wish to only extract those that contain `"B"` as the first character:
 
 ```{r}
-match_p(cjs, "^B")
+match_params(cjs, "^B")
 ```
 
 Likewise, you could extract only nodes that end with `"0"`:
 
 ```{r}
-match_p(cjs, "0$")
+match_params(cjs, "0$")
 ```
 
 Note that no elements of `"b0"` are returned, because these are matched on the basis of (e.g.,) `"b0[1]"`.
@@ -300,7 +300,7 @@ Note that no elements of `"b0"` are returned, because these are matched on the b
 You can repeat a wild card or some other character one or more times using the `"+"` symbol:
 
 ```{r}
-match_p(cjs, "^s.+0$")
+match_params(cjs, "^s.+0$")
 ```
 
 Which forces the match to start with an `"s"`, end with a `"0"`, and have anything in between.
@@ -335,7 +335,7 @@ The more chains there are in the `mcmc.list` object passed to the `post` argumen
 Notice that the `"SIG"` node is a matrix:
 
 ```{r}
-match_p(cjs, "SIG")
+match_params(cjs, "SIG")
 ```
 
 Yet if we summarize the samples, we get this output:

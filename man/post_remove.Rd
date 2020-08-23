@@ -10,7 +10,7 @@ post_remove(post, p, ask = TRUE, auto_escape = TRUE)
 \item{post}{an object of class \code{mcmc.list}}
 
 \item{p}{a character vector of with length >= 1 specifying the nodes to summarize.
-Passed to \code{\link{match_p}}, so can (and sometimes should) be a regular expression.}
+Passed to \code{\link{match_params}}, so can (and sometimes should) be a regular expression.}
 
 \item{ask}{logical. Do you wish to be prompted prior to removing nodes?
 Defaults to \code{TRUE}}

@@ -8,7 +8,7 @@
 #'
 #' @param post an object of class \code{mcmc.list}
 #' @param p a character vector of with length >= 1 specifying the nodes to summarize.
-#'   Passed to \code{\link{match_p}}, so can (and sometimes should) be a regular expression.
+#'   Passed to \code{\link{match_params}}, so can (and sometimes should) be a regular expression.
 #' @param p_summ numeric vector with the posterior percentiles you wish to have summarized.
 #'   Defaults to \code{p_summ = c(0.5, 0.025, 0.975)}.
 #' @param rnd numeric vector controlling rounding of summaries.
@@ -29,7 +29,7 @@
 #'   rather than for the aggregate across chains? Defaults to \code{FALSE}.
 #'   The arguments \code{Rhat}, \code{ess}, and \code{mcse} are ignored if \code{by_chain = TRUE}
 #'   and a warning will be returned
-#' @seealso \code{\link{match_p}}, \code{\link[coda]{gelman.diag}},
+#' @seealso \code{\link{match_params}}, \code{\link[coda]{gelman.diag}},
 #'   \code{\link[coda]{effectiveSize}}, \code{\link[mcmcse]{mcse}}, \code{\link[mcmcse]{mcse.q}}
 #'
 #'@export
@@ -49,7 +49,7 @@ post_summ = function(post, p, rnd = NULL, p_summ = c(0.5, 0.025, 0.975), Rhat = 
   }
 
   # match the names of the nodes that will be extracted
-  p_match = match_p(post, p, auto_escape = auto_escape)
+  p_match = match_params(post, p, auto_escape = auto_escape)
 
   # subset the nodes corresponding to p
   post_sub = post_subset(post, p)

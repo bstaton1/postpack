@@ -23,16 +23,16 @@
 #'   with the \code{\link[stringr]{str_detect}} function.
 #' @examples
 #' \dontrun{
-#' match_p(post, "alpha")
-#' match_p(post, c("S", "R"))         # Elements of  S, S_msy, and Sigma_R, and R
-#' match_p(post, c("R["))             # Elements of R and Sigma_R only
-#' match_p(post, c("^R["))            # Elements of R
-#' match_p(post, c("^R["), ubase = T) # Only the base node name: R
+#' match_params(post, "alpha")
+#' match_params(post, c("S", "R"))         # Elements of  S, S_msy, and Sigma_R, and R
+#' match_params(post, c("R["))             # Elements of R and Sigma_R only
+#' match_params(post, c("^R["))            # Elements of R
+#' match_params(post, c("^R["), ubase = T) # Only the base node name: R
 #' }
 #'
 #' @export
 
-match_p = function(post, p, ubase = FALSE, auto_escape = TRUE) {
+match_params = function(post, p, ubase = FALSE, auto_escape = TRUE) {
 
   # stop if post isn't mcmc.list
   if (!coda::is.mcmc.list(post)) {

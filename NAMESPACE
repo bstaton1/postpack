@@ -3,7 +3,7 @@
 export(array_format)
 export(diag_plots)
 export(get_params)
-export(match_p)
+export(match_params)
 export(matrix2mcmclist)
 export(post_bind)
 export(post_convert)
