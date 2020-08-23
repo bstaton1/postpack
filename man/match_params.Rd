@@ -4,14 +4,14 @@
 \alias{match_params}
 \title{Find matching node names}
 \usage{
-match_params(post, p, ubase = FALSE, auto_escape = TRUE)
+match_params(post, params, ubase = FALSE, auto_escape = TRUE)
 }
 \arguments{
 \item{post}{an object of class \code{mcmc.list}}
 
-\item{p}{a character vector with length >= 1. Passed to \code{stringr::str_detect},
+\item{params}{a character vector with length >= 1. Passed to \code{stringr::str_detect},
 so can, and sometimes should, be a regular expression; see the examples.
-Duplicate matches found among different elements of \code{p} are discarded.}
+Duplicate matches found among different elements of \code{params} are discarded.}
 
 \item{ubase}{logical. Do you wish to return only the unique bases (i.e., without indices listed)?}
 
@@ -23,7 +23,7 @@ unless you are performing complex regex searches that require the
 \code{"["} and \code{"]"} symbols to be special characters}
 }
 \value{
-a character vector with all node names that match \code{p}.
+a character vector with all node names that match \code{params}.
   If no matches are found, it will return an error with
   the base node names found the \code{mcmc.list} to help the next try.
 }
