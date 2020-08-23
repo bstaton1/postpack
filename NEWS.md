@@ -1,5 +1,12 @@
 # *NEWS*
 
+# postpack 0.3.0 (2020-08-23)
+
+## Remove `StatonMisc` Dependencies
+
+* **This change won't affect users** -- just what goes on under the hood
+* See issue #[16](https://github.com/bstaton1/postpack/issues/16) for details on the functions from `StatonMisc` that `postpack` depended on, and pull request #[21](https://github.com/bstaton1/postpack/pull/21) for the changes that were made
+
 # postpack 0.2.7 (2020-08-20)
 
 ## Updates to `post_thin()`
