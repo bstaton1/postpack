@@ -15,7 +15,7 @@ density_plot = function(post, p_one, show_diags = "if_poor_Rhat") {
   # return error if show_diags is invalid
   valid_show_diags = c("always", "never", "if_poor_Rhat")
   if (!(show_diags %in% valid_show_diags)) {
-    stop ("show_diags must be one of: ", StatonMisc::list_out(valid_show_diags, final = "or", wrap = '"'))
+    stop ("show_diags must be one of: ", list_out(valid_show_diags, final = "or", wrap = '"'))
   }
 
   # lock in the search string. It must be exact for the rest of this code to work

@@ -63,7 +63,7 @@ post_dim = function(post, kind = NULL) {
 
     # if any of kind are not in the names, return informative error
     if (!all(kind %in% c(names(out)))) {
-      stop ("kind can only include some of: \n", StatonMisc::list_out(names(out), final = "and", wrap = "'", indent = "  "))
+      stop ("kind can only include some of: \n", list_out(names(out), final = "and", wrap = "'", indent = "  "))
     } else {# otherwise subset
       out = out[kind]
       # unname if there is only one element returned

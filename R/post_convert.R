@@ -19,7 +19,6 @@
 #' @note If samples are stored in a \code{list} object, the individual elements must be
 #'   \code{matrix} or \code{mcmc} class, storing the samples (rows) across parameters (columns, with names)
 #'   for each chain (list elements). If list elements are in \code{matrix} format, they will be coerced to \code{mcmc} format, and thinning, start, and end intervals may be inaccurate.
-#' @importFrom StatonMisc list_out
 #' @seealso \code{\link[coda]{as.mcmc.list}}, \code{\link[coda]{as.mcmc}}, \code{\link[rstan]{As.mcmc.list}}
 #' @export
 

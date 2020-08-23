@@ -67,8 +67,8 @@ match_p = function(post, p, ubase = FALSE, auto_escape = TRUE) {
     stop (
       paste(
         "\n  Supplied value(s) of p (",
-        StatonMisc::list_out(p[u_base_matches == 0], final = "and", wrap = '"'),
-        ") did not have any matches in the nodes stored in post.\n  All elements of p must have at least one match.\n  The base names of all monitored nodes are:\n", StatonMisc::list_out(u_p, final = "and", wrap = '"', per_line = 4, indent = "    "), sep = "")
+        list_out(p[u_base_matches == 0], final = "and", wrap = '"'),
+        ") did not have any matches in the nodes stored in post.\n  All elements of p must have at least one match.\n  The base names of all monitored nodes are:\n", list_out(u_p, final = "and", wrap = '"', per_line = 4, indent = "    "), sep = "")
     )
   }
 
