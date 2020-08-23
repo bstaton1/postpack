@@ -7,7 +7,6 @@
 vcov_decomp(
   post,
   p,
-  progress = TRUE,
   sigma_base_name = "sigma",
   rho_base_name = "rho",
   invert = FALSE,
@@ -20,9 +19,6 @@ vcov_decomp(
 
 \item{p}{a character vector with length >= 1. Passed to \code{\link{match_p}}.
 Must match only one node in \code{post}, and that node must be a matrix.}
-
-\item{progress}{logical. Given this calculation can be slow for large matrices,
-do you wish to have a progress indicator printed to the console? Defaults to \code{TRUE}}
 
 \item{sigma_base_name}{a character vector with length == 1. What should the base node name be
 for the standard deviation vector component? Defaults to \code{sigma}, which becomes \code{sigma[1]}, \code{sigma[2]},

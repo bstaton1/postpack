@@ -7,7 +7,6 @@
 #'   \code{"always"}, \code{"never"}, \code{"if_poor_Rhat"}. Defaults to
 #'   \code{"if_poor_Rhat"}, which will display the Rhat and effective MCMC samples
 #'   if the Rhat statistic is greater than 1.1
-#' @importFrom StatonMisc %!in%
 
 density_plot = function(post, p_one, show_diags = "if_poor_Rhat") {
   # return error if p_one has length > 1
@@ -15,8 +14,8 @@ density_plot = function(post, p_one, show_diags = "if_poor_Rhat") {
 
   # return error if show_diags is invalid
   valid_show_diags = c("always", "never", "if_poor_Rhat")
-  if (show_diags %!in% valid_show_diags) {
-    stop ("show_diags must be one of: ", StatonMisc::list_out(valid_show_diags, final = "or", wrap = '"'))
+  if (!(show_diags %in% valid_show_diags)) {
+    stop ("show_diags must be one of: ", list_out(valid_show_diags, final = "or", wrap = '"'))
   }
 
   # lock in the search string. It must be exact for the rest of this code to work
@@ -54,7 +53,7 @@ density_plot = function(post, p_one, show_diags = "if_poor_Rhat") {
     if (!is.na(diags["Rhat"])) {
       if (diags["Rhat"] >= 1.1 | show_diags == "always") {
         Rhat_text = paste0("Rhat: ", diags["Rhat"])
-        ess_text = paste0("ESS: ", StatonMisc::prettify(diags["ess"]))
+        ess_text = paste0("ESS: ", prettyNum(diags["ess"], big.mark = ","))
         legend("topright", legend = c(Rhat_text, ess_text), bty = "n")
       }
     }

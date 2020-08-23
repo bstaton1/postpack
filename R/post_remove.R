@@ -22,8 +22,6 @@
 #' cjs2 = post_remove(cjs, "SIG") # remove nodes that match "SIG"
 #' get_p(cjs2)                    # look at the nodes present
 #' }
-#' @importFrom StatonMisc %!in%
-#' @importFrom StatonMisc list_out
 #' @export
 
 post_remove = function(post, p, ask = TRUE, auto_escape = TRUE) {
@@ -36,10 +34,10 @@ post_remove = function(post, p, ask = TRUE, auto_escape = TRUE) {
   acceptable_no = c("n", "no")
   if (ask) {
     message("Node(s) found:")
-    message(StatonMisc::list_out(discard_p, final = "and", per_line = 5, indent = "  ", wrap = '"'))
+    message(list_out(discard_p, final = "and", per_line = 5, indent = "  ", wrap = '"'))
     message("Do you wish to proceed with removing these nodes (Y/N)?")
     answer = readline(prompt = "")
-    if (tolower(answer) %!in% c(acceptable_yes, acceptable_no)) {
+    if (!(tolower(answer) %in% c(acceptable_yes, acceptable_no))) {
       stop ("invalid answer provided")
     }
   } else {
@@ -51,7 +49,7 @@ post_remove = function(post, p, ask = TRUE, auto_escape = TRUE) {
     all_p = get_p(post, type = "all")
 
     # get the names of the nodes to keep
-    keep_p = all_p[all_p %!in% discard_p]
+    keep_p = all_p[!(all_p %in% discard_p)]
 
     # extract the iteration ids: chain and iteration numbers
     ids = id_mat(post)
@@ -76,7 +74,7 @@ post_remove = function(post, p, ask = TRUE, auto_escape = TRUE) {
 
     # print a message
     message("Node(s) discarded:")
-    message(StatonMisc::list_out(discard_p, final = "and", per_line = 5, indent = "  ", wrap = '"'))
+    message(list_out(discard_p, final = "and", per_line = 5, indent = "  ", wrap = '"'))
 
     # return the output
     return(post_out)
@@ -86,4 +84,3 @@ post_remove = function(post, p, ask = TRUE, auto_escape = TRUE) {
     return(post)
   }
 }
-

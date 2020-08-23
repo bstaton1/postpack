@@ -22,7 +22,6 @@
 #'   \item{if the node names are empty (e.g., only one node in an mcmc.list or missing column names in a matrix), the node names will be coerced to \code{"var1"}, \code{"var2"}, etc.}
 #' }
 #'
-#' @importFrom StatonMisc %!in%
 #' @export
 
 post_bind = function(post1, post2, dup_id = "_p2") {
@@ -31,7 +30,7 @@ post_bind = function(post1, post2, dup_id = "_p2") {
   class1 = class(post1)[1]; class2 = class(post2)[1]
   classes = c(class1, class2)
 
-  if (any(classes %!in% c("mcmc.list", "matrix"))) {
+  if (!all(classes %in% c("mcmc.list", "matrix"))) {
     stop ("post1 and post2 must be objects of class 'mcmc.list' or 'matrix'")
   }
 
@@ -96,9 +95,9 @@ post_bind = function(post1, post2, dup_id = "_p2") {
     dup_names = colnames(post_m)[dups]
     colnames(post_m)[dups] = paste0(dup_names, dup_id)
     warning ("the following node names were duplicated between post1 and post2:\n",
-             StatonMisc::list_out(dup_names, final = "and", wrap = '"', per_line = 5, indent = "    "),
+             list_out(dup_names, final = "and", wrap = '"', per_line = 5, indent = "    "),
              "\n The node names of post2 that were duplicated have been altered to:\n",
-             StatonMisc::list_out(colnames(post_m)[dups], final = "and", wrap = '"', per_line = 5, indent = "    "))
+             list_out(colnames(post_m)[dups], final = "and", wrap = '"', per_line = 5, indent = "    "))
   }
 
   # coerce back to mcmc.list

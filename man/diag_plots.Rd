@@ -25,7 +25,7 @@ so can (and sometimes should) be a regular expression.}
 
 \item{ext_device}{logical. Do you wish to have an external device open to display the diagnostics?
 \code{TRUE} will create a new plotting device using the OS-specific function.
-Defaults to \code{FALSE}. Requires the \code{\link[StatonMisc]{ext_device}} function.}
+Defaults to \code{FALSE}.}
 
 \item{show_diags}{a character vector of length == 1. Must be one of
 \code{"always"}, \code{"never"}, \code{"if_poor_Rhat"}. Defaults to

@@ -9,10 +9,11 @@
 #' @param post an object of class \code{mcmc.list}
 #' @param p a character vector of with length >= 1 specifying the nodes to summarize.
 #'   Passed to \code{\link{match_p}}, so can (and sometimes should) be a regular expression.
-#' @param p_summ numeric vector passed to \code{\link[StatonMisc]{summ}}.
-#'  The posterior percentiles you want to have summarized, Defaults to \code{p_summ = c(0.5, 0.025, 0.975)}.
-#' @param rnd numeric vector passed to \code{\link[StatonMisc]{summ}}.
-#'   The digits of \code{round}.
+#' @param p_summ numeric vector with the posterior percentiles you wish to have summarized.
+#'   Defaults to \code{p_summ = c(0.5, 0.025, 0.975)}.
+#' @param rnd numeric vector controlling rounding of summaries.
+#'   Passed to the \code{digits} argument of \code{\link[base]{round}}.
+#'   Defaults to \code{NULL}, which produces no rounding.
 #' @param Rhat logical. Do you wish to calculate the
 #'   Rhat convergence diagnostic using \code{\link[coda]{gelman.diag}}?
 #'   Fair warning: this can take a bit of time to run on many nodes/samples
@@ -28,9 +29,8 @@
 #'   rather than for the aggregate across chains? Defaults to \code{FALSE}.
 #'   The arguments \code{Rhat}, \code{ess}, and \code{mcse} are ignored if \code{by_chain = TRUE}
 #'   and a warning will be returned
-#' @seealso \code{\link{match_p}}, \code{\link[StatonMisc]{summ}}, \code{\link[coda]{gelman.diag}},
+#' @seealso \code{\link{match_p}}, \code{\link[coda]{gelman.diag}},
 #'   \code{\link[coda]{effectiveSize}}, \code{\link[mcmcse]{mcse}}, \code{\link[mcmcse]{mcse.q}}
-#' @importFrom StatonMisc summ
 #'
 #'@export
 
@@ -41,21 +41,28 @@ post_summ = function(post, p, rnd = NULL, p_summ = c(0.5, 0.025, 0.975), Rhat = 
     warning("Rhat, ess, and mcmse will not be calculated by chain.\nSet by_chain = FALSE to see these summaries.")
   }
 
+  # define a basic summary function
+  summ = function(x, p_summ = c(0.5, 0.025, 0.975), rnd = NULL) {
+    out = c(mean = mean(x), sd = sd(x), quantile(x, p_summ))
+    if (!is.null(rnd)) out = round(out, rnd)
+    return(out)
+  }
+
   # match the names of the nodes that will be extracted
   p_match = match_p(post, p, auto_escape = auto_escape)
 
   # subset the nodes corresponding to p
   post_sub = post_subset(post, p)
 
-  # apply the StatonMisc::summ function
+  # apply the summ function to calculate numerical summaries of each requested node
   if (!by_chain) {
     output = apply(as.matrix(post_sub), 2, function(x) {
-      summ(x, p = p_summ, rnd = rnd)
+      summ(x, p_summ = p_summ, rnd = rnd)
     })
   } else {
     output = lapply(post_sub, function(chain) {
       apply(chain, 2, function(x) {
-        summ(x, p = p_summ, rnd = rnd)
+        summ(x, p_summ = p_summ, rnd = rnd)
       })
     })
 
@@ -67,9 +74,9 @@ post_summ = function(post, p, rnd = NULL, p_summ = c(0.5, 0.025, 0.975), Rhat = 
   }
 
   # add the right node name if necessary
-  # if (length(p_match) == 1) {
-  #   colnames(output) = p_match
-  # }
+  if (length(p_match) == 1) {
+    colnames(output) = p_match
+  }
 
   # if doing Rhat, calculate it
   if (Rhat & !by_chain) {

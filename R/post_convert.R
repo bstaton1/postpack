@@ -19,8 +19,6 @@
 #' @note If samples are stored in a \code{list} object, the individual elements must be
 #'   \code{matrix} or \code{mcmc} class, storing the samples (rows) across parameters (columns, with names)
 #'   for each chain (list elements). If list elements are in \code{matrix} format, they will be coerced to \code{mcmc} format, and thinning, start, and end intervals may be inaccurate.
-#' @importFrom StatonMisc %!in%
-#' @importFrom StatonMisc list_out
 #' @seealso \code{\link[coda]{as.mcmc.list}}, \code{\link[coda]{as.mcmc}}, \code{\link[rstan]{As.mcmc.list}}
 #' @export
 
@@ -37,13 +35,13 @@ post_convert = function(obj) {
 
   # return error if it is not one of the required object types
   accepted_classes = c("list", "stanfit", "bugs", "rjags")
-  if (obj_class %!in% accepted_classes) {
+  if (!(obj_class %in% accepted_classes)) {
     stop ("The class '", obj_class, "' is not accepted by this function.\n  Accepted classes are:\n    ", list_out(accepted_classes, wrap = "'"))
   }
 
   # return an error if it is a list object and the elements are not mcmc objects
   if (obj_class == "list") {
-    if (!all(unlist(lapply(obj, class)) %in% c("matrix", "mcmc"))) {
+    if (!all(unlist(lapply(obj, function(x) class(x)[1])) %in% c("matrix", "mcmc"))) {
       stop ("If obj is of class 'list', then all list elements must be of class 'matrix' or 'mcmc'")
     }
   }
@@ -62,8 +60,8 @@ post_convert = function(obj) {
   }
 
   if (obj_class == "list") {
-    if (all(unlist(lapply(obj, function(l) l[1])) == "matrix")) {
-      out_obj = coda::as.mcmc.list(lapply(x, coda::as.mcmc))
+    if (all(unlist(lapply(obj, function(l) class(l)[1])) == "matrix")) {
+      out_obj = coda::as.mcmc.list(lapply(obj, coda::as.mcmc))
     } else {
       out_obj = coda::as.mcmc.list(obj)
     }

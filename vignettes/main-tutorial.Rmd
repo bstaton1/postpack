@@ -358,12 +358,8 @@ Currently, objects with dimensions between 2 and 10 are supported. Although this
 
 For the `"SIG"` matrix, the diagonal elements `"SIG[1,1]"` and `"SIG[2,2]"` represent the inter-annual variance of the intercept and slope, respectively. The off-diagonal elements `"SIG[2,1]"` and `"SIG[1,2]"` store their covariances. To obtain the posterior of the correlation between the slope and intercept, you must divide these elements in a specific way for each posterior sample - which can get cumbersome for larger matrices. This is the purpose of `vcov_decomp()`:
 
-```{r, eval = F}
+```{r}
 SIG_decomp = vcov_decomp(cjs, "SIG")
-```
-
-```{r, echo = F}
-SIG_decomp = vcov_decomp(cjs, "SIG", progress = F)
 ```
 
 Note the characteristics of the output obtained:
@@ -388,7 +384,7 @@ You can now build the correlation matrix at the posterior median:
 array_format(post_summ(SIG_decomp, "rho")["50%",])
 ```
 
-When using `vcov_decomp()`, you are recommended to always keep `check = T`, which will ensure that the samples are from a valid variance-covariance matrix prior to performing the calculation. Setting `invert = T` will take the inverse of the matrix from each posterior sample prior to performing the calculations (e.g., if you had monitored a precision matrix rather than a covariance matrix). The progress message can be suppressed by setting `progress = F` - if you are curious, this progress message is generated using the `StatonMisc::progress_updater()` function.
+When using `vcov_decomp()`, you are recommended to always keep `check = T`, which will ensure that the samples are from a valid variance-covariance matrix prior to performing the calculation. Setting `invert = T` will take the inverse of the matrix from each posterior sample prior to performing the calculations (e.g., if you had monitored a precision matrix rather than a covariance matrix).
 
 ## `post_thin()`
 

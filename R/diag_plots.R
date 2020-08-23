@@ -11,7 +11,7 @@
 #'   so can (and sometimes should) be a regular expression.
 #' @param ext_device logical. Do you wish to have an external device open to display the diagnostics?
 #'   \code{TRUE} will create a new plotting device using the OS-specific function.
-#'   Defaults to \code{FALSE}. Requires the \code{\link[StatonMisc]{ext_device}} function.
+#'   Defaults to \code{FALSE}.
 #' @param show_diags a character vector of length == 1. Must be one of
 #'   \code{"always"}, \code{"never"}, \code{"if_poor_Rhat"}. Defaults to
 #'   \code{"if_poor_Rhat"}, which will display the Rhat and effective MCMC samples
@@ -40,8 +40,6 @@
 #' @note If saving as a pdf, these files can get very large with many samples and render slowly.
 #'   The \code{keep_percent} argument is intended to help with this by thinning the chains at quasi-evenly spaced intervals.
 #' @seealso \code{\link{match_p}}
-#' @importFrom StatonMisc %!in%
-#' @importFrom StatonMisc ext_device
 #'
 #' @export
 
@@ -51,7 +49,7 @@ diag_plots = function(post, p, ext_device = FALSE, show_diags = "if_poor_Rhat", 
   keep = match_p(post, p, ubase = F, auto_escape = auto_escape); n = length(keep)
 
   # error handle for layout
-  if (layout %!in% c("auto", "1x1", "2x1", "4x1", "4x2", "5x3")) {
+  if (!(layout %in% c("auto", "1x1", "2x1", "4x1", "4x2", "5x3"))) {
     stop ("layout must be one of 'auto', '1x1', '2x1', '4x1', '4x2', or '5x3'")
   }
 
@@ -68,6 +66,25 @@ diag_plots = function(post, p, ext_device = FALSE, show_diags = "if_poor_Rhat", 
     if (tolower(substr(file, nchar(file) - 2, nchar(file))) != "pdf") {
       stop("filename must include the '.pdf' extension")
     }
+  }
+
+  # define the create_device() function. Duplicated from StatonMisc::ext_device
+  create_device = function(h = 7, w = 7, title = NULL) {
+    # determine the operating system
+    if (.Platform$OS.type == "windows") {
+      os = "win"
+    } else if (Sys.info()["sysname"] == "Darwin") {
+      os = "mac"
+    } else if (.Platform$OS.type == "unix") {
+      os = "unix"
+    } else {
+      stop("Unknown OS; cannot select the appropriate graphics device")
+    }
+
+    # use the appropriate device-generating function depending on OS
+    if (os == "win") windows(h = h, w = w, title = title)
+    if (os == "mac") quartz(h = h, w = w, title = title)
+    if (os == "unix") x11(h = h, w = w, title = title)
   }
 
   # set the layout
@@ -88,7 +105,7 @@ diag_plots = function(post, p, ext_device = FALSE, show_diags = "if_poor_Rhat", 
   }
   height_width = as.numeric(unlist(stringr::str_split(dims, "x")))
 
-  if (ext_device) ext_device(h = height_width[1], w = height_width[2])
+  if (ext_device) create_device(h = height_width[1], w = height_width[2])
   if (save) pdf(file, h = height_width[1], w = height_width[2])
 
   # set up the graphics device
@@ -96,7 +113,7 @@ diag_plots = function(post, p, ext_device = FALSE, show_diags = "if_poor_Rhat", 
 
   junk = sapply(keep, function(i) {
     if (which(keep == i) %in% new_page & ext_device) {
-      ext_device(h = height_width[1], w = height_width[2])
+      create_device(h = height_width[1], w = height_width[2])
       par(mfrow = c(row_col[1],row_col[2] * 2))
     }
     density_plot(post, i, show_diags)
@@ -106,6 +123,3 @@ diag_plots = function(post, p, ext_device = FALSE, show_diags = "if_poor_Rhat", 
 
   if (save) dev.off()
 }
-
-
-
