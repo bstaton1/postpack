@@ -16,7 +16,7 @@
 #'
 #'@export
 
-get_p = function(post, type = "base") {
+get_params = function(post, type = "base") {
 
   # error check for type acceptance
   if (type != "base" & type != "all") {

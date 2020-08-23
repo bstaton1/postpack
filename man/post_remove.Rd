@@ -32,8 +32,8 @@ Just like post_subset, but keep all nodes from \code{post} except nodes that mat
 }
 \examples{
 \dontrun{
-get_p(cjs, type = "all")       # look at the nodes present
+get_params(cjs, type = "all")       # look at the nodes present
 cjs2 = post_remove(cjs, "SIG") # remove nodes that match "SIG"
-get_p(cjs2)                    # look at the nodes present
+get_params(cjs2)                    # look at the nodes present
 }
 }

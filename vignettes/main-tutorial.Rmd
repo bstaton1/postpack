@@ -97,16 +97,16 @@ post_dim(cjs)
 
 You can extract one of these dimensional elements quickly by specifying the `kind` argument, e.g., notice that there are `r post_dim(cjs, "nodes")` saved nodes by running `post_dim(cjs, "nodes")`.
 
-The names of these nodes will be crucial in subsetting them, so you should be able to check them out quickly at any time. This is the purpose of the `get_p()` function:
+The names of these nodes will be crucial in subsetting them, so you should be able to check them out quickly at any time. This is the purpose of the `get_params()` function:
 
 ```{r}
-get_p(cjs)
+get_params(cjs)
 ```
 
 But I thought we stored `r post_dim(cjs, "nodes")` nodes? This is because some of the nodes have multiple elements; you can access the indices monitored for each node as well:
 
 ```{r}
-get_p(cjs, type = "all")
+get_params(cjs, type = "all")
 ```
 
 # Extracting Summaries
@@ -179,7 +179,7 @@ Often you will want to take a subset out of your output while retaining each sav
 b0_samps = post_subset(cjs, "b0")
 ```
 
-By default, the output will be a `mcmc.list` which allows it to play nicely with the rest of the `postpack` functions (e.g., `get_p(b0_samps)`). However, performing plotting or calculation tasks on posterior samples might be easier if they were combined across chains and stored as a matrix (nodes as columns, rows as samples):
+By default, the output will be a `mcmc.list` which allows it to play nicely with the rest of the `postpack` functions (e.g., `get_params(b0_samps)`). However, performing plotting or calculation tasks on posterior samples might be easier if they were combined across chains and stored as a matrix (nodes as columns, rows as samples):
 
 ```{r}
 b0_samps = post_subset(cjs, "b0", matrix = T)
@@ -373,7 +373,7 @@ post_dim(cjs) == post_dim(SIG_decomp)
 ```
 
 ```{r}
-get_p(SIG_decomp, type = "all")
+get_params(SIG_decomp, type = "all")
 ```
 
 The nodes `"sigma[1]"` and `"sigma[2]"` represent the square root of the diagonal elements `"SIG[1,1]"` and `"SIG[2,2]"` (and are thus the same as the `"sig_B0"` and `"sig_B1"` nodes stored in `cjs`), and the `"rho"` elements represent to correlation matrix - and posterior samples exist now for each. The names used for these newly-created nodes can be changed using the `sigma_base_name` and `rho_base_name` arguments.
@@ -411,7 +411,7 @@ cjs = post_bind(post1 = cjs, post2 = SIG_decomp)
 and note that you have the new calculated nodes in you main master object:
 
 ```{r}
-get_p(cjs)
+get_params(cjs)
 ```
 
 You can now quickly verify that `"sig_B0"` and `"sig_B1"` are the same as `"sigma[1]"` and `"sigma[2]"`, respectively:
@@ -486,10 +486,10 @@ From here, the world is wide open to you. Anything you would do with one of your
 sapply(post_list, post_dim)
 ```
 
-Notice the two are identical, except that the `"no_rho"` run has fewer nodes because we added some to the `cjs` object above. You can see this by applying `get_p()` separately to each model object:
+Notice the two are identical, except that the `"no_rho"` run has fewer nodes because we added some to the `cjs` object above. You can see this by applying `get_params()` separately to each model object:
 
 ```{r}
-sapply(post_list, get_p)
+sapply(post_list, get_params)
 ```
 
 You could extract the summaries of the global survival coefficients from each mode to see that the qualitative inference does not depend on whether `rho` is estimated or fixed at zero:

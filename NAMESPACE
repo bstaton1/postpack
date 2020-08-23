@@ -2,7 +2,7 @@
 
 export(array_format)
 export(diag_plots)
-export(get_p)
+export(get_params)
 export(match_p)
 export(matrix2mcmclist)
 export(post_bind)

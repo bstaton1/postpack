@@ -18,9 +18,9 @@
 #'   responds "no" to the question when \code{ask = TRUE}, the object is returned unaltered.
 #' @examples
 #' \dontrun{
-#' get_p(cjs, type = "all")       # look at the nodes present
+#' get_params(cjs, type = "all")       # look at the nodes present
 #' cjs2 = post_remove(cjs, "SIG") # remove nodes that match "SIG"
-#' get_p(cjs2)                    # look at the nodes present
+#' get_params(cjs2)                    # look at the nodes present
 #' }
 #' @export
 
@@ -46,7 +46,7 @@ post_remove = function(post, p, ask = TRUE, auto_escape = TRUE) {
 
   if (tolower(answer) %in% acceptable_yes) {
     # extract the names of all nodes
-    all_p = get_p(post, type = "all")
+    all_p = get_params(post, type = "all")
 
     # get the names of the nodes to keep
     keep_p = all_p[!(all_p %in% discard_p)]

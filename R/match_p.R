@@ -43,10 +43,10 @@ match_p = function(post, p, ubase = FALSE, auto_escape = TRUE) {
   p_regex = ifelse(!stringr::str_detect(p, "\\\\") & auto_escape, ins_regex_bracket(p), p)
 
   # extract all parameters in the post object
-  all_p = get_p(post, type = "all")
+  all_p = get_params(post, type = "all")
 
   # extract the node names
-  u_p = get_p(post, type = "base")
+  u_p = get_params(post, type = "base")
 
   # determine which names match
   match_list = lapply(p_regex, function(x) {
