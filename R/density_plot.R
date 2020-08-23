@@ -53,7 +53,7 @@ density_plot = function(post, p_one, show_diags = "if_poor_Rhat") {
     if (!is.na(diags["Rhat"])) {
       if (diags["Rhat"] >= 1.1 | show_diags == "always") {
         Rhat_text = paste0("Rhat: ", diags["Rhat"])
-        ess_text = paste0("ESS: ", StatonMisc::prettify(diags["ess"]))
+        ess_text = paste0("ESS: ", prettyNum(diags["ess"], big.mark = ","))
         legend("topright", legend = c(Rhat_text, ess_text), bty = "n")
       }
     }
