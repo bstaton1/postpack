@@ -7,8 +7,6 @@
 #' @param post an object of class \code{mcmc.list}
 #' @param p a character vector with length >= 1. Passed to \code{\link{match_p}}.
 #'   Must match only one node in \code{post}, and that node must be a matrix.
-#' @param progress logical. Given this calculation can be slow for large matrices,
-#'   do you wish to have a progress indicator printed to the console? Defaults to \code{TRUE}
 #' @param sigma_base_name a character vector with length == 1. What should the base node name be
 #'   for the standard deviation vector component? Defaults to \code{sigma}, which becomes \code{sigma[1]}, \code{sigma[2]},
 #'   etc. in the output
@@ -25,7 +23,7 @@
 #' @return an object of class \code{mcmc.list}
 #' @export
 
-vcov_decomp = function(post, p, progress = TRUE, sigma_base_name = "sigma", rho_base_name = "rho", invert = FALSE, check = TRUE, auto_escape = TRUE) {
+vcov_decomp = function(post, p, sigma_base_name = "sigma", rho_base_name = "rho", invert = FALSE, check = TRUE, auto_escape = TRUE) {
 
   # check for only one node match; the normal checks will be done by match_p
   matched_p = match_p(post, p, ubase = T, auto_escape = auto_escape)
@@ -71,11 +69,10 @@ vcov_decomp = function(post, p, progress = TRUE, sigma_base_name = "sigma", rho_
   rho_samps_array = array(NA, dim = c(n, n, ni))
   rho_samps = matrix(NA, ni, n^2)
 
-  if (progress) cat("Decomposing variance-covariance matrix node", ifelse(invert, " (after inverting)", ""),  ": ", matched_p, " (", n, "x", n, ")\n\n  ", sep = "")
+  message("Decomposing variance-covariance matrix node", ifelse(invert, " (after inverting)", ""),  ": ", matched_p, " (", n, "x", n, ")\n\n  ", sep = "")
 
   # calculate the sigma vector and rho matrix for each posterior sample
   for (i in 1:ni) {
-    if (progress) StatonMisc::progress_updater(i, ni, rnd = 1)
     Sigma_tmp = array_format(Sigma_samps[i,])
     if (invert) Sigma_tmp = solve(Sigma_tmp)
     sigma_samps[i,] = sqrt(diag(Sigma_tmp))
@@ -85,7 +82,7 @@ vcov_decomp = function(post, p, progress = TRUE, sigma_base_name = "sigma", rho_
       }
     }
     rho_samps[i,] = as.numeric(rho_samps_array[,,i])
-  }; if(progress) cat("\n")
+  }
 
   # generate names for rho
   rho_names = matrix(NA, n, n)
