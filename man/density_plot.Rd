@@ -4,12 +4,12 @@
 \alias{density_plot}
 \title{Create a density for a single desired node}
 \usage{
-density_plot(post, p_one, show_diags = "if_poor_Rhat")
+density_plot(post, param, show_diags = "if_poor_Rhat")
 }
 \arguments{
 \item{post}{an object of class \code{mcmc.list}}
 
-\item{p_one}{a character vector of length == 1. Should be a node reference
+\item{param}{a character vector of length == 1. Should be a node reference
 to a single element in the model. E.g., \code{"pi[1]"}, not \code{"pi"}.}
 
 \item{show_diags}{a character vector of length == 1. Must be one of

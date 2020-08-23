@@ -4,12 +4,12 @@
 \alias{trace_plot}
 \title{Create a traceplot for a single desired node}
 \usage{
-trace_plot(post, p_one, keep_percent = 0)
+trace_plot(post, param, keep_percent = 0)
 }
 \arguments{
 \item{post}{an object of class \code{mcmc.list}}
 
-\item{p_one}{a character vector of length 1.
+\item{param}{a character vector of length 1.
 Should be a node reference to a single element in the model. E.g., \code{"pi[1]"}, not \code{"pi"}.}
 
 \item{keep_percent}{a numeric vector of length one and scaled between 0 and 1.

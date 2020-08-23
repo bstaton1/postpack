@@ -6,7 +6,7 @@
 \usage{
 diag_plots(
   post,
-  p,
+  params,
   ext_device = FALSE,
   show_diags = "if_poor_Rhat",
   layout = "auto",
@@ -20,7 +20,7 @@ diag_plots(
 \arguments{
 \item{post}{an object of class \code{mcmc.list}}
 
-\item{p}{a character vector of with length >= 1 specifying the nodes to plot. Passed to \code{\link{match_params}},
+\item{params}{a character vector of with length >= 1 specifying the nodes to plot. Passed to \code{\link{match_params}},
 so can (and sometimes should) be a regular expression.}
 
 \item{ext_device}{logical. Do you wish to have an external device open to display the diagnostics?

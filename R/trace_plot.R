@@ -1,26 +1,26 @@
 #' Create a traceplot for a single desired node
 #'
 #' @param post an object of class \code{mcmc.list}
-#' @param p_one a character vector of length 1.
+#' @param param a character vector of length 1.
 #'   Should be a node reference to a single element in the model. E.g., \code{"pi[1]"}, not \code{"pi"}.
 #' @param keep_percent a numeric vector of length one and scaled between 0 and 1.
 #'   Percent of samples you'd like to keep for traceplotting and passed to \code{\link{post_thin}}.
 #' @note If saving as a pdf, these files can get very large with many samples and render slowly.
 #'   The \code{keep_percent} argument is intended to help with this by thinning the chains at quasi-evenly spaced intervals.
 
-trace_plot = function(post, p_one, keep_percent = 0) {
+trace_plot = function(post, param, keep_percent = 0) {
 
-  # return error if p_one has length > 1
-  if (length(p_one) > 1) stop ("p_one must have only one element, and it must match the desired node exactly")
+  # return error if param has length > 1
+  if (length(param) > 1) stop ("param must have only one element, and it must match the desired node exactly")
 
   # lock in the search string. It must be exact for the rest of this code to work
-  p_one = ins_regex_lock(p_one)
+  param = ins_regex_lock(param)
 
   # perform additional thinning if desired
   post = post_thin(post, keep_percent = keep_percent)
 
   # extract this node's samples
-  post_sub = post_subset(post, p_one, matrix = T, iters = T, chains = T)
+  post_sub = post_subset(post, param, matrix = T, iters = T, chains = T)
 
   # get axis limits
   y_lim = range(post_sub[,3])
