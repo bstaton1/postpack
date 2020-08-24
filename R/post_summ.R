@@ -1,16 +1,17 @@
 #' Obtain a posterior summary of specific nodes
 #'
 #' Obtaining a summary of specific nodes is cumbersome from mcmc.list objects:
-#' \code{summary(post)} if \code{post} is of class \code{mcmc.list} is clunky.
+#' \code{\link[coda]{summary.mcmc.list}} is difficult to use for this purpose.
 #' The central tendency and uncertainty measures are in different lists.
-#' This function allows extractinging a summary of the posteriors
-#' associated with requested nodes.
+#' This function allows extracting a summary of the posteriors
+#' associated with requested nodes, including several diagnostic quantities and measures of uncertainty.
 #'
 #' @param post an object of class \code{mcmc.list}
 #' @param params a character vector of with length >= 1 specifying the nodes to summarize.
 #'   Passed to \code{\link{match_params}}, so can (and sometimes should) be a regular expression.
-#' @param p_summ numeric vector with the posterior percentiles you wish to have summarized.
-#'   Defaults to \code{p_summ = c(0.5, 0.025, 0.975)}.
+#' @param probs numeric vector specifying the posterior quantiles you wish to have summarized.
+#'   Passed to \code{\link[stats]{quantile}}.
+#'   Defaults to \code{probs = c(0.5, 0.025, 0.975)} (i.e., median and equal-tailed 95\% credible interval).
 #' @param digits numeric vector controlling rounding of summaries.
 #'   Passed to \code{\link[base]{round}} and defaults to \code{NULL}, which produces no rounding.
 #' @param Rhat logical. Do you wish to calculate the
@@ -33,7 +34,7 @@
 #'
 #'@export
 
-post_summ = function(post, params, digits = NULL, p_summ = c(0.5, 0.025, 0.975), Rhat = FALSE, neff = FALSE, mcse = FALSE, by_chain = F, auto_escape = TRUE) {
+post_summ = function(post, params, digits = NULL, probs = c(0.5, 0.025, 0.975), Rhat = FALSE, neff = FALSE, mcse = FALSE, by_chain = F, auto_escape = TRUE) {
 
   # warn user that some arguments will be ignored if doing by chain
   if (any(c(Rhat, neff, mcse)) & by_chain) {
@@ -41,8 +42,8 @@ post_summ = function(post, params, digits = NULL, p_summ = c(0.5, 0.025, 0.975),
   }
 
   # define a basic summary function
-  summ = function(x, p_summ = c(0.5, 0.025, 0.975), digits = NULL) {
-    out = c(mean = mean(x), sd = sd(x), quantile(x, p_summ))
+  summ = function(x, probs = c(0.5, 0.025, 0.975), digits = NULL) {
+    out = c(mean = mean(x), sd = sd(x), quantile(x, probs))
     if (!is.null(digits)) out = round(out, digits)
     return(out)
   }
@@ -56,12 +57,12 @@ post_summ = function(post, params, digits = NULL, p_summ = c(0.5, 0.025, 0.975),
   # apply the summ function to calculate numerical summaries of each requested node
   if (!by_chain) {
     output = apply(as.matrix(post_sub), 2, function(x) {
-      summ(x, p_summ = p_summ, digits = digits)
+      summ(x, probs = probs, digits = digits)
     })
   } else {
     output = lapply(post_sub, function(chain) {
       apply(chain, 2, function(x) {
-        summ(x, p_summ = p_summ, digits = digits)
+        summ(x, probs = probs, digits = digits)
       })
     })
 
@@ -106,11 +107,11 @@ post_summ = function(post, params, digits = NULL, p_summ = c(0.5, 0.025, 0.975),
 
     # calculate Monte Carlo SE of the various quantiles that are returned
     se_q = NULL
-    for (i in 1:length(p_summ)) {
-      se_q = rbind(se_q, apply(post_sub_mat, 2, function(x) mcmcse::mcse.q(x, p_summ[i])$se))
+    for (i in 1:length(probs)) {
+      se_q = rbind(se_q, apply(post_sub_mat, 2, function(x) mcmcse::mcse.q(x, probs[i])$se))
     }
     if (!is.null(digits)) se_q = round(se_q, digits)
-    rownames(se_q) = paste0("mcse_", p_summ * 100, "%")
+    rownames(se_q) = paste0("mcse_", probs * 100, "%")
 
     # add the standard errors to the output
     output = rbind(

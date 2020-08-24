@@ -11,6 +11,7 @@
 ## Renamed Function Arguments
 
 * All functions that previously accepted a `p` argument now accept a `params` argument (`match_params()`, `diag_plots()` `post_subset()`, `post_summ()`, `post_remove()`, `vcov_decomp()`, etc.)
+* `p_summ` has been replaced with `probs` in `post_summ()`
 * `match_params` and `get_params` now both take a `type` argument, and both accept only values of `"base_only"` or `"base_index"`.
 * `density_plot()` and `trace_plot()` previously accepted a `p_one` argument -- this is now `param` (distinction between multiple parameters and one parameter); but most users won't notice this as these are non-exported functions.
 * The non-exported functions `ins_regex_bracket()`, `rm_regex_bracket()`, `ins_regex_lock()`, and `rm_regex_lock()` now take the `params` argument rather than the `string` argument, but most users won't notice this.

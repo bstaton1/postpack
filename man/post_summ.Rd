@@ -8,7 +8,7 @@ post_summ(
   post,
   params,
   digits = NULL,
-  p_summ = c(0.5, 0.025, 0.975),
+  probs = c(0.5, 0.025, 0.975),
   Rhat = FALSE,
   neff = FALSE,
   mcse = FALSE,
@@ -25,8 +25,9 @@ Passed to \code{\link{match_params}}, so can (and sometimes should) be a regular
 \item{digits}{numeric vector controlling rounding of summaries.
 Passed to \code{\link[base]{round}} and defaults to \code{NULL}, which produces no rounding.}
 
-\item{p_summ}{numeric vector with the posterior percentiles you wish to have summarized.
-Defaults to \code{p_summ = c(0.5, 0.025, 0.975)}.}
+\item{probs}{numeric vector specifying the posterior quantiles you wish to have summarized.
+Passed to \code{\link[stats]{quantile}}.
+Defaults to \code{probs = c(0.5, 0.025, 0.975)} (i.e., median and equal-tailed 95\% credible interval).}
 
 \item{Rhat}{logical. Do you wish to calculate the
 Rhat convergence diagnostic using \code{\link[coda]{gelman.diag}}?
@@ -49,10 +50,10 @@ and a warning will be returned}
 }
 \description{
 Obtaining a summary of specific nodes is cumbersome from mcmc.list objects:
-\code{summary(post)} if \code{post} is of class \code{mcmc.list} is clunky.
+\code{\link[coda]{summary.mcmc.list}} is difficult to use for this purpose.
 The central tendency and uncertainty measures are in different lists.
-This function allows extractinging a summary of the posteriors
-associated with requested nodes.
+This function allows extracting a summary of the posteriors
+associated with requested nodes, including several diagnostic quantities and measures of uncertainty.
 }
 \seealso{
 \code{\link{match_params}}, \code{\link[coda]{gelman.diag}},

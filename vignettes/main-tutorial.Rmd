@@ -141,11 +141,11 @@ post_summ(cjs, c("sig_B0", "sig_B1"), neff = T, Rhat = T)
 
 **NOTE**: `"Rhat"` will always be rounded to three digits, and `"neff"` will always be rounded to an integer.
 
-You can report other quantiles using `p_summ` if desired and round them using `digits`:
+You can report other quantiles using `probs` if desired and round them using `digits`:
 
 ```{r}
 b1_ests = post_summ(cjs, "b1", digits = 3,
-  p_summ = c(0.025, 0.25, 0.5, 0.75, 0.975)
+  probs = c(0.025, 0.25, 0.5, 0.75, 0.975)
 )
 ```
 
