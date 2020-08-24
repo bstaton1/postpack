@@ -95,7 +95,7 @@ You can return the dimensions of the MCMC run saved in `cjs` using:
 post_dim(cjs)
 ```
 
-You can extract one of these dimensional elements quickly by specifying the `kind` argument, e.g., notice that there are `r post_dim(cjs, "nodes")` saved nodes by running `post_dim(cjs, "nodes")`.
+You can extract one of these dimensional elements quickly by specifying the `types` argument, e.g., notice that there are `r post_dim(cjs, "params")` saved nodes by running `post_dim(cjs, types = "params")`.
 
 The names of these nodes will be crucial in subsetting them, so you should be able to check them out quickly at any time. This is the purpose of the `get_params()` function:
 
@@ -103,7 +103,7 @@ The names of these nodes will be crucial in subsetting them, so you should be ab
 get_params(cjs)
 ```
 
-But I thought we stored `r post_dim(cjs, "nodes")` nodes? This is because some of the nodes have multiple elements; you can access the indices monitored for each node as well:
+But I thought we stored `r post_dim(cjs, "params")` nodes? This is because some of the nodes have multiple elements; you can access the indices monitored for each node as well:
 
 ```{r}
 get_params(cjs, type = "base_index")

@@ -4,7 +4,7 @@
 #' number of chains, etc. from an object of class \code{mcmc.list}
 #'
 #' @param post an object of class \code{mcmc.list}
-#' @param kind a character vector containing some of \code{"burn"}, \code{"post_burn"},
+#' @param types a character vector containing some of \code{"burn"}, \code{"post_burn"},
 #'   \code{"thin"}, \code{"chains"}, \code{"nodes"}. Defaults to \code{NULL}, in which case all of these are returned
 #' @return vector with named elements.
 #' \itemize{
@@ -13,19 +13,18 @@
 #'   \item \code{thin} - The thinning interval post-burn-in
 #'   \item \code{chains} - The number of chains
 #'   \item \code{saved} - The number of saved samples across all chains
-#'   \item \code{nodes} - The number of nodes with MCMC samples
+#'   \item \code{params} - The number of nodes with MCMC samples
 #' }
 #'
-#' All of these will be returned if \code{kind = NULL}, a subset can be returned by
-#'  specifying (for example) \code{kind = c("burn", "thin")}
+#' All of these will be returned if \code{types = NULL}, a subset can be returned by
+#'  specifying (for example) \code{types = c("burn", "thin")}
 #'
 #' @note If the \code{post} object was thinned after MCMC completed
-#'   using \code{\link{post_thin}}, then these dimensions will be improperly calculated
-#'   (currently).
+#'   using \code{\link{post_thin}}, then the \code{burn} and \code{thin} dimensions will be improperly calculated.
 #'
 #' @export
 
-post_dim = function(post, kind = NULL) {
+post_dim = function(post, types = NULL) {
 
   # stop if not an mcmc.list object
   if (!coda::is.mcmc.list(post)) {
@@ -54,18 +53,18 @@ post_dim = function(post, kind = NULL) {
     thin = n_thin,
     chains = n_chains,
     saved = n_save,
-    nodes = ncol(postm[,-which(colnames(postm) %in% c("CHAIN", "ITER"))])
+    params = ncol(postm[,-which(colnames(postm) %in% c("CHAIN", "ITER"))])
   )
 
-  # decide on which to return based on kind argument
-  # only eval if kind isn't null
-  if (!is.null(kind)) {
+  # decide on which to return based on types argument
+  # only eval if types isn't null
+  if (!is.null(types)) {
 
-    # if any of kind are not in the names, return informative error
-    if (!all(kind %in% c(names(out)))) {
-      stop ("kind can only include some of: \n", list_out(names(out), final = "and", wrap = "'", indent = "  "))
+    # if any of types are not in the names, return informative error
+    if (!all(types %in% c(names(out)))) {
+      stop ("types can only include some of: \n", list_out(names(out), final = "and", wrap = "'", indent = "  "))
     } else {# otherwise subset
-      out = out[kind]
+      out = out[types]
       # unname if there is only one element returned
       if (length(out) == 1) out = unname(out)
     }
@@ -74,4 +73,3 @@ post_dim = function(post, kind = NULL) {
   # return the output
   return(out)
 }
-
