@@ -6,7 +6,7 @@
 \usage{
 post_summ(
   post,
-  p,
+  params,
   rnd = NULL,
   p_summ = c(0.5, 0.025, 0.975),
   Rhat = FALSE,
@@ -19,7 +19,7 @@ post_summ(
 \arguments{
 \item{post}{an object of class \code{mcmc.list}}
 
-\item{p}{a character vector of with length >= 1 specifying the nodes to summarize.
+\item{params}{a character vector of with length >= 1 specifying the nodes to summarize.
 Passed to \code{\link{match_params}}, so can (and sometimes should) be a regular expression.}
 
 \item{rnd}{numeric vector controlling rounding of summaries.

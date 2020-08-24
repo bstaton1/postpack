@@ -7,7 +7,7 @@
 #' associated with requested nodes.
 #'
 #' @param post an object of class \code{mcmc.list}
-#' @param p a character vector of with length >= 1 specifying the nodes to summarize.
+#' @param params a character vector of with length >= 1 specifying the nodes to summarize.
 #'   Passed to \code{\link{match_params}}, so can (and sometimes should) be a regular expression.
 #' @param p_summ numeric vector with the posterior percentiles you wish to have summarized.
 #'   Defaults to \code{p_summ = c(0.5, 0.025, 0.975)}.
@@ -34,7 +34,7 @@
 #'
 #'@export
 
-post_summ = function(post, p, rnd = NULL, p_summ = c(0.5, 0.025, 0.975), Rhat = FALSE, ess = FALSE, mcse = FALSE, by_chain = F, auto_escape = TRUE) {
+post_summ = function(post, params, rnd = NULL, p_summ = c(0.5, 0.025, 0.975), Rhat = FALSE, ess = FALSE, mcse = FALSE, by_chain = F, auto_escape = TRUE) {
 
   # warn user that some arguments will be ignored if doing by chain
   if (any(c(Rhat, ess, mcse)) & by_chain) {
@@ -49,10 +49,10 @@ post_summ = function(post, p, rnd = NULL, p_summ = c(0.5, 0.025, 0.975), Rhat = 
   }
 
   # match the names of the nodes that will be extracted
-  p_match = match_params(post, p, auto_escape = auto_escape)
+  matched_params = match_params(post, params, auto_escape = auto_escape)
 
-  # subset the nodes corresponding to p
-  post_sub = post_subset(post, p)
+  # subset the nodes corresponding to params
+  post_sub = post_subset(post, params)
 
   # apply the summ function to calculate numerical summaries of each requested node
   if (!by_chain) {
@@ -74,8 +74,8 @@ post_summ = function(post, p, rnd = NULL, p_summ = c(0.5, 0.025, 0.975), Rhat = 
   }
 
   # add the right node name if necessary
-  if (length(p_match) == 1) {
-    colnames(output) = p_match
+  if (length(matched_params) == 1) {
+    colnames(output) = matched_params
   }
 
   # if doing Rhat, calculate it
