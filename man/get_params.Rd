@@ -4,24 +4,20 @@
 \alias{get_params}
 \title{Get the names of saved nodes}
 \usage{
-get_params(post, type = "base")
+get_params(post, type = "base_only")
 }
 \arguments{
 \item{post}{an object of class \code{mcmc.list}}
 
-\item{type}{character vector of length == 1. Currently accepted options are
-\code{"unique"} and \code{"all"}. See below.}
+\item{type}{a character vector with length == 1; only two options are accepted.
+Set to \code{type = "base_only"} if you wish to return only the unique node names (without indices).
+Set to \code{type = "base_index"} (the default) if you wish to return the node names with indices included.#'}
 }
 \value{
-if \code{type = "unique"}, then the unique node names (i.e., without indices)
-  will be returned. If \code{type = "all"}, then all node names, including the indices,
-  will be returned.
+character vector with all node names stored in the object \code{post}, formatted as requested by \code{type}
 }
 \description{
 Sometimes it's helpful to know what nodes are
 stored in an object of class \code{mcmc.list}.
 That's what this function does.
-}
-\seealso{
-\code{\link{drop_index}}
 }

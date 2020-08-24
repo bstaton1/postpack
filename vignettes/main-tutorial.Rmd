@@ -106,7 +106,7 @@ get_params(cjs)
 But I thought we stored `r post_dim(cjs, "nodes")` nodes? This is because some of the nodes have multiple elements; you can access the indices monitored for each node as well:
 
 ```{r}
-get_params(cjs, type = "all")
+get_params(cjs, type = "base_index")
 ```
 
 # Extracting Summaries
@@ -373,7 +373,7 @@ post_dim(cjs) == post_dim(SIG_decomp)
 ```
 
 ```{r}
-get_params(SIG_decomp, type = "all")
+get_params(SIG_decomp, type = "base_index")
 ```
 
 The nodes `"sigma[1]"` and `"sigma[2]"` represent the square root of the diagonal elements `"SIG[1,1]"` and `"SIG[2,2]"` (and are thus the same as the `"sig_B0"` and `"sig_B1"` nodes stored in `cjs`), and the `"rho"` elements represent to correlation matrix - and posterior samples exist now for each. The names used for these newly-created nodes can be changed using the `sigma_base_name` and `rho_base_name` arguments.

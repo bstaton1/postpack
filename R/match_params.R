@@ -50,10 +50,10 @@ match_params = function(post, params, type = "base_index", auto_escape = TRUE) {
   regex_params = ifelse(!stringr::str_detect(params, "\\\\") & auto_escape, ins_regex_bracket(params), params)
 
   # extract all parameters in the post object
-  all_params = get_params(post, type = "all")
+  all_params = get_params(post, type = "base_index")
 
   # extract the node names
-  u_params = get_params(post, type = "base")
+  u_params = get_params(post, type = "base_only")
 
   # determine which names match
   match_list = lapply(regex_params, function(x) {

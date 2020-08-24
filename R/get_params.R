@@ -5,32 +5,28 @@
 #' That's what this function does.
 #'
 #' @param post an object of class \code{mcmc.list}
-#' @param type character vector of length == 1. Currently accepted options are
-#'   \code{"unique"} and \code{"all"}. See below.
-#'
-#' @return if \code{type = "unique"}, then the unique node names (i.e., without indices)
-#'   will be returned. If \code{type = "all"}, then all node names, including the indices,
-#'   will be returned.
-#'
-#' @seealso \code{\link{drop_index}}
+#' @param type a character vector with length == 1; only two options are accepted.
+#'   Set to \code{type = "base_only"} if you wish to return only the unique node names (without indices).
+#'   Set to \code{type = "base_index"} (the default) if you wish to return the node names with indices included.#'
+#' @return character vector with all node names stored in the object \code{post}, formatted as requested by \code{type}
 #'
 #'@export
 
-get_params = function(post, type = "base") {
+get_params = function(post, type = "base_only") {
 
-  # error check for type acceptance
-  if (type != "base" & type != "all") {
-    stop("type must be either 'base' or 'all'")
+  # stop if post isn't mcmc.list
+  if (!coda::is.mcmc.list(post)) {
+    stop ("post must be an object of class 'mcmc.list'")
   }
 
-  # error check for class acceptance
-  if (!coda::is.mcmc.list(post)) {
-    stop("post must be an object of class 'mcmc.list'")
+  # stop if type isn't one of "base_only" or "base_index"
+  if (!(type %in% c("base_only", "base_index"))) {
+    stop ("type must be one of 'base_only' or 'base_index'. See ?get_params for details")
   }
 
   # extract all names
-  all_p = colnames(post[[1]])
+  all_params = colnames(post[[1]])
 
   ## return the appropriate output
-  if (type == "base") return(unique(drop_index(all_p))) else return(all_p)
+  if (type == "base_only") return(unique(drop_index(all_params))) else return(all_params)
 }
