@@ -4,10 +4,10 @@
 \alias{rm_regex_bracket}
 \title{Remove escapes on regex brackets}
 \usage{
-rm_regex_bracket(string)
+rm_regex_bracket(params)
 }
 \arguments{
-\item{string}{a character vector}
+\item{params}{a character vector}
 }
 \description{
 Remove escapes on regex brackets

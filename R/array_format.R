@@ -29,7 +29,7 @@ array_format = function(v) {
   all_p = names(v)
 
   # extract the base name
-  base = unique(base_p(all_p))
+  base = unique(drop_index(all_p))
   if (length(base) > 1) stop(paste0("more than one base name provided: ", paste(base, collapse = ", ")))
 
   # extract the indices

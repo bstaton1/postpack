@@ -4,10 +4,10 @@
 \alias{ins_regex_bracket}
 \title{Insert escapes on regex brackets}
 \usage{
-ins_regex_bracket(string)
+ins_regex_bracket(params)
 }
 \arguments{
-\item{string}{a character vector}
+\item{params}{a character vector}
 }
 \description{
 Insert escapes on regex brackets

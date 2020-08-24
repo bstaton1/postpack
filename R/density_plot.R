@@ -1,16 +1,16 @@
 #' Create a density for a single desired node
 #'
 #' @param post an object of class \code{mcmc.list}
-#' @param p_one a character vector of length == 1. Should be a node reference
+#' @param param a character vector of length == 1. Should be a node reference
 #'   to a single element in the model. E.g., \code{"pi[1]"}, not \code{"pi"}.
 #' @param show_diags a character vector of length == 1. Must be one of
 #'   \code{"always"}, \code{"never"}, \code{"if_poor_Rhat"}. Defaults to
 #'   \code{"if_poor_Rhat"}, which will display the Rhat and effective MCMC samples
 #'   if the Rhat statistic is greater than 1.1
 
-density_plot = function(post, p_one, show_diags = "if_poor_Rhat") {
-  # return error if p_one has length > 1
-  if (length(p_one) > 1) stop ("p_one must have only one element, and it must match the desired node exactly")
+density_plot = function(post, param, show_diags = "if_poor_Rhat") {
+  # return error if param has length > 1
+  if (length(param) > 1) stop ("param must have only one element, and it must match the desired node exactly")
 
   # return error if show_diags is invalid
   valid_show_diags = c("always", "never", "if_poor_Rhat")
@@ -19,10 +19,10 @@ density_plot = function(post, p_one, show_diags = "if_poor_Rhat") {
   }
 
   # lock in the search string. It must be exact for the rest of this code to work
-  p_one = ins_regex_lock(p_one)
+  param = ins_regex_lock(param)
 
   # extract this node's samples
-  post_sub = post_subset(post, p_one, matrix = T, iters = T, chains = T)
+  post_sub = post_subset(post, param, matrix = T, iters = T, chains = T)
 
   # fit the KDE
   dens = suppressWarnings(density(post_sub[,3]))
@@ -49,12 +49,12 @@ density_plot = function(post, p_one, show_diags = "if_poor_Rhat") {
 
   # calculate convergence diagnostics if requested
   if (show_diags %in% c("always", "if_poor_Rhat")) {
-    diags = post_summ(post, p_one, Rhat = T, ess = T)[c("Rhat", "ess"),]
+    diags = post_summ(post, param, Rhat = T, neff = T)[c("Rhat", "neff"),]
     if (!is.na(diags["Rhat"])) {
       if (diags["Rhat"] >= 1.1 | show_diags == "always") {
         Rhat_text = paste0("Rhat: ", diags["Rhat"])
-        ess_text = paste0("ESS: ", prettyNum(diags["ess"], big.mark = ","))
-        legend("topright", legend = c(Rhat_text, ess_text), bty = "n")
+        neff_text = paste0("Neff: ", prettyNum(diags["neff"], big.mark = ","))
+        legend("topright", legend = c(Rhat_text, neff_text), bty = "n")
       }
     }
   }

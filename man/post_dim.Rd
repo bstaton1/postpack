@@ -4,12 +4,12 @@
 \alias{post_dim}
 \title{Obtain MCMC dimensions from an mcmc.list}
 \usage{
-post_dim(post, kind = NULL)
+post_dim(post, types = NULL)
 }
 \arguments{
 \item{post}{an object of class \code{mcmc.list}}
 
-\item{kind}{a character vector containing some of \code{"burn"}, \code{"post_burn"},
+\item{types}{a character vector containing some of \code{"burn"}, \code{"post_burn"},
 \code{"thin"}, \code{"chains"}, \code{"nodes"}. Defaults to \code{NULL}, in which case all of these are returned}
 }
 \value{
@@ -20,11 +20,11 @@ vector with named elements.
   \item \code{thin} - The thinning interval post-burn-in
   \item \code{chains} - The number of chains
   \item \code{saved} - The number of saved samples across all chains
-  \item \code{nodes} - The number of nodes with MCMC samples
+  \item \code{params} - The number of nodes with MCMC samples
 }
 
-All of these will be returned if \code{kind = NULL}, a subset can be returned by
- specifying (for example) \code{kind = c("burn", "thin")}
+All of these will be returned if \code{types = NULL}, a subset can be returned by
+ specifying (for example) \code{types = c("burn", "thin")}
 }
 \description{
 Quickly query the number of burn-in samples, post-burnin, thinning,
@@ -32,6 +32,5 @@ number of chains, etc. from an object of class \code{mcmc.list}
 }
 \note{
 If the \code{post} object was thinned after MCMC completed
-  using \code{\link{post_thin}}, then these dimensions will be improperly calculated
-  (currently).
+  using \code{\link{post_thin}}, then the \code{burn} and \code{thin} dimensions will be improperly calculated.
 }

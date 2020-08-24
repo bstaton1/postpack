@@ -4,10 +4,10 @@
 \alias{rm_regex_lock}
 \title{Remove the symbols that lock in a string for matching}
 \usage{
-rm_regex_lock(string)
+rm_regex_lock(params)
 }
 \arguments{
-\item{string}{a character vector on to which a carrot and dollar sign
+\item{params}{a character vector on to which a carrot and dollar sign
 will be removed from if present}
 }
 \description{

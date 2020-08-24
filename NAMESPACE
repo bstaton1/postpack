@@ -2,9 +2,8 @@
 
 export(array_format)
 export(diag_plots)
-export(get_p)
-export(match_p)
-export(matrix2mcmclist)
+export(get_params)
+export(match_params)
 export(post_bind)
 export(post_convert)
 export(post_dim)

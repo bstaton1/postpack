@@ -1,27 +1,27 @@
 #' Insert escapes on regex brackets
 #'
-#' @param string a character vector
+#' @param params a character vector
 #' @details searches the contents of a string for the occurrence of a
 #'  square bracket or two, and inserts the necessary escapes for searching
 #'  via regular expression
 #' @note this is NOT a function users will generally use.
 
-ins_regex_bracket = function(string) {
-  out = stringr::str_replace(string, "\\[", "\\\\[")
+ins_regex_bracket = function(params) {
+  out = stringr::str_replace(params, "\\[", "\\\\[")
   out = stringr::str_replace(out, "\\]", "\\\\]")
   return(out)
 }
 
 #' Remove escapes on regex brackets
 #'
-#' @param string a character vector
+#' @param params a character vector
 #' @details searches the contents of a string for the occurrence of a
 #'  square bracket or two (that has been escaped), and removes the escaping
 #'  that was necessary for regular expression matching
 #' @note this is NOT a function users will generally use.
 
-rm_regex_bracket = function(string) {
-  out = stringr::str_replace(string, "\\\\\\[", "\\[")
+rm_regex_bracket = function(params) {
+  out = stringr::str_replace(params, "\\\\\\[", "\\[")
   out = stringr::str_replace(out, "\\\\\\]", "\\]")
   return(out)
 }
@@ -31,12 +31,12 @@ rm_regex_bracket = function(string) {
 #' To ensure that a regular expression will match exactly,
 #' it's necessary to specify so - which is what this function does.
 #'
-#' @param string a character vector on to which a carrot and dollar sign
+#' @param params a character vector on to which a carrot and dollar sign
 #'   will be pasted to if not already present
 #' @note this is NOT a function users will generally use.
 
-ins_regex_lock = function(string) {
-  if (!stringr::str_detect(string, "\\^")) out = paste("^", string, sep = "")
+ins_regex_lock = function(params) {
+  if (!stringr::str_detect(params, "\\^")) out = paste("^", params, sep = "")
   if (!stringr::str_detect(out, "\\$")) out = paste(out, "$", sep = "")
   return(out)
 }
@@ -47,12 +47,12 @@ ins_regex_lock = function(string) {
 #' it's necessary to specify so - this function undoes the work of
 #' \code{\link{ins_regex_lock}} - currently just for prettier printing of node names
 #'
-#' @param string a character vector on to which a carrot and dollar sign
+#' @param params a character vector on to which a carrot and dollar sign
 #'   will be removed from if present
 #' @note this is NOT a function users will generally use.
 
-rm_regex_lock = function(string) {
-  out = stringr::str_replace(string, "\\^", "")
+rm_regex_lock = function(params) {
+  out = stringr::str_replace(params, "\\^", "")
   out = stringr::str_replace(out, "\\$", "")
   return(out)
 }
@@ -61,13 +61,13 @@ rm_regex_lock = function(string) {
 #'
 #' Removes square brackets, numbers, and commas that represent
 #' the index of the node element in question. Returns just the
-#' text portion. E.g, \code{"R\[1\]"} becomes \code{"R"}.
+#' node name.
 #'
-#' @param p character vector containing node names
+#' @param params character vector containing node names
 #' @note this is NOT a function users will generally use.
 
-base_p = function(p) {
-  stringr::str_replace(p, "\\[.+\\]", "")
+drop_index = function(params) {
+  stringr::str_replace(params, "\\[.+\\]", "")
 }
 
 #' Adds a title between two figures
@@ -107,4 +107,3 @@ id_mat = function(post) {
   # extract and return the sample identification information
   as.matrix(post, iters = T, chains = T)[,c("CHAIN", "ITER")]
 }
-

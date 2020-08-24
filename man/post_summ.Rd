@@ -6,11 +6,11 @@
 \usage{
 post_summ(
   post,
-  p,
-  rnd = NULL,
+  params,
+  digits = NULL,
   p_summ = c(0.5, 0.025, 0.975),
   Rhat = FALSE,
-  ess = FALSE,
+  neff = FALSE,
   mcse = FALSE,
   by_chain = F,
   auto_escape = TRUE
@@ -19,12 +19,11 @@ post_summ(
 \arguments{
 \item{post}{an object of class \code{mcmc.list}}
 
-\item{p}{a character vector of with length >= 1 specifying the nodes to summarize.
-Passed to \code{\link{match_p}}, so can (and sometimes should) be a regular expression.}
+\item{params}{a character vector of with length >= 1 specifying the nodes to summarize.
+Passed to \code{\link{match_params}}, so can (and sometimes should) be a regular expression.}
 
-\item{rnd}{numeric vector controlling rounding of summaries.
-Passed to the \code{digits} argument of \code{\link[base]{round}}.
-Defaults to \code{NULL}, which produces no rounding.}
+\item{digits}{numeric vector controlling rounding of summaries.
+Passed to \code{\link[base]{round}} and defaults to \code{NULL}, which produces no rounding.}
 
 \item{p_summ}{numeric vector with the posterior percentiles you wish to have summarized.
 Defaults to \code{p_summ = c(0.5, 0.025, 0.975)}.}
@@ -33,8 +32,8 @@ Defaults to \code{p_summ = c(0.5, 0.025, 0.975)}.}
 Rhat convergence diagnostic using \code{\link[coda]{gelman.diag}}?
 Fair warning: this can take a bit of time to run on many nodes/samples}
 
-\item{ess}{logical. Do you wish to calculate the
-effective sample size using \code{\link[coda]{effectiveSize}}?
+\item{neff}{logical. Do you wish to calculate the number of effective MCMC samples
+using \code{\link[coda]{effectiveSize}}?
 Fair warning: this can take a bit of time to run on many nodes/samples}
 
 \item{mcse}{logical. Do you wish to calculate the
@@ -45,7 +44,7 @@ Fair warning: this can take a bit of time to run on many nodes/samples}
 
 \item{by_chain}{logical. Do you wish to calculate posterior summaries for each chain,
 rather than for the aggregate across chains? Defaults to \code{FALSE}.
-The arguments \code{Rhat}, \code{ess}, and \code{mcse} are ignored if \code{by_chain = TRUE}
+The arguments \code{Rhat}, \code{neff}, and \code{mcse} are ignored if \code{by_chain = TRUE}
 and a warning will be returned}
 }
 \description{
@@ -56,6 +55,6 @@ This function allows extractinging a summary of the posteriors
 associated with requested nodes.
 }
 \seealso{
-\code{\link{match_p}}, \code{\link[coda]{gelman.diag}},
+\code{\link{match_params}}, \code{\link[coda]{gelman.diag}},
   \code{\link[coda]{effectiveSize}}, \code{\link[mcmcse]{mcse}}, \code{\link[mcmcse]{mcse.q}}
 }
