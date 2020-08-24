@@ -1,5 +1,12 @@
 # *NEWS*
 
+# postpack 0.4.1 (2020-08-24)
+
+## Improve examples in help files
+
+* Some previous examples were entirely hypothetical (non-executable), and some functions didn't even have them.
+* Nearly all examples now rely heavily on the `data(cjs)` object.
+
 # postpack 0.4.0 (2020-08-24)
 
 ## Renamed Functions
