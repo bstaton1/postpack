@@ -119,10 +119,10 @@ summary(cjs)
 
 However, note that **all** nodes are summarized (which many take a long time if the model has many nodes) and that much of the important information is stored in more than one location in the summary (e.g., mean and standard deviations are stored separately from the quantiles, making them difficult to access). 
 
-With `post_summ()` you can summarize only the node(s) you wish by passing their name(s) to the `p` argument.
+With `post_summ()` you can summarize only the node(s) you wish by passing their name(s) to the `params` argument.
 
 ```{r}
-post_summ(cjs, p = c("sig_B0", "sig_B1"))
+post_summ(cjs, params = c("sig_B0", "sig_B1"))
 ```
 
 Notice that the basic measures of central tendency are presented along with the measures of variability and the two most commonly accessed quantiles: those corresponding to the posterior median and the equal-tailed 95% credible limits. If you prefer to see nodes be stored as rows and summary statistics as columns, you can perform a matrix transposition with the `t()` function:
@@ -136,7 +136,7 @@ Summaries for each chain can be obtained using the `by_chain = T` argument.
 Calculating convergence diagnostics for all nodes in a model can be time-consuming for large output (e.g., via `coda::gelman.diag()` or `coda::effectiveSize()`), so `post_summ()` can also be seen as a wrapper for these functions but on a smaller subset of the MCMC output:
 
 ```{r}
-post_summ(cjs, p = c("sig_B0", "sig_B1"), ess = T, Rhat = T)
+post_summ(cjs, c("sig_B0", "sig_B1"), ess = T, Rhat = T)
 ```
 
 `"Rhat"` will always be rounded to three digits, and `"ess"` will always be rounded to an integer.
@@ -211,7 +211,7 @@ head(post_subset(cjs, "b0", matrix = T, chains = T, iters = T))
 
 # Pattern Matching {-}
 
-Early versions of these `postpack` functions required that if you wanted to subset both (e.g.,) `sig_B0` and `sig_B1`, you had pass them explicity to the `p` argument. However, with the magic of pattern matching with regular expressions, far more general subsetting is now available. However, you will need to learn some very basic regular expression syntax to get it to work properly.
+Early versions of these `postpack` functions required that if you wanted to subset both (e.g.,) `sig_B0` and `sig_B1`, you had pass them explicitly to the `params` argument. However, with the magic of pattern matching with regular expressions, far more general subsetting is now available. However, you will need to learn some very basic regular expression syntax to get it to work properly.
 
 Here is a very basic example:
 
@@ -219,11 +219,11 @@ Here is a very basic example:
 post_summ(cjs, "B")
 ```
 
-because all of the node names contain a `"B"`, they are matched and returned. So if you only wanted `sig_B0` and `sig_B1`, you could pass `p = "sig"` as an argument to the `postpack` function in question, to perform the action for only nodes that contain `"sig"`.
+because all of the node names contain a `"B"`, they are matched and returned. So if you only wanted `sig_B0` and `sig_B1`, you could pass `params = "sig"` as an argument to the `postpack` function in question, to perform the action for only nodes that contain `"sig"`.
 
 ## `match_params()`
 
-Pattern matching is driven by the `match_params()` function (which is essentially a wrapper for `stringr::str_detect()`). Every function in `postpack` that uses a `p` argument passes that argument to `match_params()` early on their calculations, so understanding the way it works is important. For example, say you want the random slope and intercept for year 2. Use `match_params()` to help you get the right regular expression code by checking what will be matched when you try to subset your output:
+Pattern matching is driven by the `match_params()` function (which is essentially a wrapper for `stringr::str_detect()`). Every function in `postpack` that uses a `params` argument passes that argument to `match_params()` early on their calculations, so understanding the way it works is important. For example, say you want the random slope and intercept for year 2 (named `"b0[2]"` and `"b1[2]"` in the output). Use `match_params()` to help you get the right regular expression code by checking what will be matched when you try to subset your output:
 
 ```{r}
 match_params(cjs, "2")
@@ -253,7 +253,7 @@ The `"."` serves as a wild card, which says match any one character. If you woul
 match_params(cjs, "b[2]")
 ```
 
-Which is what will happen when any elements supplied to `p` do not match one of the node names stored in the output. The wildcard is necessary to specify that some character (here a `"0"` or a `"1"`) falls between the `"b"` and the `"["` characters in your desired match. You can now pass `"b.[2]"` to `post_summ()` with confidence knowing that only the two coefficients you want will be returned:
+Which is what will happen when any element supplied to `params` does not match one of the node names stored in the output. The wildcard is necessary to specify that some character (here a `"0"` or a `"1"`) falls between the `"b"` and the `"["` characters in your desired match. You can now pass `"b.[2]"` to `post_summ()` with confidence knowing that only the two coefficients you want will be returned:
 
 ```{r}
 (b2_ests = post_summ(cjs, "b.[2]"))
@@ -307,14 +307,14 @@ Which forces the match to start with an `"s"`, end with a `"0"`, and have anythi
 
 # Other Useful Features
 
-Now that you have a basic understanding of how to use the `p` argument within `postpack` functions to be very specific about which output you want to obtain, its time to cover some other other functionality provided with `postpack`.
+Now that you have a basic understanding of how to use the `params` argument within `postpack` functions to be very specific about which output you want to obtain, its time to cover some other other functionality provided with `postpack`.
 
 ## `diag_plots()`
 
 One of the key outputs to look at for convergence and good sampling behavior is the density and trace plots compared between chains. The `diag_plots()` function serves this purpose (which unlike the `coda` version allows plotting the densities color coded by chain and only for specific nodes):
 
 ```{r, fig.width = 4, fig.height = 6}
-diag_plots(cjs, "SIG")
+diag_plots(cjs, params = "SIG")
 ```
 
 Options exist to:
@@ -322,11 +322,11 @@ Options exist to:
 *  display the Rhat and effective MCMC samples for each node (the `show_diags` argument, which accepts value of `"always"`, `"never"`, or `"if_poor_Rhat"` with the last one being the default. See `?diag_plots` for details),
 *  change the size of the graphics device (the `dims` argument),
 *  change the layout of parameters on the device (the `layout` argument), 
-*  plot the output in a new external device (the `ext_device` argument, the device will be OS specific - see `?StatonMisc::ext_device`), 
+*  plot the output in a new external device (the `ext_device` argument, the device will be OS specific), 
 *  save the output to a PDF graphics device (the `save` argument, which then requires that you enter the `file` argument, which is the file name of the PDF complete with the `".pdf"` extension). 
-*  thin the chains by some percentage (at evenly spaced intervals) before drawing the trace plot - this can help manage the file size when generating many plots with many samples taken while still providing much of the same inference as the unthinned output. The argument `keep_percent = 0.8` is passed to `post_thin`, and would discard 20% of the samples prior to trace plotting. This thinning does not affect the density plot visual - all retained samples are plotted there.
+*  thin the chains by some percentage (at evenly spaced intervals) before drawing the trace plot - this can help manage the file size when generating many plots with many samples taken while still providing much of the same inference as the unthinned output. The argument `keep_percent = 0.8` is passed to `post_thin`, and would discard 20% of the samples prior to trace plotting. This thinning does not affect the density plot visual -- all retained samples are plotted there.
 
-The `dims` and `layout` arguments are set to `"auto"` by default - for adjustment of these settings, see `?diag_plots`. 
+The `dims` and `layout` arguments are set to `"auto"` by default -- for adjustment of these settings, see `?diag_plots`. 
 
 The more chains there are in the `mcmc.list` object passed to the `post` argument, the more colors will be displayed.
 
@@ -350,16 +350,16 @@ You may want a matrix that stores the posterior means in the same location as th
 array_format(SIG_ests["mean",])
 ```
 
-Currently, objects with dimensions between 2 and 10 are supported. Although this is a basic example, imagine you had arranged survival for each individual, detection occasion, and year as `phi[i,j,y]` - it would be really nice to quickly put the posterior summaries back in the dimensions of the model.
+Currently, objects with dimensions between 2 and 10 are supported. Although this is a basic example, imagine you had arranged survival for each individual, detection occasion, and year as `phi[i,j,y]` -- it would be really nice to quickly put the posterior summaries back in the dimensions of the model.
 
 `array_format()` requires a vector of named elements, where the element names contain the correct indices to place them in (e.g., `"SIG[1,1]"` and `"SIG[2,2]"`).
 
 ## `vcov_decomp()`
 
-For the `"SIG"` matrix, the diagonal elements `"SIG[1,1]"` and `"SIG[2,2]"` represent the inter-annual variance of the intercept and slope, respectively. The off-diagonal elements `"SIG[2,1]"` and `"SIG[1,2]"` store their covariances. To obtain the posterior of the correlation between the slope and intercept, you must divide these elements in a specific way for each posterior sample - which can get cumbersome for larger matrices. This is the purpose of `vcov_decomp()`:
+For the `"SIG"` matrix, the diagonal elements `"SIG[1,1]"` and `"SIG[2,2]"` represent the inter-annual variance of the intercept and slope, respectively. The off-diagonal elements `"SIG[2,1]"` and `"SIG[1,2]"` store their covariances. To obtain the posterior of the correlation between the slope and intercept, you must divide these elements in a specific way for each posterior sample -- which can get cumbersome for larger matrices. This is the purpose of `vcov_decomp()`:
 
 ```{r}
-SIG_decomp = vcov_decomp(cjs, "SIG")
+SIG_decomp = vcov_decomp(cjs, param = "SIG")
 ```
 
 Note the characteristics of the output obtained:
@@ -378,7 +378,7 @@ get_params(SIG_decomp, type = "all")
 
 The nodes `"sigma[1]"` and `"sigma[2]"` represent the square root of the diagonal elements `"SIG[1,1]"` and `"SIG[2,2]"` (and are thus the same as the `"sig_B0"` and `"sig_B1"` nodes stored in `cjs`), and the `"rho"` elements represent to correlation matrix - and posterior samples exist now for each. The names used for these newly-created nodes can be changed using the `sigma_base_name` and `rho_base_name` arguments.
 
-You can now build the correlation matrix at the posterior median:
+You can now build the posterior median correlation matrix:
 
 ```{r}
 array_format(post_summ(SIG_decomp, "rho")["50%",])
@@ -452,7 +452,7 @@ Finally, for step (3) combine the samples using `post_bind()`:
 cjs = post_bind(post1 = cjs, post2 = eb0_samps)
 ```
 
-If the two objects contain duplicate node names, the values from the object passed to the `post2` argument of `post_bind()` will have the suffix supplied under the argument `dup_id` (`"_p2"` by default), and a warning will be returned to notify the user that this occured.
+If the two objects contain duplicate node names, the values from the object passed to the `post2` argument of `post_bind()` will have the suffix supplied under the argument `dup_id` (`"_p2"` by default), and a warning will be returned to notify the user that this occurred.
 
 # Multiple Models
 
@@ -460,7 +460,7 @@ Oftentimes, you will want to evaluate how the output depends on a small change t
 
 I have only recently began working with the `postpack` functions in this regard efficiently, so the ideas are not fully fleshed out yet. 
 
-The trick is to store your multiple `mcmc.list` objects as elements of a larger list. Suppose you have, in addition to `cjs`, an `mcmc.list` called `cjs_no_rho`, which is identical to the model above, except that the `rho` node was fixed at zero during MCMC sampling rather than being estimated with a uniform(1,1) prior as shown above. You could combine these objects:
+So far, I have found the trick of storing your multiple `mcmc.list` objects as elements of a larger list. Suppose you have, in addition to `cjs`, an `mcmc.list` called `cjs_no_rho`, which is identical to the model above, except that the `rho` node was fixed at zero during MCMC sampling rather than being estimated with a uniform(1,1) prior as shown above. You could combine these objects:
 
 ```{r, eval = F}
 data("cjs_no_rho", package = "postpack")
@@ -480,7 +480,7 @@ Be sure to assign the list with element names, which allows tracking which outpu
 names(post_list) = c("est_rho", "no_rho")
 ```
 
-From here, the world is wide open to you. Anything you would do with one of your `mcmc.list` objects, you can do with two (or any number really) through the use of the base `apply()` family of functions. For example, extract the dimensions of the saved output for each run:
+From here, the world is wide open to you. Anything you would do with one of your `mcmc.list` objects, you can do with two (or any number really) through the use of the base R `apply()` family of functions. For example, extract the dimensions of the saved output for each run:
 
 ```{r}
 sapply(post_list, post_dim)
@@ -498,7 +498,7 @@ You could extract the summaries of the global survival coefficients from each mo
 lapply(post_list, function(model) post_summ(model, "^B", rnd = 2))
 ```
 
-Or verify that the detection efficiencies are not affected either:
+Or verify that the detection probabilities are not affected either:
 
 ```{r}
 lapply(post_list, function(model) post_summ(model, "p", rnd = 2))
