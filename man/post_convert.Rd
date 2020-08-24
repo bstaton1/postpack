@@ -8,7 +8,7 @@ post_convert(obj)
 }
 \arguments{
 \item{obj}{An R object storing posterior samples from an MCMC algorithm.
-Accepted classes are \code{list}, \code{stanfit}, \code{bugs}, \code{rjags}.}
+Accepted classes are \code{list}, \code{matrix}, \code{stanfit}, \code{bugs}, \code{rjags}.}
 }
 \value{
 The same information as passed in the \code{obj} argument, but formatted as \code{mcmc.list} class
@@ -25,14 +25,16 @@ Accepted classes are produced by several packages, including but probably not li
     \item \code{bugs} objects are created by \code{R2WinBUGS::bugs} and \code{R2OpenBUGS::bugs}
     \item \code{rjags} objects are created by \code{R2jags::jags}
     \item \code{list} objects are created by \code{nimble::runMCMC}, \code{MCMCpack}, or custom MCMC algorithms
+    \item \code{matrix} objects are created by \code{\link{post_subset}(..., matrix = TRUE)} and is often the format of derived quantities
     \item \code{mcmc.list} objects are created by \code{rjags::coda.samples}, \code{jagsUI::jags.basic}, and \code{jagsUI::jags()$samples}. If a \code{mcmc.list} object is passed to \code{post_convert}, an error will be returned telling the user this function is not necessary.
   }
   If you find that a critical class conversion is missing, please submit an issue to \url{https://github.com/bstaton1/postpack/issues} requesting its addition with a minimum working example of how it can be created.
 }
 \note{
-If samples are stored in a \code{list} object, the individual elements must be
-  \code{matrix} or \code{mcmc} class, storing the samples (rows) across parameters (columns, with names)
-  for each chain (list elements). If list elements are in \code{matrix} format, they will be coerced to \code{mcmc} format, and thinning, start, and end intervals may be inaccurate.
+\itemize{
+    \item If samples are stored in a \code{list} object, the individual elements must be \code{matrix} or \code{mcmc} class, storing the samples (rows) across parameters (columns, with names) for each chain (list elements). If list elements are in \code{matrix} format, they will be coerced to \code{mcmc} format, and thinning, start, and end intervals may be inaccurate.
+    \item If samples are stored in a \code{matrix} object, rows should store samples and columns should store nodes. Multiple chains should be combined using \code{\link[base]{rbind}}. Two additional columns MUST be present: \code{"CHAIN"} and \code{"ITER"}, which denote the MCMC chain and iteration numbers, respectively.
+  }
 }
 \seealso{
 \code{\link[coda]{as.mcmc.list}}, \code{\link[coda]{as.mcmc}}, \code{\link[rstan]{As.mcmc.list}}
