@@ -4,12 +4,12 @@
 \alias{post_remove}
 \title{Remove nodes from output}
 \usage{
-post_remove(post, p, ask = TRUE, auto_escape = TRUE)
+post_remove(post, params, ask = TRUE, auto_escape = TRUE)
 }
 \arguments{
 \item{post}{an object of class \code{mcmc.list}}
 
-\item{p}{a character vector of with length >= 1 specifying the nodes to summarize.
+\item{params}{a character vector of with length >= 1 specifying the nodes to summarize.
 Passed to \code{\link{match_params}}, so can (and sometimes should) be a regular expression.}
 
 \item{ask}{logical. Do you wish to be prompted prior to removing nodes?
