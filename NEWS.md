@@ -1,5 +1,24 @@
 # *NEWS*
 
+# postpack 0.4.0 (2020-08-24)
+
+## Renamed Functions
+
+* `get_p()` became `get_params()`
+* `match_p()` became `match_params()`
+* `base_p()` became `drop_index()`
+
+## Renamed Function Arguments
+
+* All functions that previously accepted a `p` argument now accept a `params` argument (`match_params()`, `diag_plots()` `post_subset()`, `post_summ()`, `post_remove()`, `vcov_decomp()`, etc.)
+* `match_params` and `get_params` now both take a `type` argument, and both accept only values of `"base_only"` or `"base_index"`.
+* `density_plot()` and `trace_plot()` previously accepted a `p_one` argument -- this is now `param` (distinction between multiple parameters and one parameter); but most users won't notice this as these are non-exported functions.
+* The non-exported functions `ins_regex_bracket()`, `rm_regex_bracket()`, `ins_regex_lock()`, and `rm_regex_lock()` now take the `params` argument rather than the `string` argument, but most users won't notice this.
+
+## Deleted Functions
+
+* `matrix2mcmclist()` was deleted and now `post_convert()` does its job.
+
 # postpack 0.3.1 (2020-08-23)
 
 ## Reset `par()` after completing `diag_plots()`
