@@ -6,7 +6,7 @@
 \usage{
 vcov_decomp(
   post,
-  p,
+  param,
   sigma_base_name = "sigma",
   rho_base_name = "rho",
   invert = FALSE,
@@ -17,8 +17,8 @@ vcov_decomp(
 \arguments{
 \item{post}{an object of class \code{mcmc.list}}
 
-\item{p}{a character vector with length >= 1. Passed to \code{\link{match_params}}.
-Must match only one node in \code{post}, and that node must be a matrix.}
+\item{param}{a character vector with length == 1. Passed to \code{\link{match_params}}.
+Must match only one node in \code{post}, and that node must store samples from a matrix within the model.}
 
 \item{sigma_base_name}{a character vector with length == 1. What should the base node name be
 for the standard deviation vector component? Defaults to \code{sigma}, which becomes \code{sigma[1]}, \code{sigma[2]},
@@ -26,9 +26,9 @@ etc. in the output}
 
 \item{rho_base_name}{same as \code{sigma_base_name}, but for the correlation matrix component}
 
-\item{invert}{logical. Do you wish to take the inverse of the matrix node matched by \code{p}
+\item{invert}{logical. Do you wish to take the inverse of the matrix node matched by \code{params}
 prior to performing the calculations? This would be necessary if the matrix node was expressed as
-a precision matrix as required in the BUGS language. Triggers a call to \code{\link[base]{solve}}.
+a precision matrix as used in the BUGS language. Triggers a call to \code{\link[base]{solve}}.
 Defaults to \code{FALSE}}
 
 \item{check}{logical. Do you wish to perform checks sequentially for (a) square-ness, (b) symmetry, and (c) positive definite-ness

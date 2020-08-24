@@ -5,15 +5,15 @@
 #' and return the output as a \code{mcmc.list} object
 #'
 #' @param post an object of class \code{mcmc.list}
-#' @param p a character vector with length >= 1. Passed to \code{\link{match_params}}.
-#'   Must match only one node in \code{post}, and that node must be a matrix.
+#' @param param a character vector with length == 1. Passed to \code{\link{match_params}}.
+#'   Must match only one node in \code{post}, and that node must store samples from a matrix within the model.
 #' @param sigma_base_name a character vector with length == 1. What should the base node name be
 #'   for the standard deviation vector component? Defaults to \code{sigma}, which becomes \code{sigma[1]}, \code{sigma[2]},
 #'   etc. in the output
 #' @param rho_base_name same as \code{sigma_base_name}, but for the correlation matrix component
-#' @param invert logical. Do you wish to take the inverse of the matrix node matched by \code{p}
+#' @param invert logical. Do you wish to take the inverse of the matrix node matched by \code{params}
 #'   prior to performing the calculations? This would be necessary if the matrix node was expressed as
-#'   a precision matrix as required in the BUGS language. Triggers a call to \code{\link[base]{solve}}.
+#'   a precision matrix as used in the BUGS language. Triggers a call to \code{\link[base]{solve}}.
 #'   Defaults to \code{FALSE}
 #' @param check logical. Do you wish to perform checks sequentially for (a) square-ness, (b) symmetry, and (c) positive definite-ness
 #'   before proceeding with the calculations? Defaults to \code{TRUE}, if set to \code{FALSE} unexpected output may be returned or
@@ -23,39 +23,39 @@
 #' @return an object of class \code{mcmc.list}
 #' @export
 
-vcov_decomp = function(post, p, sigma_base_name = "sigma", rho_base_name = "rho", invert = FALSE, check = TRUE, auto_escape = TRUE) {
+vcov_decomp = function(post, param, sigma_base_name = "sigma", rho_base_name = "rho", invert = FALSE, check = TRUE, auto_escape = TRUE) {
 
   # check for only one node match; the normal checks will be done by match_params
-  matched_p = match_params(post, p, ubase = T, auto_escape = auto_escape)
-  if (length(matched_p) > 1) {
-    stop("more than one unique base name matched by p: \n\n    ", paste(paste0("'", matched_p, "'"), collapse = ", "))
+  matched_param = match_params(post, param, ubase = T, auto_escape = auto_escape)
+  if (length(matched_param) > 1) {
+    stop("more than one unique base name matched by param: \n\n    ", paste(paste0("'", matched_param, "'"), collapse = ", "))
   }
 
   # extract desired node
-  Sigma_samps = post_subset(post, p, matrix = T)
+  Sigma_samps = post_subset(post, param, matrix = T)
   test_mat = array_format(Sigma_samps[1,])
 
-  # check for whether p is a matrix: search for 1 comma
+  # check for whether node matched by param is a matrix: search for 1 comma
   comma_counts = stringr::str_count(colnames(Sigma_samps), ",")
   if (length(comma_counts) < 1 | !all(comma_counts == 1)) {
-    stop("the node matched by p ('", matched_p, "') is not a matrix in the model")
+    stop("the node matched by param ('", matched_param, "') is not a matrix in the model")
   }
 
   # "optional" checks for covariance matrix
   if (check) {
-    # for whether p is a square matrix
+    # for whether node matched by param is a square matrix
     if(!matrixcalc::is.square.matrix(test_mat)) {
-      stop("the node matched by p ('", matched_p, "') is a matrix in the model, but not a square one")
+      stop("the node matched by param ('", matched_param, "') is a matrix in the model, but not a square one")
     }
 
-    # for whether p is a symmetric matrix
+    # for whether node matched by param is a symmetric matrix
     if (!matrixcalc::is.symmetric.matrix(test_mat)) {
-      stop("the node matched by p ('", matched_p, "') is a square matrix in the model, but not a symmetric one")
+      stop("the node matched by param ('", matched_param, "') is a square matrix in the model, but not a symmetric one")
     }
 
     # check for whether p is positive definite
     if (!matrixcalc::is.positive.definite(test_mat)) {
-      stop("the node matched by p ('", matched_p, "') is a symmetric matrix in the model, but it is not positive definite")
+      stop("the node matched by param ('", matched_param, "') is a symmetric matrix in the model, but it is not positive definite")
     }
   }
 
@@ -69,7 +69,7 @@ vcov_decomp = function(post, p, sigma_base_name = "sigma", rho_base_name = "rho"
   rho_samps_array = array(NA, dim = c(n, n, ni))
   rho_samps = matrix(NA, ni, n^2)
 
-  message("Decomposing variance-covariance matrix node", ifelse(invert, " (after inverting)", ""),  ": ", matched_p, " (", n, "x", n, ")\n\n  ", sep = "")
+  message("Decomposing variance-covariance matrix node", ifelse(invert, " (after inverting)", ""),  ": ", matched_param, " (", n, "x", n, ")\n\n  ", sep = "")
 
   # calculate the sigma vector and rho matrix for each posterior sample
   for (i in 1:ni) {
@@ -105,4 +105,3 @@ vcov_decomp = function(post, p, sigma_base_name = "sigma", rho_base_name = "rho"
   # convert to an mcmc.list
   matrix2mcmclist(out)
 }
-
