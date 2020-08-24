@@ -141,10 +141,10 @@ post_summ(cjs, c("sig_B0", "sig_B1"), neff = T, Rhat = T)
 
 **NOTE**: `"Rhat"` will always be rounded to three digits, and `"neff"` will always be rounded to an integer.
 
-You can report other quantiles if desired and round them:
+You can report other quantiles using `p_summ` if desired and round them using `digits`:
 
 ```{r}
-b1_ests = post_summ(cjs, "b1", rnd = 3,
+b1_ests = post_summ(cjs, "b1", digits = 3,
   p_summ = c(0.025, 0.25, 0.5, 0.75, 0.975)
 )
 ```
@@ -168,7 +168,7 @@ In which the grey bars are the posterior medians, the thick black lines are the 
 The error resulting from MCMC sampling can also be calculated for the posterior mean (with `mcmcse::mcse`) and reported quantiles (with `mcmcse::mcse.q`) by setting the `mcse` argument to `TRUE`:
 
 ```{r}
-post_summ(cjs, "b1", rnd = 3, mcse = T)
+post_summ(cjs, "b1", digits = 3, mcse = T)
 ```
 
 # Extracting Samples
@@ -341,7 +341,7 @@ match_params(cjs, "SIG")
 Yet if we summarize the samples, we get this output:
 
 ```{r}
-(SIG_ests = post_summ(cjs, "SIG", rnd = 2))
+(SIG_ests = post_summ(cjs, "SIG", digits = 2))
 ```
 
 You may want a matrix that stores the posterior means in the same location as they would be found in the model. For this, you can use `array_format()`:
@@ -495,13 +495,13 @@ sapply(post_list, get_params)
 You could extract the summaries of the global survival coefficients from each mode to see that the qualitative inference does not depend on whether `rho` is estimated or fixed at zero:
 
 ```{r}
-lapply(post_list, function(model) post_summ(model, "^B", rnd = 2))
+lapply(post_list, function(model) post_summ(model, "^B", digits = 2))
 ```
 
 Or verify that the detection probabilities are not affected either:
 
 ```{r}
-lapply(post_list, function(model) post_summ(model, "p", rnd = 2))
+lapply(post_list, function(model) post_summ(model, "p", digits = 2))
 ```
 
 # That's All (For Now)

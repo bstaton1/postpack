@@ -11,9 +11,8 @@
 #'   Passed to \code{\link{match_params}}, so can (and sometimes should) be a regular expression.
 #' @param p_summ numeric vector with the posterior percentiles you wish to have summarized.
 #'   Defaults to \code{p_summ = c(0.5, 0.025, 0.975)}.
-#' @param rnd numeric vector controlling rounding of summaries.
-#'   Passed to the \code{digits} argument of \code{\link[base]{round}}.
-#'   Defaults to \code{NULL}, which produces no rounding.
+#' @param digits numeric vector controlling rounding of summaries.
+#'   Passed to \code{\link[base]{round}} and defaults to \code{NULL}, which produces no rounding.
 #' @param Rhat logical. Do you wish to calculate the
 #'   Rhat convergence diagnostic using \code{\link[coda]{gelman.diag}}?
 #'   Fair warning: this can take a bit of time to run on many nodes/samples
@@ -34,7 +33,7 @@
 #'
 #'@export
 
-post_summ = function(post, params, rnd = NULL, p_summ = c(0.5, 0.025, 0.975), Rhat = FALSE, neff = FALSE, mcse = FALSE, by_chain = F, auto_escape = TRUE) {
+post_summ = function(post, params, digits = NULL, p_summ = c(0.5, 0.025, 0.975), Rhat = FALSE, neff = FALSE, mcse = FALSE, by_chain = F, auto_escape = TRUE) {
 
   # warn user that some arguments will be ignored if doing by chain
   if (any(c(Rhat, neff, mcse)) & by_chain) {
@@ -42,9 +41,9 @@ post_summ = function(post, params, rnd = NULL, p_summ = c(0.5, 0.025, 0.975), Rh
   }
 
   # define a basic summary function
-  summ = function(x, p_summ = c(0.5, 0.025, 0.975), rnd = NULL) {
+  summ = function(x, p_summ = c(0.5, 0.025, 0.975), digits = NULL) {
     out = c(mean = mean(x), sd = sd(x), quantile(x, p_summ))
-    if (!is.null(rnd)) out = round(out, rnd)
+    if (!is.null(digits)) out = round(out, digits)
     return(out)
   }
 
@@ -57,12 +56,12 @@ post_summ = function(post, params, rnd = NULL, p_summ = c(0.5, 0.025, 0.975), Rh
   # apply the summ function to calculate numerical summaries of each requested node
   if (!by_chain) {
     output = apply(as.matrix(post_sub), 2, function(x) {
-      summ(x, p_summ = p_summ, rnd = rnd)
+      summ(x, p_summ = p_summ, digits = digits)
     })
   } else {
     output = lapply(post_sub, function(chain) {
       apply(chain, 2, function(x) {
-        summ(x, p_summ = p_summ, rnd = rnd)
+        summ(x, p_summ = p_summ, digits = digits)
       })
     })
 
@@ -103,14 +102,14 @@ post_summ = function(post, params, rnd = NULL, p_summ = c(0.5, 0.025, 0.975), Rh
 
     # calculate Monte Carlo SE of the mean
     se_mean = apply(post_sub_mat, 2, function(x) mcmcse::mcse(x)$se)
-    if (!is.null(rnd)) se_mean = round(se_mean, rnd)
+    if (!is.null(digits)) se_mean = round(se_mean, digits)
 
     # calculate Monte Carlo SE of the various quantiles that are returned
     se_q = NULL
     for (i in 1:length(p_summ)) {
       se_q = rbind(se_q, apply(post_sub_mat, 2, function(x) mcmcse::mcse.q(x, p_summ[i])$se))
     }
-    if (!is.null(rnd)) se_q = round(se_q, rnd)
+    if (!is.null(digits)) se_q = round(se_q, digits)
     rownames(se_q) = paste0("mcse_", p_summ * 100, "%")
 
     # add the standard errors to the output

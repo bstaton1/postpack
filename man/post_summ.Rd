@@ -7,7 +7,7 @@
 post_summ(
   post,
   params,
-  rnd = NULL,
+  digits = NULL,
   p_summ = c(0.5, 0.025, 0.975),
   Rhat = FALSE,
   neff = FALSE,
@@ -22,9 +22,8 @@ post_summ(
 \item{params}{a character vector of with length >= 1 specifying the nodes to summarize.
 Passed to \code{\link{match_params}}, so can (and sometimes should) be a regular expression.}
 
-\item{rnd}{numeric vector controlling rounding of summaries.
-Passed to the \code{digits} argument of \code{\link[base]{round}}.
-Defaults to \code{NULL}, which produces no rounding.}
+\item{digits}{numeric vector controlling rounding of summaries.
+Passed to \code{\link[base]{round}} and defaults to \code{NULL}, which produces no rounding.}
 
 \item{p_summ}{numeric vector with the posterior percentiles you wish to have summarized.
 Defaults to \code{p_summ = c(0.5, 0.025, 0.975)}.}
