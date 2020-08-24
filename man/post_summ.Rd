@@ -10,7 +10,7 @@ post_summ(
   rnd = NULL,
   p_summ = c(0.5, 0.025, 0.975),
   Rhat = FALSE,
-  ess = FALSE,
+  neff = FALSE,
   mcse = FALSE,
   by_chain = F,
   auto_escape = TRUE
@@ -33,8 +33,8 @@ Defaults to \code{p_summ = c(0.5, 0.025, 0.975)}.}
 Rhat convergence diagnostic using \code{\link[coda]{gelman.diag}}?
 Fair warning: this can take a bit of time to run on many nodes/samples}
 
-\item{ess}{logical. Do you wish to calculate the
-effective sample size using \code{\link[coda]{effectiveSize}}?
+\item{neff}{logical. Do you wish to calculate the number of effective MCMC samples
+using \code{\link[coda]{effectiveSize}}?
 Fair warning: this can take a bit of time to run on many nodes/samples}
 
 \item{mcse}{logical. Do you wish to calculate the
@@ -45,7 +45,7 @@ Fair warning: this can take a bit of time to run on many nodes/samples}
 
 \item{by_chain}{logical. Do you wish to calculate posterior summaries for each chain,
 rather than for the aggregate across chains? Defaults to \code{FALSE}.
-The arguments \code{Rhat}, \code{ess}, and \code{mcse} are ignored if \code{by_chain = TRUE}
+The arguments \code{Rhat}, \code{neff}, and \code{mcse} are ignored if \code{by_chain = TRUE}
 and a warning will be returned}
 }
 \description{

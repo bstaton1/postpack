@@ -17,8 +17,8 @@
 #' @param Rhat logical. Do you wish to calculate the
 #'   Rhat convergence diagnostic using \code{\link[coda]{gelman.diag}}?
 #'   Fair warning: this can take a bit of time to run on many nodes/samples
-#' @param ess logical. Do you wish to calculate the
-#'   effective sample size using \code{\link[coda]{effectiveSize}}?
+#' @param neff logical. Do you wish to calculate the number of effective MCMC samples
+#'   using \code{\link[coda]{effectiveSize}}?
 #'   Fair warning: this can take a bit of time to run on many nodes/samples
 #' @param mcse logical. Do you wish to calculate the
 #'   Monte Carlo standard error for the posterior mean and reported quantiles
@@ -27,18 +27,18 @@
 #'   Fair warning: this can take a bit of time to run on many nodes/samples
 #' @param by_chain logical. Do you wish to calculate posterior summaries for each chain,
 #'   rather than for the aggregate across chains? Defaults to \code{FALSE}.
-#'   The arguments \code{Rhat}, \code{ess}, and \code{mcse} are ignored if \code{by_chain = TRUE}
+#'   The arguments \code{Rhat}, \code{neff}, and \code{mcse} are ignored if \code{by_chain = TRUE}
 #'   and a warning will be returned
 #' @seealso \code{\link{match_params}}, \code{\link[coda]{gelman.diag}},
 #'   \code{\link[coda]{effectiveSize}}, \code{\link[mcmcse]{mcse}}, \code{\link[mcmcse]{mcse.q}}
 #'
 #'@export
 
-post_summ = function(post, params, rnd = NULL, p_summ = c(0.5, 0.025, 0.975), Rhat = FALSE, ess = FALSE, mcse = FALSE, by_chain = F, auto_escape = TRUE) {
+post_summ = function(post, params, rnd = NULL, p_summ = c(0.5, 0.025, 0.975), Rhat = FALSE, neff = FALSE, mcse = FALSE, by_chain = F, auto_escape = TRUE) {
 
   # warn user that some arguments will be ignored if doing by chain
-  if (any(c(Rhat, ess, mcse)) & by_chain) {
-    warning("Rhat, ess, and mcmse will not be calculated by chain.\nSet by_chain = FALSE to see these summaries.")
+  if (any(c(Rhat, neff, mcse)) & by_chain) {
+    warning("Rhat, neff, and mcmse will not be calculated by chain.\nSet by_chain = FALSE to see these summaries.")
   }
 
   # define a basic summary function
@@ -78,7 +78,7 @@ post_summ = function(post, params, rnd = NULL, p_summ = c(0.5, 0.025, 0.975), Rh
     colnames(output) = matched_params
   }
 
-  # if doing Rhat, calculate it
+  # if requested, calculate Rhat
   if (Rhat & !by_chain) {
     Rhat = round(coda::gelman.diag(post_sub, autoburnin = F, multivariate = F)[[1]][,1], 3)
     output = rbind(
@@ -87,16 +87,16 @@ post_summ = function(post, params, rnd = NULL, p_summ = c(0.5, 0.025, 0.975), Rh
     )
   }
 
-  # if doing effective sample size, do so
-  if (ess & !by_chain) {
-    ess = round(coda::effectiveSize(post_sub))
+  # if requested, calculate effective samples
+  if (neff & !by_chain) {
+    neff = round(coda::effectiveSize(post_sub))
     output = rbind(
       output,
-      ess = ess
+      neff = neff
     )
   }
 
-  # if doing MC error, do so
+  # if requested, calculate MC error
   if (mcse & !by_chain) {
     # convert samples to matrix format
     post_sub_mat = as.matrix(post_sub)

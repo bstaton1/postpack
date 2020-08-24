@@ -136,10 +136,10 @@ Summaries for each chain can be obtained using the `by_chain = T` argument.
 Calculating convergence diagnostics for all nodes in a model can be time-consuming for large output (e.g., via `coda::gelman.diag()` or `coda::effectiveSize()`), so `post_summ()` can also be seen as a wrapper for these functions but on a smaller subset of the MCMC output:
 
 ```{r}
-post_summ(cjs, c("sig_B0", "sig_B1"), ess = T, Rhat = T)
+post_summ(cjs, c("sig_B0", "sig_B1"), neff = T, Rhat = T)
 ```
 
-`"Rhat"` will always be rounded to three digits, and `"ess"` will always be rounded to an integer.
+**NOTE**: `"Rhat"` will always be rounded to three digits, and `"neff"` will always be rounded to an integer.
 
 You can report other quantiles if desired and round them:
 
