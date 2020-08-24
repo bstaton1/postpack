@@ -4,10 +4,10 @@
 \alias{ins_regex_lock}
 \title{Insert the symbols to lock in a string for matching}
 \usage{
-ins_regex_lock(string)
+ins_regex_lock(params)
 }
 \arguments{
-\item{string}{a character vector on to which a carrot and dollar sign
+\item{params}{a character vector on to which a carrot and dollar sign
 will be pasted to if not already present}
 }
 \description{

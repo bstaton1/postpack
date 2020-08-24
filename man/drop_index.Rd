@@ -4,15 +4,15 @@
 \alias{drop_index}
 \title{Extract the base of a node name}
 \usage{
-drop_index(p)
+drop_index(params)
 }
 \arguments{
-\item{p}{character vector containing node names}
+\item{params}{character vector containing node names}
 }
 \description{
 Removes square brackets, numbers, and commas that represent
 the index of the node element in question. Returns just the
-text portion. E.g, \code{"R\[1\]"} becomes \code{"R"}.
+node name.
 }
 \note{
 this is NOT a function users will generally use.
