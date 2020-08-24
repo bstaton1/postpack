@@ -10,8 +10,8 @@ get_params(post, type = "base_only")
 \item{post}{an object of class \code{mcmc.list}}
 
 \item{type}{a character vector with length == 1; only two options are accepted.
-Set to \code{type = "base_only"} if you wish to return only the unique node names (without indices).
-Set to \code{type = "base_index"} (the default) if you wish to return the node names with indices included.#'}
+Set to \code{type = "base_only"} (the default) if you wish to return only the unique node names (without indices).
+Set to \code{type = "base_index"}  if you wish to return the node names with indices included.}
 }
 \value{
 character vector with all node names stored in the object \code{post}, formatted as requested by \code{type}
