@@ -101,5 +101,5 @@ post_bind = function(post1, post2, dup_id = "_p2") {
   }
 
   # coerce back to mcmc.list
-  matrix2mcmclist(post_m)
+  post_convert(post_m)
 }

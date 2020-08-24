@@ -103,5 +103,5 @@ vcov_decomp = function(post, param, sigma_base_name = "sigma", rho_base_name = "
   out = cbind(id_mat(post), sigma_samps, rho_samps)
 
   # convert to an mcmc.list
-  matrix2mcmclist(out)
+  post_convert(out)
 }

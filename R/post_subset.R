@@ -52,7 +52,7 @@ post_subset = function(post, params, matrix = FALSE, iters = FALSE, chains = FAL
     post_out = as.matrix(post_sub[,keep_columns], nrow = nrow(ids), ncol = length(keep_columns))
     colnames(post_out) = keep_columns
   } else { # if returning in mcmc.list format, reformat to mcmc.list
-    post_out = matrix2mcmclist(post_sub)
+    post_out = post_convert(post_sub)
   }
 
   # return the output

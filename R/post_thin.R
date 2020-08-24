@@ -69,5 +69,5 @@ post_thin = function(post, keep_percent, keep_iters) {
   post_mat_thin[,"ITER"] = rep(1:length(keep), post_dims["chains"])
 
   # return a mcmc.list object
-  matrix2mcmclist(post_mat_thin)
+  post_convert(post_mat_thin)
 }

@@ -69,7 +69,7 @@ post_remove = function(post, params, ask = TRUE, auto_escape = TRUE) {
     post_sub = cbind(ids, post_sub_matx)
 
     # convert back to mcmc.list
-    post_out = matrix2mcmclist(post_sub)
+    post_out = post_convert(post_sub)
 
     # print a message
     message("Node(s) discarded:")
