@@ -21,6 +21,18 @@
 #'
 #' @note If the \code{post} object was thinned after MCMC completed
 #'   using \code{\link{post_thin}}, then the \code{burn} and \code{thin} dimensions will be improperly calculated.
+#' @examples
+#' # load example mcmc.list
+#' data(cjs, package = "postpack")
+#'
+#' # get all relevant dimensions
+#' post_dim(cjs)
+#'
+#' # get only the number of chains
+#' post_dim(cjs, "chains")
+#'
+#' # get the thinning and burn-in intervals
+#' post_dim(cjs, c("burn", "thin"))
 #'
 #' @export
 

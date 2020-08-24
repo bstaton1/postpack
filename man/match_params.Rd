@@ -40,12 +40,28 @@ this function is called as one of the first steps in many of the more downstream
   with the \code{\link[stringr]{str_detect}} function.
 }
 \examples{
-\dontrun{
-match_params(post, "alpha")
-match_params(post, c("S", "R"))         # Elements of  S, S_msy, and Sigma_R, and R
-match_params(post, c("R["))             # Elements of R and Sigma_R only
-match_params(post, c("^R["))            # Elements of R
-match_params(post, c("^R["), ubase = T) # Only the base node name: R
-}
+# load example mcmc.list
+data(cjs, package = "postpack")
 
+# these produce same output b/c of regex pattern matching
+match_params(cjs, params = c("b0", "b1"))
+match_params(cjs, params = c("b"))
+
+# force a match to start with B
+match_params(cjs, "^B")
+
+# force a match to end with 0
+match_params(cjs, "0$")
+
+# use a wild card to get b0[3] and b1[3]
+match_params(cjs, "b.[3]")
+
+# repeat a wild card
+match_params(cjs, "s.+0")
+
+# turn off auto escape to use [] in regex syntax rather than matching them as text
+match_params(cjs, params = "[:digit:]$", auto_escape = F)
+
+# pass an empty string to match all (same as get_params)
+match_params(cjs, "")
 }

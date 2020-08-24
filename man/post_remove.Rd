@@ -31,9 +31,15 @@ an object of class \code{mcmc.list}, identical in all ways to the original
 Just like post_subset, but keep all nodes from \code{post} except nodes that match \code{params}
 }
 \examples{
-\dontrun{
-get_params(cjs)                # look at the nodes present
-cjs2 = post_remove(cjs, "SIG") # remove nodes that match "SIG"
-get_params(cjs2)               # look at the nodes present
-}
+# load example mcmc.list
+data(cjs, package = "postpack")
+
+# get names of all nodes
+get_params(cjs)
+
+# remove the SIG nodes
+new_cjs = suppressMessages(post_remove(cjs, "SIG", ask = F))
+
+# get names of new output
+get_params(new_cjs)
 }

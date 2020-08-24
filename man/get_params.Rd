@@ -21,3 +21,13 @@ Sometimes it's helpful to know what nodes are
 stored in an object of class \code{mcmc.list}.
 That's what this function does.
 }
+\examples{
+ # load example mcmc.list
+data(cjs, package = "postpack")
+
+# get only node names, no indices (default)
+get_params(cjs, type = "base_only")
+
+# get indices too, where applicable
+get_params(cjs, type = "base_index")
+}

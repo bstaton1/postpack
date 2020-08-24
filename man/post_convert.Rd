@@ -36,6 +36,49 @@ Accepted classes are produced by several packages, including but probably not li
     \item If samples are stored in a \code{matrix} object, rows should store samples and columns should store nodes. Multiple chains should be combined using \code{\link[base]{rbind}}. Two additional columns MUST be present: \code{"CHAIN"} and \code{"ITER"}, which denote the MCMC chain and iteration numbers, respectively.
   }
 }
+\examples{
+## EXAMPLE 1
+load example mcmc.list
+data(cjs, package = "postpack")
+
+# take a subset from cjs as a matrix, retain chain and iter ids
+cjs_sub = post_subset(cjs, "^B", matrix = T, chains = T, iters = T)
+
+# convert back to mcmc.list
+class(post_convert(cjs_sub))
+
+## EXAMPLE 2: create mcmc.list from hypothetical MCMC samples; chains are list elements
+# create hypothetical samples; can't use postpack on this - not an mcmc.list
+samps = lapply(1:3, function(i) {
+  m = matrix(rnorm(100), 20, 5)
+  colnames(m) = paste0("param", 1:5)
+  m
+})
+
+# convert
+samps_new = post_convert(samps)
+
+# can use postpack now
+post_summ(samps_new, "param")
+
+## EXAMPLE 3: create mcmc.list from hypothetical MCMC samples; chains rbind-ed matrices
+# create samples
+f = function() {
+  m = matrix(rnorm(100), 20, 5)
+  colnames(m) = paste0("param", 1:5)
+  m
+}
+samps = rbind(f(), f(), f())
+
+# assign chain and iter IDs to each sample
+samps = cbind(CHAIN = rep(1:3, each = 20), ITER = rep(1:20, 3), samps)
+
+# convert
+samps_new = post_convert(samps)
+
+# can use postpack now
+post_summ(samps_new, "param")
+}
 \seealso{
 \code{\link[coda]{as.mcmc.list}}, \code{\link[coda]{as.mcmc}}, \code{\link[rstan]{As.mcmc.list}}
 }

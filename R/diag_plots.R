@@ -40,7 +40,26 @@
 #' @note If saving as a pdf, these files can get very large with many samples and render slowly.
 #'   The \code{keep_percent} argument is intended to help with this by thinning the chains at quasi-evenly spaced intervals.
 #' @seealso \code{\link{match_params}}
+#' @examples
+#' if (interactive()) {
+#'   #load example mcmc.list
+#'   data(cjs, package = "postpack")
 #'
+#'   # use current device
+#'   diag_plots(cjs, "B0")
+#'
+#'   # use a new device
+#'   diag_plots(cjs, "B0", ext_device = T)
+#'
+#'   # always show diagnostic summaries
+#'   diag_plots(cjs, "B0", show_diags = "always")
+#'
+#'   # use a different layout (leaving it as "auto" is usually best)
+#'   diag_plots(cjs, c("sig", "b"), layout = "5x3")
+#'
+#'   # save diagnostics for all nodes to a pdf file
+#'   diag_plots(cjs, "", save = T, file = "diags.pdf")
+#' }
 #' @export
 
 diag_plots = function(post, params, ext_device = FALSE, show_diags = "if_poor_Rhat", layout = "auto", dims = "auto", keep_percent = 1, save = FALSE, file = NULL, auto_escape = TRUE) {

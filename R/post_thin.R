@@ -21,7 +21,23 @@
 #'   calculations using the full posterior output.
 #'
 #' @return an object of class \code{mcmc.list}
+#' @examples
+#' # load example mcmc.list
+#' data(cjs, package = "postpack")
 #'
+#' # take note of original dimensions
+#' post_dim(cjs)
+#'
+#' # keep ~20% of the samples
+#' cjs_thin1 = post_thin(cjs, keep_percent = 0.2)
+#'
+#' # note burn-in and thin intervals no longer correct!
+#' # but desired outcome acheived - nearly identical object but smaller
+#' post_dim(cjs_thin1)
+#'
+#' # keep 30 samples per chain
+#' cjs_thin2 = post_thin(cjs, keep_iters = 30)
+#' post_dim(cjs_thin2)
 #' @export
 
 post_thin = function(post, keep_percent, keep_iters) {

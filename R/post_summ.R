@@ -29,10 +29,30 @@
 #'   rather than for the aggregate across chains? Defaults to \code{FALSE}.
 #'   The arguments \code{Rhat}, \code{neff}, and \code{mcse} are ignored if \code{by_chain = TRUE}
 #'   and a warning will be returned
+#' @examples
+#' # load example mcmc.list
+#' data(cjs, package = "postpack")
+#'
+#' # calculate posterior summaries for the "p" nodes
+#' # ("p[1]" doesn't exist in model)
+#' post_summ(cjs, "p")
+#'
+#' # do this by chain
+#' post_summ(cjs, "p", by_chain = T)
+#'
+#' # calculate Rhat and Neff diagnostic summaries as well
+#' # multiple node names too
+#' post_summ(cjs, c("b0", "p"), Rhat = T, neff = T)
+#'
+#' # calculate Monte Carlo SE for mean and quantiles, with rounding
+#' post_summ(cjs, "p", mcse = T, digits = 3)
+#'
+#' # summarize different quantiles: median and central 80%
+#' post_summ(cjs, "p", probs = c(0.5, 0.1, 0.9))
+#'
 #' @seealso \code{\link{match_params}}, \code{\link[coda]{gelman.diag}},
 #'   \code{\link[coda]{effectiveSize}}, \code{\link[mcmcse]{mcse}}, \code{\link[mcmcse]{mcse.q}}
-#'
-#'@export
+#' @export
 
 post_summ = function(post, params, digits = NULL, probs = c(0.5, 0.025, 0.975), Rhat = FALSE, neff = FALSE, mcse = FALSE, by_chain = F, auto_escape = TRUE) {
 

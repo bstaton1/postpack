@@ -21,6 +21,15 @@
 #'   if wishing to set \code{invert = TRUE}.
 #'
 #' @return an object of class \code{mcmc.list}
+#' @examples
+#' # load example mcmc.list
+#' data(cjs, package = "postpack")
+#'
+#' # "SIG" is a covariance matrix node
+#' SIG_decomp = vcov_decomp(cjs, "SIG")
+#'
+#' # extract the posterior mean correlation matrix, and reformat
+#' array_format(post_summ(SIG_decomp, "rho")["mean",])
 #' @export
 
 vcov_decomp = function(post, param, sigma_base_name = "sigma", rho_base_name = "rho", invert = FALSE, check = TRUE, auto_escape = TRUE) {

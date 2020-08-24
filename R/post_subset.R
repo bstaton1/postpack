@@ -18,6 +18,18 @@
 #'   It is generally recommended to keep this as \code{TRUE} (the default),
 #'   unless you are performing complex regex searches that require the
 #'   \code{"["} and \code{"]"} symbols to be special characters
+#' @examples
+#' # load example mcmc.list
+#' data(cjs, package = "postpack")
+#'
+#' # create mcmc.list with all nodes that contain "B0"
+#' x1 = post_subset(cjs, "B0")
+#'
+#' # create mcmc.list with all nodes that contain "b" or "B"
+#' x2 = post_subset(cjs, c("b", "B"))
+#'
+#' # perform the subset and return a matrix as output, while retaining the chain ID
+#' x3 = post_subset(cjs, "B0", matrix = T, chain = T)
 #' @seealso \code{\link{match_params}}
 #' @export
 

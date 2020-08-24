@@ -13,9 +13,20 @@
 #'   Up to 10 dimensions are currently supported.
 #'
 #' @examples
-#' \dontrun{
-#' array_format(post_summ(post, "^m[")["mean",])
-#' }
+#' # load example mcmc.list
+#' data(cjs, package = "postpack")
+#'
+#' # find an array node from your model
+#' match_params(cjs, "SIG")
+#'
+#' # extract the posterior mean of it
+#' SIG_mean = post_summ(cjs, "SIG")["mean",]
+#'
+#' # note that it has element names
+#' SIG_mean
+#'
+#' # create a matrix with elements in the proper place
+#' array_format(SIG_mean)
 #'
 #'@export
 

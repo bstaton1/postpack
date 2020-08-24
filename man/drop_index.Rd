@@ -17,3 +17,8 @@ node name.
 \note{
 this is NOT a function users will generally use.
 }
+\examples{
+postpack:::drop_index("a[1]")
+postpack:::drop_index(c("a[1]", "a[2]"))
+postpack:::drop_index(c("a[1,1,1,1,1]", "a[2,2,2,2,2]"))
+}

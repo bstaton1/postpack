@@ -44,3 +44,13 @@ For each posterior sample, extract the standard deviation and correlation compon
 of a monitored node representing a variance-covariance matrix,
 and return the output as a \code{mcmc.list} object
 }
+\examples{
+# load example mcmc.list
+data(cjs, package = "postpack")
+
+# "SIG" is a covariance matrix node
+SIG_decomp = vcov_decomp(cjs, "SIG")
+
+# extract the posterior mean correlation matrix, and reformat
+array_format(post_summ(SIG_decomp, "rho")["mean",])
+}

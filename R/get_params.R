@@ -9,7 +9,15 @@
 #'   Set to \code{type = "base_only"} (the default) if you wish to return only the unique node names (without indices).
 #'   Set to \code{type = "base_index"}  if you wish to return the node names with indices included.
 #' @return character vector with all node names stored in the object \code{post}, formatted as requested by \code{type}
+#' @examples
+#'  # load example mcmc.list
+#' data(cjs, package = "postpack")
 #'
+#' # get only node names, no indices (default)
+#' get_params(cjs, type = "base_only")
+#'
+#' # get indices too, where applicable
+#' get_params(cjs, type = "base_index")
 #'@export
 
 get_params = function(post, type = "base_only") {

@@ -17,11 +17,17 @@
 #'   except that nodes matched by the \code{params} argument are removed. If the user
 #'   responds "no" to the question when \code{ask = TRUE}, the object is returned unaltered.
 #' @examples
-#' \dontrun{
-#' get_params(cjs)                # look at the nodes present
-#' cjs2 = post_remove(cjs, "SIG") # remove nodes that match "SIG"
-#' get_params(cjs2)               # look at the nodes present
-#' }
+#' # load example mcmc.list
+#' data(cjs, package = "postpack")
+#'
+#' # get names of all nodes
+#' get_params(cjs)
+#'
+#' # remove the SIG nodes
+#' new_cjs = suppressMessages(post_remove(cjs, "SIG", ask = F))
+#'
+#' # get names of new output
+#' get_params(new_cjs)
 #' @export
 
 post_remove = function(post, params, ask = TRUE, auto_escape = TRUE) {

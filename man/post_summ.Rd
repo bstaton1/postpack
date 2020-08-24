@@ -55,6 +55,28 @@ The central tendency and uncertainty measures are in different lists.
 This function allows extracting a summary of the posteriors
 associated with requested nodes, including several diagnostic quantities and measures of uncertainty.
 }
+\examples{
+# load example mcmc.list
+data(cjs, package = "postpack")
+
+# calculate posterior summaries for the "p" nodes
+# ("p[1]" doesn't exist in model)
+post_summ(cjs, "p")
+
+# do this by chain
+post_summ(cjs, "p", by_chain = T)
+
+# calculate Rhat and Neff diagnostic summaries as well
+# multiple node names too
+post_summ(cjs, c("b0", "p"), Rhat = T, neff = T)
+
+# calculate Monte Carlo SE for mean and quantiles, with rounding
+post_summ(cjs, "p", mcse = T, digits = 3)
+
+# summarize different quantiles: median and central 80\%
+post_summ(cjs, "p", probs = c(0.5, 0.1, 0.9))
+
+}
 \seealso{
 \code{\link{match_params}}, \code{\link[coda]{gelman.diag}},
   \code{\link[coda]{effectiveSize}}, \code{\link[mcmcse]{mcse}}, \code{\link[mcmcse]{mcse.q}}

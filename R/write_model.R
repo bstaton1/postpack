@@ -9,7 +9,25 @@
 #'     but with slightly better output (scientific notation, spacing, etc.). The main reason it was created
 #'     for use in this package was to remove the need for the \code{R2OpenBUGS} package, as this was
 #'     the only function the author ever used from it.
+#' @examples
+#' if (interactive()) {
+#'   # define some simple BUGS model as an R function
+#'   # note the use of %_% to include a truncation
+#'   mod = function() {
+#'     # PRIORS
+#'     mu ~ dnorm(0,0.001) %_% T(0,)
+#'     sig ~ dunif(0,10)
+#'     tau <- 1/sig^2
 #'
+#'     # LIKELIHOOD
+#'     for (i in 1:n) {
+#'       y[i] ~ dnorm(mu, tau)
+#'     }
+#'   }
+#'
+#'   # write model to a text file to be called by BUGS/JAGS
+#'   write_model(mod, "model.txt")
+#' }
 #' @export
 
 write_model = function(fun, file) {

@@ -33,3 +33,15 @@ Some important things to note:
   \item{if the node names are empty (e.g., only one node in an mcmc.list or missing column names in a matrix), the node names will be coerced to \code{"var1"}, \code{"var2"}, etc.}
 }
 }
+\examples{
+# load example mcmc.list
+data(cjs, package = "postpack")
+
+# create two subsets from cjs: one as mcmc.list and one as matrix
+# also works if both are mcmc.list objects
+p1 = post_subset(cjs, "b0")
+p2 = post_subset(cjs, "b1", matrix = T)
+
+# combine them into one mcmc.list
+head(post_bind(p1, p2))
+}
