@@ -24,11 +24,11 @@ unless you are performing complex regex searches that require the
 }
 \value{
 an object of class \code{mcmc.list}, identical in all ways to the original
-  except that nodes matched by the \code{p} argument are removed. If the user
+  except that nodes matched by the \code{params} argument are removed. If the user
   responds "no" to the question when \code{ask = TRUE}, the object is returned unaltered.
 }
 \description{
-Just like post_subset, but keep all nodes from \code{post} except nodes that match \code{p}
+Just like post_subset, but keep all nodes from \code{post} except nodes that match \code{params}
 }
 \examples{
 \dontrun{
