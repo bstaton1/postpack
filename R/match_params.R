@@ -7,7 +7,9 @@
 #' @param params a character vector with length >= 1. Passed to \code{stringr::str_detect},
 #'   so can, and sometimes should, be a regular expression; see the examples.
 #'   Duplicate matches found among different elements of \code{params} are discarded.
-#' @param ubase logical. Do you wish to return only the unique bases (i.e., without indices listed)?
+#' @param type a character vector with length == 1; only two options are accepted.
+#'   Set to \code{type = "base_only"} if you wish to return only the unique node names (without indices).
+#'   Set to \code{type = "base_index"} (the default) if you wish to return the node names with indices included.
 #' @param auto_escape logical. \code{FALSE} will treat \code{"["} and \code{"]"}
 #'   as regular expression syntax (unless explicitly escaped by user),
 #'   \code{TRUE} will treat these symbols as plain text to be matched.
@@ -32,11 +34,16 @@
 #'
 #' @export
 
-match_params = function(post, params, ubase = FALSE, auto_escape = TRUE) {
+match_params = function(post, params, type = "base_index", auto_escape = TRUE) {
 
   # stop if post isn't mcmc.list
   if (!coda::is.mcmc.list(post)) {
     stop ("post must be an object of class 'mcmc.list'")
+  }
+
+  # stop if type isn't one of "base_only" or "base_index"
+  if (!(type %in% c("base_only", "base_index"))) {
+    stop ("type must be one of 'base_only' or 'base_index'. See ?match_params for details")
   }
 
   # insert regex escapes for brackets if necessary
@@ -73,7 +80,7 @@ match_params = function(post, params, ubase = FALSE, auto_escape = TRUE) {
   }
 
   # return the names of the exact nodes to extract
-  if (!ubase) {
+  if (type == "base_index") {
     return(unique(match_vec))
   } else {
     return(unique(drop_index(match_vec)))

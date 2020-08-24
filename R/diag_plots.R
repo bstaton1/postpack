@@ -46,7 +46,7 @@
 diag_plots = function(post, params, ext_device = FALSE, show_diags = "if_poor_Rhat", layout = "auto", dims = "auto", keep_percent = 1, save = FALSE, file = NULL, auto_escape = TRUE) {
 
   # the exact nodes to display. includes error checks for post and p being compatible.
-  keep = match_params(post, params, ubase = F, auto_escape = auto_escape); n = length(keep)
+  keep = match_params(post, params, type = "base_index", auto_escape = auto_escape); n = length(keep)
 
   # error handle for layout
   if (!(layout %in% c("auto", "1x1", "2x1", "4x1", "4x2", "5x3"))) {

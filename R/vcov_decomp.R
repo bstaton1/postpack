@@ -26,7 +26,7 @@
 vcov_decomp = function(post, param, sigma_base_name = "sigma", rho_base_name = "rho", invert = FALSE, check = TRUE, auto_escape = TRUE) {
 
   # check for only one node match; the normal checks will be done by match_params
-  matched_param = match_params(post, param, ubase = T, auto_escape = auto_escape)
+  matched_param = match_params(post, param, type = "base_only", auto_escape = auto_escape)
   if (length(matched_param) > 1) {
     stop("more than one unique base name matched by param: \n\n    ", paste(paste0("'", matched_param, "'"), collapse = ", "))
   }

@@ -24,7 +24,7 @@
 post_subset = function(post, params, matrix = FALSE, iters = FALSE, chains = FALSE, auto_escape = TRUE) {
 
   # extract the names to keep
-  keep_params = match_params(post, params, ubase = F, auto_escape = auto_escape)
+  keep_params = match_params(post, params, type = "base_index", auto_escape = auto_escape)
 
   # extract the iteration ids: chain and iteration numbers
   ids = id_mat(post)

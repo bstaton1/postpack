@@ -4,7 +4,7 @@
 \alias{match_params}
 \title{Find matching node names}
 \usage{
-match_params(post, params, ubase = FALSE, auto_escape = TRUE)
+match_params(post, params, type = "base_index", auto_escape = TRUE)
 }
 \arguments{
 \item{post}{an object of class \code{mcmc.list}}
@@ -13,7 +13,9 @@ match_params(post, params, ubase = FALSE, auto_escape = TRUE)
 so can, and sometimes should, be a regular expression; see the examples.
 Duplicate matches found among different elements of \code{params} are discarded.}
 
-\item{ubase}{logical. Do you wish to return only the unique bases (i.e., without indices listed)?}
+\item{type}{a character vector with length == 1; only two options are accepted.
+Set to \code{type = "base_only"} if you wish to return only the unique node names (without indices).
+Set to \code{type = "base_index"} (the default) if you wish to return the node names with indices included.}
 
 \item{auto_escape}{logical. \code{FALSE} will treat \code{"["} and \code{"]"}
 as regular expression syntax (unless explicitly escaped by user),

@@ -49,7 +49,7 @@ post_summ = function(post, params, rnd = NULL, p_summ = c(0.5, 0.025, 0.975), Rh
   }
 
   # match the names of the nodes that will be extracted
-  matched_params = match_params(post, params, auto_escape = auto_escape)
+  matched_params = match_params(post, params, type = "base_index", auto_escape = auto_escape)
 
   # subset the nodes corresponding to params
   post_sub = post_subset(post, params)

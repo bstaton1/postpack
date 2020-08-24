@@ -27,7 +27,7 @@
 post_remove = function(post, params, ask = TRUE, auto_escape = TRUE) {
 
   # extract the names to discard
-  discard_params = match_params(post, params, ubase = F, auto_escape = auto_escape)
+  discard_params = match_params(post, params, type = "base_index", auto_escape = auto_escape)
 
   # print message and ask user if they wish to proceed
   acceptable_yes = c("y", "yes")
