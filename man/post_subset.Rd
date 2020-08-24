@@ -6,7 +6,7 @@
 \usage{
 post_subset(
   post,
-  p,
+  params,
   matrix = FALSE,
   iters = FALSE,
   chains = FALSE,
@@ -16,7 +16,7 @@ post_subset(
 \arguments{
 \item{post}{an object of class \code{mcmc.list}}
 
-\item{p}{a character vector of with length >= 1 specifying the nodes to extract. Passed to \code{\link{match_params}},
+\item{params}{a character vector of with length >= 1 specifying the nodes to extract. Passed to \code{\link{match_params}},
 so can (and sometimes should) be a regular expression.}
 
 \item{matrix}{logical. If \code{TRUE}, the subsetted output will be returned as a matrix.

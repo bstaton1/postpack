@@ -4,7 +4,7 @@
 #' corresponding only to the node(s) requested.
 #'
 #' @param post an object of class \code{mcmc.list}
-#' @param p a character vector of with length >= 1 specifying the nodes to extract. Passed to \code{\link{match_params}},
+#' @param params a character vector of with length >= 1 specifying the nodes to extract. Passed to \code{\link{match_params}},
 #'   so can (and sometimes should) be a regular expression.
 #' @param matrix logical. If \code{TRUE}, the subsetted output will be returned as a matrix.
 #'   Defaults to \code{FALSE}, in which case the class \code{mcmc.list} will be retained.
@@ -21,10 +21,10 @@
 #' @seealso \code{\link{match_params}}
 #' @export
 
-post_subset = function(post, p, matrix = FALSE, iters = FALSE, chains = FALSE, auto_escape = TRUE) {
+post_subset = function(post, params, matrix = FALSE, iters = FALSE, chains = FALSE, auto_escape = TRUE) {
 
   # extract the names to keep
-  keep_p = match_params(post, p, ubase = F, auto_escape = auto_escape)
+  keep_params = match_params(post, params, ubase = F, auto_escape = auto_escape)
 
   # extract the iteration ids: chain and iteration numbers
   ids = id_mat(post)
@@ -33,8 +33,8 @@ post_subset = function(post, p, matrix = FALSE, iters = FALSE, chains = FALSE, a
 
   # extract the samples from the right nodes in each chain, place these into list elements
   post_sub_list = lapply(post, function(x) {
-    mat = as.matrix(x[,keep_p], nrow = n_iter, ncol = length(keep_p))
-    colnames(mat) = keep_p
+    mat = as.matrix(x[,keep_params], nrow = n_iter, ncol = length(keep_params))
+    colnames(mat) = keep_params
     mat
     }
   )
@@ -46,7 +46,7 @@ post_subset = function(post, p, matrix = FALSE, iters = FALSE, chains = FALSE, a
 
   # if returning in matrix format, decide which columns to keep
   if (matrix) {
-    keep_columns = keep_p
+    keep_columns = keep_params
     if (iters) keep_columns = c("ITER", keep_columns)
     if (chains) keep_columns = c("CHAIN", keep_columns)
     post_out = as.matrix(post_sub[,keep_columns], nrow = nrow(ids), ncol = length(keep_columns))
