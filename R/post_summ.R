@@ -27,6 +27,7 @@
 #' @return A [`matrix`][base::matrix] object with summary statistics as rows and nodes as columns.
 #'   If `by_chain = TRUE`, an [`array`][base::array] is returned instead.
 #' @seealso [match_params()], [coda::gelman.diag()], [coda::effectiveSize()], [mcmcse::mcse()], [mcmcse::mcse.q()]
+#' @importFrom stats quantile sd
 #' @examples
 #' # load example mcmc.list
 #' data(cjs, package = "postpack")

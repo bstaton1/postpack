@@ -41,6 +41,9 @@
 #' @seealso [match_params()], [density_plot()], [trace_plot()]
 #' @return A multi-panel figure showing the posterior density and trace plots for requested nodes.
 #'   The device in which it is placed depends on the argument values.
+#' @importFrom grDevices dev.new dev.off pdf
+#' @importFrom graphics axis box legend lines par
+#' @importFrom stats density
 #' @examples
 #' if (interactive()) {
 #'   #load example mcmc.list
