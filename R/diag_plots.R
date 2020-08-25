@@ -1,45 +1,46 @@
-#' Create MCMC diagnostic plots for nodes of interest
-#'
-#' Allows quick visualization of posterior density and traceplots,
-#' BOTH separated by chain, for the desired nodes of interest. Includes the
-#' ability to plot in the RStudio graphics device, an external device (OS-indepenent),
-#' or a PDF file. Further, with the auto settings, the dimensions of the
-#' plotting device scales to the job needed.
-#'
-#' @param post an object of class \code{mcmc.list}
-#' @param params a character vector of with length >= 1 specifying the nodes to plot. Passed to \code{\link{match_params}},
-#'   so can (and sometimes should) be a regular expression.
-#' @param ext_device logical. Do you wish to have an external device open to display the diagnostics?
-#'   \code{TRUE} will create a new plotting device using the OS-specific function.
-#'   Defaults to \code{FALSE}.
-#' @param show_diags a character vector of length == 1. Must be one of
-#'   \code{"always"}, \code{"never"}, \code{"if_poor_Rhat"}. Defaults to
-#'   \code{"if_poor_Rhat"}, which will display the Rhat and effective MCMC samples
-#'   if the Rhat statistic is greater than 1.1
-#' @param layout a character vector specifying \code{"ROWSxCOLUMNS"} of parameter diagnostics.
-#'   For example, \code{"4x1"} has 4 rows and 1 column of parameter diagnostics.
-#'   Defaults to \code{"auto"}, which selects between \code{"1x1"}, \code{"2x1"}, \code{"4x1"}, \code{"4x2"}, and \code{"5x3"}.
-#' @param dims a character vector specifying the \code{"HEIGHTxWIDTH"} dimensions
+#' @title Create MCMC diagnostic plots for nodes of interest
+#' @description Allows quick visualization of posterior density and trace plots,
+#'   **both** separated by chain, for the desired nodes of interest. Includes the
+#'   ability to plot in the RStudio graphics device, an external device,
+#'   or a PDF file. Further, with the auto settings, the dimensions of the
+#'   plotting device scales to the job needed.
+#' @param post A [`mcmc.list`][coda::mcmc.list] object.
+#' @param params A character vector with length >= 1 specifying the nodes to plot.
+#'   Passed to [match_params()] so is matched using regular expressions.
+#' @param ext_device Logical. Do you wish to have an external device open to display the diagnostics?
+#'   `FALSE` (the default) will plot in the active device (including RStudio window).
+#'   `TRUE` will create a new graphics device.
+#' @param show_diags A character vector of length == 1. Must be one of
+#'   `"always"`, `"never"`, or `"if_poor_Rhat"`. `"if_poor_Rhat"` (the default)
+#'   will display the Rhat and effective MCMC samples if the Rhat statistic
+#'   is greater than 1.1.
+#' @param layout A character vector with length == 1 specifying `"ROWSxCOLUMNS"` of parameter diagnostics.
+#'   For example, `"4x1"` has 4 rows and 1 column of parameter diagnostics.
+#'   Defaults to `"auto"`, which selects between the only accepted options of
+#'   `"1x1"`, `"2x1"`, `"4x1"`, `"4x2"`, and `"5x3"`.
+#' @param dims A character vector with length == 1 specifying the `"HEIGHTxWIDTH"` dimensions
 #'   of the plotting device, in inches.
-#'   For example, \code{"5x7"} would create a 5 inch tall and 7 inch wide plotting device.
-#'   Defaults to \code{"auto"}, which selects the dimensions that look nice when \code{layout = "auto"}
+#'   For example, `"5x7"` would create a 5 inch tall and 7 inch wide plotting device.
+#'   Defaults to `"auto"`, which selects the dimensions that look nice when `layout = "auto"`
 #'   as well.
-#' @param keep_percent a numeric vector of length one and scaled between 0 and 1.
-#'   Percent of samples you'd like to keep for traceplotting and passed to \code{\link{post_thin}}.
-#' @param save logical. Do you wish to save the diagnostic plots in a PDF file? If so,
-#'   specify \code{file = "example.pdf"} as well. Defaults to \code{FALSE}.
-#' @param file character vector of length 1. The file name, which
-#'   must include the \code{".pdf"} extension. Saved to working directory by default,
-#'   but can recieve an absolute or relative file path here as well
-#' @param auto_escape logical. \code{FALSE} will treat \code{"["} and \code{"]"}
-#'   as regular expression syntax (unless explicitly escaped by user),
-#'   \code{TRUE} will treat these symbols as plain text to be matched.
-#'   It is generally recommended to keep this as \code{TRUE} (the default),
+#' @param keep_percent A numeric vector of length == 1 and scaled between 0 and 1.
+#'   Percent of samples you'd like to keep for trace plotting and passed to [post_thin()].
+#' @param save Logical. Do you wish to save the diagnostic plots in a PDF file? If so,
+#'   specify `file = "example.pdf"` as well. Defaults to `FALSE`.
+#' @param file Character vector of length == 1. The file name, which
+#'   must include the `".pdf"` extension. Saved to working directory by default,
+#'   but can receive an absolute or relative file path as part of this argument.
+#' @param auto_escape Logical. `FALSE` will treat `"["` and`"]"`
+#'   as special regular expression characters (unless explicitly escaped by user),
+#'   `TRUE` will treat these symbols as plain text to be matched.
+#'   It is generally recommended to keep this as `TRUE` (the default),
 #'   unless you are performing complex regex searches that require the
-#'   \code{"["} and \code{"]"} symbols to be special characters
+#'   `"["` and `"]"` symbols to be special characters.
 #' @note If saving as a pdf, these files can get very large with many samples and render slowly.
-#'   The \code{keep_percent} argument is intended to help with this by thinning the chains at quasi-evenly spaced intervals.
-#' @seealso \code{\link{match_params}}
+#'   The `keep_percent` argument is intended to help with this by thinning the chains at quasi-evenly spaced intervals.
+#' @seealso [match_params()], [density_plot()], [trace_plot()]
+#' @return A multi-panel figure showing the posterior density and trace plots for requested nodes.
+#'   The device in which it is placed depends on the argument values.
 #' @examples
 #' if (interactive()) {
 #'   #load example mcmc.list

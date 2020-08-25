@@ -18,57 +18,62 @@ diag_plots(
 )
 }
 \arguments{
-\item{post}{an object of class \code{mcmc.list}}
+\item{post}{A \code{\link[coda:mcmc.list]{mcmc.list}} object.}
 
-\item{params}{a character vector of with length >= 1 specifying the nodes to plot. Passed to \code{\link{match_params}},
-so can (and sometimes should) be a regular expression.}
+\item{params}{A character vector with length >= 1 specifying the nodes to plot.
+Passed to \code{\link[=match_params]{match_params()}} so is matched using regular expressions.}
 
-\item{ext_device}{logical. Do you wish to have an external device open to display the diagnostics?
-\code{TRUE} will create a new plotting device using the OS-specific function.
-Defaults to \code{FALSE}.}
+\item{ext_device}{Logical. Do you wish to have an external device open to display the diagnostics?
+\code{FALSE} (the default) will plot in the active device (including RStudio window).
+\code{TRUE} will create a new graphics device.}
 
-\item{show_diags}{a character vector of length == 1. Must be one of
-\code{"always"}, \code{"never"}, \code{"if_poor_Rhat"}. Defaults to
-\code{"if_poor_Rhat"}, which will display the Rhat and effective MCMC samples
-if the Rhat statistic is greater than 1.1}
+\item{show_diags}{A character vector of length == 1. Must be one of
+\code{"always"}, \code{"never"}, or \code{"if_poor_Rhat"}. \code{"if_poor_Rhat"} (the default)
+will display the Rhat and effective MCMC samples if the Rhat statistic
+is greater than 1.1.}
 
-\item{layout}{a character vector specifying \code{"ROWSxCOLUMNS"} of parameter diagnostics.
+\item{layout}{A character vector with length == 1 specifying \code{"ROWSxCOLUMNS"} of parameter diagnostics.
 For example, \code{"4x1"} has 4 rows and 1 column of parameter diagnostics.
-Defaults to \code{"auto"}, which selects between \code{"1x1"}, \code{"2x1"}, \code{"4x1"}, \code{"4x2"}, and \code{"5x3"}.}
+Defaults to \code{"auto"}, which selects between the only accepted options of
+\code{"1x1"}, \code{"2x1"}, \code{"4x1"}, \code{"4x2"}, and \code{"5x3"}.}
 
-\item{dims}{a character vector specifying the \code{"HEIGHTxWIDTH"} dimensions
+\item{dims}{A character vector with length == 1 specifying the \code{"HEIGHTxWIDTH"} dimensions
 of the plotting device, in inches.
 For example, \code{"5x7"} would create a 5 inch tall and 7 inch wide plotting device.
 Defaults to \code{"auto"}, which selects the dimensions that look nice when \code{layout = "auto"}
 as well.}
 
-\item{keep_percent}{a numeric vector of length one and scaled between 0 and 1.
-Percent of samples you'd like to keep for traceplotting and passed to \code{\link{post_thin}}.}
+\item{keep_percent}{A numeric vector of length == 1 and scaled between 0 and 1.
+Percent of samples you'd like to keep for trace plotting and passed to \code{\link[=post_thin]{post_thin()}}.}
 
-\item{save}{logical. Do you wish to save the diagnostic plots in a PDF file? If so,
+\item{save}{Logical. Do you wish to save the diagnostic plots in a PDF file? If so,
 specify \code{file = "example.pdf"} as well. Defaults to \code{FALSE}.}
 
-\item{file}{character vector of length 1. The file name, which
+\item{file}{Character vector of length == 1. The file name, which
 must include the \code{".pdf"} extension. Saved to working directory by default,
-but can recieve an absolute or relative file path here as well}
+but can receive an absolute or relative file path as part of this argument.}
 
-\item{auto_escape}{logical. \code{FALSE} will treat \code{"["} and \code{"]"}
-as regular expression syntax (unless explicitly escaped by user),
+\item{auto_escape}{Logical. \code{FALSE} will treat \code{"["} and\code{"]"}
+as special regular expression characters (unless explicitly escaped by user),
 \code{TRUE} will treat these symbols as plain text to be matched.
 It is generally recommended to keep this as \code{TRUE} (the default),
 unless you are performing complex regex searches that require the
-\code{"["} and \code{"]"} symbols to be special characters}
+\code{"["} and \code{"]"} symbols to be special characters.}
+}
+\value{
+A multi-panel figure showing the posterior density and trace plots for requested nodes.
+The device in which it is placed depends on the argument values.
 }
 \description{
-Allows quick visualization of posterior density and traceplots,
-BOTH separated by chain, for the desired nodes of interest. Includes the
-ability to plot in the RStudio graphics device, an external device (OS-indepenent),
+Allows quick visualization of posterior density and trace plots,
+\strong{both} separated by chain, for the desired nodes of interest. Includes the
+ability to plot in the RStudio graphics device, an external device,
 or a PDF file. Further, with the auto settings, the dimensions of the
 plotting device scales to the job needed.
 }
 \note{
 If saving as a pdf, these files can get very large with many samples and render slowly.
-  The \code{keep_percent} argument is intended to help with this by thinning the chains at quasi-evenly spaced intervals.
+The \code{keep_percent} argument is intended to help with this by thinning the chains at quasi-evenly spaced intervals.
 }
 \examples{
 if (interactive()) {
@@ -92,5 +97,5 @@ if (interactive()) {
 }
 }
 \seealso{
-\code{\link{match_params}}
+\code{\link[=match_params]{match_params()}}, \code{\link[=density_plot]{density_plot()}}, \code{\link[=trace_plot]{trace_plot()}}
 }
