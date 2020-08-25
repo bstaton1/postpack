@@ -16,6 +16,10 @@
 #'   It is generally recommended to keep this as `TRUE` (the default),
 #'   unless you are performing complex regex searches that require the
 #'   `"["` and `"]"` symbols to be special characters.
+#' @return A [`mcmc.list`][coda::mcmc.list] or [`matrix`][base::matrix] object, depending on the
+#'   value of the `matrix` argument. Object contains all nodes that match the `params` argument;
+#'   an error will be returned if no matches are found.
+#' @seealso [match_params()]
 #' @examples
 #' # load example mcmc.list
 #' data(cjs, package = "postpack")

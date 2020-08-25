@@ -35,6 +35,11 @@ It is generally recommended to keep this as \code{TRUE} (the default),
 unless you are performing complex regex searches that require the
 \code{"["} and \code{"]"} symbols to be special characters.}
 }
+\value{
+A \code{\link[coda:mcmc.list]{mcmc.list}} or \code{\link[base:matrix]{matrix}} object, depending on the
+value of the \code{matrix} argument. Object contains all nodes that match the \code{params} argument;
+an error will be returned if no matches are found.
+}
 \description{
 Subsets a smaller portion from a \code{\link[coda:mcmc.list]{mcmc.list}} object
 corresponding only to the node(s) requested.
@@ -53,5 +58,5 @@ x2 = post_subset(cjs, c("b", "B"))
 x3 = post_subset(cjs, "B0", matrix = T, chain = T)
 }
 \seealso{
-\code{\link{match_params}}
+\code{\link[=match_params]{match_params()}}
 }
