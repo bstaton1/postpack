@@ -19,11 +19,11 @@
 #' @seealso [coda::as.mcmc.list()], [coda::as.mcmc()], [rstan::As.mcmc.list()]
 #' @examples
 #' ## EXAMPLE 1
-#' load example mcmc.list
+#' # load example mcmc.list
 #' data(cjs, package = "postpack")
 #'
 #' # take a subset from cjs as a matrix, retain chain and iter ids
-#' cjs_sub = post_subset(cjs, "^B", matrix = T, chains = T, iters = T)
+#' cjs_sub = post_subset(cjs, "^B", matrix = TRUE, chains = TRUE, iters = TRUE)
 #'
 #' # convert back to mcmc.list
 #' class(post_convert(cjs_sub))

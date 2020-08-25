@@ -65,14 +65,14 @@ data(cjs, package = "postpack")
 post_summ(cjs, "p")
 
 # do this by chain
-post_summ(cjs, "p", by_chain = T)
+post_summ(cjs, "p", by_chain = TRUE)
 
 # calculate Rhat and Neff diagnostic summaries as well
 # multiple node names too
-post_summ(cjs, c("b0", "p"), Rhat = T, neff = T)
+post_summ(cjs, c("b0", "p"), Rhat = TRUE, neff = TRUE)
 
 # calculate Monte Carlo SE for mean and quantiles, with rounding
-post_summ(cjs, "p", mcse = T, digits = 3)
+post_summ(cjs, "p", mcse = TRUE, digits = 3)
 
 # summarize different quantiles: median and central 80\%
 post_summ(cjs, "p", probs = c(0.5, 0.1, 0.9))

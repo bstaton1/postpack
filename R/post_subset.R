@@ -31,8 +31,7 @@
 #' x2 = post_subset(cjs, c("b", "B"))
 #'
 #' # perform the subset and return a matrix as output, while retaining the chain ID
-#' x3 = post_subset(cjs, "B0", matrix = T, chain = T)
-#' @seealso \code{\link{match_params}}
+#' x3 = post_subset(cjs, "B0", matrix = TRUE, chain = TRUE)
 #' @export
 
 post_subset = function(post, params, matrix = FALSE, iters = FALSE, chains = FALSE, auto_escape = TRUE) {

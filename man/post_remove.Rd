@@ -38,7 +38,7 @@ data(cjs, package = "postpack")
 get_params(cjs)
 
 # remove the SIG nodes
-new_cjs = suppressMessages(post_remove(cjs, "SIG", ask = F))
+new_cjs = suppressMessages(post_remove(cjs, "SIG", ask = FALSE))
 
 # get names of new output
 get_params(new_cjs)

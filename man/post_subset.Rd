@@ -55,7 +55,7 @@ x1 = post_subset(cjs, "B0")
 x2 = post_subset(cjs, c("b", "B"))
 
 # perform the subset and return a matrix as output, while retaining the chain ID
-x3 = post_subset(cjs, "B0", matrix = T, chain = T)
+x3 = post_subset(cjs, "B0", matrix = TRUE, chain = TRUE)
 }
 \seealso{
 \code{\link[=match_params]{match_params()}}
