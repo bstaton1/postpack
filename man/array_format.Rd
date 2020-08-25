@@ -7,19 +7,27 @@
 array_format(v)
 }
 \arguments{
-\item{v}{a vector with names indicating its elements' appropriate placement in a new array.
-See the details for more about what this means.}
+\item{v}{A vector with names indicating the index location of each element in a new array.
+See the details (particularly the example) for more about what this means.}
+}
+\value{
+An array with elements of \code{v} placed in the appropriate location based on their
+index names.
 }
 \description{
-This function unvectorizes summarized output and creates an array
-of the appropriate dimensions based on the element names.
+Use element names to place vector elements in
+the appropriate location of an array.
 }
 \details{
-For example, you have a AxB matrix \code{m} in your JAGS model, and you would like to
-  create an object in R that stores the posterior means in the same location as
-  in the JAGS model. If A and B are small, it is simple to create this matrix "by-hand".
-  However, if there are also dimensions C, D, and E, it becomes much more difficult.
-  Up to 10 dimensions are currently supported.
+Suppose you have an AxB matrix in your model, and you would like to
+create an object that stores the posterior means in the same AxB matrix as found in
+the model. For an AxB matrix, this is not too difficult to do "by-hand".
+However, if there are also dimensions C, D, and E, missing values, etc. it becomes more difficult.
+}
+\note{
+Up to 10 dimensions are currently supported. Please submit an
+\href{https://github.com/bstaton1/postpack/issues}{issue}
+should you find that you need more dimensions.
 }
 \examples{
 # load example mcmc.list
