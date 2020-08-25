@@ -2,22 +2,19 @@
 % Please edit documentation in R/utils.R
 \name{id_mat}
 \alias{id_mat}
-\title{Quickly extract the chain and iteration IDs}
+\title{Extract chain and iteration IDs for each sample}
 \usage{
 id_mat(post)
 }
 \arguments{
-\item{post}{an object of class \code{mcmc.list}}
+\item{post}{A \code{\link[coda:mcmc.list]{mcmc.list}} object.}
 }
 \value{
-a matrix with columns \code{"CHAIN"} and \code{"ITER"}
+A matrix with columns\code{"CHAIN"} and \code{"ITER"}.
 }
 \description{
-It is sometimes useful to be able to add these characteristics to a
-matrix of derived quantities, which then allows coercion to a \code{mcmc.list}
-object, which can then be binded (e.g., \code{\link{post_bind}}) to the
-more complete samples.
+Extract chain and iteration IDs for each sample
 }
 \note{
-this is NOT a function users will generally use.
+This is NOT a function users will generally use.
 }

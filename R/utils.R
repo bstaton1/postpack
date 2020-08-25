@@ -88,17 +88,10 @@ mytitle = function(text) {
        labels = text, font = 2, cex = 1.4, xpd = NA)
 }
 
-#' Quickly extract the chain and iteration IDs
-#'
-#' It is sometimes useful to be able to add these characteristics to a
-#' matrix of derived quantities, which then allows coercion to a \code{mcmc.list}
-#' object, which can then be binded (e.g., \code{\link{post_bind}}) to the
-#' more complete samples.
-#'
-#' @param post an object of class \code{mcmc.list}
-#'
-#' @return a matrix with columns \code{"CHAIN"} and \code{"ITER"}
-#' @note this is NOT a function users will generally use.
+#' @title Extract chain and iteration IDs for each sample
+#' @param post A [`mcmc.list`][coda::mcmc.list] object.
+#' @return A matrix with columns`"CHAIN"` and `"ITER"`.
+#' @note This is NOT a function users will generally use.
 
 id_mat = function(post) {
   # stop if post isn't mcmc.list
