@@ -2,23 +2,25 @@
 % Please edit documentation in R/write_model.R
 \name{write_model}
 \alias{write_model}
-\title{Export BUGS model from function to file}
+\title{Export BUGS/JAGS model from function to file}
 \usage{
 write_model(fun, file)
 }
 \arguments{
-\item{fun}{a function object containing BUGS model code}
+\item{fun}{A function object containing BUGS/JAGS model code}
 
-\item{file}{a character vector of length 1: the name of the file to write to}
+\item{file}{A character vector of length == 1: the name of the file to write to}
+}
+\value{
+Nothing, but \code{file} is written to disk.
 }
 \description{
-Performs the same basic function as \code{\link[R2OpenBUGS]{write.model}}
+Performs the same basic function as \code{\link[R2OpenBUGS:write.model]{R2OpenBUGS::write.model()}}
 }
 \details{
-This function performs the same basic function as \code{\link[R2OpenBUGS]{write.model}},
-    but with slightly better output (scientific notation, spacing, etc.). The main reason it was created
-    for use in this package was to remove the need for the \code{R2OpenBUGS} package, as this was
-    the only function the author ever used from it.
+Performs the same basic function as \code{\link[R2OpenBUGS:write.model]{R2OpenBUGS::write.model()}},
+but with slightly better output (scientific notation, spacing, etc.). The main reason it was created
+for use in 'postpack' was to remove the need for using the \code{R2OpenBUGS} package when not using OpenBUGS.
 }
 \examples{
 if (interactive()) {
