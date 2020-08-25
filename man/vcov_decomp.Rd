@@ -36,6 +36,13 @@ Defaults to \code{FALSE}.}
 before proceeding with the calculations? Defaults to \code{TRUE}. If set to \code{FALSE}, unexpected output may be returned or
 other errors related to items a, b, and c may be triggered - this is not advised, though may be required
 if wishing to set \code{invert = TRUE}.}
+
+\item{auto_escape}{Logical. \code{FALSE} will treat \code{"["} and \code{"]"}
+as special regular expression characters (unless explicitly escaped by user),
+\code{TRUE} will treat these symbols as plain text to be matched.
+It is generally recommended to keep this as \code{TRUE} (the default),
+unless you are performing complex regex searches that require the
+\code{"["} and \code{"]"} symbols to be special characters.}
 }
 \value{
 A \code{\link[coda:mcmc.list]{mcmc.list}} object.

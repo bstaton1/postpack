@@ -47,6 +47,13 @@ Fair warning: this can take a bit of time to run on many nodes/samples.}
 rather than for the aggregate across chains? Defaults to \code{FALSE}.
 The arguments \code{Rhat}, \code{neff}, and \code{mcse} are ignored if \code{by_chain = TRUE}
 and a warning will be returned.}
+
+\item{auto_escape}{Logical. \code{FALSE} will treat \code{"["} and \code{"]"}
+as special regular expression characters (unless explicitly escaped by user),
+\code{TRUE} will treat these symbols as plain text to be matched.
+It is generally recommended to keep this as \code{TRUE} (the default),
+unless you are performing complex regex searches that require the
+\code{"["} and \code{"]"} symbols to be special characters.}
 }
 \value{
 A \code{\link[base:matrix]{matrix}} object with summary statistics as rows and nodes as columns.

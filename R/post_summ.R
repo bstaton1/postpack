@@ -24,6 +24,12 @@
 #'   rather than for the aggregate across chains? Defaults to `FALSE`.
 #'   The arguments `Rhat`, `neff`, and `mcse` are ignored if `by_chain = TRUE`
 #'   and a warning will be returned.
+#' @param auto_escape Logical. `FALSE` will treat `"["` and `"]"`
+#'   as special regular expression characters (unless explicitly escaped by user),
+#'   `TRUE` will treat these symbols as plain text to be matched.
+#'   It is generally recommended to keep this as `TRUE` (the default),
+#'   unless you are performing complex regex searches that require the
+#'   `"["` and `"]"` symbols to be special characters.
 #' @return A [`matrix`][base::matrix] object with summary statistics as rows and nodes as columns.
 #'   If `by_chain = TRUE`, an [`array`][base::array] is returned instead.
 #' @seealso [match_params()], [coda::gelman.diag()], [coda::effectiveSize()], [mcmcse::mcse()], [mcmcse::mcse.q()]
