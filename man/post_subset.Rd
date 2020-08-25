@@ -2,7 +2,7 @@
 % Please edit documentation in R/post_subset.R
 \name{post_subset}
 \alias{post_subset}
-\title{Extract a subset of nodes from a \code{mcmc.list}}
+\title{Extract samples from specific nodes}
 \usage{
 post_subset(
   post,
@@ -14,29 +14,29 @@ post_subset(
 )
 }
 \arguments{
-\item{post}{an object of class \code{mcmc.list}}
+\item{post}{A \code{\link[coda:mcmc.list]{mcmc.list}} object.}
 
-\item{params}{a character vector of with length >= 1 specifying the nodes to extract. Passed to \code{\link{match_params}},
-so can (and sometimes should) be a regular expression.}
+\item{params}{A character vector of with length >= 1 specifying the nodes to extract from \code{post}.
+Passed to \code{\link[=match_params]{match_params()}} so is matched using regular expressions.}
 
-\item{matrix}{logical. If \code{TRUE}, the subsetted output will be returned as a matrix.
-Defaults to \code{FALSE}, in which case the class \code{mcmc.list} will be retained.}
+\item{matrix}{Logical. If \code{TRUE}, the output will be returned as a \code{\link[base:matrix]{matrix}}.
+Defaults to \code{FALSE}, in which case the \code{\link[coda:mcmc.list]{mcmc.list}} class will be retained.}
 
-\item{iters}{logical. Do you wish to retain the iteration number if \code{matrix = TRUE}? Not used otherwise.
+\item{iters}{Logical. Do you wish to retain the iteration number of each sample if \code{matrix = TRUE}? Not used otherwise.
 Defaults to \code{FALSE}.}
 
-\item{chains}{logical. Do you wish to retain the chain number if \code{matrix = TRUE}? Not used otherwise.
+\item{chains}{Logical. Do you wish to retain the chain number of each sample if \code{matrix = TRUE}? Not used otherwise.
 Defaults to \code{FALSE}.}
 
-\item{auto_escape}{logical. \code{FALSE} will treat \code{"["} and \code{"]"}
-as regular expression syntax (unless explicitly escaped by user),
+\item{auto_escape}{Logical. \code{FALSE} will treat \code{"["} and \code{"]"}
+as special regular expression characters (unless explicitly escaped by user),
 \code{TRUE} will treat these symbols as plain text to be matched.
 It is generally recommended to keep this as \code{TRUE} (the default),
 unless you are performing complex regex searches that require the
-\code{"["} and \code{"]"} symbols to be special characters}
+\code{"["} and \code{"]"} symbols to be special characters.}
 }
 \description{
-Subsets a smaller portion from the joint posterior
+Subsets a smaller portion from a \code{\link[coda:mcmc.list]{mcmc.list}} object
 corresponding only to the node(s) requested.
 }
 \examples{

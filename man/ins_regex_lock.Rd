@@ -7,13 +7,17 @@
 ins_regex_lock(params)
 }
 \arguments{
-\item{params}{a character vector on to which a carrot and dollar sign
-will be pasted to if not already present}
+\item{params}{A character vector with length >= 1 to paste a \code{^} and \code{$}
+(if not already present) to lock in the match.}
+}
+\value{
+A character vector with locking anchors inserted to force an exact match. For example,
+\verb{"a\\\[1\\\]"} becomes \verb{"^a\\\[1\\\]$"}.
 }
 \description{
 To ensure that a regular expression will match exactly,
-it's necessary to specify so - which is what this function does.
+it's necessary to specify so.
 }
 \note{
-this is NOT a function users will generally use.
+This is \strong{not} a function users will generally use directly.
 }

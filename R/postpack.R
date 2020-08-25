@@ -1,13 +1,16 @@
-#' postpack: Utilities for Dealing with Posterior Samples Stored in mcmc.lists
+#' Utilities for Processing Posterior Samples Stored in mcmc.lists
 #'
-#' This package contains many shortcuts for subsetting, summarizing, plotting, and diagnosing particular
-#' nodes from an \code{mcmc.list} object. These objects are created from JAGS, BUGS, or STAN models,
-#' yet the author has found the default summarization and diagnostic capabilities rather clunky
-#' for plotting and subsetting particular portions of the posterior output. The attempt here is
-#' to standardize all work with MCMC output into \code{mcmc.list} objects, and to provide the
-#' infrastructure for a unified workflow. The functions in this package streamline the extraction,
-#' summarization, and diagnostics of particular nodes monitored after model fitting. Subsetting is made
-#' highly flexible by the incorporation of regular expression compatibility.
+#' The aim of 'postpack' is to provide the infrastructure for a standardized workflow for [`mcmc.list`][coda::mcmc.list] objects.
+#' These objects can be used to store output from models fitted with Bayesian inference using
+#' JAGS, Win/OpenBUGS, NIMBLE, Stan, or even custom MCMC algorithms (see [post_convert()] for converting samples to
+#' [`mcmc.list`][coda::mcmc.list] format). Although the 'coda' package provides some methods for these objects,
+#' it is somewhat limited in easily performing post-processing tasks for **particular nodes**.
+#' Models are ever increasing in their complexity and the number of tracked nodes, and oftentimes
+#' a user may wish to summarize/diagnose sampling behavior for only a small subset of nodes at a time for a particular question or figure.
+#' Thus, many 'postpack' functions support performing tasks on a subset of nodes, where the subset is specified with regular expressions.
+#' The functions in this package streamline the extraction, summarization, and diagnostics of particular nodes monitored after model fitting.
+#' Further, because there is rarely only ever one model under consideration, 'postpack' scales efficiently to perform the same tasks on output from multiple models
+#' simultaneously, facilitating rapid assessment of model sensitivity to changes in assumptions.
 #'
 #'@docType package
 #'@name postpack

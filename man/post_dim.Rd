@@ -7,32 +7,34 @@
 post_dim(post, types = NULL)
 }
 \arguments{
-\item{post}{an object of class \code{mcmc.list}}
+\item{post}{A \code{\link[coda:mcmc.list]{mcmc.list}} object.}
 
-\item{types}{a character vector containing some of \code{"burn"}, \code{"post_burn"},
-\code{"thin"}, \code{"chains"}, \code{"nodes"}. Defaults to \code{NULL}, in which case all of these are returned}
+\item{types}{A character vector with length >= 1 and containing some of \code{"burn"}, \code{"post_burn"},
+\code{"thin"}, \code{"chains"}, \code{"nodes"}. Defaults to \code{NULL}, in which case all of these are returned.}
 }
 \value{
-vector with named elements.
+A numeric vector with named elements, which may contain:
 \itemize{
-  \item \code{burn} - The burn-in period (per chain)
-  \item \code{post_burn} - The post-burn-in period (per chain)
-  \item \code{thin} - The thinning interval post-burn-in
-  \item \code{chains} - The number of chains
-  \item \code{saved} - The number of saved samples across all chains
-  \item \code{params} - The number of nodes with MCMC samples
+\item \code{burn}: The burn-in period (per chain).
+\item \code{post_burn}: The post-burn-in period (per chain).
+\item \code{thin}: The thinning interval post-burn-in.
+\item \code{chains}: The number of chains.
+\item \code{saved}: The number of saved samples across all chains.
+\item \code{params}: The number of nodes with MCMC samples.
 }
 
 All of these will be returned if \code{types = NULL}, a subset can be returned by
- specifying (for example) \code{types = c("burn", "thin")}
+specifying (for example) \code{types = c("burn", "thin")}.
 }
 \description{
 Quickly query the number of burn-in samples, post-burnin, thinning,
-number of chains, etc. from an object of class \code{mcmc.list}
+number of chains, etc. from a \code{\link[coda:mcmc.list]{mcmc.list}} object.
 }
 \note{
 If the \code{post} object was thinned after MCMC completed
-  using \code{\link{post_thin}}, then the \code{burn} and \code{thin} dimensions will be improperly calculated.
+using \code{\link[=post_thin]{post_thin()}}, then the \code{"burn"} and \code{"thin"} dimensions will be improperly calculated.
+\code{\link[=post_thin]{post_thin()}} performs post-MCMC thinning of \code{\link[coda:mcmc.list]{mcmc.list}} objects,
+and is solely for developing long-running post-processing code, so this is okay.
 }
 \examples{
 # load example mcmc.list
@@ -46,5 +48,4 @@ post_dim(cjs, "chains")
 
 # get the thinning and burn-in intervals
 post_dim(cjs, c("burn", "thin"))
-
 }

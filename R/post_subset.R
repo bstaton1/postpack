@@ -1,23 +1,21 @@
-#' Extract a subset of nodes from a \code{mcmc.list}
-#'
-#' Subsets a smaller portion from the joint posterior
-#' corresponding only to the node(s) requested.
-#'
-#' @param post an object of class \code{mcmc.list}
-#' @param params a character vector of with length >= 1 specifying the nodes to extract. Passed to \code{\link{match_params}},
-#'   so can (and sometimes should) be a regular expression.
-#' @param matrix logical. If \code{TRUE}, the subsetted output will be returned as a matrix.
-#'   Defaults to \code{FALSE}, in which case the class \code{mcmc.list} will be retained.
-#' @param iters logical. Do you wish to retain the iteration number if \code{matrix = TRUE}? Not used otherwise.
-#'   Defaults to \code{FALSE}.
-#' @param chains logical. Do you wish to retain the chain number if \code{matrix = TRUE}? Not used otherwise.
-#'   Defaults to \code{FALSE}.
-#' @param auto_escape logical. \code{FALSE} will treat \code{"["} and \code{"]"}
-#'   as regular expression syntax (unless explicitly escaped by user),
-#'   \code{TRUE} will treat these symbols as plain text to be matched.
-#'   It is generally recommended to keep this as \code{TRUE} (the default),
+#' @title Extract samples from specific nodes
+#' @description Subsets a smaller portion from a [`mcmc.list`][coda::mcmc.list] object
+#'   corresponding only to the node(s) requested.
+#' @param post A [`mcmc.list`][coda::mcmc.list] object.
+#' @param params A character vector of with length >= 1 specifying the nodes to extract from `post`.
+#'   Passed to [match_params()] so is matched using regular expressions.
+#' @param matrix Logical. If `TRUE`, the output will be returned as a [`matrix`][base::matrix].
+#'   Defaults to `FALSE`, in which case the [`mcmc.list`][coda::mcmc.list] class will be retained.
+#' @param iters Logical. Do you wish to retain the iteration number of each sample if `matrix = TRUE`? Not used otherwise.
+#'   Defaults to `FALSE`.
+#' @param chains Logical. Do you wish to retain the chain number of each sample if `matrix = TRUE`? Not used otherwise.
+#'   Defaults to `FALSE`.
+#' @param auto_escape Logical. `FALSE` will treat `"["` and `"]"`
+#'   as special regular expression characters (unless explicitly escaped by user),
+#'   `TRUE` will treat these symbols as plain text to be matched.
+#'   It is generally recommended to keep this as `TRUE` (the default),
 #'   unless you are performing complex regex searches that require the
-#'   \code{"["} and \code{"]"} symbols to be special characters
+#'   `"["` and `"]"` symbols to be special characters.
 #' @examples
 #' # load example mcmc.list
 #' data(cjs, package = "postpack")

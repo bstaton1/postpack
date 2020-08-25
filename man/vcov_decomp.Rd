@@ -2,7 +2,7 @@
 % Please edit documentation in R/vcov_decomp.R
 \name{vcov_decomp}
 \alias{vcov_decomp}
-\title{Decompose Variance-Covariance Matrix Node}
+\title{Decompose the posterior of a variance-covariance node}
 \usage{
 vcov_decomp(
   post,
@@ -15,34 +15,34 @@ vcov_decomp(
 )
 }
 \arguments{
-\item{post}{an object of class \code{mcmc.list}}
+\item{post}{A \code{\link[coda:mcmc.list]{mcmc.list}} object.}
 
-\item{param}{a character vector with length == 1. Passed to \code{\link{match_params}}.
-Must match only one node in \code{post}, and that node must store samples from a matrix within the model.}
+\item{param}{A character vector of with length >= 1 specifying the variance-covariance node in \code{post}.
+Passed to \code{\link[=match_params]{match_params()}} so is matched using regular expressions.
+Must match only base node name in \code{post}, and that node must store samples from a matrix within the model.}
 
-\item{sigma_base_name}{a character vector with length == 1. What should the base node name be
-for the standard deviation vector component? Defaults to \code{sigma}, which becomes \code{sigma[1]}, \code{sigma[2]},
-etc. in the output}
+\item{sigma_base_name}{A character vector with length == 1. What should the base node name be
+for the standard deviation vector component? Defaults to \code{"sigma"}, which becomes \code{"sigma[1]"}, \code{"sigma[2]"},
+etc. in the output.}
 
-\item{rho_base_name}{same as \code{sigma_base_name}, but for the correlation matrix component}
+\item{rho_base_name}{Same as \code{sigma_base_name}, but for the correlation matrix component.}
 
-\item{invert}{logical. Do you wish to take the inverse of the matrix node matched by \code{params}
+\item{invert}{Logical. Do you wish to take the inverse of the matrix node matched by \code{param}
 prior to performing the calculations? This would be necessary if the matrix node was expressed as
-a precision matrix as used in the BUGS language. Triggers a call to \code{\link[base]{solve}}.
-Defaults to \code{FALSE}}
+a precision matrix as used in the BUGS language. Triggers a call to \code{\link[base:solve]{base::solve()}}.
+Defaults to \code{FALSE}.}
 
-\item{check}{logical. Do you wish to perform checks sequentially for (a) square-ness, (b) symmetry, and (c) positive definite-ness
-before proceeding with the calculations? Defaults to \code{TRUE}, if set to \code{FALSE} unexpected output may be returned or
+\item{check}{Logical. Do you wish to perform checks sequentially that the matrix node is (a) square, (b) symmetrical, and (c) positive definite
+before proceeding with the calculations? Defaults to \code{TRUE}. If set to \code{FALSE}, unexpected output may be returned or
 other errors related to items a, b, and c may be triggered - this is not advised, though may be required
 if wishing to set \code{invert = TRUE}.}
 }
 \value{
-an object of class \code{mcmc.list}
+A \code{\link[coda:mcmc.list]{mcmc.list}} object.
 }
 \description{
 For each posterior sample, extract the standard deviation and correlation components
-of a monitored node representing a variance-covariance matrix,
-and return the output as a \code{mcmc.list} object
+of a monitored node representing a variance-covariance matrix.
 }
 \examples{
 # load example mcmc.list

@@ -1,17 +1,17 @@
-#' Convert a vector to the array structure used in model
-#'
-#' This function unvectorizes summarized output and creates an array
-#' of the appropriate dimensions based on the element names.
-#'
-#' @param v a vector with names indicating its elements' appropriate placement in a new array.
-#'   See the details for more about what this means.
-#'
-#' @details For example, you have a AxB matrix \code{m} in your JAGS model, and you would like to
-#'   create an object in R that stores the posterior means in the same location as
-#'   in the JAGS model. If A and B are small, it is simple to create this matrix "by-hand".
-#'   However, if there are also dimensions C, D, and E, it becomes much more difficult.
-#'   Up to 10 dimensions are currently supported.
-#'
+#' @title Convert a vector to the array structure used in model
+#' @description Use element names to place vector elements in
+#'   the appropriate location of an array.
+#' @param v A vector with names indicating the index location of each element in a new array.
+#'   See the details (particularly the example) for more about what this means.
+#' @details Suppose you have an AxB matrix in your model, and you would like to
+#'   create an object that stores the posterior means in the same AxB matrix as found in
+#'   the model. For an AxB matrix, this is not too difficult to do "by-hand".
+#'   However, if there are also dimensions C, D, and E, missing values, etc. it becomes more difficult.
+#' @note Up to 10 dimensions are currently supported. Please submit an
+#'   [issue](https://github.com/bstaton1/postpack/issues)
+#'   should you find that you need more dimensions.
+#' @return An array with elements of `v` placed in the appropriate location based on their
+#'   index names.
 #' @examples
 #' # load example mcmc.list
 #' data(cjs, package = "postpack")
@@ -33,7 +33,7 @@
 array_format = function(v) {
   # stop if v doesn't have names
   if (is.null(names(v))) {
-    stop("'v' must have names from an mcmc.list or matrix")
+    stop("'v' must have names with element indices included")
   }
 
   #the node names
@@ -49,6 +49,7 @@ array_format = function(v) {
   # number of dimensions: count commas and add one
   ndims = unique(stringr::str_count(inds, ",")) + 1
   if (ndims == 1) warning("only one dimension found. You don't need this function in this case")
+  if (ndims > 10) stop ("more than 10 dimensions found. See ?array_format")
 
   # replace the [ and ] with nothing
   inds = stringr::str_replace(inds, "\\[", "")

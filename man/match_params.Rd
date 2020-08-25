@@ -7,37 +7,38 @@
 match_params(post, params, type = "base_index", auto_escape = TRUE)
 }
 \arguments{
-\item{post}{an object of class \code{mcmc.list}}
+\item{post}{A \code{\link[coda:mcmc.list]{mcmc.list}} object.}
 
-\item{params}{a character vector with length >= 1. Passed to \code{stringr::str_detect},
-so can, and sometimes should, be a regular expression; see the examples.
-Duplicate matches found among different elements of \code{params} are discarded.}
+\item{params}{A character vector with length >= 1 specifying the nodes to match.
+Passed to \code{\link[stringr:str_detect]{stringr::str_detect()}} so is matched using regular expressions.}
 
-\item{type}{a character vector with length == 1; only two options are accepted.
-Set to \code{type = "base_only"} if you wish to return only the unique node names (without indices).
-Set to \code{type = "base_index"} (the default) if you wish to return the node names with indices included.}
+\item{type}{A character vector with length == 1; only two options are accepted:
+\itemize{
+\item \code{type = "base_only"} to return only the unique node names (without indices).
+\item \code{type = "base_index"} (the default) to return the node names with indices included.
+}}
 
-\item{auto_escape}{logical. \code{FALSE} will treat \code{"["} and \code{"]"}
-as regular expression syntax (unless explicitly escaped by user),
+\item{auto_escape}{Logical. \code{FALSE} will treat \code{"["} and \code{"]"}
+as special regular expression characters (unless explicitly escaped by user),
 \code{TRUE} will treat these symbols as plain text to be matched.
 It is generally recommended to keep this as \code{TRUE} (the default),
 unless you are performing complex regex searches that require the
-\code{"["} and \code{"]"} symbols to be special characters}
+\code{"["} and \code{"]"} symbols to be special characters.}
 }
 \value{
-a character vector with all node names that match \code{params}.
-  If no matches are found, it will return an error with
-  the base node names found the \code{mcmc.list} to help the next try.
+A character vector with all node names in \code{post} that match \code{params}, formatted as requested by \code{type}..
+If no matches are found, an error will be returned with
+the base node names found in \code{post} to help the next try.
 }
 \description{
-Returns all the node names stored in an \code{mcmc.list} object
-that match a provided string
+Returns all the node names stored in a \code{\link[coda:mcmc.list]{mcmc.list}}
+object that match a provided string.
 }
 \details{
-this function is called as one of the first steps in many of the more downstream
-  functions in this package. It is thus fairly important to get used to
-  how the regular expressions work, particularly
-  with the \code{\link[stringr]{str_detect}} function.
+This function is called as one of the first steps in many of the more downstream
+functions in this package. It is thus fairly important to get used to
+how the regular expressions work. This function can be used directly to hone in on the correct regular expression.
+See the examples below.
 }
 \examples{
 # load example mcmc.list

@@ -1,26 +1,23 @@
-#' Decompose Variance-Covariance Matrix Node
-#'
-#' For each posterior sample, extract the standard deviation and correlation components
-#' of a monitored node representing a variance-covariance matrix,
-#' and return the output as a \code{mcmc.list} object
-#'
-#' @param post an object of class \code{mcmc.list}
-#' @param param a character vector with length == 1. Passed to \code{\link{match_params}}.
-#'   Must match only one node in \code{post}, and that node must store samples from a matrix within the model.
-#' @param sigma_base_name a character vector with length == 1. What should the base node name be
-#'   for the standard deviation vector component? Defaults to \code{sigma}, which becomes \code{sigma[1]}, \code{sigma[2]},
-#'   etc. in the output
-#' @param rho_base_name same as \code{sigma_base_name}, but for the correlation matrix component
-#' @param invert logical. Do you wish to take the inverse of the matrix node matched by \code{params}
+#' @title Decompose the posterior of a variance-covariance node
+#' @description For each posterior sample, extract the standard deviation and correlation components
+#'   of a monitored node representing a variance-covariance matrix.
+#' @param post A [`mcmc.list`][coda::mcmc.list] object.
+#' @param param A character vector of with length >= 1 specifying the variance-covariance node in `post`.
+#'   Passed to [match_params()] so is matched using regular expressions.
+#'   Must match only base node name in `post`, and that node must store samples from a matrix within the model.
+#' @param sigma_base_name A character vector with length == 1. What should the base node name be
+#'   for the standard deviation vector component? Defaults to `"sigma"`, which becomes `"sigma[1]"`, `"sigma[2]"`,
+#'   etc. in the output.
+#' @param rho_base_name Same as \code{sigma_base_name}, but for the correlation matrix component.
+#' @param invert Logical. Do you wish to take the inverse of the matrix node matched by `param`
 #'   prior to performing the calculations? This would be necessary if the matrix node was expressed as
-#'   a precision matrix as used in the BUGS language. Triggers a call to \code{\link[base]{solve}}.
-#'   Defaults to \code{FALSE}
-#' @param check logical. Do you wish to perform checks sequentially for (a) square-ness, (b) symmetry, and (c) positive definite-ness
-#'   before proceeding with the calculations? Defaults to \code{TRUE}, if set to \code{FALSE} unexpected output may be returned or
+#'   a precision matrix as used in the BUGS language. Triggers a call to [base::solve()].
+#'   Defaults to `FALSE`.
+#' @param check Logical. Do you wish to perform checks sequentially that the matrix node is (a) square, (b) symmetrical, and (c) positive definite
+#'   before proceeding with the calculations? Defaults to `TRUE`. If set to `FALSE`, unexpected output may be returned or
 #'   other errors related to items a, b, and c may be triggered - this is not advised, though may be required
-#'   if wishing to set \code{invert = TRUE}.
-#'
-#' @return an object of class \code{mcmc.list}
+#'   if wishing to set `invert = TRUE`.
+#' @return A [`mcmc.list`][coda::mcmc.list] object.
 #' @examples
 #' # load example mcmc.list
 #' data(cjs, package = "postpack")

@@ -2,20 +2,23 @@
 % Please edit documentation in R/utils.R
 \name{drop_index}
 \alias{drop_index}
-\title{Extract the base of a node name}
+\title{Extract the base node name of a parameter}
 \usage{
 drop_index(params)
 }
 \arguments{
-\item{params}{character vector containing node names}
+\item{params}{A character vector with length >= 1 containing node names.}
+}
+\value{
+A character vector with the same length as \code{params}, with no indices included.
+For example, \code{"a[1]"} becomes \code{"a"}.
 }
 \description{
 Removes square brackets, numbers, and commas that represent
-the index of the node element in question. Returns just the
-node name.
+the index of the node element in question. Returns just the node name.
 }
 \note{
-this is NOT a function users will generally use.
+This is \strong{not} a function users will generally use directly.
 }
 \examples{
 postpack:::drop_index("a[1]")

@@ -1,26 +1,24 @@
-#' Thin a mcmc.list object
-#'
-#' Remove iterations from each chain of an
-#' objective of class \code{mcmc.list} at quasi-evenly spaced intervals.
-#' Thinning samples after running the model is useful for
-#' developing long-running post-processing code.
-#'
-#' @param post an object of class \code{mcmc.list}
-#' @param keep_percent numeric vector of length 1 and between the interval
-#'   (0,1): what fraction of the samples do you wish to retain from each
-#'   chain? Setting \code{keep_percent 0.2} will remove approximately 80\% of the samples.
-#' @param keep_iters numeric vector of length 1 representing how many samples from each
+#' @title Perform post-MCMC thinning
+#' @description Removes iterations from each chain of a [`mcmc.list`][coda::mcmc.list]
+#'   object at quasi-evenly spaced intervals. Post-MCMC thinning is useful for
+#'   developing long-running post-processing code with a smaller but otherwise identical [`mcmc.list`][coda::mcmc.list].
+#' @param post A [`mcmc.list`][coda::mcmc.list] object.
+#' @param keep_percent A numeric vector with length == 1 and on the interval
+#'   (0,1]: what fraction of the samples do you wish to retain from each
+#'   chain? Setting `keep_percent = 0.2` will remove approximately 80 percent of the samples.
+#' @param keep_iters A numeric vector of length == 1 representing how many samples from each
 #'   chain to retain.
 #' @details The samples will be removed at as evenly spaced intervals
 #'   as possible, however, this is not perfect. It is therefore recommended
-#'   to use the full posterior for final output, but this should be fine for
-#'   most development.
-#' @note Iteration numbers are reset after thinning the samples, if running \code{\link{post_dim}}
-#'   on output passed through \code{post_thin}, you cannot trust the burn-in or thinning counts.
-#'   Again, this is not an issue for developing post-processing code, but is why you should perform final
-#'   calculations using the full posterior output.
+#'   to use the full posterior for final post-processing calculations, but this should be fine for
+#'   most development of long-running code.
 #'
-#' @return an object of class \code{mcmc.list}
+#'   If both `keep_percent` and `keep_iters` are supplied, an error will be returned requesting that only
+#'   one be used.
+#' @note Iteration numbers are reset after thinning the samples. So if running [post_dim()]
+#'   on output passed through `post_thin()`, you cannot trust the burn-in or thinning counts.
+#'   Again, this is not an issue for developing post-processing code.
+#' @return A [`mcmc.list`][coda::mcmc.list] object, identical to `post`, but with fewer samples of each node.
 #' @examples
 #' # load example mcmc.list
 #' data(cjs, package = "postpack")
@@ -32,7 +30,7 @@
 #' cjs_thin1 = post_thin(cjs, keep_percent = 0.2)
 #'
 #' # note burn-in and thin intervals no longer correct!
-#' # but desired outcome acheived - nearly identical object but smaller
+#' # but desired outcome achieved - identical object but smaller
 #' post_dim(cjs_thin1)
 #'
 #' # keep 30 samples per chain

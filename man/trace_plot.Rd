@@ -20,5 +20,5 @@ Create a traceplot for a single desired node
 }
 \note{
 If saving as a pdf, these files can get very large with many samples and render slowly.
-  The \code{keep_percent} argument is intended to help with this by thinning the chains at quasi-evenly spaced intervals.
+The \code{keep_percent} argument is intended to help with this by thinning the chains at quasi-evenly spaced intervals.
 }

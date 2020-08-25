@@ -1,14 +1,11 @@
-#' Get the names of saved nodes
-#'
-#' Sometimes it's helpful to know what nodes are
-#' stored in an object of class \code{mcmc.list}.
-#' That's what this function does.
-#'
-#' @param post an object of class \code{mcmc.list}
-#' @param type a character vector with length == 1; only two options are accepted.
-#'   Set to \code{type = "base_only"} (the default) if you wish to return only the unique node names (without indices).
-#'   Set to \code{type = "base_index"}  if you wish to return the node names with indices included.
-#' @return character vector with all node names stored in the object \code{post}, formatted as requested by \code{type}
+#' @title Obtain the names of all nodes
+#' @description Returns the names of all quantities stored in
+#'   a [`mcmc.list`][coda::mcmc.list] object.
+#' @param post A [`mcmc.list`][coda::mcmc.list] object.
+#' @param type A character vector with length == 1; only two options are accepted:
+#'   * `type = "base_only"` (the default) to return only the unique node names (without indices).
+#'   * `type = "base_index"` to return the node names with indices included.
+#' @return A character vector with all node names stored in the `post` object, formatted as requested by `type`.
 #' @examples
 #'  # load example mcmc.list
 #' data(cjs, package = "postpack")

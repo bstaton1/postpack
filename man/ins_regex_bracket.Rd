@@ -7,16 +7,20 @@
 ins_regex_bracket(params)
 }
 \arguments{
-\item{params}{a character vector}
+\item{params}{A character vector with length >= 1.}
+}
+\value{
+A character vector with all brackets escaped. For example,
+\code{"a[1]"} becomes \verb{"a\\\[1\\\]"}
 }
 \description{
 Insert escapes on regex brackets
 }
 \details{
-searches the contents of a string for the occurrence of a
- square bracket or two, and inserts the necessary escapes for searching
- via regular expression
+Searches the contents of a string for the occurrence of a
+square bracket or two, and inserts the necessary escapes for pattern matching
+via regular expressions.
 }
 \note{
-this is NOT a function users will generally use.
+This is NOT a function users will generally use directly.
 }

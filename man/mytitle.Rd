@@ -2,19 +2,19 @@
 % Please edit documentation in R/utils.R
 \name{mytitle}
 \alias{mytitle}
-\title{Adds a title between two figures}
+\title{Add a title between two figures}
 \usage{
 mytitle(text)
 }
 \arguments{
-\item{text}{character vector length == 1. The text string to
-include as a title}
+\item{text}{A character vector length == 1. The text string to
+include as a title.}
 }
 \description{
-Used by \code{\link{diag_plots}} to place a common
-title over top of two figures: one trace and one density
+Used by \code{\link[=diag_plots]{diag_plots()}} to place a common
+title over top of two figures: one density and one trace
 for a given node.
 }
 \note{
-this is NOT a function users will generally use.
+This is \strong{not} a function users will generally use directly.
 }

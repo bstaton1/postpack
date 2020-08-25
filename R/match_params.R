@@ -1,28 +1,25 @@
-#' Find matching node names
-#'
-#' Returns all the node names stored in an \code{mcmc.list} object
-#' that match a provided string
-#'
-#' @param post an object of class \code{mcmc.list}
-#' @param params a character vector with length >= 1. Passed to \code{stringr::str_detect},
-#'   so can, and sometimes should, be a regular expression; see the examples.
-#'   Duplicate matches found among different elements of \code{params} are discarded.
-#' @param type a character vector with length == 1; only two options are accepted.
-#'   Set to \code{type = "base_only"} if you wish to return only the unique node names (without indices).
-#'   Set to \code{type = "base_index"} (the default) if you wish to return the node names with indices included.
-#' @param auto_escape logical. \code{FALSE} will treat \code{"["} and \code{"]"}
-#'   as regular expression syntax (unless explicitly escaped by user),
-#'   \code{TRUE} will treat these symbols as plain text to be matched.
-#'   It is generally recommended to keep this as \code{TRUE} (the default),
+#' @title Find matching node names
+#' @description Returns all the node names stored in a [`mcmc.list`][coda::mcmc.list]
+#'   object that match a provided string.
+#' @param post A [`mcmc.list`][coda::mcmc.list] object.
+#' @param params A character vector with length >= 1 specifying the nodes to match.
+#'   Passed to [stringr::str_detect()] so is matched using regular expressions.
+#' @param type A character vector with length == 1; only two options are accepted:
+#'   * `type = "base_only"` to return only the unique node names (without indices).
+#'   * `type = "base_index"` (the default) to return the node names with indices included.
+#' @param auto_escape Logical. `FALSE` will treat `"["` and `"]"`
+#'   as special regular expression characters (unless explicitly escaped by user),
+#'   `TRUE` will treat these symbols as plain text to be matched.
+#'   It is generally recommended to keep this as `TRUE` (the default),
 #'   unless you are performing complex regex searches that require the
-#'   \code{"["} and \code{"]"} symbols to be special characters
-#' @return a character vector with all node names that match \code{params}.
-#'   If no matches are found, it will return an error with
-#'   the base node names found the \code{mcmc.list} to help the next try.
-#' @details this function is called as one of the first steps in many of the more downstream
+#'   `"["` and `"]"` symbols to be special characters.
+#' @return A character vector with all node names in `post` that match `params`, formatted as requested by `type`..
+#'   If no matches are found, an error will be returned with
+#'   the base node names found in `post` to help the next try.
+#' @details This function is called as one of the first steps in many of the more downstream
 #'   functions in this package. It is thus fairly important to get used to
-#'   how the regular expressions work, particularly
-#'   with the \code{\link[stringr]{str_detect}} function.
+#'   how the regular expressions work. This function can be used directly to hone in on the correct regular expression.
+#'   See the examples below.
 #' @examples
 #' # load example mcmc.list
 #' data(cjs, package = "postpack")

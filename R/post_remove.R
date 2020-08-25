@@ -1,21 +1,19 @@
-#' Remove nodes from output
-#'
-#' Just like post_subset, but keep all nodes from \code{post} except nodes that match \code{params}
-#'
-#' @param post an object of class \code{mcmc.list}
-#' @param params a character vector of with length >= 1 specifying the nodes to summarize.
-#'   Passed to \code{\link{match_params}}, so can (and sometimes should) be a regular expression.
-#' @param ask logical. Do you wish to be prompted prior to removing nodes?
-#'   Defaults to \code{TRUE}
-#' @param auto_escape logical. \code{FALSE} will treat \code{"["} and \code{"]"}
-#'   as regular expression syntax (unless explicitly escaped by user),
-#'   \code{TRUE} will treat these symbols as plain text to be matched.
-#'   It is generally recommended to keep this as \code{TRUE} (the default),
+#' @title Remove nodes from mcmc.list
+#' @description Just like [post_subset()], but keep all nodes **except** those that match.
+#' @param post A [`mcmc.list`][coda::mcmc.list] object.
+#' @param params A character vector of with length >= 1 specifying the nodes to discard from `post`.
+#'   Passed to [match_params()] so is matched using regular expressions.
+#' @param ask Logical. Do you wish to be prompted prior to removing nodes?
+#'   Defaults to `TRUE`.
+#' @param auto_escape Logical. `FALSE` will treat `"["` and `"]"`
+#'   as special regular expression characters (unless explicitly escaped by user),
+#'   `TRUE` will treat these symbols as plain text to be matched.
+#'   It is generally recommended to keep this as `TRUE` (the default),
 #'   unless you are performing complex regex searches that require the
-#'   \code{"["} and \code{"]"} symbols to be special characters
-#' @return an object of class \code{mcmc.list}, identical in all ways to the original
-#'   except that nodes matched by the \code{params} argument are removed. If the user
-#'   responds "no" to the question when \code{ask = TRUE}, the object is returned unaltered.
+#'   `"["` and `"]"` symbols to be special characters.
+#' @return A [`mcmc.list`][coda::mcmc.list], identical in all ways to the original
+#'   except that nodes matched by the `params` argument are removed. If the user
+#'   responds "no" to the question when `ask = TRUE`, `post` is returned unaltered.
 #' @examples
 #' # load example mcmc.list
 #' data(cjs, package = "postpack")

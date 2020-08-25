@@ -1,14 +1,11 @@
-#' Export BUGS model from function to file
-#'
-#' Performs the same basic function as \code{\link[R2OpenBUGS]{write.model}}
-#'
-#' @param fun a function object containing BUGS model code
-#' @param file a character vector of length 1: the name of the file to write to
-#'
-#' @details This function performs the same basic function as \code{\link[R2OpenBUGS]{write.model}},
-#'     but with slightly better output (scientific notation, spacing, etc.). The main reason it was created
-#'     for use in this package was to remove the need for the \code{R2OpenBUGS} package, as this was
-#'     the only function the author ever used from it.
+#' @title Export BUGS/JAGS model from function to file
+#' @description Performs the same basic function as [R2OpenBUGS::write.model()]
+#' @param fun A function object containing BUGS/JAGS model code
+#' @param file A character vector of length == 1: the name of the file to write to
+#' @details Performs the same basic function as [R2OpenBUGS::write.model()],
+#'   but with slightly better output (scientific notation, spacing, etc.). The main reason it was created
+#'   for use in 'postpack' was to remove the need for using the \code{R2OpenBUGS} package when not using OpenBUGS.
+#' @return Nothing, but `file` is written to disk.
 #' @examples
 #' if (interactive()) {
 #'   # define some simple BUGS model as an R function

@@ -7,14 +7,16 @@
 rm_regex_lock(params)
 }
 \arguments{
-\item{params}{a character vector on to which a carrot and dollar sign
-will be removed from if present}
+\item{params}{A character vector with length >= 1 to remove a \code{^} and \code{$} from
+(if present).}
+}
+\value{
+A character vector with locking anchors inserted to force an exact match. For example,
+\verb{"^a\\\[1\\\]$"} becomes \verb{"a\\\[1\\\]"}.
 }
 \description{
-To ensure that a regular expression will match exactly,
-it's necessary to specify so - this function undoes the work of
-\code{\link{ins_regex_lock}} - currently just for prettier printing of node names
+Undoes the work of \code{\link[=ins_regex_lock]{ins_regex_lock()}}.
 }
 \note{
-this is NOT a function users will generally use.
+This is \strong{not} a function users will generally use directly.
 }

@@ -1,5 +1,13 @@
 # *NEWS*
 
+# postpack 0.4.1 (2020-08-25)
+
+## Improve documentation in help files
+
+* Primarily standardization of function arguments
+* Switched to using markdown for writing Roxygen comments
+* Included more links to other relevant help files
+
 # postpack 0.4.1 (2020-08-24)
 
 ## Improve examples in help files

@@ -7,34 +7,34 @@
 post_convert(obj)
 }
 \arguments{
-\item{obj}{An R object storing posterior samples from an MCMC algorithm.
-Accepted classes are \code{list}, \code{matrix}, \code{stanfit}, \code{bugs}, \code{rjags}.}
+\item{obj}{An object storing posterior samples from an MCMC algorithm.
+Accepted classes are \code{\link[base:list]{list}}, \code{\link[base:matrix]{matrix}}, \code{\link[rstan:stanfit-class]{stanfit}}, \code{\link[R2WinBUGS:bugs]{bugs}}, \code{\link[R2jags:jags]{rjags}}.}
 }
 \value{
-The same information as passed in the \code{obj} argument, but formatted as \code{mcmc.list} class
+The same information as passed in the \code{obj} argument, but formatted as \code{\link[coda:mcmc.list]{mcmc.list}} class.
 }
 \description{
-\code{postpack} requires objects in mcmc.list format.
-This is a wrapper around several ways of converting objects to this format,
-automated based on the input object class
+Wrapper around several ways of converting objects to \code{\link[coda:mcmc.list]{mcmc.list}} format,
+automated based on the input object class.
 }
 \details{
 Accepted classes are produced by several packages, including but probably not limited to:
-  \itemize{
-    \item \code{stanfit} objects are created by \code{rstan::stan}, which also provides \code{\link[rstan]{As.mcmc.list()}} which is used here as well.
-    \item \code{bugs} objects are created by \code{R2WinBUGS::bugs} and \code{R2OpenBUGS::bugs}
-    \item \code{rjags} objects are created by \code{R2jags::jags}
-    \item \code{list} objects are created by \code{nimble::runMCMC}, \code{MCMCpack}, or custom MCMC algorithms
-    \item \code{matrix} objects are created by \code{\link{post_subset}(..., matrix = TRUE)} and is often the format of derived quantities
-    \item \code{mcmc.list} objects are created by \code{rjags::coda.samples}, \code{jagsUI::jags.basic}, and \code{jagsUI::jags()$samples}. If a \code{mcmc.list} object is passed to \code{post_convert}, an error will be returned telling the user this function is not necessary.
-  }
-  If you find that a critical class conversion is missing, please submit an issue to \url{https://github.com/bstaton1/postpack/issues} requesting its addition with a minimum working example of how it can be created.
+\itemize{
+\item \code{\link[rstan:stanfit-class]{stanfit}} objects are created by \code{\link[rstan:stan]{rstan::stan()}}, which also provides \code{\link[rstan:As.mcmc.list]{rstan::As.mcmc.list()}} which is used here as well.
+\item \code{\link[R2WinBUGS:bugs]{bugs}} objects are created by \code{\link[R2WinBUGS:bugs]{R2WinBUGS::bugs()}} and \code{\link[R2OpenBUGS:bugs]{R2OpenBUGS::bugs()}}.
+\item \code{\link[R2jags:jags]{rjags}} objects are created by \code{\link[R2jags:jags]{R2jags::jags()}}.
+\item \code{\link[base:list]{list}} objects are created by \code{\link[nimble:runMCMC]{nimble::runMCMC()}}, 'MCMCpack' functions, or custom MCMC algorithms.
+\item \code{\link[base:matrix]{matrix}} objects are created by \code{\link[=post_subset]{post_subset()}} and is often the format of posterior quantities derived from monitored nodes.
+\item \code{\link[coda:mcmc.list]{mcmc.list}} objects are created by \code{\link[rjags:coda.samples]{rjags::coda.samples()}}, \code{\link[jagsUI:jagsbasic]{jagsUI::jags.basic()}}, and \code{\link[jagsUI:jags]{jagsUI::jags()}}\verb{$samples}. If a \code{\link[coda:mcmc.list]{mcmc.list}} object is passed to \code{obj}, an error will be returned telling the user this function is not necessary.
+}
+
+If you find that a critical class conversion is missing, please submit an \href{https://github.com/bstaton1/postpack/issues}{issue} requesting its addition with a minimum working example of how it can be created.
 }
 \note{
 \itemize{
-    \item If samples are stored in a \code{list} object, the individual elements must be \code{matrix} or \code{mcmc} class, storing the samples (rows) across parameters (columns, with names) for each chain (list elements). If list elements are in \code{matrix} format, they will be coerced to \code{mcmc} format, and thinning, start, and end intervals may be inaccurate.
-    \item If samples are stored in a \code{matrix} object, rows should store samples and columns should store nodes. Multiple chains should be combined using \code{\link[base]{rbind}}. Two additional columns MUST be present: \code{"CHAIN"} and \code{"ITER"}, which denote the MCMC chain and iteration numbers, respectively.
-  }
+\item If samples are stored in a \code{\link[base:list]{list}} object, the individual elements must be \code{\link[base:matrix]{matrix}} or \code{\link[coda:mcmc]{mcmc}} class, storing the samples (rows) across parameters (columns, with names) for each chain (\code{\link[base:list]{list}} elements). If \code{\link[base:list]{list}} elements are in \code{\link[base:matrix]{matrix}} format, they will be coerced to \code{\link[coda:mcmc]{mcmc}} format, and thinning, start, and end intervals may be inaccurate.
+\item If samples are stored in a \code{\link[base:matrix]{matrix}} object, rows should store samples and columns should store nodes. Multiple chains should be combined using \code{\link[base:cbind]{base::rbind()}}. Two additional columns \strong{must} be present: \code{"CHAIN"} and \code{"ITER"}, which denote the MCMC chain and iteration numbers, respectively.
+}
 }
 \examples{
 ## EXAMPLE 1
@@ -80,5 +80,5 @@ samps_new = post_convert(samps)
 post_summ(samps_new, "param")
 }
 \seealso{
-\code{\link[coda]{as.mcmc.list}}, \code{\link[coda]{as.mcmc}}, \code{\link[rstan]{As.mcmc.list}}
+\code{\link[coda:mcmc.list]{coda::as.mcmc.list()}}, \code{\link[coda:mcmc]{coda::as.mcmc()}}, \code{\link[rstan:As.mcmc.list]{rstan::As.mcmc.list()}}
 }
