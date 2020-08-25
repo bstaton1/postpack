@@ -2,24 +2,25 @@
 % Please edit documentation in R/get_params.R
 \name{get_params}
 \alias{get_params}
-\title{Get the names of saved nodes}
+\title{Obtain the names of all nodes}
 \usage{
 get_params(post, type = "base_only")
 }
 \arguments{
-\item{post}{an object of class \code{mcmc.list}}
+\item{post}{A \code{\link[coda:mcmc.list]{mcmc.list}} object.}
 
-\item{type}{a character vector with length == 1; only two options are accepted.
-Set to \code{type = "base_only"} (the default) if you wish to return only the unique node names (without indices).
-Set to \code{type = "base_index"}  if you wish to return the node names with indices included.}
+\item{type}{A character vector with length == 1; only two options are accepted:
+\itemize{
+\item \code{type = "base_only"} (the default) to return only the unique node names (without indices).
+\item \code{type = "base_index"} to return the node names with indices included.
+}}
 }
 \value{
-character vector with all node names stored in the object \code{post}, formatted as requested by \code{type}
+A character vector with all node names stored in the \code{post} object, formatted as requested by \code{type}.
 }
 \description{
-Sometimes it's helpful to know what nodes are
-stored in an object of class \code{mcmc.list}.
-That's what this function does.
+Returns the names of all quantities stored in
+a \code{\link[coda:mcmc.list]{mcmc.list}} object.
 }
 \examples{
  # load example mcmc.list
