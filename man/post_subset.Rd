@@ -2,7 +2,7 @@
 % Please edit documentation in R/post_subset.R
 \name{post_subset}
 \alias{post_subset}
-\title{Extract samples from a subset of nodes}
+\title{Extract samples from specific nodes}
 \usage{
 post_subset(
   post,

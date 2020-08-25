@@ -1,34 +1,32 @@
-#' Obtain a posterior summary of specific nodes
-#'
-#' Obtaining a summary of specific nodes is cumbersome from mcmc.list objects:
-#' \code{\link[coda]{summary.mcmc.list}} is difficult to use for this purpose.
-#' The central tendency and uncertainty measures are in different lists.
-#' This function allows extracting a summary of the posteriors
-#' associated with requested nodes, including several diagnostic quantities and measures of uncertainty.
-#'
-#' @param post an object of class \code{mcmc.list}
-#' @param params a character vector of with length >= 1 specifying the nodes to summarize.
-#'   Passed to \code{\link{match_params}}, so can (and sometimes should) be a regular expression.
-#' @param probs numeric vector specifying the posterior quantiles you wish to have summarized.
-#'   Passed to \code{\link[stats]{quantile}}.
-#'   Defaults to \code{probs = c(0.5, 0.025, 0.975)} (i.e., median and equal-tailed 95\% credible interval).
-#' @param digits numeric vector controlling rounding of summaries.
-#'   Passed to \code{\link[base]{round}} and defaults to \code{NULL}, which produces no rounding.
-#' @param Rhat logical. Do you wish to calculate the
-#'   Rhat convergence diagnostic using \code{\link[coda]{gelman.diag}}?
-#'   Fair warning: this can take a bit of time to run on many nodes/samples
-#' @param neff logical. Do you wish to calculate the number of effective MCMC samples
-#'   using \code{\link[coda]{effectiveSize}}?
-#'   Fair warning: this can take a bit of time to run on many nodes/samples
-#' @param mcse logical. Do you wish to calculate the
+#' @title Obtain posterior summaries and diagnostics of specific nodes
+#' @description Allows rapid calculation of summaries and diagnostics from **specific nodes**
+#'  stored in [`mcmc.list`][coda::mcmc.list] objects.
+#' @param post A [`mcmc.list`][coda::mcmc.list] object.
+#' @param params A character vector of with length >= 1 specifying the nodes to summarize from `post`.
+#'   Passed to [match_params()] so is matched using regular expressions.
+#' @param probs A numeric vector specifying the posterior quantiles you wish to have summarized.
+#'   Passed to [stats::quantile()].
+#'   Defaults to `probs = c(0.5, 0.025, 0.975)` (i.e., median and equal-tailed 95 percent credible interval).
+#' @param digits A numeric vector with length == 1 controlling rounding of summaries.
+#'   Passed to [base::round()] and defaults to `NULL`, which produces no rounding.
+#' @param Rhat Logical. Do you wish to calculate the
+#'   Rhat convergence diagnostic using [coda::gelman.diag()]?
+#'   Fair warning: this can take a bit of time to run on many nodes/samples.
+#' @param neff Logical. Do you wish to calculate the number of effective MCMC samples
+#'   using [coda::effectiveSize()]?
+#'   Fair warning: this can take a bit of time to run on many nodes/samples.
+#' @param mcse Logical. Do you wish to calculate the
 #'   Monte Carlo standard error for the posterior mean and reported quantiles
-#'   using the \code{\link[mcmcse]{mcse}} and \code{\link[mcmcse]{mcse.q}} functions
+#'   using the [mcmcse::mcse()] and [mcmcse::mcse.q()] functions
 #'   (batch means method with batch size automatically calculated)?
-#'   Fair warning: this can take a bit of time to run on many nodes/samples
-#' @param by_chain logical. Do you wish to calculate posterior summaries for each chain,
-#'   rather than for the aggregate across chains? Defaults to \code{FALSE}.
-#'   The arguments \code{Rhat}, \code{neff}, and \code{mcse} are ignored if \code{by_chain = TRUE}
-#'   and a warning will be returned
+#'   Fair warning: this can take a bit of time to run on many nodes/samples.
+#' @param by_chain Logical. Do you wish to calculate posterior summaries for each chain
+#'   rather than for the aggregate across chains? Defaults to `FALSE`.
+#'   The arguments `Rhat`, `neff`, and `mcse` are ignored if `by_chain = TRUE`
+#'   and a warning will be returned.
+#' @return A [`matrix`][base::matrix] object with summary statistics as rows and nodes as columns.
+#'   If `by_chain = TRUE`, an [`array`][base::array] is returned instead.
+#' @seealso [match_params()], [coda::gelman.diag()], [coda::effectiveSize()], [mcmcse::mcse()], [mcmcse::mcse.q()]
 #' @examples
 #' # load example mcmc.list
 #' data(cjs, package = "postpack")
@@ -49,9 +47,6 @@
 #'
 #' # summarize different quantiles: median and central 80%
 #' post_summ(cjs, "p", probs = c(0.5, 0.1, 0.9))
-#'
-#' @seealso \code{\link{match_params}}, \code{\link[coda]{gelman.diag}},
-#'   \code{\link[coda]{effectiveSize}}, \code{\link[mcmcse]{mcse}}, \code{\link[mcmcse]{mcse.q}}
 #' @export
 
 post_summ = function(post, params, digits = NULL, probs = c(0.5, 0.025, 0.975), Rhat = FALSE, neff = FALSE, mcse = FALSE, by_chain = F, auto_escape = TRUE) {

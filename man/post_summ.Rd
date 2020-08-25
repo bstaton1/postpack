@@ -2,7 +2,7 @@
 % Please edit documentation in R/post_summ.R
 \name{post_summ}
 \alias{post_summ}
-\title{Obtain a posterior summary of specific nodes}
+\title{Obtain posterior summaries and diagnostics of specific nodes}
 \usage{
 post_summ(
   post,
@@ -17,43 +17,44 @@ post_summ(
 )
 }
 \arguments{
-\item{post}{an object of class \code{mcmc.list}}
+\item{post}{A \code{\link[coda:mcmc.list]{mcmc.list}} object.}
 
-\item{params}{a character vector of with length >= 1 specifying the nodes to summarize.
-Passed to \code{\link{match_params}}, so can (and sometimes should) be a regular expression.}
+\item{params}{A character vector of with length >= 1 specifying the nodes to summarize from \code{post}.
+Passed to \code{\link[=match_params]{match_params()}} so is matched using regular expressions.}
 
-\item{digits}{numeric vector controlling rounding of summaries.
-Passed to \code{\link[base]{round}} and defaults to \code{NULL}, which produces no rounding.}
+\item{digits}{A numeric vector with length == 1 controlling rounding of summaries.
+Passed to \code{\link[base:Round]{base::round()}} and defaults to \code{NULL}, which produces no rounding.}
 
-\item{probs}{numeric vector specifying the posterior quantiles you wish to have summarized.
-Passed to \code{\link[stats]{quantile}}.
-Defaults to \code{probs = c(0.5, 0.025, 0.975)} (i.e., median and equal-tailed 95\% credible interval).}
+\item{probs}{A numeric vector specifying the posterior quantiles you wish to have summarized.
+Passed to \code{\link[stats:quantile]{stats::quantile()}}.
+Defaults to \code{probs = c(0.5, 0.025, 0.975)} (i.e., median and equal-tailed 95 percent credible interval).}
 
-\item{Rhat}{logical. Do you wish to calculate the
-Rhat convergence diagnostic using \code{\link[coda]{gelman.diag}}?
-Fair warning: this can take a bit of time to run on many nodes/samples}
+\item{Rhat}{Logical. Do you wish to calculate the
+Rhat convergence diagnostic using \code{\link[coda:gelman.diag]{coda::gelman.diag()}}?
+Fair warning: this can take a bit of time to run on many nodes/samples.}
 
-\item{neff}{logical. Do you wish to calculate the number of effective MCMC samples
-using \code{\link[coda]{effectiveSize}}?
-Fair warning: this can take a bit of time to run on many nodes/samples}
+\item{neff}{Logical. Do you wish to calculate the number of effective MCMC samples
+using \code{\link[coda:effectiveSize]{coda::effectiveSize()}}?
+Fair warning: this can take a bit of time to run on many nodes/samples.}
 
-\item{mcse}{logical. Do you wish to calculate the
+\item{mcse}{Logical. Do you wish to calculate the
 Monte Carlo standard error for the posterior mean and reported quantiles
-using the \code{\link[mcmcse]{mcse}} and \code{\link[mcmcse]{mcse.q}} functions
+using the \code{\link[mcmcse:mcse]{mcmcse::mcse()}} and \code{\link[mcmcse:mcse.q]{mcmcse::mcse.q()}} functions
 (batch means method with batch size automatically calculated)?
-Fair warning: this can take a bit of time to run on many nodes/samples}
+Fair warning: this can take a bit of time to run on many nodes/samples.}
 
-\item{by_chain}{logical. Do you wish to calculate posterior summaries for each chain,
+\item{by_chain}{Logical. Do you wish to calculate posterior summaries for each chain
 rather than for the aggregate across chains? Defaults to \code{FALSE}.
 The arguments \code{Rhat}, \code{neff}, and \code{mcse} are ignored if \code{by_chain = TRUE}
-and a warning will be returned}
+and a warning will be returned.}
+}
+\value{
+A \code{\link[base:matrix]{matrix}} object with summary statistics as rows and nodes as columns.
+If \code{by_chain = TRUE}, an \code{\link[base:array]{array}} is returned instead.
 }
 \description{
-Obtaining a summary of specific nodes is cumbersome from mcmc.list objects:
-\code{\link[coda]{summary.mcmc.list}} is difficult to use for this purpose.
-The central tendency and uncertainty measures are in different lists.
-This function allows extracting a summary of the posteriors
-associated with requested nodes, including several diagnostic quantities and measures of uncertainty.
+Allows rapid calculation of summaries and diagnostics from \strong{specific nodes}
+stored in \code{\link[coda:mcmc.list]{mcmc.list}} objects.
 }
 \examples{
 # load example mcmc.list
@@ -75,9 +76,7 @@ post_summ(cjs, "p", mcse = T, digits = 3)
 
 # summarize different quantiles: median and central 80\%
 post_summ(cjs, "p", probs = c(0.5, 0.1, 0.9))
-
 }
 \seealso{
-\code{\link{match_params}}, \code{\link[coda]{gelman.diag}},
-  \code{\link[coda]{effectiveSize}}, \code{\link[mcmcse]{mcse}}, \code{\link[mcmcse]{mcse.q}}
+\code{\link[=match_params]{match_params()}}, \code{\link[coda:gelman.diag]{coda::gelman.diag()}}, \code{\link[coda:effectiveSize]{coda::effectiveSize()}}, \code{\link[mcmcse:mcse]{mcmcse::mcse()}}, \code{\link[mcmcse:mcse.q]{mcmcse::mcse.q()}}
 }

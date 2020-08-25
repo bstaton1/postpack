@@ -1,4 +1,4 @@
-#' @title Extract samples from a subset of nodes
+#' @title Extract samples from specific nodes
 #' @description Subsets a smaller portion from a [`mcmc.list`][coda::mcmc.list] object
 #'   corresponding only to the node(s) requested.
 #' @param post A [`mcmc.list`][coda::mcmc.list] object.
