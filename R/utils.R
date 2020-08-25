@@ -115,8 +115,8 @@ id_mat = function(post) {
 #' @return A character vector of length == 1; ready to be passed to
 #'   [base::stop()], [base::warning()], or [base::cat()], for example.
 #' @examples
-#' list_out(x = letters[1:10])
-#' cat(list_out(letters[1:26], wrap = "'", per_line = 4, final = "or", indent = "  "))
+#' postpack:::list_out(x = letters[1:10])
+#' cat(postpack:::list_out(letters[1:26], wrap = "'", per_line = 4, final = "or", indent = "  "))
 
 list_out = function(x, final = NULL, per_line = 1e6, wrap = NULL, indent = NULL) {
 
