@@ -110,7 +110,7 @@ diag_plots = function(post, params, ext_device = FALSE, show_diags = "if_poor_Rh
   height_width = as.numeric(unlist(stringr::str_split(dims, "x")))
 
   if (ext_device) dev.new(height = height_width[1], width = height_width[2], units = "in", noRStudioGD = T)
-  if (save) pdf(file, h = height_width[1], w = height_width[2])
+  if (save) pdf(file, height = height_width[1], width = height_width[2])
 
   # set up the graphics device
   opar = par()
