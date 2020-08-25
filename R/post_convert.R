@@ -4,7 +4,7 @@
 #' @param obj An object storing posterior samples from an MCMC algorithm.
 #'   Accepted classes are [`list`][base::list], [`matrix`][base::matrix], [`stanfit`][rstan::stanfit], [`bugs`][R2WinBUGS::bugs], [`rjags`][R2jags::jags].
 #' @details Accepted classes are produced by several packages, including but probably not limited to:
-#'   * [`stanfit`][rstan::stanfit] objects are created by [rstan::stan()], which also provides [rstan::As.mcmc.list()] which is used here as well.
+#'   * [`stanfit`][rstan::stanfit] objects are created by [rstan::stan()], which also provides [rstan::As.mcmc.list()]. Rather than requiring users to have 'rstan' installed to use 'postpack', `post_convert()` will instruct users to use this function if supplied a [`stanfit`][rstan::stanfit] object.
 #'   * [`bugs`][R2WinBUGS::bugs] objects are created by [R2WinBUGS::bugs()] and [R2OpenBUGS::bugs()].
 #'   * [`rjags`][R2jags::jags] objects are created by [R2jags::jags()].
 #'   * [`list`][base::list] objects are created by [nimble::runMCMC()], 'MCMCpack' functions, or custom MCMC algorithms.
@@ -16,7 +16,7 @@
 #'   * If samples are stored in a [`list`][base::list] object, the individual elements must be [`matrix`][base::matrix] or [`mcmc`][coda::mcmc] class, storing the samples (rows) across parameters (columns, with names) for each chain ([`list`][base::list] elements). If [`list`][base::list] elements are in [`matrix`][base::matrix] format, they will be coerced to [`mcmc`][coda::mcmc] format, and thinning, start, and end intervals may be inaccurate.
 #'   * If samples are stored in a [`matrix`][base::matrix] object, rows should store samples and columns should store nodes. Multiple chains should be combined using [base::rbind()]. Two additional columns __must__ be present: `"CHAIN"` and `"ITER"`, which denote the MCMC chain and iteration numbers, respectively.
 #' @return The same information as passed in the `obj` argument, but formatted as [`mcmc.list`][coda::mcmc.list] class.
-#' @seealso [coda::as.mcmc.list()], [coda::as.mcmc()], [rstan::As.mcmc.list()]
+#' @seealso [coda::as.mcmc.list()], [coda::as.mcmc()]
 #' @examples
 #' ## EXAMPLE 1
 #' # load example mcmc.list
@@ -72,8 +72,13 @@ post_convert = function(obj) {
     stop ("obj is already of class 'mcmc.list'")
   }
 
+  # stop if supplied with a stanfit object
+  if (obj_class == "stanfit") {
+    stop ("obj is a stanfit object, please use rstan::As.mcmc.list() instead")
+  }
+
   # return error if it is not one of the required object types
-  accepted_classes = c("matrix", "list", "stanfit", "bugs", "rjags")
+  accepted_classes = c("matrix", "list", "bugs", "rjags")
   if (!(obj_class %in% accepted_classes)) {
     stop ("The class '", obj_class, "' is not accepted by this function.\n  Accepted classes are:\n    ", list_out(accepted_classes, wrap = "'"))
   }
@@ -91,10 +96,6 @@ post_convert = function(obj) {
   }
 
   ### convert to mcmc.list based on object class ###
-  if (obj_class == "stanfit") {
-    out_obj = rstan::As.mcmc.list(obj)
-  }
-
   if (obj_class %in% c("bugs")) {
     out_obj = coda::as.mcmc.list(obj)
   }
