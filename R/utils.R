@@ -57,19 +57,16 @@ rm_regex_lock = function(params) {
   return(out)
 }
 
-#' Extract the base of a node name
-#'
-#' Removes square brackets, numbers, and commas that represent
-#' the index of the node element in question. Returns just the
-#' node name.
-#'
-#' @param params character vector containing node names
-#' @note this is NOT a function users will generally use.
+#' @title Extract the base node name of a parameter
+#' @description Removes square brackets, numbers, and commas that represent
+#'   the index of the node element in question. Returns just the node name.
+#' @param params A character vector with length >= 1 containing node names.
+#' @note This is NOT a function users will generally use.
+#' @return A character vector with the same length as `params`, with no indices included.
 #' @examples
 #' postpack:::drop_index("a[1]")
 #' postpack:::drop_index(c("a[1]", "a[2]"))
 #' postpack:::drop_index(c("a[1,1,1,1,1]", "a[2,2,2,2,2]"))
-
 
 drop_index = function(params) {
   stringr::str_replace(params, "\\[.+\\]", "")
