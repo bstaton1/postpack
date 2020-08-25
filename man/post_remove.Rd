@@ -2,33 +2,33 @@
 % Please edit documentation in R/post_remove.R
 \name{post_remove}
 \alias{post_remove}
-\title{Remove nodes from output}
+\title{Remove nodes from mcmc.list}
 \usage{
 post_remove(post, params, ask = TRUE, auto_escape = TRUE)
 }
 \arguments{
-\item{post}{an object of class \code{mcmc.list}}
+\item{post}{A \code{\link[coda:mcmc.list]{mcmc.list}} object.}
 
-\item{params}{a character vector of with length >= 1 specifying the nodes to summarize.
-Passed to \code{\link{match_params}}, so can (and sometimes should) be a regular expression.}
+\item{params}{A character vector of with length >= 1 specifying the nodes to discard from \code{post}.
+Passed to \code{\link[=match_params]{match_params()}} so is matched using regular expressions.}
 
-\item{ask}{logical. Do you wish to be prompted prior to removing nodes?
-Defaults to \code{TRUE}}
+\item{ask}{Logical. Do you wish to be prompted prior to removing nodes?
+Defaults to \code{TRUE}.}
 
-\item{auto_escape}{logical. \code{FALSE} will treat \code{"["} and \code{"]"}
-as regular expression syntax (unless explicitly escaped by user),
+\item{auto_escape}{Logical. \code{FALSE} will treat \code{"["} and \code{"]"}
+as special regular expression characters (unless explicitly escaped by user),
 \code{TRUE} will treat these symbols as plain text to be matched.
 It is generally recommended to keep this as \code{TRUE} (the default),
 unless you are performing complex regex searches that require the
-\code{"["} and \code{"]"} symbols to be special characters}
+\code{"["} and \code{"]"} symbols to be special characters.}
 }
 \value{
-an object of class \code{mcmc.list}, identical in all ways to the original
-  except that nodes matched by the \code{params} argument are removed. If the user
-  responds "no" to the question when \code{ask = TRUE}, the object is returned unaltered.
+A \code{\link[coda:mcmc.list]{mcmc.list}}, identical in all ways to the original
+except that nodes matched by the \code{params} argument are removed. If the user
+responds "no" to the question when \code{ask = TRUE}, \code{post} is returned unaltered.
 }
 \description{
-Just like post_subset, but keep all nodes from \code{post} except nodes that match \code{params}
+Just like \code{\link[=post_subset]{post_subset()}}, but keep all nodes \strong{except} those that match.
 }
 \examples{
 # load example mcmc.list
