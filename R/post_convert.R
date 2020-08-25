@@ -16,6 +16,7 @@
 #'   * If samples are stored in a [`list`][base::list] object, the individual elements must be [`matrix`][base::matrix] or [`mcmc`][coda::mcmc] class, storing the samples (rows) across parameters (columns, with names) for each chain ([`list`][base::list] elements). If [`list`][base::list] elements are in [`matrix`][base::matrix] format, they will be coerced to [`mcmc`][coda::mcmc] format, and thinning, start, and end intervals may be inaccurate.
 #'   * If samples are stored in a [`matrix`][base::matrix] object, rows should store samples and columns should store nodes. Multiple chains should be combined using [base::rbind()]. Two additional columns __must__ be present: `"CHAIN"` and `"ITER"`, which denote the MCMC chain and iteration numbers, respectively.
 #' @return The same information as passed in the `obj` argument, but formatted as [`mcmc.list`][coda::mcmc.list] class.
+#' @seealso [coda::as.mcmc.list()], [coda::as.mcmc()], [rstan::As.mcmc.list()]
 #' @examples
 #' ## EXAMPLE 1
 #' load example mcmc.list
@@ -58,7 +59,6 @@
 #'
 #' # can use postpack now
 #' post_summ(samps_new, "param")
-#' @seealso \code{\link[coda]{as.mcmc.list}}, \code{\link[coda]{as.mcmc}}, \code{\link[rstan]{As.mcmc.list}}
 #' @export
 
 post_convert = function(obj) {

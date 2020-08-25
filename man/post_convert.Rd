@@ -80,5 +80,5 @@ samps_new = post_convert(samps)
 post_summ(samps_new, "param")
 }
 \seealso{
-\code{\link[coda]{as.mcmc.list}}, \code{\link[coda]{as.mcmc}}, \code{\link[rstan]{As.mcmc.list}}
+\code{\link[coda:mcmc.list]{coda::as.mcmc.list()}}, \code{\link[coda:mcmc]{coda::as.mcmc()}}, \code{\link[rstan:As.mcmc.list]{rstan::As.mcmc.list()}}
 }
