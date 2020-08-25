@@ -3,11 +3,11 @@
 #'   object that match a provided string.
 #' @param post A [`mcmc.list`][coda::mcmc.list] object.
 #' @param params A character vector with length >= 1 specifying the nodes to match.
-#'   Passed to [match_params()] so is matched using regular expressions.
+#'   Passed to [stringr::str_detect()] so is matched using regular expressions.
 #' @param type A character vector with length == 1; only two options are accepted:
 #'   * `type = "base_only"` to return only the unique node names (without indices).
 #'   * `type = "base_index"` (the default) to return the node names with indices included.
-#' @param auto_escape Logical. `FALSE` will treat `"["` and`"]"`
+#' @param auto_escape Logical. `FALSE` will treat `"["` and `"]"`
 #'   as special regular expression characters (unless explicitly escaped by user),
 #'   `TRUE` will treat these symbols as plain text to be matched.
 #'   It is generally recommended to keep this as `TRUE` (the default),

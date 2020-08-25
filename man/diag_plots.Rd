@@ -53,7 +53,7 @@ specify \code{file = "example.pdf"} as well. Defaults to \code{FALSE}.}
 must include the \code{".pdf"} extension. Saved to working directory by default,
 but can receive an absolute or relative file path as part of this argument.}
 
-\item{auto_escape}{Logical. \code{FALSE} will treat \code{"["} and\code{"]"}
+\item{auto_escape}{Logical. \code{FALSE} will treat \code{"["} and \code{"]"}
 as special regular expression characters (unless explicitly escaped by user),
 \code{TRUE} will treat these symbols as plain text to be matched.
 It is generally recommended to keep this as \code{TRUE} (the default),

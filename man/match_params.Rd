@@ -10,7 +10,7 @@ match_params(post, params, type = "base_index", auto_escape = TRUE)
 \item{post}{A \code{\link[coda:mcmc.list]{mcmc.list}} object.}
 
 \item{params}{A character vector with length >= 1 specifying the nodes to match.
-Passed to \code{\link[=match_params]{match_params()}} so is matched using regular expressions.}
+Passed to \code{\link[stringr:str_detect]{stringr::str_detect()}} so is matched using regular expressions.}
 
 \item{type}{A character vector with length == 1; only two options are accepted:
 \itemize{
@@ -18,7 +18,7 @@ Passed to \code{\link[=match_params]{match_params()}} so is matched using regula
 \item \code{type = "base_index"} (the default) to return the node names with indices included.
 }}
 
-\item{auto_escape}{Logical. \code{FALSE} will treat \code{"["} and\code{"]"}
+\item{auto_escape}{Logical. \code{FALSE} will treat \code{"["} and \code{"]"}
 as special regular expression characters (unless explicitly escaped by user),
 \code{TRUE} will treat these symbols as plain text to be matched.
 It is generally recommended to keep this as \code{TRUE} (the default),

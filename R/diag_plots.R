@@ -30,7 +30,7 @@
 #' @param file Character vector of length == 1. The file name, which
 #'   must include the `".pdf"` extension. Saved to working directory by default,
 #'   but can receive an absolute or relative file path as part of this argument.
-#' @param auto_escape Logical. `FALSE` will treat `"["` and`"]"`
+#' @param auto_escape Logical. `FALSE` will treat `"["` and `"]"`
 #'   as special regular expression characters (unless explicitly escaped by user),
 #'   `TRUE` will treat these symbols as plain text to be matched.
 #'   It is generally recommended to keep this as `TRUE` (the default),
