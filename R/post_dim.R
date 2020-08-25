@@ -1,26 +1,23 @@
-#' Obtain MCMC dimensions from an mcmc.list
+#' @title Obtain MCMC dimensions from an mcmc.list
+#' @description Quickly query the number of burn-in samples, post-burnin, thinning,
+#'   number of chains, etc. from a [`mcmc.list`][coda::mcmc.list] object.
+#' @param post A [`mcmc.list`][coda::mcmc.list] object.
+#' @param types A character vector with length >= 1 and containing some of `"burn"`, `"post_burn"`,
+#'   `"thin"`, `"chains"`, `"nodes"`. Defaults to `NULL`, in which case all of these are returned.
+#' @return A numeric vector with named elements, which may contain:
+#'   * `burn`: The burn-in period (per chain).
+#'   * `post_burn`: The post-burn-in period (per chain).
+#'   * `thin`: The thinning interval post-burn-in.
+#'   * `chains`: The number of chains.
+#'   * `saved`: The number of saved samples across all chains.
+#'   * `params`: The number of nodes with MCMC samples.
 #'
-#' Quickly query the number of burn-in samples, post-burnin, thinning,
-#' number of chains, etc. from an object of class \code{mcmc.list}
-#'
-#' @param post an object of class \code{mcmc.list}
-#' @param types a character vector containing some of \code{"burn"}, \code{"post_burn"},
-#'   \code{"thin"}, \code{"chains"}, \code{"nodes"}. Defaults to \code{NULL}, in which case all of these are returned
-#' @return vector with named elements.
-#' \itemize{
-#'   \item \code{burn} - The burn-in period (per chain)
-#'   \item \code{post_burn} - The post-burn-in period (per chain)
-#'   \item \code{thin} - The thinning interval post-burn-in
-#'   \item \code{chains} - The number of chains
-#'   \item \code{saved} - The number of saved samples across all chains
-#'   \item \code{params} - The number of nodes with MCMC samples
-#' }
-#'
-#' All of these will be returned if \code{types = NULL}, a subset can be returned by
-#'  specifying (for example) \code{types = c("burn", "thin")}
-#'
-#' @note If the \code{post} object was thinned after MCMC completed
-#'   using \code{\link{post_thin}}, then the \code{burn} and \code{thin} dimensions will be improperly calculated.
+#'  All of these will be returned if `types = NULL`, a subset can be returned by
+#'  specifying (for example) `types = c("burn", "thin")`.
+#' @note If the `post` object was thinned after MCMC completed
+#'   using [post_thin()], then the `"burn"` and `"thin"` dimensions will be improperly calculated.
+#'   [post_thin()] performs post-MCMC thinning of [`mcmc.list`][coda::mcmc.list] objects,
+#'   and is solely for developing long-running post-processing code, so this is okay.
 #' @examples
 #' # load example mcmc.list
 #' data(cjs, package = "postpack")
@@ -33,7 +30,6 @@
 #'
 #' # get the thinning and burn-in intervals
 #' post_dim(cjs, c("burn", "thin"))
-#'
 #' @export
 
 post_dim = function(post, types = NULL) {
