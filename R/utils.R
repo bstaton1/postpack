@@ -102,21 +102,18 @@ id_mat = function(post) {
   as.matrix(post, iters = T, chains = T)[,c("CHAIN", "ITER")]
 }
 
-#' List vector elements in a nice format
-#'
-#' Oftentimes in my functions I like to list out the accepted arguments if
-#' the user enters one that is not accepted. This function faciliates that.
-#'
-#' @param x a vector object, will be coerced to a character class
-#' @param final character vector of length == 1: word that will separate the final element in the list from others.
-#'   See the examples
-#' @param per_line numeric vector of length == 1: number of elements printed per line. See the examples
-#' @param wrap character vector of length == 1: optional character to wrap around each element,
-#'   e.g., quotation marks
-#' @param indent character vector of length == 1: anything you wish to place in front of the first
-#'   element on each line. See the examples
-#' @return a character vector of length == 1, ready to be passed to
-#'   \code{\link[base]{stop}}, \code{\link[base]{warning}}, or \code{\link[base]{cat}}, for example.
+#' @title List vector elements in a nice format
+#' @description Converts a vector into a comma-separated list for use in sentences (error messages, warnings, etc.).
+#' @param x A vector, will be coerced to a character.
+#' @param final A character vector of length == 1; word that will separate the final element in the list from others.
+#'   See the examples.
+#' @param per_line A numeric vector of length == 1; number of elements printed per line. See the examples.
+#' @param wrap A character vector of length == 1; optional character to wrap around each element,
+#'   e.g., quotation marks.
+#' @param indent A character vector of length == 1; anything you wish to place in front of the first
+#'   element on each line. See the examples.
+#' @return A character vector of length == 1; ready to be passed to
+#'   [base::stop()], [base::warning()], or [base::cat()], for example.
 #' @examples
 #' list_out(x = letters[1:10])
 #' cat(list_out(letters[1:26], wrap = "'", per_line = 4, final = "or", indent = "  "))
