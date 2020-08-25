@@ -10,11 +10,11 @@ id_mat(post)
 \item{post}{A \code{\link[coda:mcmc.list]{mcmc.list}} object.}
 }
 \value{
-A matrix with columns\code{"CHAIN"} and \code{"ITER"}.
+A matrix with columns \code{"CHAIN"} and \code{"ITER"}.
 }
 \description{
 Extract chain and iteration IDs for each sample
 }
 \note{
-This is NOT a function users will generally use.
+This is \strong{not} a function users will generally use directly.
 }

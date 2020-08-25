@@ -11,13 +11,14 @@ drop_index(params)
 }
 \value{
 A character vector with the same length as \code{params}, with no indices included.
+For example, \code{"a[1]"} becomes \code{"a"}.
 }
 \description{
 Removes square brackets, numbers, and commas that represent
 the index of the node element in question. Returns just the node name.
 }
 \note{
-This is NOT a function users will generally use.
+This is \strong{not} a function users will generally use directly.
 }
 \examples{
 postpack:::drop_index("a[1]")
