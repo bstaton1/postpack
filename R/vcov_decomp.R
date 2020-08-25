@@ -8,7 +8,7 @@
 #' @param sigma_base_name A character vector with length == 1. What should the base node name be
 #'   for the standard deviation vector component? Defaults to `"sigma"`, which becomes `"sigma[1]"`, `"sigma[2]"`,
 #'   etc. in the output.
-#' @param rho_base_name Same as \code{sigma_base_name}, but for the correlation matrix component.
+#' @param rho_base_name Same as `sigma_base_name`, but for the correlation matrix component.
 #' @param invert Logical. Do you wish to take the inverse of the matrix node matched by `param`
 #'   prior to performing the calculations? This would be necessary if the matrix node was expressed as
 #'   a precision matrix as used in the BUGS language. Triggers a call to [base::solve()].
