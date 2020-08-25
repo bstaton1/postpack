@@ -1,26 +1,22 @@
-#' Combine two objects containing posterior samples
-#'
-#' Bind together two objects containing posterior samples into one \code{mcmc.list} object.
-#' Intended for use when derived quantities are calculated from monitored posterior samples,
-#' and you wish to combine them into the master list, as though they were calculated and monitored during MCMC sampling.
-#' It is not advised to combine samples from two MCMC runs (because covariance
-#' of MCMC sampling would be lost).
-#'
-#' @param post1 an object of class \code{mcmc.list} or \code{matrix}
-#' @param post2 an object of class \code{mcmc.list} or \code{matrix}
-#' @param dup_id a character vector of length == 1. If any
-#'   node names are duplicated in post2, what should be appended to the
+#' @title Combine two objects containing posterior samples
+#' @description Intended for use when derived quantities are calculated from monitored posterior samples,
+#'   and you wish to combine them into the master [`mcmc.list`][coda::mcmc.list],
+#'   as though they were calculated and monitored during MCMC sampling.
+#'   It is not advised to combine samples from two MCMC runs, because covariance
+#'   of MCMC sampling would be lost.
+#' @param post1 A [`mcmc.list`][coda::mcmc.list] or [`matrix`][base::matrix] object.
+#' @param post2 A [`mcmc.list`][coda::mcmc.list] or [`matrix`][base::matrix] object.
+#' @param dup_id A character vector of length == 1. If any
+#'   node names are duplicated in `post2`, what should be appended to the
 #'   end of these node names in the output? If this occurs a warning will be returned.
-#'   Defaults to \code{"_p2"}
-#'
+#'   Defaults to `"_p2"`
 #' @details Some important things to note:
-#' \itemize{
-#'   \item{if the object passed to \code{post1} is a matrix, \code{post2} must be an mcmc.list, and vice versa}
-#'   \item{for matrix objects, nodes should be stored as columns and samples should be stored as rows. Column names should be present}
-#'   \item{the objects passed to \code{post1} and \code{post2} must contain the same number of samples per node}
-#'   \item{if the objects passed to \code{post1} and \code{post2} are both mcmc.lists, they must have the same number of chains, iterations, burnin, and thinning interval}
-#'   \item{if the node names are empty (e.g., only one node in an mcmc.list or missing column names in a matrix), the node names will be coerced to \code{"var1"}, \code{"var2"}, etc.}
-#' }
+#'   * If the object passed to `post1` is a [`matrix`][base::matrix], `post2` must be a [`mcmc.list`][coda::mcmc.list], and vice versa.
+#'   * That is, two [`mcmc.list`][coda::mcmc.list] objects are allowed, but not two [`matrix`][base::matrix] objects.
+#'   * For [`matrix`][base::matrix] objects, nodes should be stored as columns and samples should be stored as rows. Column names should be present.
+#'   * The objects passed to `post1` and `post2` must have the same number of chains, iterations, burnin, and thinning interval.
+#'   * If the node names are empty (e.g., missing column names in a [`matrix`][base::matrix]), the node names will be coerced to `"var1"`, `"var2"`, etc. and a warning will be returned.
+#' @return A single [`mcmc.list`][coda::mcmc.list] object containing samples of the nodes from both `post1` and `post2`.
 #' @examples
 #' # load example mcmc.list
 #' data(cjs, package = "postpack")
