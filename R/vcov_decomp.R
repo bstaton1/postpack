@@ -8,7 +8,7 @@
 #' @param sigma_base_name A character vector with length == 1. What should the base node name be
 #'   for the standard deviation vector component? Defaults to `"sigma"`, which becomes `"sigma[1]"`, `"sigma[2]"`,
 #'   etc. in the output.
-#' @param rho_base_name Same as \code{sigma_base_name}, but for the correlation matrix component.
+#' @param rho_base_name Same as `sigma_base_name`, but for the correlation matrix component.
 #' @param invert Logical. Do you wish to take the inverse of the matrix node matched by `param`
 #'   prior to performing the calculations? This would be necessary if the matrix node was expressed as
 #'   a precision matrix as used in the BUGS language. Triggers a call to [base::solve()].
@@ -17,6 +17,12 @@
 #'   before proceeding with the calculations? Defaults to `TRUE`. If set to `FALSE`, unexpected output may be returned or
 #'   other errors related to items a, b, and c may be triggered - this is not advised, though may be required
 #'   if wishing to set `invert = TRUE`.
+#' @param auto_escape Logical. `FALSE` will treat `"["` and `"]"`
+#'   as special regular expression characters (unless explicitly escaped by user),
+#'   `TRUE` will treat these symbols as plain text to be matched.
+#'   It is generally recommended to keep this as `TRUE` (the default),
+#'   unless you are performing complex regex searches that require the
+#'   `"["` and `"]"` symbols to be special characters.
 #' @return A [`mcmc.list`][coda::mcmc.list] object.
 #' @examples
 #' # load example mcmc.list

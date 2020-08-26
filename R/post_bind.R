@@ -24,7 +24,7 @@
 #' # create two subsets from cjs: one as mcmc.list and one as matrix
 #' # also works if both are mcmc.list objects
 #' p1 = post_subset(cjs, "b0")
-#' p2 = post_subset(cjs, "b1", matrix = T)
+#' p2 = post_subset(cjs, "b1", matrix = TRUE)
 #'
 #' # combine them into one mcmc.list
 #' head(post_bind(p1, p2))

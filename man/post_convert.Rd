@@ -20,7 +20,7 @@ automated based on the input object class.
 \details{
 Accepted classes are produced by several packages, including but probably not limited to:
 \itemize{
-\item \code{\link[rstan:stanfit-class]{stanfit}} objects are created by \code{\link[rstan:stan]{rstan::stan()}}, which also provides \code{\link[rstan:As.mcmc.list]{rstan::As.mcmc.list()}} which is used here as well.
+\item \code{\link[rstan:stanfit-class]{stanfit}} objects are created by \code{\link[rstan:stan]{rstan::stan()}}, which also provides \code{\link[rstan:As.mcmc.list]{rstan::As.mcmc.list()}}. Rather than requiring users to have 'rstan' installed to use 'postpack', \code{post_convert()} will instruct users to use this function if supplied a \code{\link[rstan:stanfit-class]{stanfit}} object.
 \item \code{\link[R2WinBUGS:bugs]{bugs}} objects are created by \code{\link[R2WinBUGS:bugs]{R2WinBUGS::bugs()}} and \code{\link[R2OpenBUGS:bugs]{R2OpenBUGS::bugs()}}.
 \item \code{\link[R2jags:jags]{rjags}} objects are created by \code{\link[R2jags:jags]{R2jags::jags()}}.
 \item \code{\link[base:list]{list}} objects are created by \code{\link[nimble:runMCMC]{nimble::runMCMC()}}, 'MCMCpack' functions, or custom MCMC algorithms.
@@ -38,11 +38,11 @@ If you find that a critical class conversion is missing, please submit an \href{
 }
 \examples{
 ## EXAMPLE 1
-load example mcmc.list
+# load example mcmc.list
 data(cjs, package = "postpack")
 
 # take a subset from cjs as a matrix, retain chain and iter ids
-cjs_sub = post_subset(cjs, "^B", matrix = T, chains = T, iters = T)
+cjs_sub = post_subset(cjs, "^B", matrix = TRUE, chains = TRUE, iters = TRUE)
 
 # convert back to mcmc.list
 class(post_convert(cjs_sub))
@@ -80,5 +80,5 @@ samps_new = post_convert(samps)
 post_summ(samps_new, "param")
 }
 \seealso{
-\code{\link[coda:mcmc.list]{coda::as.mcmc.list()}}, \code{\link[coda:mcmc]{coda::as.mcmc()}}, \code{\link[rstan:As.mcmc.list]{rstan::As.mcmc.list()}}
+\code{\link[coda:mcmc.list]{coda::as.mcmc.list()}}, \code{\link[coda:mcmc]{coda::as.mcmc()}}
 }

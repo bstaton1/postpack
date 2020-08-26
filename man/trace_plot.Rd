@@ -2,23 +2,23 @@
 % Please edit documentation in R/trace_plot.R
 \name{trace_plot}
 \alias{trace_plot}
-\title{Create a traceplot for a single desired node}
+\title{Create a trace plot for a single desired node}
 \usage{
 trace_plot(post, param, keep_percent = 0)
 }
 \arguments{
-\item{post}{an object of class \code{mcmc.list}}
+\item{post}{A \code{\link[coda:mcmc.list]{mcmc.list}} object.}
 
-\item{param}{a character vector of length 1.
-Should be a node reference to a single element in the model. E.g., \code{"pi[1]"}, not \code{"pi"}.}
+\item{param}{A character vector of length == 1. Should be a node reference
+to a single element in the model. E.g., \code{"b0[1]"}, not \code{"b0"}.}
 
-\item{keep_percent}{a numeric vector of length one and scaled between 0 and 1.
-Percent of samples you'd like to keep for traceplotting and passed to \code{\link{post_thin}}.}
+\item{keep_percent}{A numeric vector of length == 1 and on the range (0,1].
+Percent of samples you'd like to keep for trace plotting and passed to \code{\link[=post_thin]{post_thin()}}.}
 }
 \description{
-Create a traceplot for a single desired node
+Create a trace plot for a single desired node
 }
 \note{
-If saving as a pdf, these files can get very large with many samples and render slowly.
+If saving as a pdf file, these files can get very large with many samples and render slowly.
 The \code{keep_percent} argument is intended to help with this by thinning the chains at quasi-evenly spaced intervals.
 }

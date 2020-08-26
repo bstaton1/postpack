@@ -41,7 +41,7 @@
 #' match_params(cjs, "s.+0")
 #'
 #' # turn off auto escape to use [] in regex syntax rather than matching them as text
-#' match_params(cjs, params = "[:digit:]$", auto_escape = F)
+#' match_params(cjs, params = "[:digit:]$", auto_escape = FALSE)
 #'
 #' # pass an empty string to match all (same as get_params)
 #' match_params(cjs, "")
@@ -88,8 +88,8 @@ match_params = function(post, params, type = "base_index", auto_escape = TRUE) {
       paste(
         "\n  Supplied value(s) of params (",
         list_out(params[u_base_matches == 0], final = "and", wrap = '"'),
-        ") did not have any matches in the nodes stored in post.\n  All elements of params must have at least one match.\n  The base names of all monitored nodes are:\n", list_out(u_params, final = "and", wrap = '"', per_line = 4, indent = "    "), sep = "")
-    )
+        ") did not have any matches in the nodes stored in post.\n  All elements of params must have at least one match.\n  The base names of all monitored nodes are:\n", list_out(u_params, final = "and", wrap = '"', per_line = 4, indent = "    "), sep = ""),
+      call. = F)
   }
 
   # return the names of the exact nodes to extract

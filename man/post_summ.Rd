@@ -47,6 +47,13 @@ Fair warning: this can take a bit of time to run on many nodes/samples.}
 rather than for the aggregate across chains? Defaults to \code{FALSE}.
 The arguments \code{Rhat}, \code{neff}, and \code{mcse} are ignored if \code{by_chain = TRUE}
 and a warning will be returned.}
+
+\item{auto_escape}{Logical. \code{FALSE} will treat \code{"["} and \code{"]"}
+as special regular expression characters (unless explicitly escaped by user),
+\code{TRUE} will treat these symbols as plain text to be matched.
+It is generally recommended to keep this as \code{TRUE} (the default),
+unless you are performing complex regex searches that require the
+\code{"["} and \code{"]"} symbols to be special characters.}
 }
 \value{
 A \code{\link[base:matrix]{matrix}} object with summary statistics as rows and nodes as columns.
@@ -65,14 +72,14 @@ data(cjs, package = "postpack")
 post_summ(cjs, "p")
 
 # do this by chain
-post_summ(cjs, "p", by_chain = T)
+post_summ(cjs, "p", by_chain = TRUE)
 
 # calculate Rhat and Neff diagnostic summaries as well
 # multiple node names too
-post_summ(cjs, c("b0", "p"), Rhat = T, neff = T)
+post_summ(cjs, c("b0", "p"), Rhat = TRUE, neff = TRUE)
 
 # calculate Monte Carlo SE for mean and quantiles, with rounding
-post_summ(cjs, "p", mcse = T, digits = 3)
+post_summ(cjs, "p", mcse = TRUE, digits = 3)
 
 # summarize different quantiles: median and central 80\%
 post_summ(cjs, "p", probs = c(0.5, 0.1, 0.9))

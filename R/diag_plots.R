@@ -41,6 +41,9 @@
 #' @seealso [match_params()], [density_plot()], [trace_plot()]
 #' @return A multi-panel figure showing the posterior density and trace plots for requested nodes.
 #'   The device in which it is placed depends on the argument values.
+#' @importFrom grDevices dev.new dev.off pdf
+#' @importFrom graphics axis box legend lines par plot
+#' @importFrom stats density
 #' @examples
 #' if (interactive()) {
 #'   #load example mcmc.list
@@ -88,25 +91,6 @@ diag_plots = function(post, params, ext_device = FALSE, show_diags = "if_poor_Rh
     }
   }
 
-  # define the create_device() function. Duplicated from StatonMisc::ext_device
-  create_device = function(h = 7, w = 7, title = NULL) {
-    # determine the operating system
-    if (.Platform$OS.type == "windows") {
-      os = "win"
-    } else if (Sys.info()["sysname"] == "Darwin") {
-      os = "mac"
-    } else if (.Platform$OS.type == "unix") {
-      os = "unix"
-    } else {
-      stop("Unknown OS; cannot select the appropriate graphics device")
-    }
-
-    # use the appropriate device-generating function depending on OS
-    if (os == "win") windows(h = h, w = w, title = title)
-    if (os == "mac") quartz(h = h, w = w, title = title)
-    if (os == "unix") x11(h = h, w = w, title = title)
-  }
-
   # set the layout
   if (layout == "auto") {
     layout = ifelse(n == 1, "1x1",
@@ -125,8 +109,8 @@ diag_plots = function(post, params, ext_device = FALSE, show_diags = "if_poor_Rh
   }
   height_width = as.numeric(unlist(stringr::str_split(dims, "x")))
 
-  if (ext_device) create_device(h = height_width[1], w = height_width[2])
-  if (save) pdf(file, h = height_width[1], w = height_width[2])
+  if (ext_device) dev.new(height = height_width[1], width = height_width[2], units = "in", noRStudioGD = T)
+  if (save) pdf(file, height = height_width[1], width = height_width[2])
 
   # set up the graphics device
   opar = par()
@@ -136,7 +120,7 @@ diag_plots = function(post, params, ext_device = FALSE, show_diags = "if_poor_Rh
 
   junk = sapply(keep, function(i) {
     if (which(keep == i) %in% new_page & ext_device) {
-      create_device(h = height_width[1], w = height_width[2])
+      dev.new(height = height_width[1], width = height_width[2], units = "in", noRStudioGD = T)
       par(mfrow = c(row_col[1],row_col[2] * 2))
     }
     density_plot(post, i, show_diags)

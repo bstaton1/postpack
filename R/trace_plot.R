@@ -1,12 +1,11 @@
-#' Create a traceplot for a single desired node
-#'
-#' @param post an object of class \code{mcmc.list}
-#' @param param a character vector of length 1.
-#'   Should be a node reference to a single element in the model. E.g., \code{"pi[1]"}, not \code{"pi"}.
-#' @param keep_percent a numeric vector of length one and scaled between 0 and 1.
-#'   Percent of samples you'd like to keep for traceplotting and passed to \code{\link{post_thin}}.
-#' @note If saving as a pdf, these files can get very large with many samples and render slowly.
-#'   The \code{keep_percent} argument is intended to help with this by thinning the chains at quasi-evenly spaced intervals.
+#' @title Create a trace plot for a single desired node
+#' @param post A [`mcmc.list`][coda::mcmc.list] object.
+#' @param param A character vector of length == 1. Should be a node reference
+#'   to a single element in the model. E.g., `"b0[1]"`, not `"b0"`.
+#' @param keep_percent A numeric vector of length == 1 and on the range (0,1].
+#'   Percent of samples you'd like to keep for trace plotting and passed to [post_thin()].
+#' @note If saving as a pdf file, these files can get very large with many samples and render slowly.
+#'   The `keep_percent` argument is intended to help with this by thinning the chains at quasi-evenly spaced intervals.
 
 trace_plot = function(post, param, keep_percent = 0) {
 

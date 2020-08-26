@@ -4,7 +4,7 @@
 #' @param file A character vector of length == 1: the name of the file to write to
 #' @details Performs the same basic function as [R2OpenBUGS::write.model()],
 #'   but with slightly better output (scientific notation, spacing, etc.). The main reason it was created
-#'   for use in 'postpack' was to remove the need for using the \code{R2OpenBUGS} package when not using OpenBUGS.
+#'   for use in 'postpack' was to remove the need for using the 'R2OpenBUGS' package when not using OpenBUGS.
 #' @return Nothing, but `file` is written to disk.
 #' @examples
 #' if (interactive()) {

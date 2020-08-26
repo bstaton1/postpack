@@ -21,7 +21,7 @@ Imports:
     coda,
     mcmcse,
     abind
-License: MIT
+License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 7.1.1

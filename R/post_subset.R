@@ -16,6 +16,10 @@
 #'   It is generally recommended to keep this as `TRUE` (the default),
 #'   unless you are performing complex regex searches that require the
 #'   `"["` and `"]"` symbols to be special characters.
+#' @return A [`mcmc.list`][coda::mcmc.list] or [`matrix`][base::matrix] object, depending on the
+#'   value of the `matrix` argument. Object contains all nodes that match the `params` argument;
+#'   an error will be returned if no matches are found.
+#' @seealso [match_params()]
 #' @examples
 #' # load example mcmc.list
 #' data(cjs, package = "postpack")
@@ -27,8 +31,7 @@
 #' x2 = post_subset(cjs, c("b", "B"))
 #'
 #' # perform the subset and return a matrix as output, while retaining the chain ID
-#' x3 = post_subset(cjs, "B0", matrix = T, chain = T)
-#' @seealso \code{\link{match_params}}
+#' x3 = post_subset(cjs, "B0", matrix = TRUE, chain = TRUE)
 #' @export
 
 post_subset = function(post, params, matrix = FALSE, iters = FALSE, chains = FALSE, auto_escape = TRUE) {

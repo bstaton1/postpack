@@ -20,7 +20,7 @@ Performs the same basic function as \code{\link[R2OpenBUGS:write.model]{R2OpenBU
 \details{
 Performs the same basic function as \code{\link[R2OpenBUGS:write.model]{R2OpenBUGS::write.model()}},
 but with slightly better output (scientific notation, spacing, etc.). The main reason it was created
-for use in 'postpack' was to remove the need for using the \code{R2OpenBUGS} package when not using OpenBUGS.
+for use in 'postpack' was to remove the need for using the 'R2OpenBUGS' package when not using OpenBUGS.
 }
 \examples{
 if (interactive()) {

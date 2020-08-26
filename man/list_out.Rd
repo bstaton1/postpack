@@ -28,6 +28,6 @@ A character vector of length == 1; ready to be passed to
 Converts a vector into a comma-separated list for use in sentences (error messages, warnings, etc.).
 }
 \examples{
-list_out(x = letters[1:10])
-cat(list_out(letters[1:26], wrap = "'", per_line = 4, final = "or", indent = "  "))
+postpack:::list_out(x = letters[1:10])
+cat(postpack:::list_out(letters[1:26], wrap = "'", per_line = 4, final = "or", indent = "  "))
 }
