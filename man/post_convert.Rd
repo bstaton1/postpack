@@ -39,7 +39,7 @@ If you find that a critical class conversion is missing, please submit an \href{
 \examples{
 ## EXAMPLE 1
 # load example mcmc.list
-data(cjs, package = "postpack")
+data(cjs)
 
 # take a subset from cjs as a matrix, retain chain and iter ids
 cjs_sub = post_subset(cjs, "^B", matrix = TRUE, chains = TRUE, iters = TRUE)

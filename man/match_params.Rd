@@ -42,7 +42,7 @@ See the examples below.
 }
 \examples{
 # load example mcmc.list
-data(cjs, package = "postpack")
+data(cjs)
 
 # these produce same output b/c of regex pattern matching
 match_params(cjs, params = c("b0", "b1"))

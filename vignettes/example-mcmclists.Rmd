@@ -1,0 +1,112 @@
+---
+title: "Example mcmc.lists"
+output: 
+  rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Example mcmc.lists}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(echo = TRUE, fig.align = "center")
+```
+
+'postpack' ships with two example `mcmc.list` objects to allow self-contained examples and for users to practice using 'postpack'. The `mcmc.list` objects can be loaded using:
+
+```{r, eval = FALSE}
+data(cjs)
+data(cjs_no_rho)
+```
+
+```{r, echo = FALSE}
+load("../data/cjs.rda")
+load("../data/cjs_no_rho.rda")
+```
+
+Both objects come from a JAGS model fitted to simulated data. The two objects are from two separate, but highly similar models. The output was thinned heavily to reduce file size, see:
+
+```{r}
+postpack::post_dim(cjs)
+```
+
+Each of two chains was ran for 61,000 iterations -- 11,000 were adapting/burn-in phase and 50,000 were after burn-in. Chains were thinned at an interval of 200 iterations, resulting in 500 total saved samples per 21 parameters (elements in the model).
+
+# The Context
+
+Posterior samples were generated from a model fitted to an entirely hypothetical data set.
+Suppose for 5 years, biologists individually tagged juvenile salmon in the headwaters of a river system before the fish made their migration out to sea.
+The length of each fish was measured as well, and it is safe to assume tagged fish are a random sample from the larger population and that they were all released at the same time within a given year.
+
+Three receiver arrays exist in the river that can detect fish as they move past them, but they are imperfect (sometimes a receiver will not detect a tagged fish passing it).
+The principle research goal is to quantify whether survival during migration is associated with fish size.
+
+Known quantities necessary for fitting the model (see below) include:
+
+* `nt`: number of years
+* `year`: year indicator variable
+* `J`: number of times each fish can be detected, including tagging event
+* `N`: number of fish tagged in the study (across all years)
+* `y`: detection history matrix (`N` by `J`); 1 if fish seen that event, 0 if not.
+
+# The Model
+
+The model is a Cormack-Jolly-Seber survival model. It estimates survival and detection probabilities based on individually-identifiable tagged fish. Based on how often a fish is not seen at a location and then seen at a later location, it is possible to estimate detection probabilities. Then, based on how often a fish is never seen again, it is possible to estimate survival probabilities^[Readers interested in this kind of model are encouraged to refer to _Bayesian Population Analysis using WinBUGS: A Hierarchical Perspective_ by Marc Kéry and Michael Schuab.].
+
+This is a state-space formulation, where there are explicit random processes for both the true state of each fish (alive or dead) and the observed state of each fish (seen or not seen) in each event. Both are Bernoulli random variables, with `z` representing the true state and `y` representing the observed state. It is assumed that fish cannot be detected if they are dead. Survival probability between two consecutive detection events for fish `i` is denoted by `phi[i]` and for this model is expressed as a logit-linear function of fish size (`FL[i]`, scaled and centered prior to model fitting), with random slopes and intercepts for each year. Detection probability for this model is assumed to vary among detection arrays, but is constant across years.
+
+Here is the JAGS code for this model:
+
+```
+model{
+  # HYPERPARAMETERS: SURVIVAL COEFFICIENTS AND VARIABILITY
+  B0 ~ dnorm(0, 0.001)
+  B1 ~ dnorm(0, 0.001)
+  sig_B0 ~ dunif(0,10)
+  sig_B1 ~ dunif(0,10)
+  rho ~ dunif(-1,1)
+  
+  # COVARIANCE MATRIX FOR YEAR-SPECIFIC SURVIVAL COEFFICIENTS
+  SIG[1,1] <- sig_B0^2
+  SIG[2,2] <- sig_B1^2
+  SIG[2,1] <- sig_B0 * sig_B1 * rho
+  SIG[1,2] <- sig_B0 * sig_B1 * rho
+  
+  # YEAR-SPECIFIC SURVIVAL COEFFICIENTS
+  Bmean[1] <- B0
+  Bmean[2] <- B1
+  for (t in 1:nt) {
+    b[t,1:2] ~ dmnorm.vcov(Bmean[1:2], SIG[1:2,1:2])
+    b0[t] <- b[t,1]
+    b1[t] <- b[t,2]
+  }
+  
+  # DETECTION PROBABILITY: OCCASION-SPECIFIC, BUT YEAR-CONSTANT
+  for (j in 2:J) {
+    p[j] ~ dunif(0,1)
+  }
+  
+  # LIKELIHOOD
+  for (i in 1:N) {
+    # obtain fish-specific survival based on size
+    logit(phi[i]) <- b0[year[i]] + b1[year[i]] * FL[i]
+    for (j in 2:J) {
+      # latent survival process:
+      # must have been alive last period to be alive this period
+      z[i,j] ~ dbern(z[i,j-1] * phi[i])
+      
+      # observation process:
+      # must be alive this period to be detected this period
+      y[i,j] ~ dbern(z[i,j] * p[j])
+    }
+  }
+}
+```
+
+The `mcmc.list` object called `cjs` is from this model exactly, `cjs_no_rho` is from the same model, but with the `rho` parameter fixed at zero rather than estimating its value.
+
+The nodes that were monitored include: the global survival coefficients (`B0` and `B1`), their year-specific random realizations (`b0` and `b1`), the covariance matrix modeling the inter-annual covariability (`SIG`), and the detection probability of each array (`p`). See:
+
+```{r}
+postpack::get_params(cjs, type = "base_index")
+```

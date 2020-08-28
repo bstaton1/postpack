@@ -1,0 +1,304 @@
+---
+title: "Feature Overview"
+output: 
+  rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Feature Overview}
+  %\VignetteEncoding{UTF-8}
+  %\VignetteEngine{knitr::rmarkdown}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(echo = TRUE, fig.align = "center")
+```
+
+This vignette is intended to get you up and running using 'postpack' to process your MCMC output by showcasing some of the main features.
+
+# Prequisites
+
+'postpack' requires that your MCMC samples are stored in `mcmc.list` objects (class and methods supplied by the 'coda' package). Some MCMC interfaces produce this output by default (`rjags::coda.samples()`, `jagsUI::jags.basic()`, and `jagsUI::jags()$samples`). Others produce output that can be fairly easily converted to this format (`R2WinBUGS::bugs()`, `R2OpenBUGS::bugs()`, `rstan::stan()`, `nimble::runMCMC()`).
+
+If your samples are not already in an `mcmc.list` object, check out `?postpack::post_convert` to see how you may be able to reformat them.
+
+This vignette uses an example `mcmc.list` object called `cjs` to illustrate the main features of 'postpack', see `?cjs` or `vignette("example-mcmclists")` for more details. To follow along, load it and 'postpack' into your session:
+
+```{r, eval = FALSE}
+library(postpack)
+data(cjs)
+```
+
+```{r, echo = FALSE}
+library(postpack)
+load("../data/cjs.rda")
+```
+
+# Query MCMC Attributes
+
+You can return the dimensions of the MCMC run using:
+
+```{r}
+post_dim(cjs)
+```
+
+These elements should be self-explanatory, but see `?post_dim` for details. 
+You can extract one of these dimensional elements quickly by specifying the `types` argument, e.g., notice that there are `r post_dim(cjs, "params")` saved nodes by running `post_dim(cjs, types = "params")`.
+
+The parameter names of these nodes will be crucial in subsetting them, so you should be able to check them out quickly at any time. This is the purpose of the `get_params()` function:
+
+```{r}
+get_params(cjs)
+```
+
+This shows you the base node names that were monitored during model fitting.
+If you wish to see the element indices associated with each node as well, supply the `type = "base_index"` argument:
+
+```{r}
+get_params(cjs, type = "base_index")
+```
+
+# Extracting Posterior Summaries
+
+A cornerstone of 'postpack' is the `post_summ()` function, which is for extracting posterior summaries for particular nodes of interest.
+
+```{r}
+post_summ(cjs, params = c("sig_B0", "sig_B1"))
+```
+
+The output is in a simple, easily subsettable matrix format (unlike `coda::summary.mcmc()`), which makes plotting these summaries more straight-forward. Presented by default are posterior mean, standard deviation, and the 50%, 2.5%, and 97.5% quantiles. You can report other quantiles using `probs` if desired and round them using `digits`:
+
+```{r}
+post_summ(cjs, c("sig_B0", "sig_B1"), digits = 3, probs = c(0.025, 0.25, 0.5, 0.75, 0.975))
+```
+
+One of the key features is that the `params` argument selects nodes based on regular expressions, so all elements of the `"b0"` node can be summarized with:
+
+```{r}
+post_summ(cjs, "b0")
+```
+
+Several 'postpack' functions accept the `params` argument (always in the second argument if it is present) to specify queries from the `mcmc.list` passed to `post`, so learning to use it is key.
+More information on using regular expressions to extract particular nodes can be found in `vignette("pattern-matching")`. 
+
+Estimates of the uncertainty associated with MCMC sampling in the mean and quantiles can be obtained using the `mcse` argument (which calls `?mcmcse::mcse` and `?mcmcse::mcse.q`):
+
+```{r}
+post_summ(cjs, "^B", mcse = TRUE)
+```
+
+Summaries for each chain can be obtained using the `by_chain = TRUE` argument:
+
+```{r}
+post_summ(cjs, "^B", by_chain = TRUE)
+```
+
+# Extracting MCMC Diagnostics
+
+'postpack' features two primary ways of diagnosing the convergence/adequate sample behavior of MCMC chains: numerically and visually.
+Both methods use the `params` argument to allow users to have control over which nodes get diagnostics.
+
+`post_summ()` includes two additional arguments for obtaining numerical diagnostics:
+
+```{r}
+post_summ(cjs, c("sig_B0", "sig_B1"), neff = TRUE, Rhat = TRUE)
+```
+
+`neff = TRUE` triggers a call to `?coda::effectiveSize` to estimate the number of MCMC samples that are independent and `Rhat = TRUE` triggers a call to `?coda::gelman.diag` to calculate the commonly used Rhat convergence diagnostic (numbers near 1 are ideal, greater than 1.1 may be problematic).
+`"Rhat"` will always be rounded to three digits, and `"neff"` will always be rounded to an integer, regardless of the value of the `digits` argument.
+
+Viewing the density and trace plot for a parameter is another common way to evaluate algorithm convergence. 
+The `diag_plots()` function serves this purpose (which, unlike `?coda:::plot.mcmc.list`, allows plotting the densities color coded by chain and only for specific nodes):
+
+```{r, fig.width = 4, fig.height = 6}
+diag_plots(cjs, params = "SIG")
+```
+
+Options exist to:
+
+*  display the Rhat and effective MCMC samples for each node (the `show_diags` argument, which accepts value of `"always"`, `"never"`, or `"if_poor_Rhat"` with the last one being the default. See `?diag_plots` for details),
+*  plot the output in a new external device (the `ext_device` argument)
+*  change the size of the graphics device (the `dims` argument),
+*  change the layout of parameters on the device (the `layout` argument), 
+*  save the output to a PDF graphics device (the `save` argument, which then requires that you enter the `file` argument, which is the file name of the PDF complete with the `".pdf"` extension). 
+*  thin the chains by some percentage (at quasi-evenly spaced intervals) before drawing the trace plot -- this can help manage the file size when generating many plots with many samples while still providing much of the same inference as the unthinned output. The argument `keep_percent = 0.8` is passed to `?post_thin`, and would discard 20% of the samples prior to trace plotting. This thinning does not affect the density plot visual -- all retained samples are plotted there.
+
+The `dims` and `layout` arguments are set to `"auto"` by default -- for adjustment of these settings, see `?diag_plots`. 
+
+The more chains there are in the `mcmc.list` object passed to the `post` argument, the more colors will be displayed.
+
+# Extracting Posterior Samples
+
+Often you will want to take a subset out of your output while retaining each saved posterior sample, for example, to plot a histogram of the samples or to calculate the posterior of some derived quantity as though it had been included as part of the model code.
+
+```{r}
+b0_samps = post_subset(cjs, "b0")
+```
+
+By default, the output will be a `mcmc.list` which allows it to play nicely with the rest of the 'postpack' functions (e.g., `get_params(b0_samps)`).
+However, performing plotting or calculation tasks on posterior samples might be easier if they were combined across chains and stored as a matrix (nodes as columns, rows as samples):
+
+```{r}
+b0_samps = post_subset(cjs, "b0", matrix = TRUE)
+```
+
+Note that if you wish to retain the chain and iteration number of each posterior sample when converting to a matrix with `post_subset()`, you can pass the optional logical arguments `chains` and `iters` (both are `FALSE` by default).
+
+```{r}
+head(post_subset(cjs, "b0", matrix = TRUE, chains = TRUE, iters = TRUE))
+```
+
+In some cases, it may be easier to keep all nodes **except** those matched by `params`.
+For this this, you can use `post_remove()` (if `ask = TRUE`, you will be prompted to verify that you wish to remove the nodes that were matched -- this is the default):
+
+```{r, message = FALSE}
+# check out param names
+get_params(cjs)
+
+# remove all SIG nodes
+cjs2 = post_remove(cjs, "SIG", ask = FALSE)
+
+# did it work?
+get_params(cjs)
+```
+
+# Matrix/Array Nodes
+
+## `array_format()`
+
+Notice that the `"SIG"` node is a matrix (there are two dimensions of element indices in the node names):
+
+```{r}
+(SIG_ests = post_summ(cjs, "SIG", digits = 2))
+```
+
+You may want to create a matrix that stores the posterior means (or any other summary statistic) in the same format as they would be found in the model.
+For this, you can use `array_format()`:
+
+```{r}
+array_format(SIG_ests["mean",])
+```
+
+Although this is a basic example, this function becomes more useful for higher dimensional nodes -- dimensions between 2 and 10 are currently supported.
+
+`array_format()` requires a vector of named elements, where the element names contain the correct indices to place them in (e.g., `"SIG[1,1]"` and `"SIG[2,2]"`).
+Based on the indices in the element names, `array_format()` determines the dimensions of the object in the model and places the elements in the correct location.
+
+`array_format()` will respect missing values.
+As an example, suppose the the model did not specify what `"SIG[2,1]"` should be.
+In this case, it will not be returned as a tracked node element in the `mcmc.list` (at least in JAGS).
+We can simulate this behavior by removing that node from the output, and seeing that `array_format()` inserts an `NA` in the proper location:
+
+```{r, message = FALSE}
+cjs2 = post_remove(cjs, "SIG[2,1]", ask = FALSE)
+array_format(post_summ(cjs2, "SIG")["mean",])
+```
+
+## `vcov_decomp()`
+
+The `"SIG"` node represents a variance-covariance matrix in the model.
+Sometimes it is desirable to decompose this matrix into a vector of standard deviations and a correlation matrix.
+Rather than perform this calculation on the posterior summary of `"SIG"`, we can perform it for each posterior sample to obtain a posterior of the correlation matrix.
+This is the purpose of `vcov_decomp()`:
+
+```{r, messag = FALSE}
+SIG_decomp = vcov_decomp(cjs, param = "SIG")
+```
+
+Note the characteristics of the output obtained:
+
+```{r}
+class(SIG_decomp)
+```
+
+```{r}
+post_dim(cjs) == post_dim(SIG_decomp)
+```
+
+```{r}
+get_params(SIG_decomp, type = "base_index")
+```
+
+The nodes `"sigma[1]"` and `"sigma[2]"` represent the square root of the diagonal elements `"SIG[1,1]"` and `"SIG[2,2]"` (and are thus the same as the `"sig_B0"` and `"sig_B1"` nodes stored in `cjs`), and the `"rho"` elements represent to correlation matrix -- and posterior samples exist now for each.
+The names used for these newly-created nodes can be changed using the `sigma_base_name` and `rho_base_name` arguments.
+
+You can now build the posterior median correlation matrix:
+
+```{r}
+array_format(post_summ(SIG_decomp, "rho")["50%",])
+```
+
+When using `vcov_decomp()`, you are recommended to always keep `check = TRUE`, which will ensure that the samples are from a valid variance-covariance matrix prior to performing the calculation.
+Setting `invert = TRUE` will take the inverse of the matrix from each posterior sample prior to performing the calculations (e.g., if you had monitored a precision matrix rather than a covariance matrix).
+
+# Manipulate Samples
+
+## `post_thin()`
+
+If your downstream analyses of the posterior samples require many calculations, then it may be advantageous to develop the code with a smaller but otherwise identical version of the posterior output before unleashing them on the full output.
+You can thin the chains at quasi-evenly spaced intervals using `post_thin()`:
+
+```{r, eval = FALSE}
+post_thin(cjs, keep_percent = 0.25)
+```
+
+Which would retain 25% of the samples from each chain, and return the result as an `mcmc.list` object.
+You may instead use the `keep_iters` argument to specify the number of iterations you wish to keep per chain.
+
+## `post_bind()`
+
+It may be desirable to combine posterior samples from the same MCMC run together in a single object.
+This case may arise when calculating derived quantities, and for organizational purposes you want to have them in one object as opposed to two.
+The two objects must have the same number of chains and saved iterations, and should be calculated from the same model run.
+
+### Two `mcmc.list`s
+
+The derived quantities stored in `SIG_decomp` from above are stored as an `mcmc.list` object and were calculated from the same model using consistent rules, so have the same dimensions. This makes it easy to use:
+
+```{r}
+cjs = post_bind(post1 = cjs, post2 = SIG_decomp)
+```
+
+and note that you have the new calculated nodes in you main object:
+
+```{r}
+get_params(cjs)
+```
+
+You can now quickly verify that `"sig_B0"` and `"sig_B1"` are the same as `"sigma[1]"` and `"sigma[2]"`, respectively:
+
+```{r}
+post_summ(cjs, "sig")
+```
+
+### One `mcmc.list` and one `matrix`
+
+Suppose instead that your derived quantities are stored as a matrix: iterations along the rows and quantities along the columns. Binding this to an `mcmc.list` object involves:
+
+1.)  Obtaining the matrix of the derived quantity(ies),
+
+2.)  Deciding on a name for each of your quantities, and
+
+3.)  Binding the derived list to the main list.
+
+For step (1), generate such a matrix of derived quantities now, representing the inverse logit transformation of each of the `"b0"` elements:
+
+```{r}
+# extract the raw samples from cjs in matrix form
+b0_samps = post_subset(cjs, "b0", matrix = TRUE)
+
+# perform a derived quantity calculation
+eb0_samps = exp(b0_samps)/(1 + exp(b0_samps))
+```
+
+Now you have a derived quantity, so for step (2) change the names that each quantity will be stored as:
+
+```{r}
+colnames(eb0_samps) = paste0("eb0[", 1:5, "]")
+```
+
+Finally, for step (3) combine the samples using `post_bind()`:
+
+```{r}
+cjs = post_bind(post1 = cjs, post2 = eb0_samps)
+```
+
+If the two objects contain duplicate node names, the values from the object passed to the `post2` argument of `post_bind()` will have the suffix supplied under the argument `dup_id` (`"_p2"` by default), and a warning will be returned.

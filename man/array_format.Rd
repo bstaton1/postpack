@@ -31,7 +31,7 @@ should you find that you need more dimensions.
 }
 \examples{
 # load example mcmc.list
-data(cjs, package = "postpack")
+data(cjs)
 
 # find an array node from your model
 match_params(cjs, "SIG")

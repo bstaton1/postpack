@@ -1,0 +1,123 @@
+---
+title: "Multiple Models"
+output: 
+  rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Multiple Models}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(echo = TRUE, fig.align = "center")
+```
+
+Rarely do we ever work with one model.
+Instead, you will typically want to evaluate how the posterior of a parameter changes with changes to data or model.
+It would be nice to scale up the functionality of 'postpack' to allow simple or complex post-processing tasks from posterior samples from similar models using the same consistent workflow.
+This vignette illustrates how this can be acheived using 'postpack'.
+
+> I have only recently began working with the 'postpack' functions in this regard efficiently, so the ideas are not fully fleshed out yet.
+> In future versions of 'postpack', more functionality may be added in this regard.
+
+The most significant trick to use is to store multiple `mcmc.list` objects as elements of a larger `list` object.
+Suppose you have two `mcmc.list` objects from two highly similar models, named `cjs` and `cjs_no_rho` (see `vignette("example-mcmclists")` or `?cjs` for more details).
+
+Load these objects into your session:
+
+```{r, eval = FALSE}
+library(postpack)
+data(cjs)
+data(cjs_no_rho)
+```
+
+```{r, echo = FALSE}
+library(postpack)
+load("../data/cjs.rda")
+load("../data/cjs_no_rho.rda")
+```
+
+And create a `list` object with them, where each element is an `mcmc.list` object:
+
+```{r}
+post_list = list(cjs, cjs_no_rho)
+```
+
+Be sure to assign element names, which allows tracking which output is from which model later on:
+
+```{r}
+names(post_list) = c("est_rho", "no_rho")
+```
+
+From here, the world is wide open to you.
+Anything you would do with one `mcmc.list` object, you can do with two (or any number) through the use of the base R `apply()` family of functions.
+For example, extract the dimensions of the saved output for each model:
+
+```{r}
+sapply(post_list, post_dim)
+```
+
+Notice the two have identical dimensions. You can see that each model has the same parameters saved:
+
+```{r}
+sapply(post_list, get_params, type = "base_index")
+```
+
+You could verify that all parameters in both models converged well according to the `Rhat` statistic:
+
+```{r}
+sapply(post_list, function(model) post_summ(model, "", Rhat = TRUE)["Rhat",])
+```
+
+(The `NaN` values for `"SIG[1,2]"` and `"SIG[2,1]"` in the `no_rho` model are because those had the same value each MCMC iteration).
+
+You could extract the summaries of the global survival coefficients from each model to see that the qualitative inference does not depend on the feature that differs between these two models:
+
+```{r}
+lapply(post_list, function(model) post_summ(model, "^B", digits = 2))
+```
+
+Or verify that the detection probabilities are not affected either:
+
+```{r}
+lapply(post_list, function(model) post_summ(model, "p", digits = 2))
+```
+
+You can embed more steps in the function that is applied to each `mcmc.list` object.
+For example, the code below obtains the posterior mean correlation matrix for each model:
+
+```{r, message = FALSE}
+lapply(post_list, function(model) {
+  SIG_decomp = vcov_decomp(model, "SIG")
+  rho_mean = post_summ(SIG_decomp, "rho")["mean",]
+  array_format(rho_mean)
+})
+```
+
+Or more complex still, to predict the survival probability between two consecutive detection arrays for fish of different sizes in each year and model:
+
+```{r}
+lapply(post_list, function(model) {
+  # 2SDs below average length, average length, and 2SDs above average length
+  # model was fitted with length scaled and centered
+  pred_length = c(-2,0,2)  
+
+  # extract posterior mean of random coefficients
+  b0_mean = post_summ(model, "b0")["mean",]
+  b1_mean = post_summ(model, "b1")["mean",]
+
+  # predict survival each year from coefficients at each length
+  pred_phi = sapply(1:5, function(y) {
+    logit_phi = b0_mean[y] + b1_mean[y] * pred_length
+    phi = exp(logit_phi)/(1 + exp(logit_phi))
+    round(phi, 2)
+  })
+  
+  # give dimension names
+  dimnames(pred_phi) = list(c("small", "average", "large"), paste0("y", 1:5))
+  
+  # return the predicted survival
+  return(pred_phi)
+})
+
+```

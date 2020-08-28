@@ -28,7 +28,7 @@ but they are imperfect (sometimes a receiver will not detect a tagged fish passi
 The principle research goal is to quantify whether survival during migration
 is associated with fish size.
 
-The object \code{cjs} (accessed via \verb{data(cjs, package = "postpack"})
+The object \code{cjs} (accessed via \code{data(cjs)})
 stores heavily thinned posterior samples (to reduce file size) from the model below, fitted with JAGS.\preformatted{model\{
   # HYPERPARAMETERS: SURVIVAL COEFFICIENTS AND VARIABILITY
   B0 ~ dnorm(0, 0.001)

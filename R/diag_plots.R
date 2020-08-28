@@ -47,7 +47,7 @@
 #' @examples
 #' if (interactive()) {
 #'   #load example mcmc.list
-#'   data(cjs, package = "postpack")
+#'   data(cjs)
 #'
 #'   # use current device
 #'   diag_plots(cjs, "B0")

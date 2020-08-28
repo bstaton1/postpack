@@ -40,7 +40,7 @@ Again, this is not an issue for developing post-processing code.
 }
 \examples{
 # load example mcmc.list
-data(cjs, package = "postpack")
+data(cjs)
 
 # take note of original dimensions
 post_dim(cjs)

@@ -5,7 +5,7 @@
 #' @param types A character vector with length >= 1 and containing some of `"burn"`, `"post_burn"`,
 #'   `"thin"`, `"chains"`, `"nodes"`. Defaults to `NULL`, in which case all of these are returned.
 #' @return A numeric vector with named elements, which may contain:
-#'   * `burn`: The burn-in period (per chain).
+#'   * `burn`: The burn-in period + adapting phase (per chain).
 #'   * `post_burn`: The post-burn-in period (per chain).
 #'   * `thin`: The thinning interval post-burn-in.
 #'   * `chains`: The number of chains.
@@ -20,7 +20,7 @@
 #'   and is solely for developing long-running post-processing code, so this is okay.
 #' @examples
 #' # load example mcmc.list
-#' data(cjs, package = "postpack")
+#' data(cjs)
 #'
 #' # get all relevant dimensions
 #' post_dim(cjs)

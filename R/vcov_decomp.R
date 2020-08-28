@@ -26,7 +26,7 @@
 #' @return A [`mcmc.list`][coda::mcmc.list] object.
 #' @examples
 #' # load example mcmc.list
-#' data(cjs, package = "postpack")
+#' data(cjs)
 #'
 #' # "SIG" is a covariance matrix node
 #' SIG_decomp = vcov_decomp(cjs, "SIG")

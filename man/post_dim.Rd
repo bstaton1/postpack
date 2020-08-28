@@ -15,7 +15,7 @@ post_dim(post, types = NULL)
 \value{
 A numeric vector with named elements, which may contain:
 \itemize{
-\item \code{burn}: The burn-in period (per chain).
+\item \code{burn}: The burn-in period + adapting phase (per chain).
 \item \code{post_burn}: The post-burn-in period (per chain).
 \item \code{thin}: The thinning interval post-burn-in.
 \item \code{chains}: The number of chains.
@@ -38,7 +38,7 @@ and is solely for developing long-running post-processing code, so this is okay.
 }
 \examples{
 # load example mcmc.list
-data(cjs, package = "postpack")
+data(cjs)
 
 # get all relevant dimensions
 post_dim(cjs)

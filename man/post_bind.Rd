@@ -38,7 +38,7 @@ Some important things to note:
 }
 \examples{
 # load example mcmc.list
-data(cjs, package = "postpack")
+data(cjs)
 
 # create two subsets from cjs: one as mcmc.list and one as matrix
 # also works if both are mcmc.list objects

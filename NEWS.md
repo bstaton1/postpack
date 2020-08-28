@@ -1,6 +1,14 @@
 # *NEWS*
 
-# postpack 0.4.1 (2020-08-25)
+# postpack 0.4.3 (2020-08-28)
+
+## Improve vignettes and readme
+
+* Previously, all information about how to use `postpack` was found in one vignette. It was really large and not suitable for either a first tutorial, nor was it useful as a refresher reference (because it contained everything).
+* It has now been split into four vignettes: one for an overview of features (which resembles the old "main-tutorial" vignette), one for how to use the `params` argument (this is where most new users will likely most often stumble, so good to have it on its own), one for how to use multiple `mcmc.list`s (a cool, but not totally `postpack` topic), and one for explaining the structure of the example `mcmc.list` objects that ship with `postpack`.
+* These changes are in preparation for creating a `pkgdown` website.
+
+# postpack 0.4.2 (2020-08-25)
 
 ## Improve documentation in help files
 

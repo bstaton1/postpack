@@ -24,7 +24,7 @@ a \code{\link[coda:mcmc.list]{mcmc.list}} object.
 }
 \examples{
  # load example mcmc.list
-data(cjs, package = "postpack")
+data(cjs)
 
 # get only node names, no indices (default)
 get_params(cjs, type = "base_only")

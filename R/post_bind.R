@@ -19,7 +19,7 @@
 #' @return A single [`mcmc.list`][coda::mcmc.list] object containing samples of the nodes from both `post1` and `post2`.
 #' @examples
 #' # load example mcmc.list
-#' data(cjs, package = "postpack")
+#' data(cjs)
 #'
 #' # create two subsets from cjs: one as mcmc.list and one as matrix
 #' # also works if both are mcmc.list objects
