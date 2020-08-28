@@ -21,14 +21,14 @@ This vignette illustrates how this can be acheived using 'postpack'.
 > In future versions of 'postpack', more functionality may be added in this regard.
 
 The most significant trick to use is to store multiple `mcmc.list` objects as elements of a larger `list` object.
-Suppose you have two `mcmc.list` objects from two highly similar models, named `cjs` and `cjs_no_rho` (see `vignette("Example mcmc.lists", package = "postpack")` or `?cjs` for more details).
+Suppose you have two `mcmc.list` objects from two highly similar models, named `cjs` and `cjs_no_rho` (see `vignette("example-mcmclists")` or `?cjs` for more details).
 
 Load these objects into your session:
 
 ```{r, eval = FALSE}
 library(postpack)
-data(cjs, package = "postpack")
-data(cjs_no_rho, package = "postpack")
+data(cjs)
+data(cjs_no_rho)
 ```
 
 ```{r, echo = FALSE}

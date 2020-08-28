@@ -21,7 +21,7 @@
 #' @return A [`mcmc.list`][coda::mcmc.list] object, identical to `post`, but with fewer samples of each node.
 #' @examples
 #' # load example mcmc.list
-#' data(cjs, package = "postpack")
+#' data(cjs)
 #'
 #' # take note of original dimensions
 #' post_dim(cjs)

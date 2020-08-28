@@ -20,11 +20,11 @@ This vignette is intended to get you up and running using 'postpack' to process 
 
 If your samples are not already in an `mcmc.list` object, check out `?postpack::post_convert` to see how you may be able to reformat them.
 
-This vignette uses an example `mcmc.list` object called `cjs` to illustrate the main features of 'postpack', see `?cjs` or `vignette("Example mcmc.lists", package = "postpack")` for more details. To follow along, load it and 'postpack' into your session:
+This vignette uses an example `mcmc.list` object called `cjs` to illustrate the main features of 'postpack', see `?cjs` or `vignette("example-mcmclists")` for more details. To follow along, load it and 'postpack' into your session:
 
 ```{r, eval = FALSE}
 library(postpack)
-data(cjs, package = "postpack")
+data(cjs)
 ```
 
 ```{r, echo = FALSE}
@@ -77,7 +77,7 @@ post_summ(cjs, "b0")
 ```
 
 Several 'postpack' functions accept the `params` argument (always in the second argument if it is present) to specify queries from the `mcmc.list` passed to `post`, so learning to use it is key.
-More information on using regular expressions to extract particular nodes can be found in `vignette("Pattern Matching", package = "postpack")`. 
+More information on using regular expressions to extract particular nodes can be found in `vignette("pattern-matching")`. 
 
 Estimates of the uncertainty associated with MCMC sampling in the mean and quantiles can be obtained using the `mcse` argument (which calls `?mcmcse::mcse` and `?mcmcse::mcse.q`):
 

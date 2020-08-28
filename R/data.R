@@ -22,7 +22,7 @@
 #'   The principle research goal is to quantify whether survival during migration
 #'   is associated with fish size.
 #'
-#'   The object `cjs` (accessed via `data(cjs, package = "postpack"`)
+#'   The object `cjs` (accessed via `data(cjs)`)
 #'   stores heavily thinned posterior samples (to reduce file size) from the model below, fitted with JAGS.
 #'
 #'   ```

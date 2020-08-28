@@ -78,7 +78,7 @@ The \code{keep_percent} argument is intended to help with this by thinning the c
 \examples{
 if (interactive()) {
   #load example mcmc.list
-  data(cjs, package = "postpack")
+  data(cjs)
 
   # use current device
   diag_plots(cjs, "B0")

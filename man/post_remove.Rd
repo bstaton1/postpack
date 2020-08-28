@@ -32,7 +32,7 @@ Just like \code{\link[=post_subset]{post_subset()}}, but keep all nodes \strong{
 }
 \examples{
 # load example mcmc.list
-data(cjs, package = "postpack")
+data(cjs)
 
 # get names of all nodes
 get_params(cjs)

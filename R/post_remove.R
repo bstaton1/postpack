@@ -16,7 +16,7 @@
 #'   responds "no" to the question when `ask = TRUE`, `post` is returned unaltered.
 #' @examples
 #' # load example mcmc.list
-#' data(cjs, package = "postpack")
+#' data(cjs)
 #'
 #' # get names of all nodes
 #' get_params(cjs)

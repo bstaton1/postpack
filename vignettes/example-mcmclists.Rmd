@@ -15,8 +15,8 @@ knitr::opts_chunk$set(echo = TRUE, fig.align = "center")
 'postpack' ships with two example `mcmc.list` objects to allow self-contained examples and for users to practice using 'postpack'. The `mcmc.list` objects can be loaded using:
 
 ```{r, eval = FALSE}
-data(cjs, package = "postpack")
-data(cjs_no_rho, package = "postpack")
+data(cjs)
+data(cjs_no_rho)
 ```
 
 ```{r, echo = FALSE}

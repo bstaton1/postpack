@@ -8,7 +8,7 @@
 #' @return A character vector with all node names stored in the `post` object, formatted as requested by `type`.
 #' @examples
 #'  # load example mcmc.list
-#' data(cjs, package = "postpack")
+#' data(cjs)
 #'
 #' # get only node names, no indices (default)
 #' get_params(cjs, type = "base_only")

@@ -46,7 +46,7 @@ corresponding only to the node(s) requested.
 }
 \examples{
 # load example mcmc.list
-data(cjs, package = "postpack")
+data(cjs)
 
 # create mcmc.list with all nodes that contain "B0"
 x1 = post_subset(cjs, "B0")

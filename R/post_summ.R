@@ -36,7 +36,7 @@
 #' @importFrom stats quantile sd
 #' @examples
 #' # load example mcmc.list
-#' data(cjs, package = "postpack")
+#' data(cjs)
 #'
 #' # calculate posterior summaries for the "p" nodes
 #' # ("p[1]" doesn't exist in model)

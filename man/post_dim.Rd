@@ -38,7 +38,7 @@ and is solely for developing long-running post-processing code, so this is okay.
 }
 \examples{
 # load example mcmc.list
-data(cjs, package = "postpack")
+data(cjs)
 
 # get all relevant dimensions
 post_dim(cjs)
