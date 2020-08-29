@@ -1,5 +1,11 @@
 # *NEWS*
 
+# postpack 0.4.4 (2020-08-28)
+
+## Include `pkgdown` stuff
+
+* Not much more needs to be said here.
+
 # postpack 0.4.3 (2020-08-28)
 
 ## Improve vignettes and readme

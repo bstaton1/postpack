@@ -2,9 +2,9 @@
 
 'postpack' exists to facilitate processing the output of models fitted using Markov Chain Monte Carlo (MCMC) methods, as is commonly done in Bayesian inference. Although substantial capabilities exist to interface from R with programs that perform MCMC like JAGS, WinBUGS, OpenBUGS, NIMBLE, and Stan, the functionality to easily process the output is sometimes lacking. 
 
->In particular, it is often cumbersome to perform post-processing tasks for **particular nodes** from the model.
+>In particular, it is often cumbersome to perform post-processing tasks for **specific nodes** from the model.
 >
->'postpack' makes extracting particular nodes more transparent by accepting **regular expressions** and returning output in predictable and manipulable formats. 
+>'postpack' makes extracting specific nodes more transparent by accepting **regular expressions** and returning output in predictable and manipulable formats. 
 
 Common tasks encompassed by "post-processing" include:
 
@@ -35,4 +35,3 @@ Currently it is only available through GitHub (CRAN submission planned soon). It
 ```R
 remotes::install_github("bstaton1/postpack")
 ```
-
