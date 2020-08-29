@@ -21,10 +21,10 @@ Common tasks encompassed by "post-processing" include:
 
 > Want to learn more?
 
-* Have a look at `vignette("feature-overview")` to see whether 'postpack' can help clean up your post-MCMC workflow. 
-* An overview of how to make the most of regular expressions in this context can be found in `vignette("pattern-matching")`.  
-* As a more advanced topic, `vignette("multiple-models")` illustrates how the transparent and short syntax of 'postpack' can be scaled to compare inferences from multiple models that share similar structures.
-* For more details on the example `mcmc.list` objects used in the examples and vignettes, take a look at `vignette("example-mcmclists")`.
+* Have a look at the [feature overview](https://bstaton1.github.io/postpack/articles/feature-overview.html) vignette to see whether 'postpack' can help clean up your post-MCMC workflow. 
+* An overview of how to make the most of regular expressions in this context can be found in the [pattern matching](https://bstaton1.github.io/postpack/articles/pattern-matching.html) vignette.  
+* As a more advanced topic, the vignette about working with [multiple models](https://bstaton1.github.io/postpack/articles/multiple-models.html) illustrates how the transparent and short syntax of 'postpack' can be scaled to compare inferences between similar models.
+* For more details on the example `mcmc.list` objects used in the examples and vignettes, take a look at [that vignette](https://bstaton1.github.io/postpack/articles/example-mcmclists.html).
 
 ## Installation
 
