@@ -157,7 +157,7 @@ get_params(cjs)
 cjs2 = post_remove(cjs, "SIG", ask = FALSE)
 
 # did it work?
-get_params(cjs)
+get_params(cjs2)
 ```
 
 # Matrix/Array Nodes
