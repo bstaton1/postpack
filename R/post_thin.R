@@ -3,11 +3,9 @@
 #'   object at quasi-evenly spaced intervals. Post-MCMC thinning is useful for
 #'   developing long-running post-processing code with a smaller but otherwise identical [`mcmc.list`][coda::mcmc.list].
 #' @param post A [`mcmc.list`][coda::mcmc.list] object.
-#' @param keep_percent A numeric vector with length == 1 and on the interval
-#'   (0,1]: what fraction of the samples do you wish to retain from each
-#'   chain? Setting `keep_percent = 0.2` will remove approximately 80 percent of the samples.
-#' @param keep_iters A numeric vector of length == 1 representing how many samples from each
-#'   chain to retain.
+#' @param keep_percent Proportion (between 0 and 1) of samples to keep from each chain.
+#'   Setting `keep_percent = 0.2` will remove approximately 80 percent of the samples.
+#' @param keep_iters Number of samples to keep from each chain.
 #' @details The samples will be removed at as evenly spaced intervals
 #'   as possible, however, this is not perfect. It is therefore recommended
 #'   to use the full posterior for final post-processing calculations, but this should be fine for

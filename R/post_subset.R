@@ -5,12 +5,9 @@
 #' @param params A vector of regular expressions specifying the nodes to match for subsetting.
 #'   Accepts multi-element vectors to match more than one node at a time.
 #'   See [match_params()] and `vignette("pattern-matching")` for more details.
-#' @param matrix Logical. If `TRUE`, the output will be returned as a [`matrix`][base::matrix].
-#'   Defaults to `FALSE`, in which case the [`mcmc.list`][coda::mcmc.list] class will be retained.
-#' @param iters Logical. Do you wish to retain the iteration number of each sample if `matrix = TRUE`? Not used otherwise.
-#'   Defaults to `FALSE`.
-#' @param chains Logical. Do you wish to retain the chain number of each sample if `matrix = TRUE`? Not used otherwise.
-#'   Defaults to `FALSE`.
+#' @param matrix Return samples in [`matrix`][base::matrix] rather than [`mcmc.list`][coda::mcmc.list] format?
+#' @param iters Retain the iteration number of each sample if `matrix = TRUE`? Not used otherwise.
+#' @param chains Retain the chain number of each sample if `matrix = TRUE`? Not used otherwise.
 #' @param auto_escape Automatically escape `"["` and `"]"` characters for pattern matching?
 #'   See [match_params()] for details.
 #' @return A [`mcmc.list`][coda::mcmc.list] or [`matrix`][base::matrix] object, depending on the

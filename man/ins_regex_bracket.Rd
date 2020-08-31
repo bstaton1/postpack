@@ -7,7 +7,7 @@
 ins_regex_bracket(params)
 }
 \arguments{
-\item{params}{A character vector with length >= 1.}
+\item{params}{Node names.}
 }
 \value{
 A character vector with all brackets escaped. For example,
@@ -22,5 +22,5 @@ square bracket or two, and inserts the necessary escapes for pattern matching
 via regular expressions.
 }
 \note{
-This is NOT a function users will generally use directly.
+This is \strong{not} a function users will generally use directly.
 }

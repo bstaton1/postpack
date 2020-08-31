@@ -6,8 +6,7 @@
 #'   of MCMC sampling would be lost.
 #' @param post1 A [`mcmc.list`][coda::mcmc.list] or [`matrix`][base::matrix] object.
 #' @param post2 A [`mcmc.list`][coda::mcmc.list] or [`matrix`][base::matrix] object.
-#' @param dup_id A character vector of length == 1. If any
-#'   node names are duplicated in `post2`, what should be appended to the
+#' @param dup_id If any node names are duplicated in `post2`, what should be appended to the
 #'   end of these node names in the output? If this occurs a warning will be returned.
 #'   Defaults to `"_p2"`
 #' @details Some important things to note:

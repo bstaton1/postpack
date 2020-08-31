@@ -13,7 +13,7 @@ match_params(post, params, type = "base_index", auto_escape = TRUE)
 Accepts multi-element vectors to match more than one node at a time.
 See examples and \code{vignette("pattern-matching")} for more details.}
 
-\item{type}{A character vector with length == 1; only two options are accepted:
+\item{type}{Format of returned matches; only two options are accepted:
 \itemize{
 \item \code{type = "base_only"} to return only the unique node names (without indices).
 \item \code{type = "base_index"} (the default) to return the node names with indices included.
@@ -48,6 +48,9 @@ data(cjs)
 # these produce same output b/c of regex pattern matching
 match_params(cjs, params = c("b0", "b1"))
 match_params(cjs, params = c("b"))
+
+# return only base names, not indices as well
+match_params(cjs, params = "b", type = "base_only")
 
 # force a match to start with B
 match_params(cjs, "^B")

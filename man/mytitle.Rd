@@ -7,8 +7,7 @@
 mytitle(text)
 }
 \arguments{
-\item{text}{A character vector length == 1. The text string to
-include as a title.}
+\item{text}{The text string to include as a centered title over two adjacent plots.}
 }
 \description{
 Used by \code{\link[=diag_plots]{diag_plots()}} to place a common

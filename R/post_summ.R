@@ -5,30 +5,26 @@
 #' @param params A vector of regular expressions specifying the nodes to match for summarization.
 #'   Accepts multi-element vectors to match more than one node at a time.
 #'   See [match_params()] and `vignette("pattern-matching")` for more details.
-#' @param probs A numeric vector specifying the posterior quantiles you wish to have summarized.
-#'   Passed to [stats::quantile()].
+#' @param probs Posterior quantiles to calculate. Passed to [stats::quantile()].
 #'   Defaults to `probs = c(0.5, 0.025, 0.975)` (i.e., median and equal-tailed 95 percent credible interval).
-#' @param digits A numeric vector with length == 1 controlling rounding of summaries.
+#' @param digits Control rounding of summaries.
 #'   Passed to [base::round()] and defaults to `NULL`, which produces no rounding.
-#' @param Rhat Logical. Do you wish to calculate the
-#'   Rhat convergence diagnostic using [coda::gelman.diag()]?
+#' @param Rhat Calculate the Rhat convergence diagnostic using [coda::gelman.diag()]?
 #'   Fair warning: this can take a bit of time to run on many nodes/samples.
-#' @param neff Logical. Do you wish to calculate the number of effective MCMC samples
-#'   using [coda::effectiveSize()]?
+#' @param neff Calculate the number of effective MCMC samples using [coda::effectiveSize()]?
 #'   Fair warning: this can take a bit of time to run on many nodes/samples.
-#' @param mcse Logical. Do you wish to calculate the
-#'   Monte Carlo standard error for the posterior mean and reported quantiles
+#' @param mcse Calculate the Monte Carlo standard error for the posterior mean and reported quantiles
 #'   using the [mcmcse::mcse()] and [mcmcse::mcse.q()] functions
 #'   (batch means method with batch size automatically calculated)?
 #'   Fair warning: this can take a bit of time to run on many nodes/samples.
-#' @param by_chain Logical. Do you wish to calculate posterior summaries for each chain
+#' @param by_chain Calculate posterior summaries for each chain
 #'   rather than for the aggregate across chains? Defaults to `FALSE`.
 #'   The arguments `Rhat`, `neff`, and `mcse` are ignored if `by_chain = TRUE`
 #'   and a warning will be returned.
 #' @param auto_escape Automatically escape `"["` and `"]"` characters for pattern matching?
 #'   See [match_params()] for details.
 #' @return A [`matrix`][base::matrix] object with summary statistics as rows and nodes as columns.
-#'   If `by_chain = TRUE`, an [`array`][base::array] is returned instead.
+#'   If `by_chain = TRUE`, an [`array`][base::array] with chain-specific summaries as the third dimension is returned instead.
 #' @seealso [match_params()], [coda::gelman.diag()], [coda::effectiveSize()], [mcmcse::mcse()], [mcmcse::mcse.q()]
 #' @importFrom stats quantile sd
 #' @examples

@@ -11,8 +11,7 @@ post_bind(post1, post2, dup_id = "_p2")
 
 \item{post2}{A \code{\link[coda:mcmc.list]{mcmc.list}} or \code{\link[base:matrix]{matrix}} object.}
 
-\item{dup_id}{A character vector of length == 1. If any
-node names are duplicated in \code{post2}, what should be appended to the
+\item{dup_id}{If any node names are duplicated in \code{post2}, what should be appended to the
 end of these node names in the output? If this occurs a warning will be returned.
 Defaults to \code{"_p2"}}
 }

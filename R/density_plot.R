@@ -3,11 +3,12 @@
 #' @param post A [`mcmc.list`][coda::mcmc.list] object.
 #' @param param A regular expression that matches a single element in the model.
 #'   E.g., `"b0[1]"`, not `"b0"`. See [match_params()].
-#' @param show_diags A character vector of length == 1. Must be one of
+#' @param show_diags Control when to display numerical diagnostic summaries on plots. Must be one of
 #'   `"always"`, `"never"`, or `"if_poor_Rhat"`. `"if_poor_Rhat"` (the default)
 #'   will display the Rhat and effective MCMC samples if the Rhat statistic
 #'   is greater than 1.1.
 #' @return A figure showing the posterior density, separated by chain.
+#' @note This is **not** a function users will generally use directly. Call [diag_plots()] instead.
 
 density_plot = function(post, param, show_diags = "if_poor_Rhat") {
   # return error if param has length > 1

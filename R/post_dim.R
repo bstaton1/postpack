@@ -2,7 +2,7 @@
 #' @description Quickly query the number of burn-in samples, post-burnin, thinning,
 #'   number of chains, etc. from a [`mcmc.list`][coda::mcmc.list] object.
 #' @param post A [`mcmc.list`][coda::mcmc.list] object.
-#' @param types A character vector with length >= 1 and containing some of `"burn"`, `"post_burn"`,
+#' @param types The dimension types to return. Must contain some of `"burn"`, `"post_burn"`,
 #'   `"thin"`, `"chains"`, `"nodes"`. Defaults to `NULL`, in which case all of these are returned.
 #' @return A numeric vector with named elements, which may contain:
 #'   * `burn`: The burn-in period + adapting phase (per chain).

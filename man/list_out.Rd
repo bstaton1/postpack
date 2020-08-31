@@ -9,20 +9,19 @@ list_out(x, final = NULL, per_line = 1e+06, wrap = NULL, indent = NULL)
 \arguments{
 \item{x}{A vector, will be coerced to a character.}
 
-\item{final}{A character vector of length == 1; word that will separate the final element in the list from others.
+\item{final}{Word that will separate the final element in the list from others.
 See the examples.}
 
-\item{per_line}{A numeric vector of length == 1; number of elements printed per line. See the examples.}
+\item{per_line}{Number of elements printed per line. See the examples.}
 
-\item{wrap}{A character vector of length == 1; optional character to wrap around each element,
-e.g., quotation marks.}
+\item{wrap}{Optional character to wrap around each element, e.g., quotation marks.}
 
-\item{indent}{A character vector of length == 1; anything you wish to place in front of the first
+\item{indent}{Optional string to place in front of the first
 element on each line. See the examples.}
 }
 \value{
-A character vector of length == 1; ready to be passed to
-\code{\link[base:stop]{base::stop()}}, \code{\link[base:warning]{base::warning()}}, or \code{\link[base:cat]{base::cat()}}, for example.
+A character vector with length == 1; ready to be passed to
+\code{\link[base:stop]{base::stop()}}, \code{\link[base:warning]{base::warning()}}, or \code{\link[base:cat]{base::cat()}}, to provide a useful message.
 }
 \description{
 Converts a vector into a comma-separated list for use in sentences (error messages, warnings, etc.).

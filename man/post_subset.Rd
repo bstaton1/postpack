@@ -20,14 +20,11 @@ post_subset(
 Accepts multi-element vectors to match more than one node at a time.
 See \code{\link[=match_params]{match_params()}} and \code{vignette("pattern-matching")} for more details.}
 
-\item{matrix}{Logical. If \code{TRUE}, the output will be returned as a \code{\link[base:matrix]{matrix}}.
-Defaults to \code{FALSE}, in which case the \code{\link[coda:mcmc.list]{mcmc.list}} class will be retained.}
+\item{matrix}{Return samples in \code{\link[base:matrix]{matrix}} rather than \code{\link[coda:mcmc.list]{mcmc.list}} format?}
 
-\item{iters}{Logical. Do you wish to retain the iteration number of each sample if \code{matrix = TRUE}? Not used otherwise.
-Defaults to \code{FALSE}.}
+\item{iters}{Retain the iteration number of each sample if \code{matrix = TRUE}? Not used otherwise.}
 
-\item{chains}{Logical. Do you wish to retain the chain number of each sample if \code{matrix = TRUE}? Not used otherwise.
-Defaults to \code{FALSE}.}
+\item{chains}{Retain the chain number of each sample if \code{matrix = TRUE}? Not used otherwise.}
 
 \item{auto_escape}{Automatically escape \code{"["} and \code{"]"} characters for pattern matching?
 See \code{\link[=match_params]{match_params()}} for details.}

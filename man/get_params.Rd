@@ -9,7 +9,7 @@ get_params(post, type = "base_only")
 \arguments{
 \item{post}{A \code{\link[coda:mcmc.list]{mcmc.list}} object.}
 
-\item{type}{A character vector with length == 1; only two options are accepted:
+\item{type}{Format of returned matches; only two options are accepted:
 \itemize{
 \item \code{type = "base_only"} (the default) to return only the unique node names (without indices).
 \item \code{type = "base_index"} to return the node names with indices included.

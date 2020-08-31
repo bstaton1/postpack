@@ -2,7 +2,7 @@
 #' @description Returns the names of all quantities stored in
 #'   a [`mcmc.list`][coda::mcmc.list] object.
 #' @param post A [`mcmc.list`][coda::mcmc.list] object.
-#' @param type A character vector with length == 1; only two options are accepted:
+#' @param type Format of returned matches; only two options are accepted:
 #'   * `type = "base_only"` (the default) to return only the unique node names (without indices).
 #'   * `type = "base_index"` to return the node names with indices included.
 #' @return A character vector with all node names stored in the `post` object, formatted as requested by `type`.

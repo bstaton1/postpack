@@ -7,7 +7,7 @@
 rm_regex_bracket(params)
 }
 \arguments{
-\item{params}{A character vector with length >= 1.}
+\item{params}{Node names.}
 }
 \value{
 A character vector with all brackets escaped. For example,

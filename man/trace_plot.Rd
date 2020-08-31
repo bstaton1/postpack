@@ -21,4 +21,5 @@ Create a trace plot for a single desired node
 \note{
 If saving as a pdf file, these files can get very large with many samples and render slowly.
 The \code{keep_percent} argument is intended to help with this by thinning the chains at quasi-evenly spaced intervals.
+This is \strong{not} a function users will generally use directly. Call \code{\link[=diag_plots]{diag_plots()}} instead.
 }

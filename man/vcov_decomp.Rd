@@ -17,19 +17,17 @@ vcov_decomp(
 \arguments{
 \item{post}{A \code{\link[coda:mcmc.list]{mcmc.list}} object.}
 
-\item{sigma_base_name}{A character vector with length == 1. What should the base node name be
-for the standard deviation vector component? Defaults to \code{"sigma"}, which becomes \code{"sigma[1]"}, \code{"sigma[2]"},
-etc. in the output.}
+\item{sigma_base_name}{Base node name to assign to the standard deviation vector component?
+Defaults to \code{"sigma"}, which becomes \code{"sigma[1]"}, \code{"sigma[2]"}, etc. in the output.}
 
 \item{rho_base_name}{Same as \code{sigma_base_name}, but for the correlation matrix component.}
 
-\item{invert}{Logical. Do you wish to take the inverse of the matrix node matched by \code{param}
+\item{invert}{Take the inverse of the matrix node matched by \code{param}
 prior to performing the calculations? This would be necessary if the matrix node was expressed as
-a precision matrix as used in the BUGS language. Triggers a call to \code{\link[base:solve]{base::solve()}}.
-Defaults to \code{FALSE}.}
+a precision matrix as used in the BUGS language. Triggers a call to \code{\link[base:solve]{base::solve()}}.}
 
-\item{check}{Logical. Do you wish to perform checks sequentially that the matrix node is (a) square, (b) symmetrical, and (c) positive definite
-before proceeding with the calculations? Defaults to \code{TRUE}. If set to \code{FALSE}, unexpected output may be returned or
+\item{check}{Perform checks sequentially that the matrix node is (a) square, (b) symmetrical, and (c) positive definite
+before proceeding with the calculations? If set to \code{FALSE}, unexpected output may be returned or
 other errors related to items a, b, and c may be triggered - this is not advised, though may be required
 if wishing to set \code{invert = TRUE}.}
 

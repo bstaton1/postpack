@@ -7,8 +7,7 @@
 rm_regex_lock(params)
 }
 \arguments{
-\item{params}{A character vector with length >= 1 to remove a \code{^} and \code{$} from
-(if present).}
+\item{params}{Node names to remove a \code{^} and \code{$} from (if present).}
 }
 \value{
 A character vector with locking anchors inserted to force an exact match. For example,

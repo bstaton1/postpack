@@ -5,7 +5,7 @@
 #' @param params A vector of regular expressions specifying the nodes to match.
 #'   Accepts multi-element vectors to match more than one node at a time.
 #'   See examples and `vignette("pattern-matching")` for more details.
-#' @param type A character vector with length == 1; only two options are accepted:
+#' @param type Format of returned matches; only two options are accepted:
 #'   * `type = "base_only"` to return only the unique node names (without indices).
 #'   * `type = "base_index"` (the default) to return the node names with indices included.
 #' @param auto_escape Automatically escape `"["` and `"]"` characters for pattern matching?
@@ -28,6 +28,9 @@
 #' # these produce same output b/c of regex pattern matching
 #' match_params(cjs, params = c("b0", "b1"))
 #' match_params(cjs, params = c("b"))
+#'
+#' # return only base names, not indices as well
+#' match_params(cjs, params = "b", type = "base_only")
 #'
 #' # force a match to start with B
 #' match_params(cjs, "^B")

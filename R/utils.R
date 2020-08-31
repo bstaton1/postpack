@@ -1,9 +1,9 @@
 #' @title Insert escapes on regex brackets
-#' @param params A character vector with length >= 1.
+#' @param params Node names.
 #' @details Searches the contents of a string for the occurrence of a
 #'  square bracket or two, and inserts the necessary escapes for pattern matching
 #'  via regular expressions.
-#' @note This is NOT a function users will generally use directly.
+#' @note This is **not** a function users will generally use directly.
 #' @return A character vector with all brackets escaped. For example,
 #'   `"a[1]"` becomes `"a\\[1\\]"`
 
@@ -14,7 +14,7 @@ ins_regex_bracket = function(params) {
 }
 
 #' @title Remove escapes on regex brackets
-#' @param params A character vector with length >= 1.
+#' @param params Node names.
 #' @details Searches the contents of a string for the occurrence of a
 #'  square bracket or two (that has been escaped), and removes the escaping
 #'  that was necessary for matching via regular expressions.
@@ -31,8 +31,7 @@ rm_regex_bracket = function(params) {
 #' @title Insert the symbols to lock in a string for matching
 #' @description To ensure that a regular expression will match exactly,
 #'   it's necessary to specify so.
-#' @param params A character vector with length >= 1 to paste a `^` and `$`
-#'   (if not already present) to lock in the match.
+#' @param params Node names to paste a `^` and `$` (if not already present) to lock in the match.
 #' @note This is **not** a function users will generally use directly.
 #' @return A character vector with locking anchors inserted to force an exact match. For example,
 #'   `"a\\[1\\]"` becomes `"^a\\[1\\]$"`.
@@ -45,8 +44,7 @@ ins_regex_lock = function(params) {
 
 #' @title Remove the symbols that lock in a string for matching
 #' @description Undoes the work of [ins_regex_lock()].
-#' @param params A character vector with length >= 1 to remove a `^` and `$` from
-#'   (if present).
+#' @param params Node names to remove a `^` and `$` from (if present).
 #' @note This is **not** a function users will generally use directly.
 #' @return A character vector with locking anchors inserted to force an exact match. For example,
 #'   `"^a\\[1\\]$"` becomes `"a\\[1\\]"`.
@@ -60,7 +58,7 @@ rm_regex_lock = function(params) {
 #' @title Extract the base node name of a parameter
 #' @description Removes square brackets, numbers, and commas that represent
 #'   the index of the node element in question. Returns just the node name.
-#' @param params A character vector with length >= 1 containing node names.
+#' @param params Node names.
 #' @note This is **not** a function users will generally use directly.
 #' @return A character vector with the same length as `params`, with no indices included.
 #'   For example, `"a[1]"` becomes `"a"`.
@@ -77,8 +75,7 @@ drop_index = function(params) {
 #' @description Used by [diag_plots()] to place a common
 #'   title over top of two figures: one density and one trace
 #'   for a given node.
-#' @param text A character vector length == 1. The text string to
-#'   include as a title.
+#' @param text The text string to include as a centered title over two adjacent plots.
 #' @note This is **not** a function users will generally use directly.
 
 mytitle = function(text) {
@@ -105,15 +102,14 @@ id_mat = function(post) {
 #' @title List vector elements in a nice format
 #' @description Converts a vector into a comma-separated list for use in sentences (error messages, warnings, etc.).
 #' @param x A vector, will be coerced to a character.
-#' @param final A character vector of length == 1; word that will separate the final element in the list from others.
+#' @param final Word that will separate the final element in the list from others.
 #'   See the examples.
-#' @param per_line A numeric vector of length == 1; number of elements printed per line. See the examples.
-#' @param wrap A character vector of length == 1; optional character to wrap around each element,
-#'   e.g., quotation marks.
-#' @param indent A character vector of length == 1; anything you wish to place in front of the first
+#' @param per_line Number of elements printed per line. See the examples.
+#' @param wrap Optional character to wrap around each element, e.g., quotation marks.
+#' @param indent Optional string to place in front of the first
 #'   element on each line. See the examples.
-#' @return A character vector of length == 1; ready to be passed to
-#'   [base::stop()], [base::warning()], or [base::cat()], for example.
+#' @return A character vector with length == 1; ready to be passed to
+#'   [base::stop()], [base::warning()], or [base::cat()], to provide a useful message.
 #' @examples
 #' postpack:::list_out(x = letters[1:10])
 #' cat(postpack:::list_out(letters[1:26], wrap = "'", per_line = 4, final = "or", indent = "  "))

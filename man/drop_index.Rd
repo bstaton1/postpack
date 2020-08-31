@@ -7,7 +7,7 @@
 drop_index(params)
 }
 \arguments{
-\item{params}{A character vector with length >= 1 containing node names.}
+\item{params}{Node names.}
 }
 \value{
 A character vector with the same length as \code{params}, with no indices included.

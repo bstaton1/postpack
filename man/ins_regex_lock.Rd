@@ -7,8 +7,7 @@
 ins_regex_lock(params)
 }
 \arguments{
-\item{params}{A character vector with length >= 1 to paste a \code{^} and \code{$}
-(if not already present) to lock in the match.}
+\item{params}{Node names to paste a \code{^} and \code{$} (if not already present) to lock in the match.}
 }
 \value{
 A character vector with locking anchors inserted to force an exact match. For example,

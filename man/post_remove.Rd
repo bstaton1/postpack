@@ -13,8 +13,7 @@ post_remove(post, params, ask = TRUE, auto_escape = TRUE)
 Accepts multi-element vectors to match more than one node at a time.
 See \code{\link[=match_params]{match_params()}} and \code{vignette("pattern-matching")} for more details.}
 
-\item{ask}{Logical. Do you wish to be prompted prior to removing nodes?
-Defaults to \code{TRUE}.}
+\item{ask}{Prompt user for a response prior to removing nodes?}
 
 \item{auto_escape}{Automatically escape \code{"["} and \code{"]"} characters?
 See \code{\link[=match_params]{match_params()}} for details.}

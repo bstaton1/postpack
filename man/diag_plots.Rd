@@ -24,34 +24,33 @@ diag_plots(
 Accepts multi-element vectors to match more than one node at a time.
 See \code{\link[=match_params]{match_params()}} and \code{vignette("pattern-matching")} for more details.}
 
-\item{ext_device}{Logical. Do you wish to have an external device open to display the diagnostics?
+\item{ext_device}{Display plots in an external device rather than the active device?
 \code{FALSE} (the default) will plot in the active device (including RStudio window).
 \code{TRUE} will create a new graphics device.}
 
-\item{show_diags}{A character vector of length == 1. Must be one of
+\item{show_diags}{Control when to display numerical diagnostic summaries on plots. Must be one of
 \code{"always"}, \code{"never"}, or \code{"if_poor_Rhat"}. \code{"if_poor_Rhat"} (the default)
 will display the Rhat and effective MCMC samples if the Rhat statistic
 is greater than 1.1.}
 
-\item{layout}{A character vector with length == 1 specifying \code{"ROWSxCOLUMNS"} of parameter diagnostics.
-For example, \code{"4x1"} has 4 rows and 1 column of parameter diagnostics.
+\item{layout}{Control how parameter diagnostics are organized into \code{"ROWSxCOLUMNS"}.
+For example, \code{layout = "4x1"} has 4 rows and 1 column of parameter diagnostics.
 Defaults to \code{"auto"}, which selects between the only accepted options of
 \code{"1x1"}, \code{"2x1"}, \code{"4x1"}, \code{"4x2"}, and \code{"5x3"}.}
 
-\item{dims}{A character vector with length == 1 specifying the \code{"HEIGHTxWIDTH"} dimensions
-of the plotting device, in inches.
+\item{dims}{Control the dimensions of the graphics device using \code{"HEIGHTxWIDTH"} in inches.
 For example, \code{"5x7"} would create a 5 inch tall and 7 inch wide plotting device.
 Defaults to \code{"auto"}, which selects the dimensions that look nice when \code{layout = "auto"}
 as well.}
 
-\item{keep_percent}{A numeric vector of length == 1 and scaled between 0 and 1.
-Percent of samples you'd like to keep for trace plotting and passed to \code{\link[=post_thin]{post_thin()}}.}
+\item{keep_percent}{Proportion (between 0 and 1) of samples to keep for trace plotting.
+Passed to \code{\link[=post_thin]{post_thin()}}.}
 
-\item{save}{Logical. Do you wish to save the diagnostic plots in a PDF file? If so,
+\item{save}{Save the diagnostic plots in a PDF file? If so,
 specify \code{file = "example.pdf"} as well. Defaults to \code{FALSE}.}
 
-\item{file}{Character vector of length == 1. The file name, which
-must include the \code{".pdf"} extension. Saved to working directory by default,
+\item{file}{File name of a PDF file to save the plots to.
+Must include the \code{".pdf"} extension. Saved to working directory by default,
 but can receive an absolute or relative file path as part of this argument.}
 
 \item{auto_escape}{Automatically escape \code{"["} and \code{"]"} characters for pattern matching?

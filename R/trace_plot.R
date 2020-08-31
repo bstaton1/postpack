@@ -6,6 +6,7 @@
 #'   Percent of samples you'd like to keep for trace plotting and passed to [post_thin()].
 #' @note If saving as a pdf file, these files can get very large with many samples and render slowly.
 #'   The `keep_percent` argument is intended to help with this by thinning the chains at quasi-evenly spaced intervals.
+#'   This is **not** a function users will generally use directly. Call [diag_plots()] instead.
 
 trace_plot = function(post, param, keep_percent = 0) {
 

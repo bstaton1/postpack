@@ -9,7 +9,7 @@ post_dim(post, types = NULL)
 \arguments{
 \item{post}{A \code{\link[coda:mcmc.list]{mcmc.list}} object.}
 
-\item{types}{A character vector with length >= 1 and containing some of \code{"burn"}, \code{"post_burn"},
+\item{types}{The dimension types to return. Must contain some of \code{"burn"}, \code{"post_burn"},
 \code{"thin"}, \code{"chains"}, \code{"nodes"}. Defaults to \code{NULL}, in which case all of these are returned.}
 }
 \value{

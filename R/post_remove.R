@@ -4,8 +4,7 @@
 #' @param params A vector of regular expressions specifying the nodes to match for removal.
 #'   Accepts multi-element vectors to match more than one node at a time.
 #'   See [match_params()] and `vignette("pattern-matching")` for more details.
-#' @param ask Logical. Do you wish to be prompted prior to removing nodes?
-#'   Defaults to `TRUE`.
+#' @param ask Prompt user for a response prior to removing nodes?
 #' @param auto_escape Automatically escape `"["` and `"]"` characters?
 #'   See [match_params()] for details.
 #' @return A [`mcmc.list`][coda::mcmc.list], identical in all ways to the original

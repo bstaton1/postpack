@@ -5,16 +5,14 @@
 #' @param params A vector of regular expressions specifying the nodes to match for plotting.
 #'   Must match only one base node name in `post`, and that node must store samples from a matrix within the model.
 #'   See [match_params()] and `vignette("pattern-matching")` for more details.
-#' @param sigma_base_name A character vector with length == 1. What should the base node name be
-#'   for the standard deviation vector component? Defaults to `"sigma"`, which becomes `"sigma[1]"`, `"sigma[2]"`,
-#'   etc. in the output.
+#' @param sigma_base_name Base node name to assign to the standard deviation vector component?
+#'   Defaults to `"sigma"`, which becomes `"sigma[1]"`, `"sigma[2]"`, etc. in the output.
 #' @param rho_base_name Same as `sigma_base_name`, but for the correlation matrix component.
-#' @param invert Logical. Do you wish to take the inverse of the matrix node matched by `param`
+#' @param invert Take the inverse of the matrix node matched by `param`
 #'   prior to performing the calculations? This would be necessary if the matrix node was expressed as
 #'   a precision matrix as used in the BUGS language. Triggers a call to [base::solve()].
-#'   Defaults to `FALSE`.
-#' @param check Logical. Do you wish to perform checks sequentially that the matrix node is (a) square, (b) symmetrical, and (c) positive definite
-#'   before proceeding with the calculations? Defaults to `TRUE`. If set to `FALSE`, unexpected output may be returned or
+#' @param check Perform checks sequentially that the matrix node is (a) square, (b) symmetrical, and (c) positive definite
+#'   before proceeding with the calculations? If set to `FALSE`, unexpected output may be returned or
 #'   other errors related to items a, b, and c may be triggered - this is not advised, though may be required
 #'   if wishing to set `invert = TRUE`.
 #' @param auto_escape Automatically escape `"["` and `"]"` characters for pattern matching?

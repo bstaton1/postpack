@@ -9,12 +9,10 @@ post_thin(post, keep_percent, keep_iters)
 \arguments{
 \item{post}{A \code{\link[coda:mcmc.list]{mcmc.list}} object.}
 
-\item{keep_percent}{A numeric vector with length == 1 and on the interval
-(0,1]: what fraction of the samples do you wish to retain from each
-chain? Setting \code{keep_percent = 0.2} will remove approximately 80 percent of the samples.}
+\item{keep_percent}{Proportion (between 0 and 1) of samples to keep from each chain.
+Setting \code{keep_percent = 0.2} will remove approximately 80 percent of the samples.}
 
-\item{keep_iters}{A numeric vector of length == 1 representing how many samples from each
-chain to retain.}
+\item{keep_iters}{Number of samples to keep from each chain.}
 }
 \value{
 A \code{\link[coda:mcmc.list]{mcmc.list}} object, identical to \code{post}, but with fewer samples of each node.
