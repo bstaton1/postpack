@@ -26,7 +26,7 @@ Encoding: UTF-8
 LazyData: true
 RoxygenNote: 7.1.1
 Roxygen: list(markdown = TRUE)
-URL: https://github.com/bstaton1/postpack
+URL: https://bstaton1.github.io/postpack/
 BugReports: https://github.com/bstaton1/postpack/issues
 Suggests: 
     knitr,
