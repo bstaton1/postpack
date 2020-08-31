@@ -1,5 +1,11 @@
 # *NEWS*
 
+# postpack 0.5.0 (2020-08-31)
+
+## Version submitted to CRAN
+
+* First submission to CRAN.
+
 # postpack 0.4.4 (2020-08-28)
 
 ## Include `pkgdown` stuff

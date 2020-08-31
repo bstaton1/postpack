@@ -1,6 +1,6 @@
 Package: postpack
 Title: Utilities for Processing Posterior Samples Stored in mcmc.lists
-Version: 0.4.4
+Version: 0.5.0
 Authors@R: person("Ben", "Staton", email = "statonbe@gmail.com", role = c("aut", "cre"), comment = c(ORCID = "0000-0002-2342-3482"))
 Description: The aim of 'postpack' is to provide the infrastructure for a standardized workflow for mcmc.list objects.
     These objects can be used to store output from models fitted with Bayesian inference using
