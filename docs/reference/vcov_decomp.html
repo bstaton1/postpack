@@ -73,7 +73,7 @@ of a monitored node representing a variance-covariance matrix." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">postpack</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.4.4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.0</span>
       </span>
     </div>
 
@@ -171,6 +171,12 @@ of a monitored node representing a variance-covariance matrix.</p>
       <td><p>A <code><a href='https://rdrr.io/pkg/coda/man/mcmc.list.html'>mcmc.list</a></code> object.</p></td>
     </tr>
     <tr>
+      <th>param</th>
+      <td><p>A vector of regular expressions specifying the nodes to match for plotting.
+Must match only one base node name in <code>post</code>, and that node must store samples from a matrix within the model.
+See <code><a href='match_params.html'>match_params()</a></code> and <code><a href='../articles/pattern-matching.html'>vignette("pattern-matching")</a></code> for more details.</p></td>
+    </tr>
+    <tr>
       <th>sigma_base_name</th>
       <td><p>Base node name to assign to the standard deviation vector component?
 Defaults to <code>"sigma"</code>, which becomes <code>"sigma[1]"</code>, <code>"sigma[2]"</code>, etc. in the output.</p></td>
@@ -196,12 +202,6 @@ if wishing to set <code>invert = TRUE</code>.</p></td>
       <th>auto_escape</th>
       <td><p>Automatically escape <code><a href='https://rdrr.io/r/base/Extract.html'>"["</a></code> and <code>"]"</code> characters for pattern matching?
 See <code><a href='match_params.html'>match_params()</a></code> for details.</p></td>
-    </tr>
-    <tr>
-      <th>params</th>
-      <td><p>A vector of regular expressions specifying the nodes to match for plotting.
-Must match only one base node name in <code>post</code>, and that node must store samples from a matrix within the model.
-See <code><a href='match_params.html'>match_params()</a></code> and <code><a href='../articles/pattern-matching.html'>vignette("pattern-matching")</a></code> for more details.</p></td>
     </tr>
     </table>
 
