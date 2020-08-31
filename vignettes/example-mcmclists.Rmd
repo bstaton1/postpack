@@ -34,7 +34,7 @@ Each of two chains was ran for 61,000 iterations -- 11,000 were adapting/burn-in
 
 # The Context
 
-Posterior samples were generated from a model fitted to an entirely hypothetical data set.
+Posterior samples were generated from a model fitted to a hypothetical (i.e., simulated) data set.
 Suppose for 5 years, biologists individually tagged juvenile salmon in the headwaters of a river system before the fish made their migration out to sea.
 The length of each fish was measured as well, and it is safe to assume tagged fish are a random sample from the larger population and that they were all released at the same time within a given year.
 
@@ -53,7 +53,7 @@ Known quantities necessary for fitting the model (see below) include:
 
 The model is a Cormack-Jolly-Seber survival model. It estimates survival and detection probabilities based on individually-identifiable tagged fish. Based on how often a fish is not seen at a location and then seen at a later location, it is possible to estimate detection probabilities. Then, based on how often a fish is never seen again, it is possible to estimate survival probabilities^[Readers interested in this kind of model are encouraged to refer to _Bayesian Population Analysis using WinBUGS: A Hierarchical Perspective_ by Marc Kéry and Michael Schuab.].
 
-This is a state-space formulation, where there are explicit random processes for both the true state of each fish (alive or dead) and the observed state of each fish (seen or not seen) in each event. Both are Bernoulli random variables, with `z` representing the true state and `y` representing the observed state. It is assumed that fish cannot be detected if they are dead. Survival probability between two consecutive detection events for fish `i` is denoted by `phi[i]` and for this model is expressed as a logit-linear function of fish size (`FL[i]`, scaled and centered prior to model fitting), with random slopes and intercepts for each year. Detection probability for this model is assumed to vary among detection arrays, but is constant across years.
+This is a state-space formulation, where there are explicit random processes for both the true state of each fish (alive or dead) and the observed state of each fish (detected or not detected) in each event. Both are Bernoulli random variables, with `z` representing the true state (0 = dead; 1 = alive) and `y` representing the observed state (0 = not detected; 1 = detected). It is assumed that fish cannot be detected if they are dead. Survival probability between two consecutive detection events for fish `i` is denoted by `phi[i]` and for this model is expressed as a logit-linear function of fish size (`FL[i]`, scaled and centered prior to model fitting), with random slopes and intercepts for each year. Detection probability for this model is assumed to vary among detection arrays, but is constant across years for a given array.
 
 Here is the JAGS code for this model:
 
@@ -103,9 +103,21 @@ model{
 }
 ```
 
-The `mcmc.list` object called `cjs` is from this model exactly, `cjs_no_rho` is from the same model, but with the `rho` parameter fixed at zero rather than estimating its value.
+**Parameter definitions**:
 
-The nodes that were monitored include: the global survival coefficients (`B0` and `B1`), their year-specific random realizations (`b0` and `b1`), the covariance matrix modeling the inter-annual covariability (`SIG`), and the detection probability of each array (`p`). See:
+* `B0`: intercept of logit-linear survival vs. length relationship: global mean across years
+* `B1`: slope of logit-linear survival v. length relationship: global mean across years
+* `b0[1:5]`: year-specific survival random intercepts
+* `b1[1:5]`: year-specific survival random slopes
+* `sig_B0`: standard deviation of year-specific intercepts
+* `sig_B1`: standard deviation of year-specific slopes
+* `rho`: correlation between random intercepts and slopes
+* `SIG[1:2,1:2]`: variance-covariance matrix modeling the covariance between random slopes and intercepts
+* `p[2:4]`: detection probability for each receiver array, assumed constant across years (note the first detection occasion is not modeled because that is the tagging event -- all fish were alive and detected)
+
+The `mcmc.list` object accessed via `data(cjs)` is from this model exactly, the one found in `data(cjs_no_rho)` is from the same model, but with the `rho` parameter fixed at zero rather than estimating its value.
+
+The nodes that were monitored include:
 
 ```{r}
 postpack::get_params(cjs, type = "base_index")
