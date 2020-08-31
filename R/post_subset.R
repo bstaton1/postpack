@@ -10,12 +10,8 @@
 #'   Defaults to `FALSE`.
 #' @param chains Logical. Do you wish to retain the chain number of each sample if `matrix = TRUE`? Not used otherwise.
 #'   Defaults to `FALSE`.
-#' @param auto_escape Logical. `FALSE` will treat `"["` and `"]"`
-#'   as special regular expression characters (unless explicitly escaped by user),
-#'   `TRUE` will treat these symbols as plain text to be matched.
-#'   It is generally recommended to keep this as `TRUE` (the default),
-#'   unless you are performing complex regex searches that require the
-#'   `"["` and `"]"` symbols to be special characters.
+#' @param auto_escape Automatically escape `"["` and `"]"` characters for pattern matching?
+#'   See [match_params()] for details.
 #' @return A [`mcmc.list`][coda::mcmc.list] or [`matrix`][base::matrix] object, depending on the
 #'   value of the `matrix` argument. Object contains all nodes that match the `params` argument;
 #'   an error will be returned if no matches are found.

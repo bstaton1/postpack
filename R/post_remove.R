@@ -5,12 +5,8 @@
 #'   Passed to [match_params()] so is matched using regular expressions.
 #' @param ask Logical. Do you wish to be prompted prior to removing nodes?
 #'   Defaults to `TRUE`.
-#' @param auto_escape Logical. `FALSE` will treat `"["` and `"]"`
-#'   as special regular expression characters (unless explicitly escaped by user),
-#'   `TRUE` will treat these symbols as plain text to be matched.
-#'   It is generally recommended to keep this as `TRUE` (the default),
-#'   unless you are performing complex regex searches that require the
-#'   `"["` and `"]"` symbols to be special characters.
+#' @param auto_escape Automatically escape `"["` and `"]"` characters?
+#'   See [match_params()] for details.
 #' @return A [`mcmc.list`][coda::mcmc.list], identical in all ways to the original
 #'   except that nodes matched by the `params` argument are removed. If the user
 #'   responds "no" to the question when `ask = TRUE`, `post` is returned unaltered.

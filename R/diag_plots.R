@@ -30,12 +30,8 @@
 #' @param file Character vector of length == 1. The file name, which
 #'   must include the `".pdf"` extension. Saved to working directory by default,
 #'   but can receive an absolute or relative file path as part of this argument.
-#' @param auto_escape Logical. `FALSE` will treat `"["` and `"]"`
-#'   as special regular expression characters (unless explicitly escaped by user),
-#'   `TRUE` will treat these symbols as plain text to be matched.
-#'   It is generally recommended to keep this as `TRUE` (the default),
-#'   unless you are performing complex regex searches that require the
-#'   `"["` and `"]"` symbols to be special characters.
+#' @param auto_escape Automatically escape `"["` and `"]"` characters for pattern matching?
+#'   See [match_params()] for details.
 #' @note If saving as a pdf, these files can get very large with many samples and render slowly.
 #'   The `keep_percent` argument is intended to help with this by thinning the chains at quasi-evenly spaced intervals.
 #' @seealso [match_params()], [density_plot()], [trace_plot()]

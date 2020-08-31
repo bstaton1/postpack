@@ -17,12 +17,8 @@
 #'   before proceeding with the calculations? Defaults to `TRUE`. If set to `FALSE`, unexpected output may be returned or
 #'   other errors related to items a, b, and c may be triggered - this is not advised, though may be required
 #'   if wishing to set `invert = TRUE`.
-#' @param auto_escape Logical. `FALSE` will treat `"["` and `"]"`
-#'   as special regular expression characters (unless explicitly escaped by user),
-#'   `TRUE` will treat these symbols as plain text to be matched.
-#'   It is generally recommended to keep this as `TRUE` (the default),
-#'   unless you are performing complex regex searches that require the
-#'   `"["` and `"]"` symbols to be special characters.
+#' @param auto_escape Automatically escape `"["` and `"]"` characters for pattern matching?
+#'   See [match_params()] for details.
 #' @return A [`mcmc.list`][coda::mcmc.list] object.
 #' @examples
 #' # load example mcmc.list

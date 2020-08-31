@@ -28,12 +28,8 @@ Defaults to \code{FALSE}.}
 \item{chains}{Logical. Do you wish to retain the chain number of each sample if \code{matrix = TRUE}? Not used otherwise.
 Defaults to \code{FALSE}.}
 
-\item{auto_escape}{Logical. \code{FALSE} will treat \code{"["} and \code{"]"}
-as special regular expression characters (unless explicitly escaped by user),
-\code{TRUE} will treat these symbols as plain text to be matched.
-It is generally recommended to keep this as \code{TRUE} (the default),
-unless you are performing complex regex searches that require the
-\code{"["} and \code{"]"} symbols to be special characters.}
+\item{auto_escape}{Automatically escape \code{"["} and \code{"]"} characters for pattern matching?
+See \code{\link[=match_params]{match_params()}} for details.}
 }
 \value{
 A \code{\link[coda:mcmc.list]{mcmc.list}} or \code{\link[base:matrix]{matrix}} object, depending on the

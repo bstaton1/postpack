@@ -7,8 +7,8 @@
 #' @param type A character vector with length == 1; only two options are accepted:
 #'   * `type = "base_only"` to return only the unique node names (without indices).
 #'   * `type = "base_index"` (the default) to return the node names with indices included.
-#' @param auto_escape Logical. `FALSE` will treat `"["` and `"]"`
-#'   as special regular expression characters (unless explicitly escaped by user),
+#' @param auto_escape Automatically escape `"["` and `"]"` characters for pattern matching?
+#'  `FALSE` will treat `"["` and `"]"` as special regular expression characters (unless explicitly escaped by user),
 #'   `TRUE` will treat these symbols as plain text to be matched.
 #'   It is generally recommended to keep this as `TRUE` (the default),
 #'   unless you are performing complex regex searches that require the

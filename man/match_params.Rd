@@ -18,8 +18,8 @@ Passed to \code{\link[stringr:str_detect]{stringr::str_detect()}} so is matched 
 \item \code{type = "base_index"} (the default) to return the node names with indices included.
 }}
 
-\item{auto_escape}{Logical. \code{FALSE} will treat \code{"["} and \code{"]"}
-as special regular expression characters (unless explicitly escaped by user),
+\item{auto_escape}{Automatically escape \code{"["} and \code{"]"} characters for pattern matching?
+\code{FALSE} will treat \code{"["} and \code{"]"} as special regular expression characters (unless explicitly escaped by user),
 \code{TRUE} will treat these symbols as plain text to be matched.
 It is generally recommended to keep this as \code{TRUE} (the default),
 unless you are performing complex regex searches that require the

@@ -15,12 +15,8 @@ Passed to \code{\link[=match_params]{match_params()}} so is matched using regula
 \item{ask}{Logical. Do you wish to be prompted prior to removing nodes?
 Defaults to \code{TRUE}.}
 
-\item{auto_escape}{Logical. \code{FALSE} will treat \code{"["} and \code{"]"}
-as special regular expression characters (unless explicitly escaped by user),
-\code{TRUE} will treat these symbols as plain text to be matched.
-It is generally recommended to keep this as \code{TRUE} (the default),
-unless you are performing complex regex searches that require the
-\code{"["} and \code{"]"} symbols to be special characters.}
+\item{auto_escape}{Automatically escape \code{"["} and \code{"]"} characters?
+See \code{\link[=match_params]{match_params()}} for details.}
 }
 \value{
 A \code{\link[coda:mcmc.list]{mcmc.list}}, identical in all ways to the original

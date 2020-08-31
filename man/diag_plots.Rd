@@ -53,12 +53,8 @@ specify \code{file = "example.pdf"} as well. Defaults to \code{FALSE}.}
 must include the \code{".pdf"} extension. Saved to working directory by default,
 but can receive an absolute or relative file path as part of this argument.}
 
-\item{auto_escape}{Logical. \code{FALSE} will treat \code{"["} and \code{"]"}
-as special regular expression characters (unless explicitly escaped by user),
-\code{TRUE} will treat these symbols as plain text to be matched.
-It is generally recommended to keep this as \code{TRUE} (the default),
-unless you are performing complex regex searches that require the
-\code{"["} and \code{"]"} symbols to be special characters.}
+\item{auto_escape}{Automatically escape \code{"["} and \code{"]"} characters for pattern matching?
+See \code{\link[=match_params]{match_params()}} for details.}
 }
 \value{
 A multi-panel figure showing the posterior density and trace plots for requested nodes.
