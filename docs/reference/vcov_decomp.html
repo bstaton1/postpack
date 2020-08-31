@@ -171,16 +171,9 @@ of a monitored node representing a variance-covariance matrix.</p>
       <td><p>A <code><a href='https://rdrr.io/pkg/coda/man/mcmc.list.html'>mcmc.list</a></code> object.</p></td>
     </tr>
     <tr>
-      <th>param</th>
-      <td><p>A character vector of with length &gt;= 1 specifying the variance-covariance node in <code>post</code>.
-Passed to <code><a href='match_params.html'>match_params()</a></code> so is matched using regular expressions.
-Must match only base node name in <code>post</code>, and that node must store samples from a matrix within the model.</p></td>
-    </tr>
-    <tr>
       <th>sigma_base_name</th>
-      <td><p>A character vector with length == 1. What should the base node name be
-for the standard deviation vector component? Defaults to <code>"sigma"</code>, which becomes <code>"sigma[1]"</code>, <code>"sigma[2]"</code>,
-etc. in the output.</p></td>
+      <td><p>Base node name to assign to the standard deviation vector component?
+Defaults to <code>"sigma"</code>, which becomes <code>"sigma[1]"</code>, <code>"sigma[2]"</code>, etc. in the output.</p></td>
     </tr>
     <tr>
       <th>rho_base_name</th>
@@ -188,26 +181,27 @@ etc. in the output.</p></td>
     </tr>
     <tr>
       <th>invert</th>
-      <td><p>Logical. Do you wish to take the inverse of the matrix node matched by <code>param</code>
+      <td><p>Take the inverse of the matrix node matched by <code>param</code>
 prior to performing the calculations? This would be necessary if the matrix node was expressed as
-a precision matrix as used in the BUGS language. Triggers a call to <code><a href='https://rdrr.io/r/base/solve.html'>base::solve()</a></code>.
-Defaults to <code>FALSE</code>.</p></td>
+a precision matrix as used in the BUGS language. Triggers a call to <code><a href='https://rdrr.io/r/base/solve.html'>base::solve()</a></code>.</p></td>
     </tr>
     <tr>
       <th>check</th>
-      <td><p>Logical. Do you wish to perform checks sequentially that the matrix node is (a) square, (b) symmetrical, and (c) positive definite
-before proceeding with the calculations? Defaults to <code>TRUE</code>. If set to <code>FALSE</code>, unexpected output may be returned or
+      <td><p>Perform checks sequentially that the matrix node is (a) square, (b) symmetrical, and (c) positive definite
+before proceeding with the calculations? If set to <code>FALSE</code>, unexpected output may be returned or
 other errors related to items a, b, and c may be triggered - this is not advised, though may be required
 if wishing to set <code>invert = TRUE</code>.</p></td>
     </tr>
     <tr>
       <th>auto_escape</th>
-      <td><p>Logical. <code>FALSE</code> will treat <code><a href='https://rdrr.io/r/base/Extract.html'>"["</a></code> and <code>"]"</code>
-as special regular expression characters (unless explicitly escaped by user),
-<code>TRUE</code> will treat these symbols as plain text to be matched.
-It is generally recommended to keep this as <code>TRUE</code> (the default),
-unless you are performing complex regex searches that require the
-<code><a href='https://rdrr.io/r/base/Extract.html'>"["</a></code> and <code>"]"</code> symbols to be special characters.</p></td>
+      <td><p>Automatically escape <code><a href='https://rdrr.io/r/base/Extract.html'>"["</a></code> and <code>"]"</code> characters for pattern matching?
+See <code><a href='match_params.html'>match_params()</a></code> for details.</p></td>
+    </tr>
+    <tr>
+      <th>params</th>
+      <td><p>A vector of regular expressions specifying the nodes to match for plotting.
+Must match only one base node name in <code>post</code>, and that node must store samples from a matrix within the model.
+See <code><a href='match_params.html'>match_params()</a></code> and <code><a href='../articles/pattern-matching.html'>vignette("pattern-matching")</a></code> for more details.</p></td>
     </tr>
     </table>
 

@@ -164,20 +164,21 @@ object that match a provided string.</p>
     </tr>
     <tr>
       <th>params</th>
-      <td><p>A character vector with length &gt;= 1 specifying the nodes to match.
-Passed to <code><a href='https://stringr.tidyverse.org/reference/str_detect.html'>stringr::str_detect()</a></code> so is matched using regular expressions.</p></td>
+      <td><p>A vector of regular expressions specifying the nodes to match.
+Accepts multi-element vectors to match more than one node at a time.
+See examples and <code><a href='../articles/pattern-matching.html'>vignette("pattern-matching")</a></code> for more details.</p></td>
     </tr>
     <tr>
       <th>type</th>
-      <td><p>A character vector with length == 1; only two options are accepted:</p><ul>
+      <td><p>Format of returned matches; only two options are accepted:</p><ul>
 <li><p><code>type = "base_only"</code> to return only the unique node names (without indices).</p></li>
 <li><p><code>type = "base_index"</code> (the default) to return the node names with indices included.</p></li>
 </ul></td>
     </tr>
     <tr>
       <th>auto_escape</th>
-      <td><p>Logical. <code>FALSE</code> will treat <code><a href='https://rdrr.io/r/base/Extract.html'>"["</a></code> and <code>"]"</code>
-as special regular expression characters (unless explicitly escaped by user),
+      <td><p>Automatically escape <code><a href='https://rdrr.io/r/base/Extract.html'>"["</a></code> and <code>"]"</code> characters for pattern matching?
+<code>FALSE</code> will treat <code><a href='https://rdrr.io/r/base/Extract.html'>"["</a></code> and <code>"]"</code> as special regular expression characters (unless explicitly escaped by user),
 <code>TRUE</code> will treat these symbols as plain text to be matched.
 It is generally recommended to keep this as <code>TRUE</code> (the default),
 unless you are performing complex regex searches that require the
@@ -205,6 +206,8 @@ See the examples below.</p>
 <span class='fu'>match_params</span>(<span class='no'>cjs</span>, <span class='kw'>params</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"b0"</span>, <span class='st'>"b1"</span>))</div><div class='output co'>#&gt;  [1] "b0[1]" "b0[2]" "b0[3]" "b0[4]" "b0[5]" "b1[1]" "b1[2]" "b1[3]" "b1[4]"
 #&gt; [10] "b1[5]"</div><div class='input'><span class='fu'>match_params</span>(<span class='no'>cjs</span>, <span class='kw'>params</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"b"</span>))</div><div class='output co'>#&gt;  [1] "b0[1]" "b0[2]" "b0[3]" "b0[4]" "b0[5]" "b1[1]" "b1[2]" "b1[3]" "b1[4]"
 #&gt; [10] "b1[5]"</div><div class='input'>
+<span class='co'># return only base names, not indices as well</span>
+<span class='fu'>match_params</span>(<span class='no'>cjs</span>, <span class='kw'>params</span> <span class='kw'>=</span> <span class='st'>"b"</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"base_only"</span>)</div><div class='output co'>#&gt; [1] "b0" "b1"</div><div class='input'>
 <span class='co'># force a match to start with B</span>
 <span class='fu'>match_params</span>(<span class='no'>cjs</span>, <span class='st'>"^B"</span>)</div><div class='output co'>#&gt; [1] "B0" "B1"</div><div class='input'>
 <span class='co'># force a match to end with 0</span>

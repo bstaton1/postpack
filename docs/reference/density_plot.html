@@ -162,12 +162,12 @@
     </tr>
     <tr>
       <th>param</th>
-      <td><p>A character vector of length == 1. Should be a node reference
-to a single element in the model. E.g., <code>"b0[1]"</code>, not <code>"b0"</code>.</p></td>
+      <td><p>A regular expression that matches a single element in the model.
+E.g., <code>"b0[1]"</code>, not <code>"b0"</code>. See <code><a href='match_params.html'>match_params()</a></code>.</p></td>
     </tr>
     <tr>
       <th>show_diags</th>
-      <td><p>A character vector of length == 1. Must be one of
+      <td><p>Control when to display numerical diagnostic summaries on plots. Must be one of
 <code>"always"</code>, <code>"never"</code>, or <code>"if_poor_Rhat"</code>. <code>"if_poor_Rhat"</code> (the default)
 will display the Rhat and effective MCMC samples if the Rhat statistic
 is greater than 1.1.</p></td>
@@ -177,6 +177,9 @@ is greater than 1.1.</p></td>
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>A figure showing the posterior density, separated by chain.</p>
+    <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
+
+    <p>This is <strong>not</strong> a function users will generally use directly. Call <code><a href='diag_plots.html'>diag_plots()</a></code> instead.</p>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

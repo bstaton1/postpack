@@ -181,61 +181,57 @@ plotting device scales to the job needed.</p>
     </tr>
     <tr>
       <th>params</th>
-      <td><p>A character vector with length &gt;= 1 specifying the nodes to plot.
-Passed to <code><a href='match_params.html'>match_params()</a></code> so is matched using regular expressions.</p></td>
+      <td><p>A vector of regular expressions specifying the nodes to match for plotting.
+Accepts multi-element vectors to match more than one node at a time.
+See <code><a href='match_params.html'>match_params()</a></code> and <code><a href='../articles/pattern-matching.html'>vignette("pattern-matching")</a></code> for more details.</p></td>
     </tr>
     <tr>
       <th>ext_device</th>
-      <td><p>Logical. Do you wish to have an external device open to display the diagnostics?
+      <td><p>Display plots in an external device rather than the active device?
 <code>FALSE</code> (the default) will plot in the active device (including RStudio window).
 <code>TRUE</code> will create a new graphics device.</p></td>
     </tr>
     <tr>
       <th>show_diags</th>
-      <td><p>A character vector of length == 1. Must be one of
+      <td><p>Control when to display numerical diagnostic summaries on plots. Must be one of
 <code>"always"</code>, <code>"never"</code>, or <code>"if_poor_Rhat"</code>. <code>"if_poor_Rhat"</code> (the default)
 will display the Rhat and effective MCMC samples if the Rhat statistic
 is greater than 1.1.</p></td>
     </tr>
     <tr>
       <th>layout</th>
-      <td><p>A character vector with length == 1 specifying <code>"ROWSxCOLUMNS"</code> of parameter diagnostics.
-For example, <code>"4x1"</code> has 4 rows and 1 column of parameter diagnostics.
+      <td><p>Control how parameter diagnostics are organized into <code>"ROWSxCOLUMNS"</code>.
+For example, <code>layout = "4x1"</code> has 4 rows and 1 column of parameter diagnostics.
 Defaults to <code>"auto"</code>, which selects between the only accepted options of
 <code>"1x1"</code>, <code>"2x1"</code>, <code>"4x1"</code>, <code>"4x2"</code>, and <code>"5x3"</code>.</p></td>
     </tr>
     <tr>
       <th>dims</th>
-      <td><p>A character vector with length == 1 specifying the <code>"HEIGHTxWIDTH"</code> dimensions
-of the plotting device, in inches.
+      <td><p>Control the dimensions of the graphics device using <code>"HEIGHTxWIDTH"</code> in inches.
 For example, <code>"5x7"</code> would create a 5 inch tall and 7 inch wide plotting device.
 Defaults to <code>"auto"</code>, which selects the dimensions that look nice when <code>layout = "auto"</code>
 as well.</p></td>
     </tr>
     <tr>
       <th>keep_percent</th>
-      <td><p>A numeric vector of length == 1 and scaled between 0 and 1.
-Percent of samples you'd like to keep for trace plotting and passed to <code><a href='post_thin.html'>post_thin()</a></code>.</p></td>
+      <td><p>Proportion (between 0 and 1) of samples to keep for trace plotting.
+Passed to <code><a href='post_thin.html'>post_thin()</a></code>.</p></td>
     </tr>
     <tr>
       <th>save</th>
-      <td><p>Logical. Do you wish to save the diagnostic plots in a PDF file? If so,
+      <td><p>Save the diagnostic plots in a PDF file? If so,
 specify <code>file = "example.pdf"</code> as well. Defaults to <code>FALSE</code>.</p></td>
     </tr>
     <tr>
       <th>file</th>
-      <td><p>Character vector of length == 1. The file name, which
-must include the <code>".pdf"</code> extension. Saved to working directory by default,
+      <td><p>File name of a PDF file to save the plots to.
+Must include the <code>".pdf"</code> extension. Saved to working directory by default,
 but can receive an absolute or relative file path as part of this argument.</p></td>
     </tr>
     <tr>
       <th>auto_escape</th>
-      <td><p>Logical. <code>FALSE</code> will treat <code><a href='https://rdrr.io/r/base/Extract.html'>"["</a></code> and <code>"]"</code>
-as special regular expression characters (unless explicitly escaped by user),
-<code>TRUE</code> will treat these symbols as plain text to be matched.
-It is generally recommended to keep this as <code>TRUE</code> (the default),
-unless you are performing complex regex searches that require the
-<code><a href='https://rdrr.io/r/base/Extract.html'>"["</a></code> and <code>"]"</code> symbols to be special characters.</p></td>
+      <td><p>Automatically escape <code><a href='https://rdrr.io/r/base/Extract.html'>"["</a></code> and <code>"]"</code> characters for pattern matching?
+See <code><a href='match_params.html'>match_params()</a></code> for details.</p></td>
     </tr>
     </table>
 

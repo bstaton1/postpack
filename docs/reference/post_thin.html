@@ -166,14 +166,12 @@ developing long-running post-processing code with a smaller but otherwise identi
     </tr>
     <tr>
       <th>keep_percent</th>
-      <td><p>A numeric vector with length == 1 and on the interval
-(0,1]: what fraction of the samples do you wish to retain from each
-chain? Setting <code>keep_percent = 0.2</code> will remove approximately 80 percent of the samples.</p></td>
+      <td><p>Proportion (between 0 and 1) of samples to keep from each chain.
+Setting <code>keep_percent = 0.2</code> will remove approximately 80 percent of the samples.</p></td>
     </tr>
     <tr>
       <th>keep_iters</th>
-      <td><p>A numeric vector of length == 1 representing how many samples from each
-chain to retain.</p></td>
+      <td><p>Number of samples to keep from each chain.</p></td>
     </tr>
     </table>
 

@@ -162,22 +162,18 @@
     </tr>
     <tr>
       <th>params</th>
-      <td><p>A character vector of with length &gt;= 1 specifying the nodes to discard from <code>post</code>.
-Passed to <code><a href='match_params.html'>match_params()</a></code> so is matched using regular expressions.</p></td>
+      <td><p>A vector of regular expressions specifying the nodes to match for removal.
+Accepts multi-element vectors to match more than one node at a time.
+See <code><a href='match_params.html'>match_params()</a></code> and <code><a href='../articles/pattern-matching.html'>vignette("pattern-matching")</a></code> for more details.</p></td>
     </tr>
     <tr>
       <th>ask</th>
-      <td><p>Logical. Do you wish to be prompted prior to removing nodes?
-Defaults to <code>TRUE</code>.</p></td>
+      <td><p>Prompt user for a response prior to removing nodes?</p></td>
     </tr>
     <tr>
       <th>auto_escape</th>
-      <td><p>Logical. <code>FALSE</code> will treat <code><a href='https://rdrr.io/r/base/Extract.html'>"["</a></code> and <code>"]"</code>
-as special regular expression characters (unless explicitly escaped by user),
-<code>TRUE</code> will treat these symbols as plain text to be matched.
-It is generally recommended to keep this as <code>TRUE</code> (the default),
-unless you are performing complex regex searches that require the
-<code><a href='https://rdrr.io/r/base/Extract.html'>"["</a></code> and <code>"]"</code> symbols to be special characters.</p></td>
+      <td><p>Automatically escape <code><a href='https://rdrr.io/r/base/Extract.html'>"["</a></code> and <code>"]"</code> characters?
+See <code><a href='match_params.html'>match_params()</a></code> for details.</p></td>
     </tr>
     </table>
 

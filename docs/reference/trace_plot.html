@@ -162,8 +162,8 @@
     </tr>
     <tr>
       <th>param</th>
-      <td><p>A character vector of length == 1. Should be a node reference
-to a single element in the model. E.g., <code>"b0[1]"</code>, not <code>"b0"</code>.</p></td>
+      <td><p>A regular expression that matches a single element in the model.
+E.g., <code>"b0[1]"</code>, not <code>"b0"</code>. See <code><a href='match_params.html'>match_params()</a></code>.</p></td>
     </tr>
     <tr>
       <th>keep_percent</th>
@@ -175,7 +175,8 @@ Percent of samples you'd like to keep for trace plotting and passed to <code><a 
     <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
 
     <p>If saving as a pdf file, these files can get very large with many samples and render slowly.
-The <code>keep_percent</code> argument is intended to help with this by thinning the chains at quasi-evenly spaced intervals.</p>
+The <code>keep_percent</code> argument is intended to help with this by thinning the chains at quasi-evenly spaced intervals.
+This is <strong>not</strong> a function users will generally use directly. Call <code><a href='diag_plots.html'>diag_plots()</a></code> instead.</p>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

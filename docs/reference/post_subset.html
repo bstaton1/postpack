@@ -171,32 +171,26 @@ corresponding only to the node(s) requested.</p>
     </tr>
     <tr>
       <th>params</th>
-      <td><p>A character vector of with length &gt;= 1 specifying the nodes to extract from <code>post</code>.
-Passed to <code><a href='match_params.html'>match_params()</a></code> so is matched using regular expressions.</p></td>
+      <td><p>A vector of regular expressions specifying the nodes to match for subsetting.
+Accepts multi-element vectors to match more than one node at a time.
+See <code><a href='match_params.html'>match_params()</a></code> and <code><a href='../articles/pattern-matching.html'>vignette("pattern-matching")</a></code> for more details.</p></td>
     </tr>
     <tr>
       <th>matrix</th>
-      <td><p>Logical. If <code>TRUE</code>, the output will be returned as a <code><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></code>.
-Defaults to <code>FALSE</code>, in which case the <code><a href='https://rdrr.io/pkg/coda/man/mcmc.list.html'>mcmc.list</a></code> class will be retained.</p></td>
+      <td><p>Return samples in <code><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></code> rather than <code><a href='https://rdrr.io/pkg/coda/man/mcmc.list.html'>mcmc.list</a></code> format?</p></td>
     </tr>
     <tr>
       <th>iters</th>
-      <td><p>Logical. Do you wish to retain the iteration number of each sample if <code>matrix = TRUE</code>? Not used otherwise.
-Defaults to <code>FALSE</code>.</p></td>
+      <td><p>Retain the iteration number of each sample if <code>matrix = TRUE</code>? Not used otherwise.</p></td>
     </tr>
     <tr>
       <th>chains</th>
-      <td><p>Logical. Do you wish to retain the chain number of each sample if <code>matrix = TRUE</code>? Not used otherwise.
-Defaults to <code>FALSE</code>.</p></td>
+      <td><p>Retain the chain number of each sample if <code>matrix = TRUE</code>? Not used otherwise.</p></td>
     </tr>
     <tr>
       <th>auto_escape</th>
-      <td><p>Logical. <code>FALSE</code> will treat <code><a href='https://rdrr.io/r/base/Extract.html'>"["</a></code> and <code>"]"</code>
-as special regular expression characters (unless explicitly escaped by user),
-<code>TRUE</code> will treat these symbols as plain text to be matched.
-It is generally recommended to keep this as <code>TRUE</code> (the default),
-unless you are performing complex regex searches that require the
-<code><a href='https://rdrr.io/r/base/Extract.html'>"["</a></code> and <code>"]"</code> symbols to be special characters.</p></td>
+      <td><p>Automatically escape <code><a href='https://rdrr.io/r/base/Extract.html'>"["</a></code> and <code>"]"</code> characters for pattern matching?
+See <code><a href='match_params.html'>match_params()</a></code> for details.</p></td>
     </tr>
     </table>
 

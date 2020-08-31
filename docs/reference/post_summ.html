@@ -174,62 +174,55 @@ stored in <code><a href='https://rdrr.io/pkg/coda/man/mcmc.list.html'>mcmc.list<
     </tr>
     <tr>
       <th>params</th>
-      <td><p>A character vector of with length &gt;= 1 specifying the nodes to summarize from <code>post</code>.
-Passed to <code><a href='match_params.html'>match_params()</a></code> so is matched using regular expressions.</p></td>
+      <td><p>A vector of regular expressions specifying the nodes to match for summarization.
+Accepts multi-element vectors to match more than one node at a time.
+See <code><a href='match_params.html'>match_params()</a></code> and <code><a href='../articles/pattern-matching.html'>vignette("pattern-matching")</a></code> for more details.</p></td>
     </tr>
     <tr>
       <th>digits</th>
-      <td><p>A numeric vector with length == 1 controlling rounding of summaries.
+      <td><p>Control rounding of summaries.
 Passed to <code><a href='https://rdrr.io/r/base/Round.html'>base::round()</a></code> and defaults to <code>NULL</code>, which produces no rounding.</p></td>
     </tr>
     <tr>
       <th>probs</th>
-      <td><p>A numeric vector specifying the posterior quantiles you wish to have summarized.
-Passed to <code><a href='https://rdrr.io/r/stats/quantile.html'>stats::quantile()</a></code>.
+      <td><p>Posterior quantiles to calculate. Passed to <code><a href='https://rdrr.io/r/stats/quantile.html'>stats::quantile()</a></code>.
 Defaults to <code>probs = c(0.5, 0.025, 0.975)</code> (i.e., median and equal-tailed 95 percent credible interval).</p></td>
     </tr>
     <tr>
       <th>Rhat</th>
-      <td><p>Logical. Do you wish to calculate the
-Rhat convergence diagnostic using <code><a href='https://rdrr.io/pkg/coda/man/gelman.diag.html'>coda::gelman.diag()</a></code>?
+      <td><p>Calculate the Rhat convergence diagnostic using <code><a href='https://rdrr.io/pkg/coda/man/gelman.diag.html'>coda::gelman.diag()</a></code>?
 Fair warning: this can take a bit of time to run on many nodes/samples.</p></td>
     </tr>
     <tr>
       <th>neff</th>
-      <td><p>Logical. Do you wish to calculate the number of effective MCMC samples
-using <code><a href='https://rdrr.io/pkg/coda/man/effectiveSize.html'>coda::effectiveSize()</a></code>?
+      <td><p>Calculate the number of effective MCMC samples using <code><a href='https://rdrr.io/pkg/coda/man/effectiveSize.html'>coda::effectiveSize()</a></code>?
 Fair warning: this can take a bit of time to run on many nodes/samples.</p></td>
     </tr>
     <tr>
       <th>mcse</th>
-      <td><p>Logical. Do you wish to calculate the
-Monte Carlo standard error for the posterior mean and reported quantiles
+      <td><p>Calculate the Monte Carlo standard error for the posterior mean and reported quantiles
 using the <code><a href='https://rdrr.io/pkg/mcmcse/man/mcse.html'>mcmcse::mcse()</a></code> and <code><a href='https://rdrr.io/pkg/mcmcse/man/mcse.q.html'>mcmcse::mcse.q()</a></code> functions
 (batch means method with batch size automatically calculated)?
 Fair warning: this can take a bit of time to run on many nodes/samples.</p></td>
     </tr>
     <tr>
       <th>by_chain</th>
-      <td><p>Logical. Do you wish to calculate posterior summaries for each chain
+      <td><p>Calculate posterior summaries for each chain
 rather than for the aggregate across chains? Defaults to <code>FALSE</code>.
 The arguments <code>Rhat</code>, <code>neff</code>, and <code>mcse</code> are ignored if <code>by_chain = TRUE</code>
 and a warning will be returned.</p></td>
     </tr>
     <tr>
       <th>auto_escape</th>
-      <td><p>Logical. <code>FALSE</code> will treat <code><a href='https://rdrr.io/r/base/Extract.html'>"["</a></code> and <code>"]"</code>
-as special regular expression characters (unless explicitly escaped by user),
-<code>TRUE</code> will treat these symbols as plain text to be matched.
-It is generally recommended to keep this as <code>TRUE</code> (the default),
-unless you are performing complex regex searches that require the
-<code><a href='https://rdrr.io/r/base/Extract.html'>"["</a></code> and <code>"]"</code> symbols to be special characters.</p></td>
+      <td><p>Automatically escape <code><a href='https://rdrr.io/r/base/Extract.html'>"["</a></code> and <code>"]"</code> characters for pattern matching?
+See <code><a href='match_params.html'>match_params()</a></code> for details.</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>A <code><a href='https://rdrr.io/r/base/matrix.html'>matrix</a></code> object with summary statistics as rows and nodes as columns.
-If <code>by_chain = TRUE</code>, an <code><a href='https://rdrr.io/r/base/array.html'>array</a></code> is returned instead.</p>
+If <code>by_chain = TRUE</code>, an <code><a href='https://rdrr.io/r/base/array.html'>array</a></code> with chain-specific summaries as the third dimension is returned instead.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='match_params.html'>match_params()</a></code>, <code><a href='https://rdrr.io/pkg/coda/man/gelman.diag.html'>coda::gelman.diag()</a></code>, <code><a href='https://rdrr.io/pkg/coda/man/effectiveSize.html'>coda::effectiveSize()</a></code>, <code><a href='https://rdrr.io/pkg/mcmcse/man/mcse.html'>mcmcse::mcse()</a></code>, <code><a href='https://rdrr.io/pkg/mcmcse/man/mcse.q.html'>mcmcse::mcse.q()</a></code></p></div>

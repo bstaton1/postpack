@@ -162,29 +162,28 @@
     </tr>
     <tr>
       <th>final</th>
-      <td><p>A character vector of length == 1; word that will separate the final element in the list from others.
+      <td><p>Word that will separate the final element in the list from others.
 See the examples.</p></td>
     </tr>
     <tr>
       <th>per_line</th>
-      <td><p>A numeric vector of length == 1; number of elements printed per line. See the examples.</p></td>
+      <td><p>Number of elements printed per line. See the examples.</p></td>
     </tr>
     <tr>
       <th>wrap</th>
-      <td><p>A character vector of length == 1; optional character to wrap around each element,
-e.g., quotation marks.</p></td>
+      <td><p>Optional character to wrap around each element, e.g., quotation marks.</p></td>
     </tr>
     <tr>
       <th>indent</th>
-      <td><p>A character vector of length == 1; anything you wish to place in front of the first
+      <td><p>Optional string to place in front of the first
 element on each line. See the examples.</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A character vector of length == 1; ready to be passed to
-<code><a href='https://rdrr.io/r/base/stop.html'>base::stop()</a></code>, <code><a href='https://rdrr.io/r/base/warning.html'>base::warning()</a></code>, or <code><a href='https://rdrr.io/r/base/cat.html'>base::cat()</a></code>, for example.</p>
+    <p>A character vector with length == 1; ready to be passed to
+<code><a href='https://rdrr.io/r/base/stop.html'>base::stop()</a></code>, <code><a href='https://rdrr.io/r/base/warning.html'>base::warning()</a></code>, or <code><a href='https://rdrr.io/r/base/cat.html'>base::cat()</a></code>, to provide a useful message.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='kw pkg'>postpack</span><span class='kw ns'>:::</span><span class='fu'>list_out</span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='no'>letters</span>[<span class='fl'>1</span>:<span class='fl'>10</span>])</div><div class='output co'>#&gt; [1] "a, b, c, d, e, f, g, h, i, j"</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/cat.html'>cat</a></span>(<span class='kw pkg'>postpack</span><span class='kw ns'>:::</span><span class='fu'>list_out</span>(<span class='no'>letters</span>[<span class='fl'>1</span>:<span class='fl'>26</span>], <span class='kw'>wrap</span> <span class='kw'>=</span> <span class='st'>"'"</span>, <span class='kw'>per_line</span> <span class='kw'>=</span> <span class='fl'>4</span>, <span class='kw'>final</span> <span class='kw'>=</span> <span class='st'>"or"</span>, <span class='kw'>indent</span> <span class='kw'>=</span> <span class='st'>"  "</span>))</div><div class='output co'>#&gt;   'a', 'b', 'c', 'd', 
