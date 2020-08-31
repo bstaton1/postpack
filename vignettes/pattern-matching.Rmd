@@ -27,7 +27,7 @@ Begin by loading 'postpack' and the example `mcmc.list`:
 
 ```{r, eval = FALSE}
 library(postpack)
-data("cjs")
+data(cjs)
 ```
 
 ```{r, echo = FALSE}
