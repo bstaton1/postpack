@@ -10,16 +10,13 @@ A \code{\link[coda:mcmc.list]{mcmc.list}} object.
 \source{
 This object stores samples from the same hypothetical example as for the \code{\link{cjs}} example object,
 with one small change to the model. The \code{rho} term that models correlation between slopes and intercepts
-is forced to be zero, rather than estimating it. Consult \code{\link{cjs}} for more details.
+was forced to be zero, rather than estimating it. Consult \code{vignette("example-mcmclists")} for more details.
 }
 \usage{
 cjs_no_rho
 }
 \description{
 An example of samples from a joint posterior distribution from a Cormack-Jolly-Seber model.
-\strong{Users should note that the specific context does not matter, this object is provided solely
-to show examples of 'postpack' functionality}. This second object is provided
-to illustrate how to scale 'postpack' functionality up to multiple models.
-All further details here are provided for interested users and completeness.
+\strong{The specific context does not matter, this object is provided to show examples of 'postpack' functionality}.
 }
 \keyword{datasets}
