@@ -2,8 +2,9 @@
 #' @description Subsets a smaller portion from a [`mcmc.list`][coda::mcmc.list] object
 #'   corresponding only to the node(s) requested.
 #' @param post A [`mcmc.list`][coda::mcmc.list] object.
-#' @param params A character vector of with length >= 1 specifying the nodes to extract from `post`.
-#'   Passed to [match_params()] so is matched using regular expressions.
+#' @param params A vector of regular expressions specifying the nodes to match for subsetting.
+#'   Accepts multi-element vectors to match more than one node at a time.
+#'   See [match_params()] and `vignette("pattern-matching")` for more details.
 #' @param matrix Logical. If `TRUE`, the output will be returned as a [`matrix`][base::matrix].
 #'   Defaults to `FALSE`, in which case the [`mcmc.list`][coda::mcmc.list] class will be retained.
 #' @param iters Logical. Do you wish to retain the iteration number of each sample if `matrix = TRUE`? Not used otherwise.

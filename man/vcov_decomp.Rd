@@ -17,10 +17,6 @@ vcov_decomp(
 \arguments{
 \item{post}{A \code{\link[coda:mcmc.list]{mcmc.list}} object.}
 
-\item{param}{A character vector of with length >= 1 specifying the variance-covariance node in \code{post}.
-Passed to \code{\link[=match_params]{match_params()}} so is matched using regular expressions.
-Must match only base node name in \code{post}, and that node must store samples from a matrix within the model.}
-
 \item{sigma_base_name}{A character vector with length == 1. What should the base node name be
 for the standard deviation vector component? Defaults to \code{"sigma"}, which becomes \code{"sigma[1]"}, \code{"sigma[2]"},
 etc. in the output.}
@@ -39,6 +35,10 @@ if wishing to set \code{invert = TRUE}.}
 
 \item{auto_escape}{Automatically escape \code{"["} and \code{"]"} characters for pattern matching?
 See \code{\link[=match_params]{match_params()}} for details.}
+
+\item{params}{A vector of regular expressions specifying the nodes to match for plotting.
+Must match only one base node name in \code{post}, and that node must store samples from a matrix within the model.
+See \code{\link[=match_params]{match_params()}} and \code{vignette("pattern-matching")} for more details.}
 }
 \value{
 A \code{\link[coda:mcmc.list]{mcmc.list}} object.

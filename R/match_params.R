@@ -2,8 +2,9 @@
 #' @description Returns all the node names stored in a [`mcmc.list`][coda::mcmc.list]
 #'   object that match a provided string.
 #' @param post A [`mcmc.list`][coda::mcmc.list] object.
-#' @param params A character vector with length >= 1 specifying the nodes to match.
-#'   Passed to [stringr::str_detect()] so is matched using regular expressions.
+#' @param params A vector of regular expressions specifying the nodes to match.
+#'   Accepts multi-element vectors to match more than one node at a time.
+#'   See examples and `vignette("pattern-matching")` for more details.
 #' @param type A character vector with length == 1; only two options are accepted:
 #'   * `type = "base_only"` to return only the unique node names (without indices).
 #'   * `type = "base_index"` (the default) to return the node names with indices included.

@@ -5,8 +5,9 @@
 #'   or a PDF file. Further, with the auto settings, the dimensions of the
 #'   plotting device scales to the job needed.
 #' @param post A [`mcmc.list`][coda::mcmc.list] object.
-#' @param params A character vector with length >= 1 specifying the nodes to plot.
-#'   Passed to [match_params()] so is matched using regular expressions.
+#' @param params A vector of regular expressions specifying the nodes to match for plotting.
+#'   Accepts multi-element vectors to match more than one node at a time.
+#'   See [match_params()] and `vignette("pattern-matching")` for more details.
 #' @param ext_device Logical. Do you wish to have an external device open to display the diagnostics?
 #'   `FALSE` (the default) will plot in the active device (including RStudio window).
 #'   `TRUE` will create a new graphics device.

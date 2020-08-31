@@ -2,8 +2,9 @@
 #' @description Allows rapid calculation of summaries and diagnostics from **specific nodes**
 #'  stored in [`mcmc.list`][coda::mcmc.list] objects.
 #' @param post A [`mcmc.list`][coda::mcmc.list] object.
-#' @param params A character vector of with length >= 1 specifying the nodes to summarize from `post`.
-#'   Passed to [match_params()] so is matched using regular expressions.
+#' @param params A vector of regular expressions specifying the nodes to match for summarization.
+#'   Accepts multi-element vectors to match more than one node at a time.
+#'   See [match_params()] and `vignette("pattern-matching")` for more details.
 #' @param probs A numeric vector specifying the posterior quantiles you wish to have summarized.
 #'   Passed to [stats::quantile()].
 #'   Defaults to `probs = c(0.5, 0.025, 0.975)` (i.e., median and equal-tailed 95 percent credible interval).

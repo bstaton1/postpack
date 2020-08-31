@@ -9,8 +9,9 @@ match_params(post, params, type = "base_index", auto_escape = TRUE)
 \arguments{
 \item{post}{A \code{\link[coda:mcmc.list]{mcmc.list}} object.}
 
-\item{params}{A character vector with length >= 1 specifying the nodes to match.
-Passed to \code{\link[stringr:str_detect]{stringr::str_detect()}} so is matched using regular expressions.}
+\item{params}{A vector of regular expressions specifying the nodes to match.
+Accepts multi-element vectors to match more than one node at a time.
+See examples and \code{vignette("pattern-matching")} for more details.}
 
 \item{type}{A character vector with length == 1; only two options are accepted:
 \itemize{

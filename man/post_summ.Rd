@@ -19,8 +19,9 @@ post_summ(
 \arguments{
 \item{post}{A \code{\link[coda:mcmc.list]{mcmc.list}} object.}
 
-\item{params}{A character vector of with length >= 1 specifying the nodes to summarize from \code{post}.
-Passed to \code{\link[=match_params]{match_params()}} so is matched using regular expressions.}
+\item{params}{A vector of regular expressions specifying the nodes to match for summarization.
+Accepts multi-element vectors to match more than one node at a time.
+See \code{\link[=match_params]{match_params()}} and \code{vignette("pattern-matching")} for more details.}
 
 \item{digits}{A numeric vector with length == 1 controlling rounding of summaries.
 Passed to \code{\link[base:Round]{base::round()}} and defaults to \code{NULL}, which produces no rounding.}

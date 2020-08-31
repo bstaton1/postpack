@@ -16,8 +16,9 @@ post_subset(
 \arguments{
 \item{post}{A \code{\link[coda:mcmc.list]{mcmc.list}} object.}
 
-\item{params}{A character vector of with length >= 1 specifying the nodes to extract from \code{post}.
-Passed to \code{\link[=match_params]{match_params()}} so is matched using regular expressions.}
+\item{params}{A vector of regular expressions specifying the nodes to match for subsetting.
+Accepts multi-element vectors to match more than one node at a time.
+See \code{\link[=match_params]{match_params()}} and \code{vignette("pattern-matching")} for more details.}
 
 \item{matrix}{Logical. If \code{TRUE}, the output will be returned as a \code{\link[base:matrix]{matrix}}.
 Defaults to \code{FALSE}, in which case the \code{\link[coda:mcmc.list]{mcmc.list}} class will be retained.}

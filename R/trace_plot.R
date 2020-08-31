@@ -1,7 +1,7 @@
 #' @title Create a trace plot for a single desired node
 #' @param post A [`mcmc.list`][coda::mcmc.list] object.
-#' @param param A character vector of length == 1. Should be a node reference
-#'   to a single element in the model. E.g., `"b0[1]"`, not `"b0"`.
+#' @param param A regular expression that matches a single element in the model.
+#'   E.g., `"b0[1]"`, not `"b0"`. See [match_params()].
 #' @param keep_percent A numeric vector of length == 1 and on the range (0,1].
 #'   Percent of samples you'd like to keep for trace plotting and passed to [post_thin()].
 #' @note If saving as a pdf file, these files can get very large with many samples and render slowly.

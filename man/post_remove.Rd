@@ -9,8 +9,9 @@ post_remove(post, params, ask = TRUE, auto_escape = TRUE)
 \arguments{
 \item{post}{A \code{\link[coda:mcmc.list]{mcmc.list}} object.}
 
-\item{params}{A character vector of with length >= 1 specifying the nodes to discard from \code{post}.
-Passed to \code{\link[=match_params]{match_params()}} so is matched using regular expressions.}
+\item{params}{A vector of regular expressions specifying the nodes to match for removal.
+Accepts multi-element vectors to match more than one node at a time.
+See \code{\link[=match_params]{match_params()}} and \code{vignette("pattern-matching")} for more details.}
 
 \item{ask}{Logical. Do you wish to be prompted prior to removing nodes?
 Defaults to \code{TRUE}.}

@@ -1,8 +1,8 @@
 #' @title Create a density plot for a single desired node
 #' @description Used by [diag_plots()], not intended to be called separately
 #' @param post A [`mcmc.list`][coda::mcmc.list] object.
-#' @param param A character vector of length == 1. Should be a node reference
-#'   to a single element in the model. E.g., `"b0[1]"`, not `"b0"`.
+#' @param param A regular expression that matches a single element in the model.
+#'   E.g., `"b0[1]"`, not `"b0"`. See [match_params()].
 #' @param show_diags A character vector of length == 1. Must be one of
 #'   `"always"`, `"never"`, or `"if_poor_Rhat"`. `"if_poor_Rhat"` (the default)
 #'   will display the Rhat and effective MCMC samples if the Rhat statistic

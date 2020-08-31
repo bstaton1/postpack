@@ -9,8 +9,8 @@ trace_plot(post, param, keep_percent = 0)
 \arguments{
 \item{post}{A \code{\link[coda:mcmc.list]{mcmc.list}} object.}
 
-\item{param}{A character vector of length == 1. Should be a node reference
-to a single element in the model. E.g., \code{"b0[1]"}, not \code{"b0"}.}
+\item{param}{A regular expression that matches a single element in the model.
+E.g., \code{"b0[1]"}, not \code{"b0"}. See \code{\link[=match_params]{match_params()}}.}
 
 \item{keep_percent}{A numeric vector of length == 1 and on the range (0,1].
 Percent of samples you'd like to keep for trace plotting and passed to \code{\link[=post_thin]{post_thin()}}.}

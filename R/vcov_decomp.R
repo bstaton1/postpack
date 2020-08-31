@@ -2,9 +2,9 @@
 #' @description For each posterior sample, extract the standard deviation and correlation components
 #'   of a monitored node representing a variance-covariance matrix.
 #' @param post A [`mcmc.list`][coda::mcmc.list] object.
-#' @param param A character vector of with length >= 1 specifying the variance-covariance node in `post`.
-#'   Passed to [match_params()] so is matched using regular expressions.
-#'   Must match only base node name in `post`, and that node must store samples from a matrix within the model.
+#' @param params A vector of regular expressions specifying the nodes to match for plotting.
+#'   Must match only one base node name in `post`, and that node must store samples from a matrix within the model.
+#'   See [match_params()] and `vignette("pattern-matching")` for more details.
 #' @param sigma_base_name A character vector with length == 1. What should the base node name be
 #'   for the standard deviation vector component? Defaults to `"sigma"`, which becomes `"sigma[1]"`, `"sigma[2]"`,
 #'   etc. in the output.

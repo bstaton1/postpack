@@ -1,8 +1,9 @@
 #' @title Remove nodes from mcmc.list
 #' @description Just like [post_subset()], but keep all nodes **except** those that match.
 #' @param post A [`mcmc.list`][coda::mcmc.list] object.
-#' @param params A character vector of with length >= 1 specifying the nodes to discard from `post`.
-#'   Passed to [match_params()] so is matched using regular expressions.
+#' @param params A vector of regular expressions specifying the nodes to match for removal.
+#'   Accepts multi-element vectors to match more than one node at a time.
+#'   See [match_params()] and `vignette("pattern-matching")` for more details.
 #' @param ask Logical. Do you wish to be prompted prior to removing nodes?
 #'   Defaults to `TRUE`.
 #' @param auto_escape Automatically escape `"["` and `"]"` characters?
