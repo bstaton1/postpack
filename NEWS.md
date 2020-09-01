@@ -1,5 +1,12 @@
 # *NEWS*
 
+# postpack 0.5.1 (2020-09-01)
+
+## Addressed CRAN feedback and resubmitted
+
+* See correspondence and to-do items in issue [33](https://github.com/bstaton1/postpack/issues/33)
+* See the edits made in pull request [34](https://github.com/bstaton1/postpack/pull/34) to see how the feedback was addressed
+
 # postpack 0.5.0 (2020-08-31)
 
 ## Version submitted to CRAN
