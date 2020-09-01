@@ -4,7 +4,7 @@ Title: Utilities for Processing Posterior Samples Stored in 'mcmc.lists'
 Authors@R: person("Ben", "Staton", email = "statonbe@gmail.com", role = c("aut", "cre"), comment = c(ORCID = "0000-0002-2342-3482"))
 Description: The aim of 'postpack' is to provide the infrastructure for a standardized workflow for 'mcmc.list' objects.
     These objects can be used to store output from models fitted with Bayesian inference using
-    JAGS, Win/OpenBUGS, NIMBLE, Stan, or even custom MCMC algorithms. Although the 'coda' package provides
+    'JAGS', 'WinBUGS', 'OpenBUGS', 'NIMBLE', 'Stan', or even custom MCMC algorithms. Although the 'coda' R package provides
     some methods for these objects, it is somewhat limited in easily performing post-processing tasks
     particular nodes. Models are ever increasing in their complexity and the number of tracked nodes, and oftentimes
     a user may wish to summarize/diagnose sampling behavior for only a small subset of nodes at a time
