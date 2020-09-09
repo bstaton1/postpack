@@ -1,8 +1,9 @@
 # *NEWS*
 
-# postpack 0.5.1 (2020-09-01)
+# postpack 0.5.2 (2020-09-09)
 
-## Addressed CRAN feedback and resubmitted
+* Addressed CRAN feedback and resubmitted
+* See feedback received and to-do items -- none are major or user-facing (#36)
 
 # postpack 0.5.1 (2020-09-01)
 
