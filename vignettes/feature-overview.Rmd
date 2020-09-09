@@ -16,7 +16,7 @@ This vignette is intended to get you up and running using 'postpack' to process 
 
 # Prequisites
 
-'postpack' requires that your MCMC samples are stored in `mcmc.list` objects (class and methods supplied by the 'coda' package). Some MCMC interfaces produce this output by default (`rjags::coda.samples()`, `jagsUI::jags.basic()`, and `jagsUI::jags()$samples`). Others produce output that can be fairly easily converted to this format (`R2WinBUGS::bugs()`, `R2OpenBUGS::bugs()`, `rstan::stan()`, `nimble::runMCMC()`).
+'postpack' requires that your MCMC samples are stored in `mcmc.list` objects (class and methods supplied by the 'coda' package). Some MCMC interfaces produce this output by default (`rjags::coda.samples()`, `jagsUI::jags.basic()`, and `jagsUI::jags()``$samples`). Others produce output that can be fairly easily converted to this format (`R2WinBUGS::bugs()`, `R2OpenBUGS::bugs()`, `rstan::stan()`, `nimble::runMCMC()`).
 
 If your samples are not already in an `mcmc.list` object, check out `?postpack::post_convert` to see how you may be able to reformat them.
 
@@ -79,7 +79,7 @@ post_summ(cjs, "b0")
 Several 'postpack' functions accept the `params` argument (always in the second argument if it is present) to specify queries from the `mcmc.list` passed to `post`, so learning to use it is key.
 More information on using regular expressions to extract particular nodes can be found in `vignette("pattern-matching")`. 
 
-Estimates of the uncertainty associated with MCMC sampling in the mean and quantiles can be obtained using the `mcse` argument (which calls `?mcmcse::mcse` and `?mcmcse::mcse.q`):
+Estimates of the uncertainty associated with MCMC sampling in the mean and quantiles can be obtained using the `mcse` argument (which calls `mcmcse::mcse()` and `mcmcse::mcse.q()`):
 
 ```{r}
 post_summ(cjs, "^B", mcse = TRUE)
@@ -102,11 +102,11 @@ Both methods use the `params` argument to allow users to have control over which
 post_summ(cjs, c("sig_B0", "sig_B1"), neff = TRUE, Rhat = TRUE)
 ```
 
-`neff = TRUE` triggers a call to `?coda::effectiveSize` to estimate the number of MCMC samples that are independent and `Rhat = TRUE` triggers a call to `?coda::gelman.diag` to calculate the commonly used Rhat convergence diagnostic (numbers near 1 are ideal, greater than 1.1 may be problematic).
+`neff = TRUE` triggers a call to `coda::effectiveSize()` to estimate the number of MCMC samples that are independent and `Rhat = TRUE` triggers a call to `coda::gelman.diag()` to calculate the commonly used Rhat convergence diagnostic (numbers near 1 are ideal, greater than 1.1 may be problematic).
 `"Rhat"` will always be rounded to three digits, and `"neff"` will always be rounded to an integer, regardless of the value of the `digits` argument.
 
 Viewing the density and trace plot for a parameter is another common way to evaluate algorithm convergence. 
-The `diag_plots()` function serves this purpose (which, unlike `?coda:::plot.mcmc.list`, allows plotting the densities color coded by chain and only for specific nodes):
+The `diag_plots()` function serves this purpose (which, unlike `coda:::plot.mcmc()`, allows plotting the densities color coded by chain and only for specific nodes):
 
 ```{r, fig.width = 4, fig.height = 6}
 diag_plots(cjs, params = "SIG")
@@ -114,12 +114,12 @@ diag_plots(cjs, params = "SIG")
 
 Options exist to:
 
-*  display the Rhat and effective MCMC samples for each node (the `show_diags` argument, which accepts value of `"always"`, `"never"`, or `"if_poor_Rhat"` with the last one being the default. See `?diag_plots` for details),
-*  plot the output in a new external device (the `ext_device` argument)
-*  change the size of the graphics device (the `dims` argument),
-*  change the layout of parameters on the device (the `layout` argument), 
-*  save the output to a PDF graphics device (the `save` argument, which then requires that you enter the `file` argument, which is the file name of the PDF complete with the `".pdf"` extension). 
-*  thin the chains by some percentage (at quasi-evenly spaced intervals) before drawing the trace plot -- this can help manage the file size when generating many plots with many samples while still providing much of the same inference as the unthinned output. The argument `keep_percent = 0.8` is passed to `?post_thin`, and would discard 20% of the samples prior to trace plotting. This thinning does not affect the density plot visual -- all retained samples are plotted there.
+*  Display the Rhat and effective MCMC samples for each node (the `show_diags` argument, which accepts value of `"always"`, `"never"`, or `"if_poor_Rhat"` with the last one being the default. See `?diag_plots` for details).
+*  Plot the output in a new external device (the `ext_device` argument).
+*  Change the size of the graphics device (the `dims` argument).
+*  Change the layout of parameters on the device (the `layout` argument).
+*  Save the output to a PDF graphics device (the `save` argument, which then requires that you enter the `file` argument, which is the file name of the PDF complete with the `".pdf"` extension). 
+*  Thin the chains by some percentage (at quasi-evenly spaced intervals) before drawing the trace plot -- this can help manage the file size when generating many plots with many samples while still providing much of the same inference as the unthinned output. The argument `keep_percent = 0.8` is passed to `post_thin()`, and would discard 20% of the samples prior to trace plotting. This thinning does not affect the density plot visual -- all retained samples are plotted there.
 
 The `dims` and `layout` arguments are set to `"auto"` by default -- for adjustment of these settings, see `?diag_plots`. 
 
