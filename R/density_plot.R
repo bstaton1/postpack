@@ -34,6 +34,8 @@ density_plot = function(post, param, show_diags = "if_poor_Rhat") {
   y_max = max(tapply(post_sub[,3], post_sub[,"CHAIN"], function(x) suppressWarnings(max(density(x)$y))))
 
   # set up device
+  # don't need on.exit(par(oldpar)) here: handled in diag_plots()
+  # and this function is non-exported
   par(yaxs = "i", mar = c(1.5,2,2.5,0.5), tcl = -0.25,
       mgp = c(1.5,0.4,0))
 

@@ -109,9 +109,8 @@ diag_plots = function(post, params, ext_device = FALSE, show_diags = "if_poor_Rh
   if (save) pdf(file, height = height_width[1], width = height_width[2])
 
   # set up the graphics device
-  opar = par()
-  opar = opar[-which(names(opar) %in% c("cin", "cra", "csi", "cxy", "din", "page", "pin"))]
-  on.exit(par(opar))
+  oldpar = par(no.readonly = TRUE)
+  on.exit(par(oldpar))
   par(mfrow = c(row_col[1],row_col[2] * 2))
 
   junk = sapply(keep, function(i) {

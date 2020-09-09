@@ -8,7 +8,7 @@
 #'   The `keep_percent` argument is intended to help with this by thinning the chains at quasi-evenly spaced intervals.
 #'   This is **not** a function users will generally use directly. Call [diag_plots()] instead.
 
-trace_plot = function(post, param, keep_percent = 0) {
+trace_plot = function(post, param, keep_percent = 1) {
 
   # return error if param has length > 1
   if (length(param) > 1) stop ("param must have only one element, and it must match the desired node exactly")
@@ -26,6 +26,8 @@ trace_plot = function(post, param, keep_percent = 0) {
   y_lim = range(post_sub[,3])
 
   # set up graphics device
+  # don't need on.exit(par(oldpar)) here: handled in diag_plots()
+  # and this function is non-exported
   par(mar = c(1.5,0.5,2.5,2), tcl = -0.25,
       mgp = c(1.5,0.4,0), yaxs = "r")
 

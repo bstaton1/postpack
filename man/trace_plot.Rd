@@ -4,7 +4,7 @@
 \alias{trace_plot}
 \title{Create a trace plot for a single desired node}
 \usage{
-trace_plot(post, param, keep_percent = 0)
+trace_plot(post, param, keep_percent = 1)
 }
 \arguments{
 \item{post}{A \code{\link[coda:mcmc.list]{mcmc.list}} object.}
