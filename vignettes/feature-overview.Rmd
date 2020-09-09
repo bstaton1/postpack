@@ -16,7 +16,7 @@ This vignette is intended to get you up and running using 'postpack' to process 
 
 # Prequisites
 
-'postpack' requires that your MCMC samples are stored in `mcmc.list` objects (class and methods supplied by the 'coda' package). Some MCMC interfaces produce this output by default (`rjags::coda.samples()`, `jagsUI::jags.basic()`, and `jagsUI::jags()``$samples`). Others produce output that can be fairly easily converted to this format (`R2WinBUGS::bugs()`, `R2OpenBUGS::bugs()`, `rstan::stan()`, `nimble::runMCMC()`).
+'postpack' requires that your MCMC samples are stored in `mcmc.list` objects (class and methods supplied by the 'coda' package). Some MCMC interfaces produce this output by default (`rjags::coda.samples()`, `jagsUI::jags.basic()`, and `jagsUI::jags()` `$samples`). Others produce output that can be fairly easily converted to this format (`R2WinBUGS::bugs()`, `R2OpenBUGS::bugs()`, `rstan::stan()`, `nimble::runMCMC()`).
 
 If your samples are not already in an `mcmc.list` object, check out `?postpack::post_convert` to see how you may be able to reformat them.
 
