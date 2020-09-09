@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">postpack</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.2</span>
       </span>
     </div>
 
@@ -115,7 +115,7 @@
 <div id="prequisites" class="section level1">
 <h1 class="hasAnchor">
 <a href="#prequisites" class="anchor"></a>Prequisites</h1>
-<p>‘postpack’ requires that your MCMC samples are stored in <code>mcmc.list</code> objects (class and methods supplied by the ‘coda’ package). Some MCMC interfaces produce this output by default (<code><a href="https://rdrr.io/pkg/rjags/man/coda.samples.html">rjags::coda.samples()</a></code>, <code><a href="https://rdrr.io/pkg/jagsUI/man/jagsbasic.html">jagsUI::jags.basic()</a></code>, and <code>jagsUI::jags()$samples</code>). Others produce output that can be fairly easily converted to this format (<code><a href="https://rdrr.io/pkg/R2WinBUGS/man/bugs.html">R2WinBUGS::bugs()</a></code>, <code><a href="https://rdrr.io/pkg/R2OpenBUGS/man/bugs.html">R2OpenBUGS::bugs()</a></code>, <code><a href="https://mc-stan.org/rstan/reference/stan.html">rstan::stan()</a></code>, <code><a href="https://rdrr.io/pkg/nimble/man/runMCMC.html">nimble::runMCMC()</a></code>).</p>
+<p>‘postpack’ requires that your MCMC samples are stored in <code>mcmc.list</code> objects (class and methods supplied by the ‘coda’ package). Some MCMC interfaces produce this output by default (<code><a href="https://rdrr.io/pkg/rjags/man/coda.samples.html">rjags::coda.samples()</a></code>, <code><a href="https://rdrr.io/pkg/jagsUI/man/jagsbasic.html">jagsUI::jags.basic()</a></code>, and <code><a href="https://rdrr.io/pkg/jagsUI/man/jags.html">jagsUI::jags()</a></code> <code>$samples</code>). Others produce output that can be fairly easily converted to this format (<code><a href="https://rdrr.io/pkg/R2WinBUGS/man/bugs.html">R2WinBUGS::bugs()</a></code>, <code><a href="https://rdrr.io/pkg/R2OpenBUGS/man/bugs.html">R2OpenBUGS::bugs()</a></code>, <code><a href="https://mc-stan.org/rstan/reference/stan.html">rstan::stan()</a></code>, <code><a href="https://rdrr.io/pkg/nimble/man/runMCMC.html">nimble::runMCMC()</a></code>).</p>
 <p>If your samples are not already in an <code>mcmc.list</code> object, check out <code><a href="../reference/post_convert.html">?postpack::post_convert</a></code> to see how you may be able to reformat them.</p>
 <p>This vignette uses an example <code>mcmc.list</code> object called <code>cjs</code> to illustrate the main features of ‘postpack’, see <code><a href="../reference/cjs.html">?cjs</a></code> or <code><a href="../articles/example-mcmclists.html">vignette("example-mcmclists")</a></code> for more details. To follow along, load it and ‘postpack’ into your session:</p>
 <div class="sourceCode" id="cb1"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">postpack</span>)
@@ -169,7 +169,7 @@
 ## 2.5%  0.9614656 1.7836702 1.324638 1.1597562 0.6748646
 ## 97.5% 1.8053107 3.1633955 2.287703 1.9605019 1.5194312</code></pre>
 <p>Several ‘postpack’ functions accept the <code>params</code> argument (always in the second argument if it is present) to specify queries from the <code>mcmc.list</code> passed to <code>post</code>, so learning to use it is key. More information on using regular expressions to extract particular nodes can be found in <code><a href="../articles/pattern-matching.html">vignette("pattern-matching")</a></code>.</p>
-<p>Estimates of the uncertainty associated with MCMC sampling in the mean and quantiles can be obtained using the <code>mcse</code> argument (which calls <code><a href="https://rdrr.io/pkg/mcmcse/man/mcse.html">?mcmcse::mcse</a></code> and <code><a href="https://rdrr.io/pkg/mcmcse/man/mcse.q.html">?mcmcse::mcse.q</a></code>):</p>
+<p>Estimates of the uncertainty associated with MCMC sampling in the mean and quantiles can be obtained using the <code>mcse</code> argument (which calls <code><a href="https://rdrr.io/pkg/mcmcse/man/mcse.html">mcmcse::mcse()</a></code> and <code><a href="https://rdrr.io/pkg/mcmcse/man/mcse.q.html">mcmcse::mcse.q()</a></code>):</p>
 <div class="sourceCode" id="cb14"><html><body><pre class="r"><span class="fu"><a href="../reference/post_summ.html">post_summ</a></span>(<span class="no">cjs</span>, <span class="st">"^B"</span>, <span class="kw">mcse</span> <span class="kw">=</span> <span class="fl">TRUE</span>)</pre></body></html></div>
 <pre><code>##                    B0          B1
 ## mean       1.59031238 0.415103100
@@ -215,18 +215,18 @@
 ## 97.5%   2.4394721 8.206409e-01
 ## Rhat    1.0220000 1.043000e+00
 ## neff  500.0000000 4.320000e+02</code></pre>
-<p><code>neff = TRUE</code> triggers a call to <code><a href="https://rdrr.io/pkg/coda/man/effectiveSize.html">?coda::effectiveSize</a></code> to estimate the number of MCMC samples that are independent and <code>Rhat = TRUE</code> triggers a call to <code><a href="https://rdrr.io/pkg/coda/man/gelman.diag.html">?coda::gelman.diag</a></code> to calculate the commonly used Rhat convergence diagnostic (numbers near 1 are ideal, greater than 1.1 may be problematic). <code>"Rhat"</code> will always be rounded to three digits, and <code>"neff"</code> will always be rounded to an integer, regardless of the value of the <code>digits</code> argument.</p>
-<p>Viewing the density and trace plot for a parameter is another common way to evaluate algorithm convergence. The <code><a href="../reference/diag_plots.html">diag_plots()</a></code> function serves this purpose (which, unlike <code>?coda:::plot.mcmc.list</code>, allows plotting the densities color coded by chain and only for specific nodes):</p>
+<p><code>neff = TRUE</code> triggers a call to <code><a href="https://rdrr.io/pkg/coda/man/effectiveSize.html">coda::effectiveSize()</a></code> to estimate the number of MCMC samples that are independent and <code>Rhat = TRUE</code> triggers a call to <code><a href="https://rdrr.io/pkg/coda/man/gelman.diag.html">coda::gelman.diag()</a></code> to calculate the commonly used Rhat convergence diagnostic (numbers near 1 are ideal, greater than 1.1 may be problematic). <code>"Rhat"</code> will always be rounded to three digits, and <code>"neff"</code> will always be rounded to an integer, regardless of the value of the <code>digits</code> argument.</p>
+<p>Viewing the density and trace plot for a parameter is another common way to evaluate algorithm convergence. The <code><a href="../reference/diag_plots.html">diag_plots()</a></code> function serves this purpose (which, unlike <code>coda:::plot.mcmc()</code>, allows plotting the densities color coded by chain and only for specific nodes):</p>
 <div class="sourceCode" id="cb20"><html><body><pre class="r"><span class="fu"><a href="../reference/diag_plots.html">diag_plots</a></span>(<span class="no">cjs</span>, <span class="kw">params</span> <span class="kw">=</span> <span class="st">"SIG"</span>)</pre></body></html></div>
 <p><img src="feature-overview_files/figure-html/unnamed-chunk-12-1.png" width="384" style="display: block; margin: auto;"></p>
 <p>Options exist to:</p>
 <ul>
-<li>display the Rhat and effective MCMC samples for each node (the <code>show_diags</code> argument, which accepts value of <code>"always"</code>, <code>"never"</code>, or <code>"if_poor_Rhat"</code> with the last one being the default. See <code><a href="../reference/diag_plots.html">?diag_plots</a></code> for details),</li>
-<li>plot the output in a new external device (the <code>ext_device</code> argument)</li>
-<li>change the size of the graphics device (the <code>dims</code> argument),</li>
-<li>change the layout of parameters on the device (the <code>layout</code> argument),</li>
-<li>save the output to a PDF graphics device (the <code>save</code> argument, which then requires that you enter the <code>file</code> argument, which is the file name of the PDF complete with the <code>".pdf"</code> extension).</li>
-<li>thin the chains by some percentage (at quasi-evenly spaced intervals) before drawing the trace plot – this can help manage the file size when generating many plots with many samples while still providing much of the same inference as the unthinned output. The argument <code>keep_percent = 0.8</code> is passed to <code><a href="../reference/post_thin.html">?post_thin</a></code>, and would discard 20% of the samples prior to trace plotting. This thinning does not affect the density plot visual – all retained samples are plotted there.</li>
+<li>Display the Rhat and effective MCMC samples for each node (the <code>show_diags</code> argument, which accepts value of <code>"always"</code>, <code>"never"</code>, or <code>"if_poor_Rhat"</code> with the last one being the default. See <code><a href="../reference/diag_plots.html">?diag_plots</a></code> for details).</li>
+<li>Plot the output in a new external device (the <code>ext_device</code> argument).</li>
+<li>Change the size of the graphics device (the <code>dims</code> argument).</li>
+<li>Change the layout of parameters on the device (the <code>layout</code> argument).</li>
+<li>Save the output to a PDF graphics device (the <code>save</code> argument, which then requires that you enter the <code>file</code> argument, which is the file name of the PDF complete with the <code>".pdf"</code> extension).</li>
+<li>Thin the chains by some percentage (at quasi-evenly spaced intervals) before drawing the trace plot – this can help manage the file size when generating many plots with many samples while still providing much of the same inference as the unthinned output. The argument <code>keep_percent = 0.8</code> is passed to <code><a href="../reference/post_thin.html">post_thin()</a></code>, and would discard 20% of the samples prior to trace plotting. This thinning does not affect the density plot visual – all retained samples are plotted there.</li>
 </ul>
 <p>The <code>dims</code> and <code>layout</code> arguments are set to <code>"auto"</code> by default – for adjustment of these settings, see <code><a href="../reference/diag_plots.html">?diag_plots</a></code>.</p>
 <p>The more chains there are in the <code>mcmc.list</code> object passed to the <code>post</code> argument, the more colors will be displayed.</p>
