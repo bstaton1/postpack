@@ -24,7 +24,7 @@ density_plot = function(post, param, show_diags = "if_poor_Rhat") {
   param = ins_regex_lock(param)
 
   # extract this node's samples
-  post_sub = post_subset(post, param, matrix = T, iters = T, chains = T)
+  post_sub = post_subset(post, param, matrix = TRUE, iters = TRUE, chains = TRUE)
 
   # fit the KDE
   dens = suppressWarnings(density(post_sub[,3]))
@@ -34,6 +34,8 @@ density_plot = function(post, param, show_diags = "if_poor_Rhat") {
   y_max = max(tapply(post_sub[,3], post_sub[,"CHAIN"], function(x) suppressWarnings(max(density(x)$y))))
 
   # set up device
+  # don't need on.exit(par(oldpar)) here: handled in diag_plots()
+  # and this function is non-exported
   par(yaxs = "i", mar = c(1.5,2,2.5,0.5), tcl = -0.25,
       mgp = c(1.5,0.4,0))
 
@@ -51,7 +53,7 @@ density_plot = function(post, param, show_diags = "if_poor_Rhat") {
 
   # calculate convergence diagnostics if requested
   if (show_diags %in% c("always", "if_poor_Rhat")) {
-    diags = post_summ(post, param, Rhat = T, neff = T)[c("Rhat", "neff"),]
+    diags = post_summ(post, param, Rhat = TRUE, neff = TRUE)[c("Rhat", "neff"),]
     if (!is.na(diags["Rhat"])) {
       if (diags["Rhat"] >= 1.1 | show_diags == "always") {
         Rhat_text = paste0("Rhat: ", diags["Rhat"])

@@ -35,18 +35,18 @@ navbar:
         href: articles/example-mcmclists.html
 
 reference:
-- title: Learn About Samples
+- title: 'Learn About Samples'
   desc: '_What is contained in your posterior object?_'
   contents:
     - '`get_params`'
     - '`post_dim`'
     - '`match_params`'
-- title: Summarize and Diagnose Posteriors
+- title: 'Summarize and Diagnose Posteriors'
   desc: '_Necessary for making inference_'
   contents:
     - '`post_summ`'
     - '`diag_plots`'
-- title: Manipulate Samples
+- title: 'Manipulate Samples'
   desc: '_Make changes to your posterior object_'
   contents:
     - '`post_bind`'
@@ -55,20 +55,21 @@ reference:
     - '`post_subset`'
     - '`post_remove`'
     - '`vcov_decomp`'
-- title: 'Example mcmc.list Objects'
+- title: "Example 'mcmc.list' Objects"
   desc: '_A set of example objects for examples, vignettes, and practice_'
   contents:
     - '`cjs`'
     - '`cjs_no_rho`'
-- title: Miscellaneous
+- title: 'Miscellaneous'
   desc: '_Not sure where to put these_'
   contents:
     - '`array_format`'
     - '`write_model`'
 - title: 'Non-Exported Functions'
-  desc: '_"Under-the-hood" type functions that users will rarely (if ever) use or see_'
+  desc: '_"Under-the-hood" functions that users will rarely (if ever) use or see_'
   contents:
     - '`density_plot`'
+    - '`trace_plot`'
     - '`drop_index`'
     - '`id_mat`'
     - '`ins_regex_bracket`'
@@ -77,4 +78,3 @@ reference:
     - '`mytitle`'
     - '`rm_regex_bracket`'
     - '`rm_regex_lock`'
-    - '`trace_plot`'

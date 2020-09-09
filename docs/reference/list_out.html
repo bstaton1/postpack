@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">postpack</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.2</span>
       </span>
     </div>
 
@@ -185,14 +185,6 @@ element on each line. See the examples.</p></td>
     <p>A character vector with length == 1; ready to be passed to
 <code><a href='https://rdrr.io/r/base/stop.html'>base::stop()</a></code>, <code><a href='https://rdrr.io/r/base/warning.html'>base::warning()</a></code>, or <code><a href='https://rdrr.io/r/base/cat.html'>base::cat()</a></code>, to provide a useful message.</p>
 
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw pkg'>postpack</span><span class='kw ns'>:::</span><span class='fu'>list_out</span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='no'>letters</span>[<span class='fl'>1</span>:<span class='fl'>10</span>])</div><div class='output co'>#&gt; [1] "a, b, c, d, e, f, g, h, i, j"</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/cat.html'>cat</a></span>(<span class='kw pkg'>postpack</span><span class='kw ns'>:::</span><span class='fu'>list_out</span>(<span class='no'>letters</span>[<span class='fl'>1</span>:<span class='fl'>26</span>], <span class='kw'>wrap</span> <span class='kw'>=</span> <span class='st'>"'"</span>, <span class='kw'>per_line</span> <span class='kw'>=</span> <span class='fl'>4</span>, <span class='kw'>final</span> <span class='kw'>=</span> <span class='st'>"or"</span>, <span class='kw'>indent</span> <span class='kw'>=</span> <span class='st'>"  "</span>))</div><div class='output co'>#&gt;   'a', 'b', 'c', 'd', 
-#&gt;   'e', 'f', 'g', 'h', 
-#&gt;   'i', 'j', 'k', 'l', 
-#&gt;   'm', 'n', 'o', 'p', 
-#&gt;   'q', 'r', 's', 't', 
-#&gt;   'u', 'v', 'w', 'x', 
-#&gt;   'y', or 'z'</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

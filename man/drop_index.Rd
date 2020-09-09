@@ -20,8 +20,3 @@ the index of the node element in question. Returns just the node name.
 \note{
 This is \strong{not} a function users will generally use directly.
 }
-\examples{
-postpack:::drop_index("a[1]")
-postpack:::drop_index(c("a[1]", "a[2]"))
-postpack:::drop_index(c("a[1,1,1,1,1]", "a[2,2,2,2,2]"))
-}

@@ -49,7 +49,7 @@
 #' post_summ(cjs, "p", probs = c(0.5, 0.1, 0.9))
 #' @export
 
-post_summ = function(post, params, digits = NULL, probs = c(0.5, 0.025, 0.975), Rhat = FALSE, neff = FALSE, mcse = FALSE, by_chain = F, auto_escape = TRUE) {
+post_summ = function(post, params, digits = NULL, probs = c(0.5, 0.025, 0.975), Rhat = FALSE, neff = FALSE, mcse = FALSE, by_chain = FALSE, auto_escape = TRUE) {
 
   # warn user that some arguments will be ignored if doing by chain
   if (any(c(Rhat, neff, mcse)) & by_chain) {
@@ -95,7 +95,7 @@ post_summ = function(post, params, digits = NULL, probs = c(0.5, 0.025, 0.975), 
 
   # if requested, calculate Rhat
   if (Rhat & !by_chain) {
-    Rhat = round(coda::gelman.diag(post_sub, autoburnin = F, multivariate = F)[[1]][,1], 3)
+    Rhat = round(coda::gelman.diag(post_sub, autoburnin = FALSE, multivariate = FALSE)[[1]][,1], 3)
     output = rbind(
       output,
       Rhat = Rhat

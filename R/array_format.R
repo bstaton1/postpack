@@ -56,7 +56,7 @@ array_format = function(v) {
   inds = stringr::str_replace(inds, "\\]", "")
 
   # extract the index in each dimension that each element corresponds to
-  dim_ids = matrix(as.numeric(unlist(stringr::str_split(inds, ","))), length(inds), ndims, byrow = T)
+  dim_ids = matrix(as.numeric(unlist(stringr::str_split(inds, ","))), length(inds), ndims, byrow = TRUE)
 
   # number of elements per dimension
   dims = apply(dim_ids, 2, max)

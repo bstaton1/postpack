@@ -80,7 +80,7 @@ if (interactive()) {
   diag_plots(cjs, "B0")
 
   # use a new device
-  diag_plots(cjs, "B0", ext_device = T)
+  diag_plots(cjs, "B0", ext_device = TRUE)
 
   # always show diagnostic summaries
   diag_plots(cjs, "B0", show_diags = "always")
@@ -89,7 +89,7 @@ if (interactive()) {
   diag_plots(cjs, c("sig", "b"), layout = "5x3")
 
   # save diagnostics for all nodes to a pdf file
-  diag_plots(cjs, "", save = T, file = "diags.pdf")
+  diag_plots(cjs, "", save = TRUE, file = "diags.pdf")
 }
 }
 \seealso{

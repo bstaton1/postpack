@@ -76,7 +76,7 @@ plotting device scales to the job needed." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">postpack</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.2</span>
       </span>
     </div>
 
@@ -256,7 +256,7 @@ The <code>keep_percent</code> argument is intended to help with this by thinning
   <span class='fu'>diag_plots</span>(<span class='no'>cjs</span>, <span class='st'>"B0"</span>)
 
   <span class='co'># use a new device</span>
-  <span class='fu'>diag_plots</span>(<span class='no'>cjs</span>, <span class='st'>"B0"</span>, <span class='kw'>ext_device</span> <span class='kw'>=</span> <span class='no'>T</span>)
+  <span class='fu'>diag_plots</span>(<span class='no'>cjs</span>, <span class='st'>"B0"</span>, <span class='kw'>ext_device</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
 
   <span class='co'># always show diagnostic summaries</span>
   <span class='fu'>diag_plots</span>(<span class='no'>cjs</span>, <span class='st'>"B0"</span>, <span class='kw'>show_diags</span> <span class='kw'>=</span> <span class='st'>"always"</span>)
@@ -265,7 +265,7 @@ The <code>keep_percent</code> argument is intended to help with this by thinning
   <span class='fu'>diag_plots</span>(<span class='no'>cjs</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"sig"</span>, <span class='st'>"b"</span>), <span class='kw'>layout</span> <span class='kw'>=</span> <span class='st'>"5x3"</span>)
 
   <span class='co'># save diagnostics for all nodes to a pdf file</span>
-  <span class='fu'>diag_plots</span>(<span class='no'>cjs</span>, <span class='st'>""</span>, <span class='kw'>save</span> <span class='kw'>=</span> <span class='no'>T</span>, <span class='kw'>file</span> <span class='kw'>=</span> <span class='st'>"diags.pdf"</span>)
+  <span class='fu'>diag_plots</span>(<span class='no'>cjs</span>, <span class='st'>""</span>, <span class='kw'>save</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>file</span> <span class='kw'>=</span> <span class='st'>"diags.pdf"</span>)
 }</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
