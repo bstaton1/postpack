@@ -93,7 +93,7 @@ match_params = function(post, params, type = "base_index", auto_escape = TRUE) {
         "\n  Supplied value(s) of params (",
         list_out(params[u_base_matches == 0], final = "and", wrap = '"'),
         ") did not have any matches in the nodes stored in post.\n  All elements of params must have at least one match.\n  The base names of all monitored nodes are:\n", list_out(u_params, final = "and", wrap = '"', per_line = 4, indent = "    "), sep = ""),
-      call. = F)
+      call. = FALSE)
   }
 
   # return the names of the exact nodes to extract

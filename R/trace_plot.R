@@ -20,7 +20,7 @@ trace_plot = function(post, param, keep_percent = 0) {
   post = post_thin(post, keep_percent = keep_percent)
 
   # extract this node's samples
-  post_sub = post_subset(post, param, matrix = T, iters = T, chains = T)
+  post_sub = post_subset(post, param, matrix = TRUE, iters = TRUE, chains = TRUE)
 
   # get axis limits
   y_lim = range(post_sub[,3])
@@ -30,7 +30,7 @@ trace_plot = function(post, param, keep_percent = 0) {
       mgp = c(1.5,0.4,0), yaxs = "r")
 
   # create an empty plotting region
-  plot(1,1, axes = F, type = "n",
+  plot(1,1, axes = FALSE, type = "n",
        xlim = range(post_sub[,"ITER"]),
        ylim = y_lim, xlab = "", ylab = "")
 

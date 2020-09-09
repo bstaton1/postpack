@@ -12,7 +12,7 @@ post_summ(
   Rhat = FALSE,
   neff = FALSE,
   mcse = FALSE,
-  by_chain = F,
+  by_chain = FALSE,
   auto_escape = TRUE
 )
 }

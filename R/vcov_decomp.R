@@ -38,7 +38,7 @@ vcov_decomp = function(post, param, sigma_base_name = "sigma", rho_base_name = "
   }
 
   # extract desired node
-  Sigma_samps = post_subset(post, param, matrix = T)
+  Sigma_samps = post_subset(post, param, matrix = TRUE)
   test_mat = array_format(Sigma_samps[1,])
 
   # check for whether node matched by param is a matrix: search for 1 comma

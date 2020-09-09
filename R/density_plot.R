@@ -24,7 +24,7 @@ density_plot = function(post, param, show_diags = "if_poor_Rhat") {
   param = ins_regex_lock(param)
 
   # extract this node's samples
-  post_sub = post_subset(post, param, matrix = T, iters = T, chains = T)
+  post_sub = post_subset(post, param, matrix = TRUE, iters = TRUE, chains = TRUE)
 
   # fit the KDE
   dens = suppressWarnings(density(post_sub[,3]))
@@ -51,7 +51,7 @@ density_plot = function(post, param, show_diags = "if_poor_Rhat") {
 
   # calculate convergence diagnostics if requested
   if (show_diags %in% c("always", "if_poor_Rhat")) {
-    diags = post_summ(post, param, Rhat = T, neff = T)[c("Rhat", "neff"),]
+    diags = post_summ(post, param, Rhat = TRUE, neff = TRUE)[c("Rhat", "neff"),]
     if (!is.na(diags["Rhat"])) {
       if (diags["Rhat"] >= 1.1 | show_diags == "always") {
         Rhat_text = paste0("Rhat: ", diags["Rhat"])

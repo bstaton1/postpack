@@ -49,7 +49,7 @@
 #'   diag_plots(cjs, "B0")
 #'
 #'   # use a new device
-#'   diag_plots(cjs, "B0", ext_device = T)
+#'   diag_plots(cjs, "B0", ext_device = TRUE)
 #'
 #'   # always show diagnostic summaries
 #'   diag_plots(cjs, "B0", show_diags = "always")
@@ -58,7 +58,7 @@
 #'   diag_plots(cjs, c("sig", "b"), layout = "5x3")
 #'
 #'   # save diagnostics for all nodes to a pdf file
-#'   diag_plots(cjs, "", save = T, file = "diags.pdf")
+#'   diag_plots(cjs, "", save = TRUE, file = "diags.pdf")
 #' }
 #' @export
 
@@ -105,7 +105,7 @@ diag_plots = function(post, params, ext_device = FALSE, show_diags = "if_poor_Rh
   }
   height_width = as.numeric(unlist(stringr::str_split(dims, "x")))
 
-  if (ext_device) dev.new(height = height_width[1], width = height_width[2], units = "in", noRStudioGD = T)
+  if (ext_device) dev.new(height = height_width[1], width = height_width[2], units = "in", noRStudioGD = TRUE)
   if (save) pdf(file, height = height_width[1], width = height_width[2])
 
   # set up the graphics device
@@ -116,7 +116,7 @@ diag_plots = function(post, params, ext_device = FALSE, show_diags = "if_poor_Rh
 
   junk = sapply(keep, function(i) {
     if (which(keep == i) %in% new_page & ext_device) {
-      dev.new(height = height_width[1], width = height_width[2], units = "in", noRStudioGD = T)
+      dev.new(height = height_width[1], width = height_width[2], units = "in", noRStudioGD = TRUE)
       par(mfrow = c(row_col[1],row_col[2] * 2))
     }
     density_plot(post, i, show_diags)

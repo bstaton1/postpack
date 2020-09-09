@@ -92,7 +92,7 @@ id_mat = function(post) {
   }
 
   # extract and return the sample identification information
-  as.matrix(post, iters = T, chains = T)[,c("CHAIN", "ITER")]
+  as.matrix(post, iters = TRUE, chains = TRUE)[,c("CHAIN", "ITER")]
 }
 
 #' @title List vector elements in a nice format
@@ -126,7 +126,7 @@ list_out = function(x, final = NULL, per_line = 1e6, wrap = NULL, indent = NULL)
     } else {
       # which elements are on a new line?
       new_line = 1:n %% per_line == 0
-      new_line[n] = F
+      new_line[n] = FALSE
 
       # which elements are the first on a new line?
       first_on_line = c(1, which(new_line) + 1)

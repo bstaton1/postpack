@@ -66,7 +66,7 @@ post_thin = function(post, keep_percent, keep_iters) {
   }
 
   # convert mcmc.list to matrix
-  post_mat = as.matrix(post, chains = T, iters = T)
+  post_mat = as.matrix(post, chains = TRUE, iters = TRUE)
 
   # extract unique iteration numbers of original object
   unique_iters = unique(post_mat[,"ITER"])

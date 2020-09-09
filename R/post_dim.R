@@ -40,7 +40,7 @@ post_dim = function(post, types = NULL) {
   }
 
   # coerce to matrix
-  postm = as.matrix(post, iters = T, chains = T)
+  postm = as.matrix(post, iters = TRUE, chains = TRUE)
   iter = unique(postm[,"ITER"])
   chain = postm[,"CHAIN"]
 
