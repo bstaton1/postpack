@@ -62,10 +62,6 @@ rm_regex_lock = function(params) {
 #' @note This is **not** a function users will generally use directly.
 #' @return A character vector with the same length as `params`, with no indices included.
 #'   For example, `"a[1]"` becomes `"a"`.
-#' @examples
-#' postpack:::drop_index("a[1]")
-#' postpack:::drop_index(c("a[1]", "a[2]"))
-#' postpack:::drop_index(c("a[1,1,1,1,1]", "a[2,2,2,2,2]"))
 
 drop_index = function(params) {
   stringr::str_replace(params, "\\[.+\\]", "")
@@ -110,9 +106,6 @@ id_mat = function(post) {
 #'   element on each line. See the examples.
 #' @return A character vector with length == 1; ready to be passed to
 #'   [base::stop()], [base::warning()], or [base::cat()], to provide a useful message.
-#' @examples
-#' postpack:::list_out(x = letters[1:10])
-#' cat(postpack:::list_out(letters[1:26], wrap = "'", per_line = 4, final = "or", indent = "  "))
 
 list_out = function(x, final = NULL, per_line = 1e6, wrap = NULL, indent = NULL) {
 
@@ -158,4 +151,3 @@ list_out = function(x, final = NULL, per_line = 1e6, wrap = NULL, indent = NULL)
   # return the output
   return(out)
 }
-
