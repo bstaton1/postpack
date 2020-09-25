@@ -30,7 +30,13 @@ Common tasks encompassed by "post-processing" include:
 
 > Ready to give 'postpack' a try in your workflow? 
 
-Currently it is only available through GitHub (CRAN submission planned soon). It can be installed via:
+A stable version can be found on [CRAN](https://CRAN.R-project.org/package=postpack):
+
+```R
+install.packages("postpack")
+```
+
+Or the development version can be installed via:
 
 ```R
 remotes::install_github("bstaton1/postpack")
