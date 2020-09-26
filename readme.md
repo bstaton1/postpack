@@ -41,3 +41,7 @@ Or the development version can be installed via:
 ```R
 remotes::install_github("bstaton1/postpack")
 ```
+
+## Acknowledgments
+
+Many thanks to [Henry Hershey](https://twitter.com/spoonbill_hank) for designing the hex sticker and for feedback on overall usability.
