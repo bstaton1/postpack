@@ -5,7 +5,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Utilities for Processing Posterior Samples Stored in mcmc.lists • postpack</title>
+<title>'postpack' • postpack</title>
 <!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
 <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
 <link rel="apple-touch-icon" type="image/png" sizes="180x180" href="apple-touch-icon.png">
@@ -17,20 +17,9 @@
 <script src="bootstrap-toc.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="pkgdown.css" rel="stylesheet">
-<script src="pkgdown.js"></script><meta property="og:title" content="Utilities for Processing Posterior Samples Stored in mcmc.lists">
-<meta property="og:description" content="The aim of postpack is to provide the infrastructure for a standardized workflow for mcmc.list objects.
-    These objects can be used to store output from models fitted with Bayesian inference using
-    JAGS, WinBUGS, OpenBUGS, NIMBLE, Stan, or even custom MCMC algorithms. Although the coda R package provides
-    some methods for these objects, it is somewhat limited in easily performing post-processing tasks for
-    specific nodes. Models are ever increasing in their complexity and the number of tracked nodes, and oftentimes
-    a user may wish to summarize/diagnose sampling behavior for only a small subset of nodes at a time
-    for a particular question or figure. Thus, many postpack functions support performing tasks on a
-    subset of nodes, where the subset is specified with regular expressions. The functions in postpack
-    streamline the extraction, summarization, and diagnostics of specific monitored nodes after model fitting.
-    Further, because there is rarely only ever one model under consideration, postpack scales efficiently 
-    to perform the same tasks on output from multiple models simultaneously, facilitating rapid assessment 
-    of model sensitivity to changes in assumptions.">
-<meta property="og:image" content="/reference/figures/postpack-social-media-image.png">
+<script src="pkgdown.js"></script><meta property="og:title" content="'postpack'">
+<meta property="og:description" content="Facilitates extracting, summarizing, and diagnosing samples for specific quantities from models fitted with MCMC methods">
+<meta property="og:image" content="https://raw.githubusercontent.com/bstaton1/postpack/add-sticker/man/figures/postpack-social-media-image.png">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:creator" content="@bstat0n">
 <meta name="twitter:site" content="@bstat0n">
