@@ -1,5 +1,5 @@
 home:
-  title: 'postpack': R package for working with 'mcmc.list' objects
+  title: "'postpack'"
   description: Facilitates extracting, summarizing, and diagnosing samples for specific quantities from models fitted with MCMC methods
 template:
   opengraph:
