@@ -1,4 +1,4 @@
-## Why 'postpack'?
+## Why 'postpack'? <img src="man/figures/logo.png" align="right" height=200px/>
 
 'postpack' exists to facilitate processing the output of models fitted using Markov Chain Monte Carlo (MCMC) methods, as is commonly done in Bayesian inference. Although substantial capabilities exist to interface from R with programs that perform MCMC like JAGS, WinBUGS, OpenBUGS, NIMBLE, and Stan, the functionality to easily process the output is sometimes lacking. 
 
@@ -41,3 +41,7 @@ Or the development version can be installed via:
 ```R
 remotes::install_github("bstaton1/postpack")
 ```
+
+## Acknowledgments
+
+Many thanks to [Henry Hershey](https://twitter.com/spoonbill_hank) for designing the hex sticker and for feedback on overall usability.

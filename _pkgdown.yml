@@ -1,3 +1,13 @@
+home:
+  title: "'postpack'"
+  description: Facilitates extracting, summarizing, and diagnosing samples for specific quantities from models fitted with MCMC methods
+template:
+  opengraph:
+    image:
+      src: https://raw.githubusercontent.com/bstaton1/postpack/add-sticker/man/figures/postpack-social-media-image.png
+    twitter:
+      creator: "@bstat0n"
+      card: summary_large_image
 navbar:
   structure:
     left:
