@@ -1,5 +1,5 @@
-#hex sticker designed by Henry Hershey
-#licensed to Ben Staton on 2020-09-25
+# hex sticker designed by Henry Hershey
+# licensed to Ben Staton on 2020-09-25
 
 # install.packages("hexSticker")
 library(hexSticker)
