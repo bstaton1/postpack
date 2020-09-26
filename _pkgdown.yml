@@ -2,6 +2,9 @@ template:
   opengraph:
     image:
       src: man/figures/postpack-social-media-image.png
+    twitter:
+      creator: "@bstat0n"
+      card: summary_large_image
 navbar:
   structure:
     left:
