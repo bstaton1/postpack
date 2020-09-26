@@ -4,7 +4,7 @@ home:
 template:
   opengraph:
     image:
-      src: man/figures/postpack-social-media-image.png
+      src: https://raw.githubusercontent.com/bstaton1/postpack/add-sticker/man/figures/postpack-social-media-image.png
     twitter:
       creator: "@bstat0n"
       card: summary_large_image
