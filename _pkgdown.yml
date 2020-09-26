@@ -1,3 +1,7 @@
+template:
+  opengraph:
+    image:
+      src: man/figures/postpack-social-media-image.png
 navbar:
   structure:
     left:
