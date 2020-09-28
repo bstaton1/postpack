@@ -16,9 +16,38 @@ This vignette is intended to get you up and running using 'postpack' to process 
 
 # Prequisites
 
-'postpack' requires that your MCMC samples are stored in `mcmc.list` objects (class and methods supplied by the 'coda' package). Some MCMC interfaces produce this output by default (`rjags::coda.samples()`, `jagsUI::jags.basic()`, and `jagsUI::jags()` `$samples`). Others produce output that can be fairly easily converted to this format (`R2WinBUGS::bugs()`, `R2OpenBUGS::bugs()`, `rstan::stan()`, `nimble::runMCMC()`).
+'postpack' requires that your MCMC samples are stored in `mcmc.list` objects (class and methods supplied by the 'coda' package).
+MCMC samples should be produced from at least two chains -- single chain output has not been tested with 'postpack' functions.
+Some MCMC interfaces produce this output by default, while others require an extra step to convert to `mcmc.list`.
 
-If your samples are not already in an `mcmc.list` object, check out `?postpack::post_convert` to see how you may be able to reformat them.
+**JAGS**
+
+`mcmc.list` output is returned by:
+
+* `rjags::coda.samples()`
+* `jagsUI::jags.basic()`
+* The `$samples` element of `jagsUI::jags()`
+
+**NIMBLE**
+
+To obtain `mcmc.list` output, users should set the `samplesAsCodaMCMC = TRUE` argument when calling `nimble::runMCMC()`.
+
+**Stan**
+
+The output of `rstan::stan()` can be converted to `mcmc.list` format using `rstan::As.mcmc.list()`.
+
+**WinBUGS/OpenBUGS**
+
+The output of both:
+
+* `R2WinBUGS::bugs()`
+* `R2OpenBUGS::bugs()`
+
+can be converted to `mcmc.list` format using `coda::as.mcmc.list()` or `postpack::post_convert()`.
+
+If your samples were generated another way (e.g., a custom MCMC algorithm or a package like 'MCMCpack'), check out `?postpack::post_convert` to see how you may be able to reformat them.
+
+# Getting Started
 
 This vignette uses an example `mcmc.list` object called `cjs` to illustrate the main features of 'postpack', see `?cjs` or `vignette("example-mcmclists")` for more details. To follow along, load it and 'postpack' into your session:
 
