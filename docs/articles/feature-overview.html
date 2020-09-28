@@ -125,8 +125,31 @@
 <div id="prequisites" class="section level1">
 <h1 class="hasAnchor">
 <a href="#prequisites" class="anchor"></a>Prequisites</h1>
-<p>‘postpack’ requires that your MCMC samples are stored in <code>mcmc.list</code> objects (class and methods supplied by the ‘coda’ package). Some MCMC interfaces produce this output by default (<code><a href="https://rdrr.io/pkg/rjags/man/coda.samples.html">rjags::coda.samples()</a></code>, <code><a href="https://rdrr.io/pkg/jagsUI/man/jagsbasic.html">jagsUI::jags.basic()</a></code>, and <code><a href="https://rdrr.io/pkg/jagsUI/man/jags.html">jagsUI::jags()</a></code> <code>$samples</code>). Others produce output that can be fairly easily converted to this format (<code><a href="https://rdrr.io/pkg/R2WinBUGS/man/bugs.html">R2WinBUGS::bugs()</a></code>, <code><a href="https://rdrr.io/pkg/R2OpenBUGS/man/bugs.html">R2OpenBUGS::bugs()</a></code>, <code><a href="https://mc-stan.org/rstan/reference/stan.html">rstan::stan()</a></code>, <code><a href="https://rdrr.io/pkg/nimble/man/runMCMC.html">nimble::runMCMC()</a></code>).</p>
-<p>If your samples are not already in an <code>mcmc.list</code> object, check out <code><a href="../reference/post_convert.html">?postpack::post_convert</a></code> to see how you may be able to reformat them.</p>
+<p>‘postpack’ requires that your MCMC samples are stored in <code>mcmc.list</code> objects (class and methods supplied by the ‘coda’ package). MCMC samples should be produced from at least two chains – single chain output has not been tested with ‘postpack’ functions. Some MCMC interfaces produce this output by default, while others require an extra step to convert to <code>mcmc.list</code>.</p>
+<p><strong>JAGS</strong></p>
+<p><code>mcmc.list</code> output is returned by:</p>
+<ul>
+<li><code><a href="https://rdrr.io/pkg/rjags/man/coda.samples.html">rjags::coda.samples()</a></code></li>
+<li><code><a href="https://rdrr.io/pkg/jagsUI/man/jagsbasic.html">jagsUI::jags.basic()</a></code></li>
+<li>The <code>$samples</code> element of <code><a href="https://rdrr.io/pkg/jagsUI/man/jags.html">jagsUI::jags()</a></code>
+</li>
+</ul>
+<p><strong>NIMBLE</strong></p>
+<p>To obtain <code>mcmc.list</code> output, users should set the <code>samplesAsCodaMCMC = TRUE</code> argument when calling <code><a href="https://rdrr.io/pkg/nimble/man/runMCMC.html">nimble::runMCMC()</a></code>.</p>
+<p><strong>Stan</strong></p>
+<p>The output of <code><a href="https://mc-stan.org/rstan/reference/stan.html">rstan::stan()</a></code> can be converted to <code>mcmc.list</code> format using <code><a href="https://mc-stan.org/rstan/reference/As.mcmc.list.html">rstan::As.mcmc.list()</a></code>.</p>
+<p><strong>WinBUGS/OpenBUGS</strong></p>
+<p>The output of both:</p>
+<ul>
+<li><code><a href="https://rdrr.io/pkg/R2WinBUGS/man/bugs.html">R2WinBUGS::bugs()</a></code></li>
+<li><code><a href="https://rdrr.io/pkg/R2OpenBUGS/man/bugs.html">R2OpenBUGS::bugs()</a></code></li>
+</ul>
+<p>can be converted to <code>mcmc.list</code> format using <code><a href="https://rdrr.io/pkg/coda/man/mcmc.list.html">coda::as.mcmc.list()</a></code> or <code><a href="../reference/post_convert.html">postpack::post_convert()</a></code>.</p>
+<p>If your samples were generated another way (e.g., a custom MCMC algorithm or a package like ‘MCMCpack’), check out <code><a href="../reference/post_convert.html">?postpack::post_convert</a></code> to see how you may be able to reformat them.</p>
+</div>
+<div id="getting-started" class="section level1">
+<h1 class="hasAnchor">
+<a href="#getting-started" class="anchor"></a>Getting Started</h1>
 <p>This vignette uses an example <code>mcmc.list</code> object called <code>cjs</code> to illustrate the main features of ‘postpack’, see <code><a href="../reference/cjs.html">?cjs</a></code> or <code><a href="../articles/example-mcmclists.html">vignette("example-mcmclists")</a></code> for more details. To follow along, load it and ‘postpack’ into your session:</p>
 <div class="sourceCode" id="cb1"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">postpack</span>)
 <span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span>(<span class="no">cjs</span>)</pre></body></html></div>
