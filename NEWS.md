@@ -1,5 +1,10 @@
 # *NEWS*
 
+# postpack 0.5.3 (2021-06-02)
+
+* No user-facing changes made.
+* Removed 'matrixcalc' as a dependency (#45)
+
 # postpack 0.5.2 (2020-09-09)
 
 * Addressed CRAN feedback and resubmitted
