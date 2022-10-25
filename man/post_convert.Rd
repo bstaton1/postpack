@@ -25,7 +25,7 @@ Accepted classes are produced by several packages, including but probably not li
 \item \code{\link[R2jags:jags]{rjags}} objects are created by \code{\link[R2jags:jags]{R2jags::jags()}}.
 \item \code{\link[base:list]{list}} objects are created by \code{\link[nimble:runMCMC]{nimble::runMCMC()}}, 'MCMCpack' functions, or custom MCMC algorithms.
 \item \code{\link[base:matrix]{matrix}} objects are created by \code{\link[=post_subset]{post_subset()}} and is often the format of posterior quantities derived from monitored nodes.
-\item \code{\link[coda:mcmc.list]{mcmc.list}} objects are created by \code{\link[rjags:coda.samples]{rjags::coda.samples()}}, \code{\link[jagsUI:jagsbasic]{jagsUI::jags.basic()}}, and \code{\link[jagsUI:jags]{jagsUI::jags()}}\verb{$samples}. If a \code{\link[coda:mcmc.list]{mcmc.list}} object is passed to \code{obj}, an error will be returned telling the user this function is not necessary.
+\item \code{\link[coda:mcmc.list]{mcmc.list}} objects are created by \code{\link[rjags:coda.samples]{rjags::coda.samples()}}, \code{\link[jagsUI:jags.basic]{jagsUI::jags.basic()}}, and \code{\link[jagsUI:jags]{jagsUI::jags()}}\verb{$samples}. If a \code{\link[coda:mcmc.list]{mcmc.list}} object is passed to \code{obj}, an error will be returned telling the user this function is not necessary.
 }
 
 If you find that a critical class conversion is missing, please submit an \href{https://github.com/bstaton1/postpack/issues}{issue} requesting its addition with a minimum working example of how it can be created.

@@ -47,8 +47,8 @@
 #' # turn off auto escape to use [] in regex syntax rather than matching them as text
 #' match_params(cjs, params = "[:digit:]$", auto_escape = FALSE)
 #'
-#' # pass an empty string to match all (same as get_params)
-#' match_params(cjs, "")
+#' # pass a dot to match all (same as get_params)
+#' match_params(cjs, ".")
 #' @export
 
 match_params = function(post, params, type = "base_index", auto_escape = TRUE) {
