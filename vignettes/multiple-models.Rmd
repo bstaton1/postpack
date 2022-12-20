@@ -66,7 +66,7 @@ sapply(post_list, get_params, type = "base_index")
 You could verify that all parameters in both models converged well according to the `Rhat` statistic:
 
 ```{r}
-sapply(post_list, function(model) post_summ(model, "", Rhat = TRUE)["Rhat",])
+sapply(post_list, function(model) post_summ(model, ".", Rhat = TRUE)["Rhat",])
 ```
 
 (The `NaN` values for `"SIG[1,2]"` and `"SIG[2,1]"` in the `no_rho` model are because those had the same value each MCMC iteration).
