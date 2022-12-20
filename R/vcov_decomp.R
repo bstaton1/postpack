@@ -49,18 +49,21 @@ vcov_decomp = function(post, param, sigma_base_name = "sigma", rho_base_name = "
 
   # "optional" checks for covariance matrix
   if (check) {
+
     # for whether node matched by param is a square matrix
-    if(!matrixcalc::is.square.matrix(test_mat)) {
+    if (nrow(test_mat) != ncol(test_mat)) {
       stop("the node matched by param ('", matched_param, "') is a matrix in the model, but not a square one")
     }
 
     # for whether node matched by param is a symmetric matrix
-    if (!matrixcalc::is.symmetric.matrix(test_mat)) {
+    if (!isSymmetric(test_mat)) {
       stop("the node matched by param ('", matched_param, "') is a square matrix in the model, but not a symmetric one")
     }
 
-    # check for whether p is positive definite
-    if (!matrixcalc::is.positive.definite(test_mat)) {
+    # check for whether node matched by param is positive definite
+    ev = eigen(test_mat)$values
+    ev = ifelse(abs(ev) < 1e-8, 0, ev)
+    if (!all(ev >= 0)) {
       stop("the node matched by param ('", matched_param, "') is a symmetric matrix in the model, but it is not positive definite")
     }
   }
