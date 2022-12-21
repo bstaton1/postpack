@@ -1,5 +1,10 @@
 # *NEWS*
 
+# postpack 0.5.4 (2022-12-20)
+
+* Addressed error created by 'stringr' v1.5.0 handling of empty strings (#49)
+* Added packages to Suggests field of DESCRIPTION to prevent CRAN notes about undeclared packages
+
 # postpack 0.5.3 (2021-06-02)
 
 * No user-facing changes made.
