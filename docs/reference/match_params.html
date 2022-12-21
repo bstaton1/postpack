@@ -84,7 +84,7 @@ object that match a provided string." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">postpack</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.4</span>
       </span>
     </div>
 
@@ -104,7 +104,7 @@ object that match a provided string." />
   </a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     <span class="fas fa-file fa-lg"></span>
      
     Articles
@@ -229,8 +229,8 @@ See the examples below.</p>
 <span class='fu'>match_params</span>(<span class='no'>cjs</span>, <span class='st'>"s.+0"</span>)</div><div class='output co'>#&gt; [1] "sig_B0"</div><div class='input'>
 <span class='co'># turn off auto escape to use [] in regex syntax rather than matching them as text</span>
 <span class='fu'>match_params</span>(<span class='no'>cjs</span>, <span class='kw'>params</span> <span class='kw'>=</span> <span class='st'>"[:digit:]$"</span>, <span class='kw'>auto_escape</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</div><div class='output co'>#&gt; [1] "B0"     "sig_B0" "B1"     "sig_B1"</div><div class='input'>
-<span class='co'># pass an empty string to match all (same as get_params)</span>
-<span class='fu'>match_params</span>(<span class='no'>cjs</span>, <span class='st'>""</span>)</div><div class='output co'>#&gt;  [1] "B0"       "sig_B0"   "B1"       "sig_B1"   "b0[1]"    "b0[2]"   
+<span class='co'># pass a dot to match all (same as get_params)</span>
+<span class='fu'>match_params</span>(<span class='no'>cjs</span>, <span class='st'>"."</span>)</div><div class='output co'>#&gt;  [1] "B0"       "sig_B0"   "B1"       "sig_B1"   "b0[1]"    "b0[2]"   
 #&gt;  [7] "b0[3]"    "b0[4]"    "b0[5]"    "b1[1]"    "b1[2]"    "b1[3]"   
 #&gt; [13] "b1[4]"    "b1[5]"    "SIG[1,1]" "SIG[2,1]" "SIG[1,2]" "SIG[2,2]"
 #&gt; [19] "p[2]"     "p[3]"     "p[4]"    </div></pre>

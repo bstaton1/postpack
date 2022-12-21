@@ -41,7 +41,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">postpack</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.4</span>
       </span>
     </div>
 
@@ -61,7 +61,7 @@
   </a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     <span class="fas fa-file fa-lg"></span>
      
     Articles
@@ -108,7 +108,7 @@
 
       
 
-      </header><script src="multiple-models_files/header-attrs-2.6.6/header-attrs.js"></script><div class="row">
+      </header><script src="multiple-models_files/header-attrs-2.14/header-attrs.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Multiple Models</h1>
@@ -121,20 +121,40 @@
 
     
     
-<p>Rarely do we ever work with one model. Instead, you will typically want to evaluate how the posterior of a parameter changes with changes to data or model. It would be nice to scale up the functionality of ‘postpack’ to allow simple or complex post-processing tasks from posterior samples from similar models using the same consistent workflow. This vignette illustrates how this can be acheived using ‘postpack’.</p>
+<p>Rarely do we ever work with one model. Instead, you will typically
+want to evaluate how the posterior of a parameter changes with changes
+to data or model. It would be nice to scale up the functionality of
+‘postpack’ to allow simple or complex post-processing tasks from
+posterior samples from similar models using the same consistent
+workflow. This vignette illustrates how this can be acheived using
+‘postpack’.</p>
 <blockquote>
-<p>I have only recently began working with the ‘postpack’ functions in this regard efficiently, so the ideas are not fully fleshed out yet. In future versions of ‘postpack’, more functionality may be added in this regard.</p>
+<p>I have only recently began working with the ‘postpack’ functions in
+this regard efficiently, so the ideas are not fully fleshed out yet. In
+future versions of ‘postpack’, more functionality may be added in this
+regard.</p>
 </blockquote>
-<p>The most significant trick to use is to store multiple <code>mcmc.list</code> objects as elements of a larger <code>list</code> object. Suppose you have two <code>mcmc.list</code> objects from two highly similar models, named <code>cjs</code> and <code>cjs_no_rho</code> (see <code><a href="../articles/example-mcmclists.html">vignette("example-mcmclists")</a></code> or <code><a href="../reference/cjs.html">?cjs</a></code> for more details).</p>
+<p>The most significant trick to use is to store multiple
+<code>mcmc.list</code> objects as elements of a larger <code>list</code>
+object. Suppose you have two <code>mcmc.list</code> objects from two
+highly similar models, named <code>cjs</code> and
+<code>cjs_no_rho</code> (see <code><a href="../articles/example-mcmclists.html">vignette("example-mcmclists")</a></code>
+or <code><a href="../reference/cjs.html">?cjs</a></code> for more details).</p>
 <p>Load these objects into your session:</p>
 <div class="sourceCode" id="cb1"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">postpack</span>)
 <span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span>(<span class="no">cjs</span>)
 <span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span>(<span class="no">cjs_no_rho</span>)</pre></body></html></div>
-<p>And create a <code>list</code> object with them, where each element is an <code>mcmc.list</code> object:</p>
+<p>And create a <code>list</code> object with them, where each element
+is an <code>mcmc.list</code> object:</p>
 <div class="sourceCode" id="cb2"><html><body><pre class="r"><span class="no">post_list</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="no">cjs</span>, <span class="no">cjs_no_rho</span>)</pre></body></html></div>
-<p>Be sure to assign element names, which allows tracking which output is from which model later on:</p>
+<p>Be sure to assign element names, which allows tracking which output
+is from which model later on:</p>
 <div class="sourceCode" id="cb3"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span>(<span class="no">post_list</span>) <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"est_rho"</span>, <span class="st">"no_rho"</span>)</pre></body></html></div>
-<p>From here, the world is wide open to you. Anything you would do with one <code>mcmc.list</code> object, you can do with two (or any number) through the use of the base R <code><a href="https://rdrr.io/r/base/apply.html">apply()</a></code> family of functions. For example, extract the dimensions of the saved output for each model:</p>
+<p>From here, the world is wide open to you. Anything you would do with
+one <code>mcmc.list</code> object, you can do with two (or any number)
+through the use of the base R <code><a href="https://rdrr.io/r/base/apply.html">apply()</a></code> family of functions.
+For example, extract the dimensions of the saved output for each
+model:</p>
 <div class="sourceCode" id="cb4"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/lapply.html">sapply</a></span>(<span class="no">post_list</span>, <span class="no">post_dim</span>)</pre></body></html></div>
 <pre><code>##           est_rho no_rho
 ## burn        11000  11000
@@ -143,7 +163,8 @@
 ## chains          2      2
 ## saved         500    500
 ## params         21     21</code></pre>
-<p>Notice the two have identical dimensions. You can see that each model has the same parameters saved:</p>
+<p>Notice the two have identical dimensions. You can see that each model
+has the same parameters saved:</p>
 <div class="sourceCode" id="cb6"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/lapply.html">sapply</a></span>(<span class="no">post_list</span>, <span class="no">get_params</span>, <span class="kw">type</span> <span class="kw">=</span> <span class="st">"base_index"</span>)</pre></body></html></div>
 <pre><code>##       est_rho    no_rho    
 ##  [1,] "B0"       "B0"      
@@ -167,8 +188,9 @@
 ## [19,] "p[2]"     "p[2]"    
 ## [20,] "p[3]"     "p[3]"    
 ## [21,] "p[4]"     "p[4]"</code></pre>
-<p>You could verify that all parameters in both models converged well according to the <code>Rhat</code> statistic:</p>
-<div class="sourceCode" id="cb8"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/lapply.html">sapply</a></span>(<span class="no">post_list</span>, <span class="kw">function</span>(<span class="no">model</span>) <span class="fu"><a href="../reference/post_summ.html">post_summ</a></span>(<span class="no">model</span>, <span class="st">""</span>, <span class="kw">Rhat</span> <span class="kw">=</span> <span class="fl">TRUE</span>)[<span class="st">"Rhat"</span>,])</pre></body></html></div>
+<p>You could verify that all parameters in both models converged well
+according to the <code>Rhat</code> statistic:</p>
+<div class="sourceCode" id="cb8"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/lapply.html">sapply</a></span>(<span class="no">post_list</span>, <span class="kw">function</span>(<span class="no">model</span>) <span class="fu"><a href="../reference/post_summ.html">post_summ</a></span>(<span class="no">model</span>, <span class="st">"."</span>, <span class="kw">Rhat</span> <span class="kw">=</span> <span class="fl">TRUE</span>)[<span class="st">"Rhat"</span>,])</pre></body></html></div>
 <pre><code>##          est_rho no_rho
 ## B0         1.011  1.020
 ## sig_B0     1.022  1.030
@@ -191,8 +213,12 @@
 ## p[2]       1.000  1.000
 ## p[3]       0.999  1.004
 ## p[4]       1.005  1.003</code></pre>
-<p>(The <code>NaN</code> values for <code>"SIG[1,2]"</code> and <code>"SIG[2,1]"</code> in the <code>no_rho</code> model are because those had the same value each MCMC iteration).</p>
-<p>You could extract the summaries of the global survival coefficients from each model to see that the qualitative inference does not depend on the feature that differs between these two models:</p>
+<p>(The <code>NaN</code> values for <code>"SIG[1,2]"</code> and
+<code>"SIG[2,1]"</code> in the <code>no_rho</code> model are because
+those had the same value each MCMC iteration).</p>
+<p>You could extract the summaries of the global survival coefficients
+from each model to see that the qualitative inference does not depend on
+the feature that differs between these two models:</p>
 <div class="sourceCode" id="cb10"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span>(<span class="no">post_list</span>, <span class="kw">function</span>(<span class="no">model</span>) <span class="fu"><a href="../reference/post_summ.html">post_summ</a></span>(<span class="no">model</span>, <span class="st">"^B"</span>, <span class="kw">digits</span> <span class="kw">=</span> <span class="fl">2</span>))</pre></body></html></div>
 <pre><code>## $est_rho
 ##         B0   B1
@@ -209,7 +235,8 @@
 ## 50%   1.60  0.39
 ## 2.5%  0.81 -0.02
 ## 97.5% 2.48  0.69</code></pre>
-<p>Or verify that the detection probabilities are not affected either:</p>
+<p>Or verify that the detection probabilities are not affected
+either:</p>
 <div class="sourceCode" id="cb12"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span>(<span class="no">post_list</span>, <span class="kw">function</span>(<span class="no">model</span>) <span class="fu"><a href="../reference/post_summ.html">post_summ</a></span>(<span class="no">model</span>, <span class="st">"p"</span>, <span class="kw">digits</span> <span class="kw">=</span> <span class="fl">2</span>))</pre></body></html></div>
 <pre><code>## $est_rho
 ##       p[2] p[3] p[4]
@@ -226,7 +253,9 @@
 ## 50%   0.75 0.70 0.64
 ## 2.5%  0.69 0.64 0.56
 ## 97.5% 0.79 0.76 0.73</code></pre>
-<p>You can embed more steps in the function that is applied to each <code>mcmc.list</code> object. For example, the code below obtains the posterior mean correlation matrix for each model:</p>
+<p>You can embed more steps in the function that is applied to each
+<code>mcmc.list</code> object. For example, the code below obtains the
+posterior mean correlation matrix for each model:</p>
 <div class="sourceCode" id="cb14"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span>(<span class="no">post_list</span>, <span class="kw">function</span>(<span class="no">model</span>) {
   <span class="no">SIG_decomp</span> <span class="kw">=</span> <span class="fu"><a href="../reference/vcov_decomp.html">vcov_decomp</a></span>(<span class="no">model</span>, <span class="st">"SIG"</span>)
   <span class="no">rho_mean</span> <span class="kw">=</span> <span class="fu"><a href="../reference/post_summ.html">post_summ</a></span>(<span class="no">SIG_decomp</span>, <span class="st">"rho"</span>)[<span class="st">"mean"</span>,]
@@ -241,7 +270,9 @@
 ##      [,1] [,2]
 ## [1,]    1    0
 ## [2,]    0    1</code></pre>
-<p>Or more complex still, to predict the survival probability between two consecutive detection arrays for fish of different sizes in each year and model:</p>
+<p>Or more complex still, to predict the survival probability between
+two consecutive detection arrays for fish of different sizes in each
+year and model:</p>
 <div class="sourceCode" id="cb16"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span>(<span class="no">post_list</span>, <span class="kw">function</span>(<span class="no">model</span>) {
   <span class="co"># 2SDs below average length, average length, and 2SDs above average length</span>
   <span class="co"># model was fitted with length scaled and centered</span>

@@ -41,7 +41,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">postpack</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.4</span>
       </span>
     </div>
 
@@ -61,7 +61,7 @@
   </a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     <span class="fas fa-file fa-lg"></span>
      
     Articles
@@ -113,23 +113,39 @@
 
 <div id="why-postpack-" class="section level2">
 <h2 class="hasAnchor">
-<a href="#why-postpack-" class="anchor"></a>Why ‘postpack’? <img src="reference/figures/logo.png" align="right" height="200px/">
+<a href="#why-postpack-" class="anchor"></a>Why ‘postpack’?
+<img src="reference/figures/logo.png" align="right" height="200px/">
 </h2>
-<p>‘postpack’ exists to facilitate processing the output of models fitted using Markov Chain Monte Carlo (MCMC) methods, as is commonly done in Bayesian inference. Although substantial capabilities exist to interface from R with programs that perform MCMC like JAGS, WinBUGS, OpenBUGS, NIMBLE, and Stan, the functionality to easily process the output is sometimes lacking.</p>
+<p>‘postpack’ exists to facilitate processing the output of models
+fitted using Markov Chain Monte Carlo (MCMC) methods, as is commonly
+done in Bayesian inference. Although substantial capabilities exist to
+interface from R with programs that perform MCMC like JAGS, WinBUGS,
+OpenBUGS, NIMBLE, and Stan, the functionality to easily process the
+output is sometimes lacking.</p>
 <blockquote>
-<p>In particular, it is often cumbersome to perform post-processing tasks for <strong>specific nodes</strong> from the model.</p>
-<p>‘postpack’ makes extracting specific nodes more transparent by accepting <strong>regular expressions</strong> and returning output in predictable and manipulable formats.</p>
+<p>In particular, it is often cumbersome to perform post-processing
+tasks for <strong>specific nodes</strong> from the model.</p>
+<p>‘postpack’ makes extracting specific nodes more transparent by
+accepting <strong>regular expressions</strong> and returning output in
+predictable and manipulable formats.</p>
 </blockquote>
 <p>Common tasks encompassed by “post-processing” include:</p>
 <ul>
 <li>Extracting raw samples</li>
-<li>Summarizing measures of posterior central tendency, spread, quantiles, and the MCMC precision of these quantities</li>
-<li>Calculating and organizing derived quantities based on each posterior sample</li>
-<li>Diagnosing the behavior of MCMC sampling, both numerically and visually</li>
-<li>Producing plots of model fit, relationships, and parameter comparisons while showing posterior uncertainty</li>
-<li>Comparing posteriors of the same quantity across many models that make different assumptions</li>
+<li>Summarizing measures of posterior central tendency, spread,
+quantiles, and the MCMC precision of these quantities</li>
+<li>Calculating and organizing derived quantities based on each
+posterior sample</li>
+<li>Diagnosing the behavior of MCMC sampling, both numerically and
+visually</li>
+<li>Producing plots of model fit, relationships, and parameter
+comparisons while showing posterior uncertainty</li>
+<li>Comparing posteriors of the same quantity across many models that
+make different assumptions</li>
 </ul>
-<p>‘postpack’ seeks to enforce consistent rules in how many these actions are performed by the user, all based around <code>mcmc.list</code> objects (one per model).</p>
+<p>‘postpack’ seeks to enforce consistent rules in how many these
+actions are performed by the user, all based around
+<code>mcmc.list</code> objects (one per model).</p>
 </div>
 <div id="documentation" class="section level2">
 <h2 class="hasAnchor">
@@ -138,11 +154,20 @@
 <p>Want to learn more?</p>
 </blockquote>
 <ul>
-<li>Have a look at the <a href="https://bstaton1.github.io/postpack/articles/feature-overview.html">feature overview</a> vignette to see whether ‘postpack’ can help clean up your post-MCMC workflow.</li>
-<li>An overview of how to make the most of regular expressions in this context can be found in the <a href="https://bstaton1.github.io/postpack/articles/pattern-matching.html">pattern matching</a> vignette.<br>
+<li>Have a look at the <a href="https://bstaton1.github.io/postpack/articles/feature-overview.html">feature
+overview</a> vignette to see whether ‘postpack’ can help clean up your
+post-MCMC workflow.</li>
+<li>An overview of how to make the most of regular expressions in this
+context can be found in the <a href="https://bstaton1.github.io/postpack/articles/pattern-matching.html">pattern
+matching</a> vignette.<br>
 </li>
-<li>As a more advanced topic, the vignette about working with <a href="https://bstaton1.github.io/postpack/articles/multiple-models.html">multiple models</a> illustrates how the transparent and short syntax of ‘postpack’ can be scaled to compare inferences between similar models.</li>
-<li>For more details on the example <code>mcmc.list</code> objects used in the examples and vignettes, take a look at <a href="https://bstaton1.github.io/postpack/articles/example-mcmclists.html">that vignette</a>.</li>
+<li>As a more advanced topic, the vignette about working with <a href="https://bstaton1.github.io/postpack/articles/multiple-models.html">multiple
+models</a> illustrates how the transparent and short syntax of
+‘postpack’ can be scaled to compare inferences between similar
+models.</li>
+<li>For more details on the example <code>mcmc.list</code> objects used
+in the examples and vignettes, take a look at <a href="https://bstaton1.github.io/postpack/articles/example-mcmclists.html">that
+vignette</a>.</li>
 </ul>
 </div>
 <div id="installation" class="section level2">
@@ -159,7 +184,9 @@
 <div id="acknowledgments" class="section level2">
 <h2 class="hasAnchor">
 <a href="#acknowledgments" class="anchor"></a>Acknowledgments</h2>
-<p>Many thanks to <a href="https://twitter.com/spoonbill_hank">Henry Hershey</a> for designing the hex sticker and for feedback on overall usability.</p>
+<p>Many thanks to <a href="https://twitter.com/spoonbill_hank">Henry
+Hershey</a> for designing the hex sticker and for feedback on overall
+usability.</p>
 </div>
 
   </div>

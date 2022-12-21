@@ -82,7 +82,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">postpack</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.4</span>
       </span>
     </div>
 
@@ -102,7 +102,7 @@
   </a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     <span class="fas fa-file fa-lg"></span>
      
     Articles
@@ -156,9 +156,20 @@
       <small>Source: <a href='https://github.com/bstaton1/postpack/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
+    <div id="postpack-054-2022-12-20" class="section level1">
+<h1 class="page-header" data-toc-text="0.5.4">
+<a href="#postpack-054-2022-12-20" class="anchor"></a>postpack 0.5.4 (2022-12-20)<small> Unreleased </small>
+</h1>
+<ul>
+<li>Addressed error created by ‘stringr’ v1.5.0 handling of empty
+strings (<a href='https://github.com/bstaton1/postpack/issues/49'>#49</a>)</li>
+<li>Added packages to Suggests field of DESCRIPTION to prevent CRAN
+notes about undeclared packages</li>
+</ul>
+</div>
     <div id="postpack-053-2021-06-02" class="section level1">
 <h1 class="page-header" data-toc-text="0.5.3">
-<a href="#postpack-053-2021-06-02" class="anchor"></a>postpack 0.5.3 (2021-06-02)<small> Unreleased </small>
+<a href="#postpack-053-2021-06-02" class="anchor"></a>postpack 0.5.3 (2021-06-02)<small> 2021-06-02 </small>
 </h1>
 <ul>
 <li>No user-facing changes made.</li>
@@ -171,7 +182,8 @@
 </h1>
 <ul>
 <li>Addressed CRAN feedback and resubmitted</li>
-<li>See feedback received and to-do items – none are major or user-facing (<a href='https://github.com/bstaton1/postpack/issues/36'>#36</a>)</li>
+<li>See feedback received and to-do items – none are major or
+user-facing (<a href='https://github.com/bstaton1/postpack/issues/36'>#36</a>)</li>
 </ul>
 </div>
     <div id="postpack-051-2020-09-01" class="section level1">
@@ -180,7 +192,8 @@
 </h1>
 <ul>
 <li>Addressed CRAN feedback and resubmitted</li>
-<li>See feedback received and to-do items – none are major or user-facing (<a href='https://github.com/bstaton1/postpack/issues/33'>#33</a>)</li>
+<li>See feedback received and to-do items – none are major or
+user-facing (<a href='https://github.com/bstaton1/postpack/issues/33'>#33</a>)</li>
 </ul>
 </div>
     <div id="postpack-050-2020-08-31" class="section level1">
@@ -196,7 +209,8 @@
 <a href="#postpack-044-2020-08-28" class="anchor"></a>postpack 0.4.4 (2020-08-28)<small> Unreleased </small>
 </h1>
 <ul>
-<li>Include <code>pkgdown</code> stuff - not much more needs to be said here.</li>
+<li>Include <code>pkgdown</code> stuff - not much more needs to be said
+here.</li>
 <li>Site is hosted <a href="https://bstaton1.github.io/postpack/">here</a>
 </li>
 </ul>
@@ -207,7 +221,8 @@
 </h1>
 <ul>
 <li>Split the large vignette into four (<a href='https://github.com/bstaton1/postpack/issues/29'>#29</a>).</li>
-<li>This change is in preparation for creating a <code>pkgdown</code> website.</li>
+<li>This change is in preparation for creating a <code>pkgdown</code>
+website.</li>
 </ul>
 </div>
     <div id="postpack-042-2020-08-25" class="section level1">
@@ -215,8 +230,10 @@
 <a href="#postpack-042-2020-08-25" class="anchor"></a>postpack 0.4.2 (2020-08-25)<small> Unreleased </small>
 </h1>
 <ul>
-<li>Primarily standardization of function argument descriptions (<a href='https://github.com/bstaton1/postpack/issues/19'>#19</a>, <a href='https://github.com/bstaton1/postpack/issues/32'>#32</a>)</li>
-<li>Switched to using markdown for writing Roxygen comments – big improvement</li>
+<li>Primarily standardization of function argument descriptions (<a href='https://github.com/bstaton1/postpack/issues/19'>#19</a>,
+<a href='https://github.com/bstaton1/postpack/issues/32'>#32</a>)</li>
+<li>Switched to using markdown for writing Roxygen comments – big
+improvement</li>
 <li>Included more links to other relevant help files</li>
 </ul>
 </div>
@@ -226,8 +243,10 @@
 </h1>
 <ul>
 <li>Improvements to function examples (<a href='https://github.com/bstaton1/postpack/issues/18'>#18</a>)</li>
-<li>Some previous examples were entirely hypothetical (non-executable), and some functions didn’t even have them.</li>
-<li>Nearly all examples now rely heavily on the <code><a href="https://rdrr.io/r/utils/data.html">data(cjs)</a></code> object.</li>
+<li>Some previous examples were entirely hypothetical (non-executable),
+and some functions didn’t even have them.</li>
+<li>Nearly all examples now rely heavily on the <code><a href="https://rdrr.io/r/utils/data.html">data(cjs)</a></code>
+object.</li>
 </ul>
 </div>
     <div id="postpack-040-2020-08-24" class="section level1">
@@ -253,14 +272,29 @@
 <h2 class="hasAnchor">
 <a href="#renamed-function-arguments" class="anchor"></a>Renamed Function Arguments</h2>
 <ul>
-<li>All functions that previously accepted a <code>p</code> argument now accept a <code>params</code> argument (<code><a href="../reference/match_params.html">match_params()</a></code>, <code><a href="../reference/diag_plots.html">diag_plots()</a></code> <code><a href="../reference/post_subset.html">post_subset()</a></code>, <code><a href="../reference/post_summ.html">post_summ()</a></code>, <code><a href="../reference/post_remove.html">post_remove()</a></code>, <code><a href="../reference/vcov_decomp.html">vcov_decomp()</a></code>, etc.) (<a href='https://github.com/bstaton1/postpack/issues/14'>#14</a>)</li>
+<li>All functions that previously accepted a <code>p</code> argument now
+accept a <code>params</code> argument (<code><a href="../reference/match_params.html">match_params()</a></code>,
+<code><a href="../reference/diag_plots.html">diag_plots()</a></code> <code><a href="../reference/post_subset.html">post_subset()</a></code>,
+<code><a href="../reference/post_summ.html">post_summ()</a></code>, <code><a href="../reference/post_remove.html">post_remove()</a></code>,
+<code><a href="../reference/vcov_decomp.html">vcov_decomp()</a></code>, etc.) (<a href='https://github.com/bstaton1/postpack/issues/14'>#14</a>)</li>
 <li>
-<code>p_summ</code> has been replaced with <code>probs</code> in <code><a href="../reference/post_summ.html">post_summ()</a></code> (<a href='https://github.com/bstaton1/postpack/issues/25'>#25</a>)</li>
+<code>p_summ</code> has been replaced with <code>probs</code> in
+<code><a href="../reference/post_summ.html">post_summ()</a></code> (<a href='https://github.com/bstaton1/postpack/issues/25'>#25</a>)</li>
 <li>
-<code>match_params</code> and <code>get_params</code> now both take a <code>type</code> argument, and both accept only values of <code>"base_only"</code> or <code>"base_index"</code> (<a href='https://github.com/bstaton1/postpack/issues/20'>#20</a> - some other function and arguments changed here as well).</li>
+<code>match_params</code> and <code>get_params</code> now both take
+a <code>type</code> argument, and both accept only values of
+<code>"base_only"</code> or <code>"base_index"</code> (<a href='https://github.com/bstaton1/postpack/issues/20'>#20</a> - some other
+function and arguments changed here as well).</li>
 <li>
-<code><a href="../reference/density_plot.html">density_plot()</a></code> and <code><a href="../reference/trace_plot.html">trace_plot()</a></code> previously accepted a <code>p_one</code> argument – this is now <code>param</code> (distinction between multiple parameters and one parameter); but most users won’t notice this as these are non-exported functions.</li>
-<li>The non-exported functions <code><a href="../reference/ins_regex_bracket.html">ins_regex_bracket()</a></code>, <code><a href="../reference/rm_regex_bracket.html">rm_regex_bracket()</a></code>, <code><a href="../reference/ins_regex_lock.html">ins_regex_lock()</a></code>, and <code><a href="../reference/rm_regex_lock.html">rm_regex_lock()</a></code> now take the <code>params</code> argument rather than the <code>string</code> argument, but most users won’t notice this.</li>
+<code><a href="../reference/density_plot.html">density_plot()</a></code> and <code><a href="../reference/trace_plot.html">trace_plot()</a></code> previously
+accepted a <code>p_one</code> argument – this is now <code>param</code>
+(distinction between multiple parameters and one parameter); but most
+users won’t notice this as these are non-exported functions.</li>
+<li>The non-exported functions <code><a href="../reference/ins_regex_bracket.html">ins_regex_bracket()</a></code>,
+<code><a href="../reference/rm_regex_bracket.html">rm_regex_bracket()</a></code>, <code><a href="../reference/ins_regex_lock.html">ins_regex_lock()</a></code>, and
+<code><a href="../reference/rm_regex_lock.html">rm_regex_lock()</a></code> now take the <code>params</code> argument
+rather than the <code>string</code> argument, but most users won’t
+notice this.</li>
 </ul>
 </div>
 <div id="deleted-functions" class="section level2">
@@ -268,7 +302,8 @@
 <a href="#deleted-functions" class="anchor"></a>Deleted Functions</h2>
 <ul>
 <li>
-<code>matrix2mcmclist()</code> was deleted and now <code><a href="../reference/post_convert.html">post_convert()</a></code> does its job (<a href='https://github.com/bstaton1/postpack/issues/23'>#23</a>).</li>
+<code>matrix2mcmclist()</code> was deleted and now
+<code><a href="../reference/post_convert.html">post_convert()</a></code> does its job (<a href='https://github.com/bstaton1/postpack/issues/23'>#23</a>).</li>
 </ul>
 </div>
 </div>
@@ -277,7 +312,8 @@
 <a href="#postpack-031-2020-08-23" class="anchor"></a>postpack 0.3.1 (2020-08-23)<small> Unreleased </small>
 </h1>
 <ul>
-<li>Reset <code><a href="https://rdrr.io/r/graphics/par.html">par()</a></code> after completing <code><a href="../reference/diag_plots.html">diag_plots()</a></code> (<a href='https://github.com/bstaton1/postpack/issues/17'>#17</a>)</li>
+<li>Reset <code><a href="https://rdrr.io/r/graphics/par.html">par()</a></code> after completing <code><a href="../reference/diag_plots.html">diag_plots()</a></code>
+(<a href='https://github.com/bstaton1/postpack/issues/17'>#17</a>)</li>
 </ul>
 </div>
     <div id="postpack-030-2020-08-23" class="section level1">
@@ -287,7 +323,8 @@
 <ul>
 <li>Remove <code>StatonMisc</code> dependencies (<a href='https://github.com/bstaton1/postpack/issues/16'>#16</a>)</li>
 <li>
-<strong>This change won’t affect users</strong> – just what goes on under the hood</li>
+<strong>This change won’t affect users</strong> – just what goes on
+under the hood</li>
 </ul>
 </div>
     <div id="postpack-027-2020-08-20" class="section level1">
@@ -297,9 +334,17 @@
 <ul>
 <li>Updates to <code><a href="../reference/post_thin.html">post_thin()</a></code>
 <ul>
-<li>Remove errors that arise when <code>thin_percent</code> is not a perfect multiple of the number of iterations per chain - this causes the thinning to be “quasi-evenly” spaced. As this function is only ever used in code development and not final products, this should not be an issue (<a href='https://github.com/bstaton1/postpack/issues/13'>#13</a>).</li>
-<li>Reversed <code>thin_percent</code> to be <code>keep_percent</code>, and implemented throughout.</li>
-<li>Added a <code>keep_iters</code> argument – now users can choose to keep either a fixed number of samples (again, may be quasi-equal to <code>keep_iters</code>, due to rounding errors) or a fixed percent of samples.</li>
+<li>Remove errors that arise when <code>thin_percent</code> is not a
+perfect multiple of the number of iterations per chain - this causes the
+thinning to be “quasi-evenly” spaced. As this function is only ever used
+in code development and not final products, this should not be an issue
+(<a href='https://github.com/bstaton1/postpack/issues/13'>#13</a>).</li>
+<li>Reversed <code>thin_percent</code> to be <code>keep_percent</code>,
+and implemented throughout.</li>
+<li>Added a <code>keep_iters</code> argument – now users can choose to
+keep either a fixed number of samples (again, may be quasi-equal to
+<code>keep_iters</code>, due to rounding errors) or a fixed percent of
+samples.</li>
 </ul>
 </li>
 </ul>
@@ -309,9 +354,13 @@
 <a href="#postpack-026-2020-08-20" class="anchor"></a>postpack 0.2.6 (2020-08-20)<small> Unreleased </small>
 </h1>
 <ul>
-<li>Add a <code>by_chain</code> argument to <code><a href="../reference/post_summ.html">post_summ()</a></code> (<a href='https://github.com/bstaton1/postpack/issues/10'>#10</a>)
+<li>Add a <code>by_chain</code> argument to <code><a href="../reference/post_summ.html">post_summ()</a></code>
+(<a href='https://github.com/bstaton1/postpack/issues/10'>#10</a>)
 <ul>
-<li>Sometimes a user may wish to summarize each chain separately rather than the aggregate across chains. They can now do this by setting <code><a href="../reference/post_summ.html">post_summ(..., by_chain = TRUE)</a></code>. For now, Rhat, ess, and mcse will be ignored if <code>by_chain = TRUE</code>.</li>
+<li>Sometimes a user may wish to summarize each chain separately rather
+than the aggregate across chains. They can now do this by setting
+<code><a href="../reference/post_summ.html">post_summ(..., by_chain = TRUE)</a></code>. For now, Rhat, ess, and
+mcse will be ignored if <code>by_chain = TRUE</code>.</li>
 </ul>
 </li>
 </ul>
@@ -325,7 +374,12 @@
 <a href="#add-a-post_convert-function" class="anchor"></a>Add a <code>post_convert()</code> function</h2>
 <ul>
 <li>
-<code>postpack</code> requires (for the most part) that MCMC samples be stored in <code>mcmc.list</code> objects. But not all R packages that perform MCMC return samples immediately in this format. This new function may help users get their samples into <code>mcmc.list</code> format, potentially broadening the accessibility of the functions in this package.</li>
+<code>postpack</code> requires (for the most part) that MCMC samples
+be stored in <code>mcmc.list</code> objects. But not all R packages that
+perform MCMC return samples immediately in this format. This new
+function may help users get their samples into <code>mcmc.list</code>
+format, potentially broadening the accessibility of the functions in
+this package.</li>
 </ul>
 </div>
 </div>
@@ -335,7 +389,8 @@
 </h1>
 <ul>
 <li>Fix warnings introduced by R 4.0.0 (<a href='https://github.com/bstaton1/postpack/issues/12'>#12</a>)</li>
-<li>User-visible behavior is identical to previous versions, but the warnings are no longer returned.</li>
+<li>User-visible behavior is identical to previous versions, but the
+warnings are no longer returned.</li>
 </ul>
 </div>
     <div id="postpack-023-2020-04-13" class="section level1">
@@ -343,7 +398,8 @@
 <a href="#postpack-023-2020-04-13" class="anchor"></a>postpack 0.2.3 (2020-04-13)<small> Unreleased </small>
 </h1>
 <ul>
-<li>Remove <code><a href="../reference/density_plot.html">density_plot()</a></code> and <code><a href="../reference/trace_plot.html">trace_plot()</a></code> from exported list</li>
+<li>Remove <code><a href="../reference/density_plot.html">density_plot()</a></code> and <code><a href="../reference/trace_plot.html">trace_plot()</a></code>
+from exported list</li>
 </ul>
 </div>
     <div id="postpack-022-2020-04-13" class="section level1">
@@ -354,7 +410,11 @@
 <h2 class="hasAnchor">
 <a href="#include-a-post_remove-function" class="anchor"></a>Include a <code>post_remove</code> function</h2>
 <ul>
-<li>In some circumstances, it might be better to exclude nodes rather than explicitly say which you want to keep. This new function behaves just like <code>post_subset</code>, except that it prompts the user to verify that they wish to exclude the match nodes and returns everything that does not match the <code>p</code> argument.</li>
+<li>In some circumstances, it might be better to exclude nodes rather
+than explicitly say which you want to keep. This new function behaves
+just like <code>post_subset</code>, except that it prompts the user to
+verify that they wish to exclude the match nodes and returns everything
+that does not match the <code>p</code> argument.</li>
 </ul>
 </div>
 </div>
@@ -363,7 +423,8 @@
 <a href="#postpack-021-2020-04-10" class="anchor"></a>postpack 0.2.1 (2020-04-10)<small> Unreleased </small>
 </h1>
 <ul>
-<li>Include ability to return Monte Carlo standard errors in <code>post_summ</code> (<a href='https://github.com/bstaton1/postpack/issues/11'>#11</a>)</li>
+<li>Include ability to return Monte Carlo standard errors in
+<code>post_summ</code> (<a href='https://github.com/bstaton1/postpack/issues/11'>#11</a>)</li>
 </ul>
 </div>
     <div id="postpack-020-2020-04-10" class="section level1">
@@ -387,11 +448,18 @@
 <a href="#postpack-0117-2020-04-09" class="anchor"></a>postpack 0.1.17 (2020-04-09)<small> Unreleased </small>
 </h1>
 <ul>
-<li>Bug fixes when working with one-node <code>mcmc.lists</code> (<a href='https://github.com/bstaton1/postpack/issues/7'>#7</a>, <a href='https://github.com/bstaton1/postpack/issues/9'>#9</a>)
+<li>Bug fixes when working with one-node <code>mcmc.lists</code> (<a href='https://github.com/bstaton1/postpack/issues/7'>#7</a>,
+<a href='https://github.com/bstaton1/postpack/issues/9'>#9</a>)
 <ul>
 <li>
-<code><a href="../reference/post_subset.html">post_subset()</a></code> and <code><a href="../reference/post_thin.html">post_thin()</a></code> previously used <code><a href="https://rdrr.io/pkg/coda/man/mcmc.list.html">coda::as.mcmc.list()</a></code> to convert matrices to mcmc.list objects, however, if the matrix contained only one node, this would result in the mcmc.list no longer having a name for that node. Because most of the postpack functions rely on node names, this caused issues (e.g., <code><a href="../reference/diag_plots.html">diag_plots()</a></code>, <code><a href="../reference/post_bind.html">post_bind()</a></code>).</li>
-<li>These functions now rely on <code>matrix2mcmclist</code> to perform this task, which should fix these issues.</li>
+<code><a href="../reference/post_subset.html">post_subset()</a></code> and <code><a href="../reference/post_thin.html">post_thin()</a></code> previously
+used <code><a href="https://rdrr.io/pkg/coda/man/mcmc.list.html">coda::as.mcmc.list()</a></code> to convert matrices to mcmc.list
+objects, however, if the matrix contained only one node, this would
+result in the mcmc.list no longer having a name for that node. Because
+most of the postpack functions rely on node names, this caused issues
+(e.g., <code><a href="../reference/diag_plots.html">diag_plots()</a></code>, <code><a href="../reference/post_bind.html">post_bind()</a></code>).</li>
+<li>These functions now rely on <code>matrix2mcmclist</code> to perform
+this task, which should fix these issues.</li>
 </ul>
 </li>
 </ul>
@@ -411,9 +479,16 @@
 <ul>
 <li><p>Bug fix when calculating Rhat</p></li>
 <li>
-<p>When calculating Rhat using <code><a href="../reference/post_summ.html">post_summ(..., Rhat = T)</a></code> (which wraps <code><a href="https://rdrr.io/pkg/coda/man/gelman.diag.html">coda::gelman.diag</a></code>) on an object containing only one node, an error would be thrown:</p>
+<p>When calculating Rhat using <code><a href="../reference/post_summ.html">post_summ(..., Rhat = T)</a></code>
+(which wraps <code><a href="https://rdrr.io/pkg/coda/man/gelman.diag.html">coda::gelman.diag</a></code>) on an object containing
+only one node, an error would be thrown:</p>
 <pre><code>Error in data[1:nobs, , drop = FALSE] : incorrect number of dimensions</code></pre>
-<p>Which I tracked down to be a result of the <code>autoburnin</code> argument being true by default. Being able to perform the calculations for only one node was required for the <code><a href="../reference/diag_plots.html">diag_plots(..., show_diags = T)</a></code> update. So I have forced this argument to be <code>FALSE</code> in its usage within <code><a href="../reference/post_summ.html">post_summ()</a></code>.</p>
+<p>Which I tracked down to be a result of the <code>autoburnin</code>
+argument being true by default. Being able to perform the calculations
+for only one node was required for the
+<code><a href="../reference/diag_plots.html">diag_plots(..., show_diags = T)</a></code> update. So I have forced
+this argument to be <code>FALSE</code> in its usage within
+<code><a href="../reference/post_summ.html">post_summ()</a></code>.</p>
 </li>
 </ul>
 </div>
@@ -422,7 +497,8 @@
 <a href="#postpack-0114-2019-11-27" class="anchor"></a>postpack 0.1.14 (2019-11-27)<small> Unreleased </small>
 </h1>
 <ul>
-<li>Functions that were previously exported but could confuse users include:
+<li>Functions that were previously exported but could confuse users
+include:
 <ul>
 <li><code><a href="../reference/ins_regex_bracket.html">ins_regex_bracket()</a></code></li>
 <li><code><a href="../reference/rm_regex_bracket.html">rm_regex_bracket()</a></code></li>
@@ -430,11 +506,15 @@
 </ul>
 </li>
 <li>These functions were removed from the exported NAMESPACE</li>
-<li>Consistency was improved for <code><a href="../reference/vcov_decomp.html">vcov_decomp()</a></code>: it now internally uses <code><a href="../reference/id_mat.html">id_mat()</a></code>
+<li>Consistency was improved for <code><a href="../reference/vcov_decomp.html">vcov_decomp()</a></code>: it now
+internally uses <code><a href="../reference/id_mat.html">id_mat()</a></code>
 </li>
 <li>
-<code><a href="../reference/post_bind.html">post_bind()</a></code> now allows one of the objects to be a matrix of derived quantities, but still requires that it has the same number of samples as the object it is being binded to.</li>
-<li>The vignette was updated to reflect these and other changes to the package since its initial creation.</li>
+<code><a href="../reference/post_bind.html">post_bind()</a></code> now allows one of the objects to be a
+matrix of derived quantities, but still requires that it has the same
+number of samples as the object it is being binded to.</li>
+<li>The vignette was updated to reflect these and other changes to the
+package since its initial creation.</li>
 </ul>
 </div>
     <div id="postpack-0113-2019-11-26" class="section level1">
@@ -442,7 +522,8 @@
 <a href="#postpack-0113-2019-11-26" class="anchor"></a>postpack 0.1.13 (2019-11-26)<small> Unreleased </small>
 </h1>
 <ul>
-<li>Include NEWS.md by going through git commit history and documenting changes at each version shift</li>
+<li>Include NEWS.md by going through git commit history and documenting
+changes at each version shift</li>
 </ul>
 </div>
     <div id="postpack-0112-2019-11-26" class="section level1">
@@ -450,7 +531,9 @@
 <a href="#postpack-0112-2019-11-26" class="anchor"></a>postpack 0.1.12 (2019-11-26)<small> Unreleased </small>
 </h1>
 <ul>
-<li>Users now have the option to set a <code>diags_plots(..., show_diags)</code> argument to display Rhat and ESS on the density plot</li>
+<li>Users now have the option to set a
+<code>diags_plots(..., show_diags)</code> argument to display Rhat and
+ESS on the density plot</li>
 </ul>
 </div>
     <div id="postpack-0111-2019-11-24" class="section level1">
@@ -458,7 +541,9 @@
 <a href="#postpack-0111-2019-11-24" class="anchor"></a>postpack 0.1.11 (2019-11-24)<small> Unreleased </small>
 </h1>
 <ul>
-<li>Improved error messages in <code>match_p</code> now uses <code><a href="https://rdrr.io/pkg/StatonMisc/man/list_out.html">StatonMisc::list_out</a></code> to print the unique node names, which makes its printing much cleaner (<a href='https://github.com/bstaton1/postpack/issues/2'>#2</a>)</li>
+<li>Improved error messages in <code>match_p</code> now uses
+<code><a href="https://rdrr.io/pkg/StatonMisc/man/list_out.html">StatonMisc::list_out</a></code> to print the unique node names, which
+makes its printing much cleaner (<a href='https://github.com/bstaton1/postpack/issues/2'>#2</a>)</li>
 </ul>
 </div>
     <div id="postpack-0110-2019-11-24" class="section level1">
@@ -466,9 +551,11 @@
 <a href="#postpack-0110-2019-11-24" class="anchor"></a>postpack 0.1.10 (2019-11-24)<small> Unreleased </small>
 </h1>
 <ul>
-<li>Removed the <code>warn</code> argument from all functions that call <code>match_p</code>
+<li>Removed the <code>warn</code> argument from all functions that call
+<code>match_p</code>
 </li>
-<li>Removed the <code>prettify</code> argument to <code><a href="../reference/post_summ.html">post_summ()</a></code> was removed</li>
+<li>Removed the <code>prettify</code> argument to
+<code><a href="../reference/post_summ.html">post_summ()</a></code> was removed</li>
 </ul>
 </div>
     <div id="postpack-019-2019-11-24" class="section level1">
@@ -479,7 +566,8 @@
 <h2 class="hasAnchor">
 <a href="#improvements-to-internal-consistency" class="anchor"></a>Improvements to internal consistency</h2>
 <ul>
-<li>The updated usage of <code><a href="../reference/post_dim.html">post_dim(..., kind)</a></code> was included in other functions including:
+<li>The updated usage of <code><a href="../reference/post_dim.html">post_dim(..., kind)</a></code> was included
+in other functions including:
 <ul>
 <li><code>post_bind</code></li>
 <li><code>post_thin</code></li>
@@ -487,8 +575,11 @@
 </ul>
 </li>
 <li>
-<code>vcov_decomp</code> has improved error messages and relies on <code><a href="https://rdrr.io/pkg/StatonMisc/man/progress_updater.html">StatonMisc::progress_updater</a></code> to print the progress of the calculation</li>
-<li>error message in <code>post_dim</code> improved to rely on <code><a href="https://rdrr.io/pkg/StatonMisc/man/list_out.html">StatonMisc::list_out</a></code>
+<code>vcov_decomp</code> has improved error messages and relies on
+<code><a href="https://rdrr.io/pkg/StatonMisc/man/progress_updater.html">StatonMisc::progress_updater</a></code> to print the progress of the
+calculation</li>
+<li>error message in <code>post_dim</code> improved to rely on
+<code><a href="https://rdrr.io/pkg/StatonMisc/man/list_out.html">StatonMisc::list_out</a></code>
 </li>
 <li>included an <code>id_mat</code> function</li>
 </ul>
@@ -498,7 +589,9 @@
 <a href="#improvements-to-documentation" class="anchor"></a>Improvements to documentation</h2>
 <ul>
 <li>included a vignette and example mcmc.list objects</li>
-<li>readme updated to instruct users to set <code>build_vignettes = T</code> when installing from GitHub and several other simplifications to the readme since there is now a vignette</li>
+<li>readme updated to instruct users to set
+<code>build_vignettes = T</code> when installing from GitHub and several
+other simplifications to the readme since there is now a vignette</li>
 </ul>
 </div>
 </div>
@@ -508,7 +601,8 @@
 </h1>
 <ul>
 <li>
-<code><a href="../reference/post_dim.html">post_dim()</a></code> now accepts a <code>kind</code> argument, which represents certain element(s) from the returned vector.</li>
+<code><a href="../reference/post_dim.html">post_dim()</a></code> now accepts a <code>kind</code> argument,
+which represents certain element(s) from the returned vector.</li>
 </ul>
 </div>
     <div id="postpack-017-2019-09-19" class="section level1">
@@ -518,7 +612,9 @@
 <ul>
 <li>Added <code><a href="../reference/vcov_decomp.html">vcov_decomp()</a></code> function
 <ul>
-<li>Will decompose the posterior of a variance-covariance node into its correlation matrix and standard deviation vector, and return an <code>mcmc.list</code> object with these nodes</li>
+<li>Will decompose the posterior of a variance-covariance node into its
+correlation matrix and standard deviation vector, and return an
+<code>mcmc.list</code> object with these nodes</li>
 </ul>
 </li>
 </ul>
@@ -530,7 +626,10 @@
 <ul>
 <li>Added more layouts to <code>diag_plots</code> (<a href='https://github.com/bstaton1/postpack/issues/6'>#6</a>)
 <ul>
-<li>Options for <code><a href="../reference/diag_plots.html">diag_plots(..., layout = "2x1")</a></code> and <code><a href="../reference/diag_plots.html">diag_plots(..., layout = "4x2")</a></code> added, and the <code>"auto"</code> option will now consider these when selecting the best option.</li>
+<li>Options for <code><a href="../reference/diag_plots.html">diag_plots(..., layout = "2x1")</a></code> and
+<code><a href="../reference/diag_plots.html">diag_plots(..., layout = "4x2")</a></code> added, and the
+<code>"auto"</code> option will now consider these when selecting the
+best option.</li>
 </ul>
 </li>
 </ul>
@@ -540,12 +639,16 @@
 <a href="#postpack-015-2019-09-03" class="anchor"></a>postpack 0.1.5 (2019-09-03)<small> Unreleased </small>
 </h1>
 <ul>
-<li>Added <code><a href="../reference/write_model.html">write_model()</a></code>: I essentially duplicated <code><a href="https://rdrr.io/pkg/R2OpenBUGS/man/write.model.html">R2OpenBUGS::write.model</a></code> because it was the only function I ever used from that package now all my BUGS models are fitted with JAGS.
+<li>Added <code><a href="../reference/write_model.html">write_model()</a></code>: I essentially duplicated
+<code><a href="https://rdrr.io/pkg/R2OpenBUGS/man/write.model.html">R2OpenBUGS::write.model</a></code> because it was the only function I
+ever used from that package now all my BUGS models are fitted with JAGS.
 <ul>
-<li>I got sick of having to load it and telling others to install it just for this one function</li>
+<li>I got sick of having to load it and telling others to install it
+just for this one function</li>
 </ul>
 </li>
-<li>Bug fix: <code>post_dim</code> was counting the chain and iters columns as nodes (<a href='https://github.com/bstaton1/postpack/issues/1'>#1</a>)</li>
+<li>Bug fix: <code>post_dim</code> was counting the chain and iters
+columns as nodes (<a href='https://github.com/bstaton1/postpack/issues/1'>#1</a>)</li>
 </ul>
 </div>
     <div id="postpack-014-2019-06-30" class="section level1">
@@ -555,7 +658,9 @@
 <ul>
 <li>
 <strong>Renamed codaTools to postpack</strong>.</li>
-<li>The name of the package was changed from <code>{codaTools}</code> to <code>{postpack}</code>. This is a better name, because it is not just used for convergence diagnostics.</li>
+<li>The name of the package was changed from <code>{codaTools}</code> to
+<code>{postpack}</code>. This is a better name, because it is not just
+used for convergence diagnostics.</li>
 <li>Package helpfile created</li>
 </ul>
 </div>
@@ -564,15 +669,22 @@
 <a href="#codatools-013-2019-06-30" class="anchor"></a>codaTools 0.1.3 (2019-06-30)<small> Unreleased </small>
 </h1>
 <ul>
-<li>Improvements to <code>get_nodes</code> and <code>filter_post</code>: better error messages</li>
-<li>Switched <code>format = "matrix"</code> to <code>matrix = T/F</code> argument</li>
-<li>Included <code>match_p</code> function - now <strong>all</strong> subsetting is handled by this one function</li>
+<li>Improvements to <code>get_nodes</code> and <code>filter_post</code>:
+better error messages</li>
+<li>Switched <code>format = "matrix"</code> to <code>matrix = T/F</code>
+argument</li>
+<li>Included <code>match_p</code> function - now <strong>all</strong>
+subsetting is handled by this one function</li>
 <li>
 <code>filter_post</code> became <code>post_subset</code>
 </li>
-<li>inclusion of <code>ins_regex_lock</code>, <code>rm_regex_lock</code>, and <code>base_p</code> - all intended to improve the behavior of <code>diag_plots</code>
+<li>inclusion of <code>ins_regex_lock</code>,
+<code>rm_regex_lock</code>, and <code>base_p</code> - all intended to
+improve the behavior of <code>diag_plots</code>
 </li>
-<li>better usage of <code>StatonMisc</code> functions, they are now imported rather than requiring the whole package at the start of a function that needs them</li>
+<li>better usage of <code>StatonMisc</code> functions, they are now
+imported rather than requiring the whole package at the start of a
+function that needs them</li>
 <li>
 <code>summ_post</code> became <code>post_summ</code>
 </li>
@@ -590,7 +702,8 @@
 </li>
 <li>addition of <code>post_dim</code>
 </li>
-<li>better titles in <code>diag_plots</code> through the <code>my_title</code> function</li>
+<li>better titles in <code>diag_plots</code> through the
+<code>my_title</code> function</li>
 </ul>
 </div>
     <div id="codatools-012-2019-04-06" class="section level1">
@@ -600,7 +713,8 @@
 <ul>
 <li>Bug fixes: <code>thin_post</code>, <code>native_format</code>
 </li>
-<li>Creation of readme: basic installation instructions and example functionality</li>
+<li>Creation of readme: basic installation instructions and example
+functionality</li>
 </ul>
 </div>
     <div id="codatools-011-2018-11-16" class="section level1">
@@ -611,9 +725,11 @@
 <li>Added new functions
 <ul>
 <li>
-<code>bind_post</code>: combines two <code>mcmc.list</code> objects</li>
+<code>bind_post</code>: combines two <code>mcmc.list</code>
+objects</li>
 <li>
-<code>thin_post</code>: thins an <code>mcmc.list</code> object at regularly-spaced intervals from each chain</li>
+<code>thin_post</code>: thins an <code>mcmc.list</code> object at
+regularly-spaced intervals from each chain</li>
 </ul>
 </li>
 </ul>
@@ -624,7 +740,10 @@
 </h1>
 <ul>
 <li>First substantially usable version of package</li>
-<li>Package now contains functional capabilities to do everything I was doing before (extracting, diagnostic, summarizing particular nodes), now with cleaner functions that do specific tasks, and with the ability to extract particular nodes using regular expressions</li>
+<li>Package now contains functional capabilities to do everything I was
+doing before (extracting, diagnostic, summarizing particular nodes), now
+with cleaner functions that do specific tasks, and with the ability to
+extract particular nodes using regular expressions</li>
 </ul>
 </div>
     <div id="codatools-009000-2018-11-05" class="section level1">
@@ -635,7 +754,9 @@
 <h2 class="hasAnchor">
 <a href="#initial-repository-creation" class="anchor"></a>Initial Repository Creation</h2>
 <ul>
-<li>First attempt at wrapping my commonly used MCMC post-processing functions into an R package, allowing them to be easily accessed during my work</li>
+<li>First attempt at wrapping my commonly used MCMC post-processing
+functions into an R package, allowing them to be easily accessed during
+my work</li>
 </ul>
 </div>
 </div>

@@ -41,7 +41,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">postpack</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.5.4</span>
       </span>
     </div>
 
@@ -61,7 +61,7 @@
   </a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     <span class="fas fa-file fa-lg"></span>
      
     Articles
@@ -108,7 +108,7 @@
 
       
 
-      </header><script src="example-mcmclists_files/header-attrs-2.6.6/header-attrs.js"></script><div class="row">
+      </header><script src="example-mcmclists_files/header-attrs-2.14/header-attrs.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Example mcmc.lists</h1>
@@ -121,38 +121,76 @@
 
     
     
-<p>‘postpack’ ships with two example <code>mcmc.list</code> objects to allow self-contained examples and for users to practice using ‘postpack’. The <code>mcmc.list</code> objects can be loaded using:</p>
+<p>‘postpack’ ships with two example <code>mcmc.list</code> objects to
+allow self-contained examples and for users to practice using
+‘postpack’. The <code>mcmc.list</code> objects can be loaded using:</p>
 <div class="sourceCode" id="cb1"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span>(<span class="no">cjs</span>)
 <span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span>(<span class="no">cjs_no_rho</span>)</pre></body></html></div>
-<p>Both objects come from a JAGS model fitted to simulated data. The two objects are from two separate, but highly similar models. The output was thinned heavily to reduce file size, see:</p>
+<p>Both objects come from a JAGS model fitted to simulated data. The two
+objects are from two separate, but highly similar models. The output was
+thinned heavily to reduce file size, see:</p>
 <div class="sourceCode" id="cb2"><html><body><pre class="r"><span class="kw pkg">postpack</span><span class="kw ns">::</span><span class="fu"><a href="../reference/post_dim.html">post_dim</a></span>(<span class="no">cjs</span>)</pre></body></html></div>
 <pre><code>##      burn post_burn      thin    chains     saved    params 
 ##     11000     50000       200         2       500        21</code></pre>
-<p>Each of two chains was ran for 61,000 iterations – 11,000 were adapting/burn-in phase and 50,000 were after burn-in. Chains were thinned at an interval of 200 iterations, resulting in 500 total saved samples per 21 parameters (elements in the model).</p>
+<p>Each of two chains was ran for 61,000 iterations – 11,000 were
+adapting/burn-in phase and 50,000 were after burn-in. Chains were
+thinned at an interval of 200 iterations, resulting in 500 total saved
+samples per 21 parameters (elements in the model).</p>
 <div id="the-context" class="section level1">
 <h1 class="hasAnchor">
 <a href="#the-context" class="anchor"></a>The Context</h1>
-<p>Posterior samples were generated from a model fitted to a hypothetical (i.e., simulated) data set. Suppose for 5 years, biologists individually tagged juvenile salmon in the headwaters of a river system before the fish made their migration out to sea. The length of each fish was measured as well, and it is safe to assume tagged fish are a random sample from the larger population and that they were all released at the same time within a given year.</p>
-<p>Three receiver arrays exist in the river that can detect fish as they move past them, but they are imperfect (sometimes a receiver will not detect a tagged fish passing it). The principle research goal is to quantify whether survival during migration is associated with fish size.</p>
-<p>Known quantities necessary for fitting the model (see below) include:</p>
+<p>Posterior samples were generated from a model fitted to a
+hypothetical (i.e., simulated) data set. Suppose for 5 years, biologists
+individually tagged juvenile salmon in the headwaters of a river system
+before the fish made their migration out to sea. The length of each fish
+was measured as well, and it is safe to assume tagged fish are a random
+sample from the larger population and that they were all released at the
+same time within a given year.</p>
+<p>Three receiver arrays exist in the river that can detect fish as they
+move past them, but they are imperfect (sometimes a receiver will not
+detect a tagged fish passing it). The principle research goal is to
+quantify whether survival during migration is associated with fish
+size.</p>
+<p>Known quantities necessary for fitting the model (see below)
+include:</p>
 <ul>
 <li>
 <code>nt</code>: number of years</li>
 <li>
 <code>year</code>: year indicator variable</li>
 <li>
-<code>J</code>: number of times each fish can be detected, including tagging event</li>
+<code>J</code>: number of times each fish can be detected, including
+tagging event</li>
 <li>
-<code>N</code>: number of fish tagged in the study (across all years)</li>
+<code>N</code>: number of fish tagged in the study (across all
+years)</li>
 <li>
-<code>y</code>: detection history matrix (<code>N</code> by <code>J</code>); 1 if fish seen that event, 0 if not.</li>
+<code>y</code>: detection history matrix (<code>N</code> by
+<code>J</code>); 1 if fish seen that event, 0 if not.</li>
 </ul>
 </div>
 <div id="the-model" class="section level1">
 <h1 class="hasAnchor">
 <a href="#the-model" class="anchor"></a>The Model</h1>
-<p>The model is a Cormack-Jolly-Seber survival model. It estimates survival and detection probabilities based on individually-identifiable tagged fish. Based on how often a fish is not seen at a location and then seen at a later location, it is possible to estimate detection probabilities. Then, based on how often a fish is never seen again, it is possible to estimate survival probabilities<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a>.</p>
-<p>This is a state-space formulation, where there are explicit random processes for both the true state of each fish (alive or dead) and the observed state of each fish (detected or not detected) in each event. Both are Bernoulli random variables, with <code>z</code> representing the true state (0 = dead; 1 = alive) and <code>y</code> representing the observed state (0 = not detected; 1 = detected). It is assumed that fish cannot be detected if they are dead. Survival probability between two consecutive detection events for fish <code>i</code> is denoted by <code>phi[i]</code> and for this model is expressed as a logit-linear function of fish size (<code>FL[i]</code>, scaled and centered prior to model fitting), with random slopes and intercepts for each year. Detection probability for this model is assumed to vary among detection arrays, but is constant across years for a given array.</p>
+<p>The model is a Cormack-Jolly-Seber survival model. It estimates
+survival and detection probabilities based on individually-identifiable
+tagged fish. Based on how often a fish is not seen at a location and
+then seen at a later location, it is possible to estimate detection
+probabilities. Then, based on how often a fish is never seen again, it
+is possible to estimate survival probabilities<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a>.</p>
+<p>This is a state-space formulation, where there are explicit random
+processes for both the true state of each fish (alive or dead) and the
+observed state of each fish (detected or not detected) in each event.
+Both are Bernoulli random variables, with <code>z</code> representing
+the true state (0 = dead; 1 = alive) and <code>y</code> representing the
+observed state (0 = not detected; 1 = detected). It is assumed that fish
+cannot be detected if they are dead. Survival probability between two
+consecutive detection events for fish <code>i</code> is denoted by
+<code>phi[i]</code> and for this model is expressed as a logit-linear
+function of fish size (<code>FL[i]</code>, scaled and centered prior to
+model fitting), with random slopes and intercepts for each year.
+Detection probability for this model is assumed to vary among detection
+arrays, but is constant across years for a given array.</p>
 <p>Here is the JAGS code for this model:</p>
 <pre><code>model{
   # HYPERPARAMETERS: SURVIVAL COEFFICIENTS AND VARIABILITY
@@ -200,25 +238,37 @@
 <p><strong>Parameter definitions</strong>:</p>
 <ul>
 <li>
-<code>B0</code>: intercept of logit-linear survival vs. length relationship: global mean across years</li>
+<code>B0</code>: intercept of logit-linear survival vs. length
+relationship: global mean across years</li>
 <li>
-<code>B1</code>: slope of logit-linear survival v. length relationship: global mean across years</li>
+<code>B1</code>: slope of logit-linear survival v. length
+relationship: global mean across years</li>
 <li>
 <code>b0[1:5]</code>: year-specific survival random intercepts</li>
 <li>
 <code>b1[1:5]</code>: year-specific survival random slopes</li>
 <li>
-<code>sig_B0</code>: standard deviation of year-specific intercepts</li>
+<code>sig_B0</code>: standard deviation of year-specific
+intercepts</li>
 <li>
 <code>sig_B1</code>: standard deviation of year-specific slopes</li>
 <li>
-<code>rho</code>: correlation between random intercepts and slopes</li>
+<code>rho</code>: correlation between random intercepts and
+slopes</li>
 <li>
-<code>SIG[1:2,1:2]</code>: variance-covariance matrix modeling the covariance between random slopes and intercepts</li>
+<code>SIG[1:2,1:2]</code>: variance-covariance matrix modeling the
+covariance between random slopes and intercepts</li>
 <li>
-<code>p[2:4]</code>: detection probability for each receiver array, assumed constant across years (note the first detection occasion is not modeled because that is the tagging event – all fish were alive and detected)</li>
+<code>p[2:4]</code>: detection probability for each receiver array,
+assumed constant across years (note the first detection occasion is not
+modeled because that is the tagging event – all fish were alive and
+detected)</li>
 </ul>
-<p>The <code>mcmc.list</code> object accessed via <code><a href="https://rdrr.io/r/utils/data.html">data(cjs)</a></code> is from this model exactly, the one found in <code><a href="https://rdrr.io/r/utils/data.html">data(cjs_no_rho)</a></code> is from the same model, but with the <code>rho</code> parameter fixed at zero rather than estimating its value.</p>
+<p>The <code>mcmc.list</code> object accessed via <code><a href="https://rdrr.io/r/utils/data.html">data(cjs)</a></code>
+is from this model exactly, the one found in
+<code><a href="https://rdrr.io/r/utils/data.html">data(cjs_no_rho)</a></code> is from the same model, but with the
+<code>rho</code> parameter fixed at zero rather than estimating its
+value.</p>
 <p>The nodes that were monitored include:</p>
 <div class="sourceCode" id="cb5"><html><body><pre class="r"><span class="kw pkg">postpack</span><span class="kw ns">::</span><span class="fu"><a href="../reference/get_params.html">get_params</a></span>(<span class="no">cjs</span>, <span class="kw">type</span> <span class="kw">=</span> <span class="st">"base_index"</span>)</pre></body></html></div>
 <pre><code>##  [1] "B0"       "sig_B0"   "B1"       "sig_B1"   "b0[1]"    "b0[2]"   
@@ -226,10 +276,12 @@
 ## [13] "b1[4]"    "b1[5]"    "SIG[1,1]" "SIG[2,1]" "SIG[1,2]" "SIG[2,2]"
 ## [19] "p[2]"     "p[3]"     "p[4]"</code></pre>
 </div>
-<div class="footnotes">
+<div class="footnotes footnotes-end-of-document">
 <hr>
 <ol>
-<li id="fn1"><p>Readers interested in this kind of model are encouraged to refer to <em>Bayesian Population Analysis using WinBUGS: A Hierarchical Perspective</em> by Marc Kéry and Michael Schuab.<a href="#fnref1" class="footnote-back">↩︎</a></p></li>
+<li id="fn1"><p>Readers interested in this kind of model are encouraged
+to refer to <em>Bayesian Population Analysis using WinBUGS: A
+Hierarchical Perspective</em> by Marc Kéry and Michael Schuab.<a href="#fnref1" class="footnote-back">↩︎</a></p></li>
 </ol>
 </div>
   </div>
